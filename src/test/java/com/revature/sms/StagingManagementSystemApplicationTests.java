@@ -49,16 +49,16 @@ public class StagingManagementSystemApplicationTests {
 		urr.save(new UserRole("associate"));
 		urr.save(new UserRole("admin"));
 		urr.save(new UserRole("superAdmin"));
-		ur.save(new User("a@a.com","Admin","Admin",urr.findByName("admin"),"password"));
-		ur.save(new User("s@s.com","Super","Admin",urr.findByName("superAdmin"),"password"));
-		ur.save(new User("j@j.com","Java","Johnny",urr.findByName("associate"),"password", "Java"));
-		ur.save(new User("d@d.com","DotNet","Dave",urr.findByName("associate"),"password", ".NET"));
-		ur.save(new User("s@s.com","SDET","Sally",urr.findByName("associate"),"password", ".NET"));
-	}*/
-	
+		ur.save(new User("admin","Admin","Admin",urr.findByName("admin"),"password"));
+		ur.save(new User("superadmin","Super","Admin",urr.findByName("superAdmin"),"password"));
+		ur.save(new User("java","Java","Johnny",urr.findByName("associate"),"password", "Java"));
+		ur.save(new User("dotnet","DotNet","Dave",urr.findByName("associate"),"password", ".NET"));
+		ur.save(new User("setDET","SDET","Sally",urr.findByName("associate"),"password", ".NET"));
+	}
+	*/
 	@Test
 	public void getUser(){
-		System.out.println(ur.findByEmail("a@a.com"));
+		System.out.println(ur.findByUsername("admin"));
 	}
 	
 }

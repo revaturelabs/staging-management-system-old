@@ -23,8 +23,8 @@ public class User {
 	@GeneratedValue(generator = "userSeq", strategy = GenerationType.SEQUENCE)
 	private int ID;
 	
-	@Column(name = "EMAIL", unique=true, nullable=false)
-	private String email;
+	@Column(name = "USERNAME", unique=true, nullable=false)
+	private String username;
 	
 	@Column(name = "FIRST_NAME", nullable=false)
 	private String firstName;
@@ -42,19 +42,19 @@ public class User {
 	@JoinColumn(name="user_role")
 	private UserRole userRole;
 
-	public User(String email, String firstName, String lastName, UserRole userRole, String inputPassword) {
+	public User(String username, String firstName, String lastName, UserRole userRole, String inputPassword) {
 		super();
-		this.email = email;
+		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userRole = userRole;
 		this.hashedPassword = hashPassword(inputPassword);
 	}
 
-	public User(String email, String firstName, String lastName, UserRole userRole, String inputPassword,
+	public User(String username, String firstName, String lastName, UserRole userRole, String inputPassword,
 			String batchType) {
 		super();
-		this.email = email;
+		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userRole = userRole;
@@ -70,12 +70,12 @@ public class User {
 		ID = iD;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getFirstName() {
@@ -128,7 +128,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [ID=" + ID + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+		return "User [ID=" + ID + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", userRole=" + userRole + ", hashedPassword=" + hashedPassword + ", batchType=" + batchType + "]";
 	}
 	

@@ -11,10 +11,10 @@ import com.revature.sms.domain.User;
 
 @Repository
 public interface UserRepo extends JpaRepository<User, Integer> {
-	User findByEmail(String email);
+	User findByUsername(String username);
 	
 	List<User> findByBatchType(String batchType);
 	
 	@Transactional
-    Long deleteByEmail(String email);
+    Long deleteByUsername(String username);
 }
