@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.revature.sms.domain.UserRole;
+import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
 
 @RunWith(SpringRunner.class)
@@ -15,7 +16,7 @@ public class StagingManagementSystemApplicationTests {
 
 	@Autowired
 	UserRoleRepo urr;
-	
+
 	@Test 
 	public void UserRoleClearIt(){
 		System.out.println(urr.deleteByName("Janitor"));
