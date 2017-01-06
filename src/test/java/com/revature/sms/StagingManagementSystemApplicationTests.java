@@ -1,5 +1,7 @@
 package com.revature.sms;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.revature.sms.domain.User;
-import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
 
@@ -57,8 +58,12 @@ public class StagingManagementSystemApplicationTests {
 	}
 	*/
 	@Test
-	public void getUser(){
-		System.out.println(ur.findByUsername("admin"));
+	public void getUsers(){
+		List<User> list = ur.findByBatchType("Java");
+		for (User user : list) {
+			System.out.println(user);
+		}
+		
 	}
 	
 }

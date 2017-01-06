@@ -15,6 +15,8 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 	
 	List<User> findByBatchType(String batchType);
 	
+	List<User> findByFirstName(String firstName);
+	
 	@Transactional
     Long deleteByUsername(String username);
 }
