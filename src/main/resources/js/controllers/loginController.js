@@ -7,13 +7,14 @@
           // functions
         lc.login = function(isValid) {
             if (isValid) {
-                var creds = { username: $scope.username, inputPass: $scope.inputPass };
-                console.log(creds);
+                var creds = {};
+                creds.username = lc.username;
+                creds.inputPass = lc.inputPass;
                 loginService.login( creds, function(response){
-                    $scope.data = response;
+                    lc.data = response;
                     console.log("Logged in.");
                 }, function(error){
-                    console.log("Error:", error.data.message);
+                    console.log("Error:", error.data.errorMessage);
                 });
             }
         };

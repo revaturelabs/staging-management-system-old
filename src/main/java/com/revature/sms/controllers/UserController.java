@@ -22,19 +22,19 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Object createUser(@RequestBody LoginAttempt in) {
-		try {
-			User u = ur.findByUsername(in.getUsername());
-			if (u.getHashedPassword().equals(hashPassword(in.getInputPass()))) {
-				u.blankPassword();
-				u.setID(0);
-				return new ResponseEntity<User>(u, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<String>("Invalid password.", HttpStatus.NOT_FOUND);
-			}
-		} catch (NullPointerException e) {
-			return new ResponseEntity<String>("Username does not exist.", HttpStatus.NOT_FOUND);
-		}
-
+//		try {
+//			User u = ur.findByUsername(in.getUsername());
+//			if (u.getHashedPassword().equals(hashPassword(in.getInputPass()))) {
+//				u.blankPassword();
+//				u.setID(0);
+//				return new ResponseEntity<User>(u, HttpStatus.OK);
+//			} else {
+//				return new ResponseEntity<String>("Invalid password.", HttpStatus.NOT_FOUND);
+//			}
+//		} catch (NullPointerException e) {
+//			return new ResponseEntity<String>("Username does not exist.", HttpStatus.NOT_FOUND);
+//		}
+		return null;
 	}
 	
 	@RequestMapping(method = RequestMethod.TRACE, produces = MediaType.APPLICATION_JSON_VALUE)
