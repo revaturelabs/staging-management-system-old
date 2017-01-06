@@ -5,6 +5,8 @@ public class LoginAttempt {
 	private String username;
 	private String inputPass;
 	
+	public LoginAttempt() {}
+	
 	public LoginAttempt(String username, String inputPass) {
 		super();
 		this.username = username;
