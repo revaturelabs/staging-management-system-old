@@ -3,6 +3,8 @@ An application to track attendance, job status, and requirements of associates
 
 ## How to Set Up your Envrionment
 
+0. Make sure *Maven* is installed and accessible my the `mvn` command on Git Bash or Windows CommandLine
+0. Make sure your *JAVA_HOME* is set to something like *C:\Program Files\Java\jdk1.8.0_101*
 0. Create a GitHub account, and direct message Christopher with your GitHub username
 0. Make sure you're set up on [JIRA](https://revaturetraining.atlassian.net/) (Contact Christopher if you have problems)
 1. Set up the environmental variables as described in Slack
