@@ -1,0 +1,40 @@
+
+    <div layout="columns">
+
+        <div flex="30"> </div>
+        
+        <md-card flex="40" md-whiteframe="8">
+
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <span> Welcome! </span>
+                </div>
+            </md-toolbar>
+
+            <form name="loginForm" novalidate>
+                <div layout="columns" layout-align="space-around center">
+
+                    <md-input-container>
+                        <label> Username </label>
+                        <input type="text" ng-model="logCtrl.username" required>
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label> Password </label>
+                        <input type="password" ng-model="logCtrl.inputPass" required>
+                    </md-input-container>
+                    
+                </div>
+
+                <div layout="columns">
+                    <div flex> </div>
+                    <md-button ng-click="logCtrl.login(loginForm.$valid)" class="md-primary md-raised">
+                        Login
+                    </md-button>
+                </div>
+
+        </md-card>
+
+        <div flex="30"> {{logCtrl.data}} </div>
+        
+    </div>
