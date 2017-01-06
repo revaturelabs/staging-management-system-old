@@ -1,5 +1,8 @@
 package com.revature.sms.domain;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="USER")
+@Table(name="USERS")
 public class User {
 
 	@Id
@@ -29,37 +32,33 @@ public class User {
 	@Column(name = "LAST_NAME", nullable=false)
 	private String lastName;
 	
-	@ManyToOne
-	@JoinColumn(name="user_role", nullable=false)
-	private UserRole userRole;
-	
 	@Column(name = "HASHED_PASSWORD", nullable=false)
 	private String hashedPassword;
 	
-	@Column(name = "BATCH_TYPE", nullable=false)
+	@Column(name = "BATCH_TYPE")
 	private String batchType;
+	
+	@ManyToOne
+	@JoinColumn(name="user_role")
+	private UserRole userRole;
 
-	public User() {
-		super();
-	}
-
-	public User(String email, String firstName, String lastName, UserRole userRole, String hashedPassword) {
+	public User(String email, String firstName, String lastName, UserRole userRole, String inputPassword) {
 		super();
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userRole = userRole;
-		this.hashedPassword = hashedPassword;
+		this.hashedPassword = hashPassword(inputPassword);
 	}
 
-	public User(String email, String firstName, String lastName, UserRole userRole, String hashedPassword,
+	public User(String email, String firstName, String lastName, UserRole userRole, String inputPassword,
 			String batchType) {
 		super();
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userRole = userRole;
-		this.hashedPassword = hashedPassword;
+		this.hashedPassword = hashPassword(inputPassword);
 		this.batchType = batchType;
 	}
 
@@ -107,10 +106,14 @@ public class User {
 		return hashedPassword;
 	}
 
-	public void setHashedPassword(String hashedPassword) {
-		this.hashedPassword = hashedPassword;
+	public void setHashedPassword(String inputPassword) {
+		this.hashedPassword = hashPassword(inputPassword);
 	}
 
+	public void blankPassword(){
+		this.hashedPassword="";
+	}
+	
 	public String getBatchType() {
 		return batchType;
 	}
@@ -119,9 +122,30 @@ public class User {
 		this.batchType = batchType;
 	}
 
+	public User() {
+		super();
+	}
+
 	@Override
 	public String toString() {
 		return "User [ID=" + ID + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", userRole=" + userRole + ", hashedPassword=" + hashedPassword + ", batchType=" + batchType + "]";
+	}
+	
+	public static String hashPassword(String inputPassword){
+		try {
+			MessageDigest md;
+			md = MessageDigest.getInstance("SHA"); 
+			md.update(inputPassword.getBytes());
+			byte byteData[] = md.digest();
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < byteData.length; i++) {
+				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			return sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
