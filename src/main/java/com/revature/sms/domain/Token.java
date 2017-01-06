@@ -1,7 +1,6 @@
 package com.revature.sms.domain;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -20,10 +19,10 @@ public class Token {
 	private String authToken;
 	
 	@ManyToOne
-	@JoinColumn(name="User", nullable=false)
+	@JoinColumn(name="AUTH_USER", nullable=false)
 	private User user;
 	
-	@Column(name="MOST_RECENT_ACCESS")
+	@Column(name="LAST_ACCESS")
 	private Timestamp mostRecentAccess;
 
 	
