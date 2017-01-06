@@ -3,7 +3,7 @@ An application to track attendance, job status, and requirements of associates
 
 ## How to Set Up your Envrionment
 
-0. Create a GitHub account
+0. Create a GitHub account, and direct message Christopher with your GitHub username
 0. Make sure you're set up on [JIRA](https://revaturetraining.atlassian.net/) (Contact Christopher if you have problems)
 1. Set up the environmental variables as described in Slack
 2. Clone this project on your local machine
