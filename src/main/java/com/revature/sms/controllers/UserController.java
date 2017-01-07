@@ -12,8 +12,6 @@ import com.revature.sms.domain.User;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dto.LoginAttempt;
 
-import static com.revature.sms.controllers.LoginController.hashPassword;
-
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
@@ -41,7 +39,7 @@ public class UserController {
 	public Object createCurriculum(@RequestBody LoginAttempt in) {
 		try {
 			User u = ur.findByUsername(in.getUsername());	
-			if (u.getHashedPassword().equals(hashPassword(in.getInputPass()))) {
+			if (u.getHashedPassword().equals(in.getInputPass())) {
 				u.blankPassword();
 				u.setID(0);
 				return new ResponseEntity<User>(u, HttpStatus.OK);
