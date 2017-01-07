@@ -1,7 +1,5 @@
 package com.revature.sms.controllers;
 
-import static com.revature.sms.domain.User.hashPassword;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dto.LoginAttempt;
+
+import static com.revature.sms.controllers.LoginController.hashPassword;
 
 @RestController
 @RequestMapping("/api/v1/user")

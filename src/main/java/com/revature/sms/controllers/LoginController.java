@@ -1,11 +1,13 @@
 package com.revature.sms.controllers;
 
-import static com.revature.sms.domain.User.hashPassword;
-
 import com.revature.sms.domain.dto.ResponseErrorEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +41,22 @@ public class LoginController {
 			}
 		} catch (NullPointerException e) {
 			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Username does not exist."), HttpStatus.NOT_FOUND);
+		}
+	}
+	public static String hashPassword(String inputPassword){
+		try {
+			MessageDigest md;
+			md = MessageDigest.getInstance("SHA"); 
+			md.update(inputPassword.getBytes());
+			byte byteData[] = md.digest();
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < byteData.length; i++) {
+				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			return sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 }

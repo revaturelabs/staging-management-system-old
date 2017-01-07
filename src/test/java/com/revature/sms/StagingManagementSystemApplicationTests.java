@@ -1,5 +1,6 @@
 package com.revature.sms;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -8,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.revature.sms.domain.User;
+import com.revature.sms.domain.AssociateAttendance;
+import com.revature.sms.domain.dao.AssociateAttendanceRepo;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
 
@@ -21,29 +23,25 @@ public class StagingManagementSystemApplicationTests {
 	
 	@Autowired
 	UserRepo ur;
-/*
-	@Test 
-	public void UserRoleClearIt(){
-		System.out.println(urr.deleteByName("Janitor"));
-	}
 	
-	@Test
-	public void UserRoleAddIt() {
-		urr.save(new UserRole("Janitor"));
-	}
-	
-	@Test
-	public void UserRoleGetIt(){
-		System.out.println(urr.findByName("Janitor"));
-	}
+	@Autowired
+	AssociateAttendanceRepo aar;
 
-	@Test 
-	public void UserRoleDeleteIt(){
-		System.out.println(urr.deleteByName("Janitor"));
+	//Test associate attendance list retrieval
+/*
+	@Test
+	public void testAttendance(){
+		aar.save(new AssociateAttendance(ur.findByUsername("java"), new Date(2017, 1, 7), false, false, null));
+		aar.save(new AssociateAttendance(ur.findByUsername("java"), new Date(2017, 1, 7), false, false, null));
+		List<AssociateAttendance> list = aar.findByAssociate(ur.findByUsername("java"));
+		for (AssociateAttendance associateAttendance : list) {
+			System.out.println(associateAttendance);
+		}
+		
 	}*/
 	
 	
-	//Initialize Data:
+	//Initialize Test Data:
 	/*
 	@Test
 	public void makeData(){
@@ -55,15 +53,6 @@ public class StagingManagementSystemApplicationTests {
 		ur.save(new User("java","Java","Johnny",urr.findByName("associate"),"password", "Java"));
 		ur.save(new User("dotnet","DotNet","Dave",urr.findByName("associate"),"password", ".NET"));
 		ur.save(new User("setDET","SDET","Sally",urr.findByName("associate"),"password", ".NET"));
-	}
-	*/
-	@Test
-	public void getUsers(){
-		List<User> list = ur.findByBatchType("Java");
-		for (User user : list) {
-			System.out.println(user);
-		}
-		
-	}
+	}*/
 	
 }
