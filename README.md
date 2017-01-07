@@ -6,7 +6,7 @@ An application to track attendance, job status, and requirements of associates
 1. Make sure *Maven* is installed and accessible my the `mvn` command on Git Bash or Windows CommandLine
 2. Make sure your *JAVA_HOME* is set to something like *C:\Program Files\Java\jdk1.8.0_101*
 3. Create a GitHub account, and direct message Christopher with your GitHub username
-4. Make sure you're set up on [JIRA](https://revaturetraining.atlassian.net/) (Contact Christopher if you have problems)
+4. Make sure you're set up on [JIRA](https://revaturetraining.atlassian.net/secure/RapidBoard.jspa?rapidView=48&projectKey=SMS&view=detail) (Contact Christopher if you don't have a login or if your account is inactive)
 5. Set up the environmental variables as described in Slack
 6. Clone this project on your local machine (run `git clone https://github.com/revaturelabs/staging-management-system.git` )
 7. In Git Bash, `cd` to the *Jars* folder inside of the project you just cloned, and run this command: `mvn install:install-file -Dfile=ojdbc7.jar -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1.0.1 -Dpackaging=jar`
@@ -17,9 +17,9 @@ An application to track attendance, job status, and requirements of associates
 12. Create a feature branch and pull request for the issue you're working (please name it according to the issue number, such as `SMS-7`) To do this:
   * On Git Bash, use `git checkout development` to make sure you're on the development branch
   * Run `git pull` to pull the latest code
-  * Use `git checkout -b SMS-7` to create a local branch for your user-story
+  * Use `git checkout -b SMS-24` to create a local branch for your user-story
   * Make a small change to your feature branch and commit it (This could be adding an empty text file or a very small change to a file you're working with. Not anything that would impact any functionality)
-  * Type `git push --set-upstream origin SMS-7` to create the branch remotely
+  * Type `git push --set-upstream origin SMS-24` to create the branch remotely
   * On GitHub, you should see a box near the top saying that (TODO: finish writing steps for creating pull requests in GitHub. Still depends on the pipeline)
 13. To access the database, use [SQL Developer](http://www.oracle.com/technetwork/developer-tools/sql-developer/downloads/index.html).  
   * Create a new connection with the username and password you found in the Slack information (check the *Save Password* box for your convienance)
