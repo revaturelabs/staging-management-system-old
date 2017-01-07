@@ -21,11 +21,6 @@ public class UserRole {
 	
 	@Column(name = "NAME", unique=true, nullable=false)
 	private String name;
-	
-	/*This is how you create a boolean:
-	@Column(name="ALIVE")
-	private Boolean alive;
-	*/
 
 	public UserRole() {
 	}

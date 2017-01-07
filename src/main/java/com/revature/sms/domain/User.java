@@ -13,10 +13,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+//This object tracks users on the application
+
 @Entity
 @Table(name="USERS")
 public class User {
-
+	
 	@Id
 	@Column(name = "ID")
 	@SequenceGenerator(allocationSize = 1, name = "userSeq", sequenceName = "USER_SEQ")
@@ -42,23 +44,23 @@ public class User {
 	@JoinColumn(name="user_role")
 	private UserRole userRole;
 
-	public User(String username, String firstName, String lastName, UserRole userRole, String inputPassword) {
+	public User(String username, String firstName, String lastName, UserRole userRole, String hashedPassword) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userRole = userRole;
-		this.hashedPassword = hashPassword(inputPassword);
+		this.hashedPassword = hashedPassword;
 	}
 
-	public User(String username, String firstName, String lastName, UserRole userRole, String inputPassword,
+	public User(String username, String firstName, String lastName, UserRole userRole, String hashedPassword,
 			String batchType) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userRole = userRole;
-		this.hashedPassword = hashPassword(inputPassword);
+		this.hashedPassword = hashedPassword;
 		this.batchType = batchType;
 	}
 
@@ -106,8 +108,8 @@ public class User {
 		return hashedPassword;
 	}
 
-	public void setHashedPassword(String inputPassword) {
-		this.hashedPassword = hashPassword(inputPassword);
+	public void setHashedPassword(String hashPassword) {
+		this.hashedPassword = hashPassword;
 	}
 
 	public void blankPassword(){
@@ -129,23 +131,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [ID=" + ID + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", userRole=" + userRole + ", hashedPassword=" + hashedPassword + ", batchType=" + batchType + "]";
+				+ ", userRole=" + userRole + ", batchType=" + batchType + "]";
 	}
 	
-	public static String hashPassword(String inputPassword){
-		try {
-			MessageDigest md;
-			md = MessageDigest.getInstance("SHA"); 
-			md.update(inputPassword.getBytes());
-			byte byteData[] = md.digest();
-			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < byteData.length; i++) {
-				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-			}
-			return sb.toString();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 }

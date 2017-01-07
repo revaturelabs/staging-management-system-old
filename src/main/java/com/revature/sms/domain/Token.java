@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+//The token object will be used to track a user's session with an authentication token
+
 @Entity
 @Table(name="TOKEN")
 public class Token {
