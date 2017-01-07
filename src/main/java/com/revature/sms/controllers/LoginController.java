@@ -32,7 +32,7 @@ public class LoginController {
 		User u = ur.findByUsername(in.getUsername());
 		System.out.println(u);
 		try {
-			if (u.getHashedPassword().equals(hashPassword(in.getInputPass()))) {
+			if (u.getHashedPassword().equals(in.getInputPass())) {
 				u.blankPassword();
 				u.setID(0);
 				return new ResponseEntity<User>(u, HttpStatus.OK);
@@ -43,20 +43,5 @@ public class LoginController {
 			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Username does not exist."), HttpStatus.NOT_FOUND);
 		}
 	}
-	public static String hashPassword(String inputPassword){
-		try {
-			MessageDigest md;
-			md = MessageDigest.getInstance("SHA"); 
-			md.update(inputPassword.getBytes());
-			byte byteData[] = md.digest();
-			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < byteData.length; i++) {
-				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-			}
-			return sb.toString();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+	
 }
