@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -20,19 +21,8 @@ public class UserRole {
 	
 	@Column(name = "NAME", unique=true, nullable=false)
 	private String name;
-	
-	/*This is how you create a boolean:
-	@Column(name="ALIVE")
-	private Boolean alive;
-	*/
 
 	public UserRole() {
-	}
-
-	public UserRole(int iD, String name) {
-		super();
-		ID = iD;
-		this.name = name;
 	}
 	
 	public UserRole(String name) {

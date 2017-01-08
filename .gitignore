@@ -1,0 +1,7 @@
+target/
+bin/
+.idea/
+.settings/
+staging-management-system.iml
+.classpath
+.project
