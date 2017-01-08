@@ -66,7 +66,7 @@ public class StagingManagementSystemApplicationTests {
 		attr.save(new AssociateTaskType("Panel"));		
 	}
 	
-	// Defunct hashPassword script. Actual hashing will take place on the client-side javascript
+	// Defunct hashPassword script. While used to create initial hashed passwords here, actual hashing will take place on the client-side javascript
 	public static String hashPassword(String inputPassword) {
 		try {
 			MessageDigest md;
