@@ -58,7 +58,7 @@ public class StagingManagementSystemApplicationTests {
 		ur.save(new User("superadmin","Super","Admin",urr.findByName("superAdmin"),hashPassword("password")));
 		ur.save(new User("java","Java","Johnny",urr.findByName("associate"),hashPassword("password"), "Java"));
 		ur.save(new User("dotnet","DotNet","Dave",urr.findByName("associate"),hashPassword("password"), ".NET"));
-		ur.save(new User("setDET","SDET","Sally",urr.findByName("associate"),hashPassword("password"), ".NET"));
+		ur.save(new User("sdet","SDET","Sally",urr.findByName("associate"),hashPassword("password"), ".NET"));
 		jetr.save(new JobEventType("Selected"));
 		jetr.save(new JobEventType("Interviewed"));
 		jetr.save(new JobEventType("On Location"));
