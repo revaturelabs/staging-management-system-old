@@ -55,4 +55,9 @@ public class StagingManagementSystemApplicationTests {
 		ur.save(new User("setDET","SDET","Sally",urr.findByName("associate"),"password", ".NET"));
 	}*/
 	
+	@Test
+  	public void getUser(){
+		System.out.println(ur.findByUsername("admin"));
+  	}
+	
 }
