@@ -8,4 +8,5 @@ import com.revature.sms.domain.AssociateTaskType;
 @Repository
 public interface AssociateTaskTypeRepo extends JpaRepository<AssociateTaskType, Integer>{
 
+	AssociateTaskType findByType(String type);
 }
