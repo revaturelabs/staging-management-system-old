@@ -43,5 +43,4 @@ public class LoginController {
 			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Username does not exist."), HttpStatus.NOT_FOUND);
 		}
 	}
-	
 }
