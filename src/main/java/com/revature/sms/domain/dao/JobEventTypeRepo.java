@@ -8,4 +8,5 @@ import com.revature.sms.domain.JobEventType;
 @Repository
 public interface JobEventTypeRepo extends JpaRepository<JobEventType, Integer> {
 
+	JobEventType findByType(String type);
 }
