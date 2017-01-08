@@ -13,37 +13,42 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ASSOCIATE_TASK")
-public class AssociateTask {
-
+@Table(name="JOB_EVENT")
+public class JobEvent {
+	
 	@Id
 	@Column(name = "ID")
-	@SequenceGenerator(allocationSize = 1, name = "associateTaskSeq", sequenceName = "ASSOCIATE_TASK_SEQ")
-	@GeneratedValue(generator = "associateTaskSeq", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(allocationSize = 1, name = "jobEventSeq", sequenceName = "JOB_EVENT_SEQ")
+	@GeneratedValue(generator = "jobEventSeq", strategy = GenerationType.SEQUENCE)
 	private int ID;
-	
+
 	@ManyToOne
 	@JoinColumn(name="ASSOCIATE")
 	private User associate;
 	
 	@ManyToOne
-	@JoinColumn(name="TASK_TYPE")
-	private AssociateTaskType taskType;
+	@JoinColumn(name="ASSIGNMENT")
+	private JobAssignment assignment;
 	
-	@Column(name="TASK_DATE", nullable=false)
+	@ManyToOne
+	@JoinColumn(name="TYPE")
+	private JobEventType type;
+	
+	@Column(name="EVENT_DATE", nullable=false)
 	private Date date;
 	
-	@Column(name="Note")
+	@Column(name="NOTE")
 	private String note;
 
-	public AssociateTask() {
+	public JobEvent() {
 		super();
 	}
 
-	public AssociateTask(User associate, AssociateTaskType taskType, Date date, String note) {
+	public JobEvent(User associate, JobAssignment assignment, JobEventType type, Date date, String note) {
 		super();
 		this.associate = associate;
-		this.taskType = taskType;
+		this.assignment = assignment;
+		this.type = type;
 		this.date = date;
 		this.note = note;
 	}
@@ -64,12 +69,20 @@ public class AssociateTask {
 		this.associate = associate;
 	}
 
-	public AssociateTaskType getTaskType() {
-		return taskType;
+	public JobAssignment getAssignment() {
+		return assignment;
 	}
 
-	public void setTaskType(AssociateTaskType taskType) {
-		this.taskType = taskType;
+	public void setAssignment(JobAssignment assignment) {
+		this.assignment = assignment;
+	}
+
+	public JobEventType getType() {
+		return type;
+	}
+
+	public void setType(JobEventType type) {
+		this.type = type;
 	}
 
 	public Date getDate() {
@@ -90,9 +103,11 @@ public class AssociateTask {
 
 	@Override
 	public String toString() {
-		return "AssociateTasks [ID=" + ID + ", associate=" + associate.getUsername() + ", taskType=" + taskType.getType() + ", date=" + date
-				+ ", note=" + note + "]";
+		return "JobEvent [ID=" + ID + ", associate=" + associate.getUsername() + ", assignment=" + assignment + ", type=" + type.getType()
+				+ ", date=" + date + ", note=" + note + "]";
 	}
+	
+	
 	
 	
 }

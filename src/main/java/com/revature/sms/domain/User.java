@@ -44,6 +44,10 @@ public class User {
 	@JoinColumn(name="user_role")
 	private UserRole userRole;
 
+	public User() {
+		super();
+	}
+	
 	public User(String username, String firstName, String lastName, UserRole userRole, String hashedPassword) {
 		super();
 		this.username = username;
@@ -122,10 +126,6 @@ public class User {
 
 	public void setBatchType(String batchType) {
 		this.batchType = batchType;
-	}
-
-	public User() {
-		super();
 	}
 
 	@Override

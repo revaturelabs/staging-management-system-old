@@ -9,8 +9,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TASK_TYPE")
-public class TaskType {
+@Table(name="ASSOCIATE_TASK_TYPE")
+public class AssociateTaskType {
 
 	@Id
 	@Column(name = "ID")
@@ -21,18 +21,12 @@ public class TaskType {
 	@Column(name = "TYPE", unique=true, nullable=false)
 	private String type;
 
-	public TaskType() {
+	public AssociateTaskType() {
 		super();
 	}
 
-	public TaskType(String type) {
+	public AssociateTaskType(String type) {
 		super();
-		this.type = type;
-	}
-
-	public TaskType(int iD, String type) {
-		super();
-		ID = iD;
 		this.type = type;
 	}
 
