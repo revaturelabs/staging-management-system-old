@@ -1,17 +1,16 @@
 package com.revature.sms;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.revature.sms.domain.User;
-import com.revature.sms.domain.UserRole;
+import com.revature.sms.domain.AssociateTaskType;
+import com.revature.sms.domain.JobEventType;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
+import com.revature.sms.domain.dao.AssociateTaskTypeRepo;
+import com.revature.sms.domain.dao.JobEventTypeRepo;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
 
@@ -27,6 +26,12 @@ public class StagingManagementSystemApplicationTests {
 	
 	@Autowired
 	AssociateAttendanceRepo aar;
+	
+	@Autowired
+	JobEventTypeRepo jetr;
+	
+	@Autowired
+	AssociateTaskTypeRepo attr;
 
 	//Test associate attendance list retrieval
 /*
@@ -54,6 +59,11 @@ public class StagingManagementSystemApplicationTests {
 		ur.save(new User("java","Java","Johnny",urr.findByName("associate"),hashPassword("password"), "Java"));
 		ur.save(new User("dotnet","DotNet","Dave",urr.findByName("associate"),hashPassword("password"), ".NET"));
 		ur.save(new User("setDET","SDET","Sally",urr.findByName("associate"),hashPassword("password"), ".NET"));
+		jetr.save(new JobEventType("Selected"));
+		jetr.save(new JobEventType("Interviewed"));
+		jetr.save(new JobEventType("On Location"));
+		attr.save(new AssociateTaskType("Certification"));
+		attr.save(new AssociateTaskType("Panel"));		
 	}
 	
 	// Defunct hashPassword script. Actual hashing will take place on the client-side javascript
