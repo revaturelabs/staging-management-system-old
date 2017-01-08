@@ -33,6 +33,9 @@ An application to track attendance, job status, and requirements of associates
 ## I have a question! Who should I ask?
 
 If your question relates to the Requirements of a userstory, contact Karan or Ankit.
+
 If your question pertains to the UI or Design of the app, contact Ben.
+
 If your question has to do with testing, contact Alex.
+
 If your quetion has to do with your development enviroment, or if you have a problem that impedes your ability to develop, contact Chris.
