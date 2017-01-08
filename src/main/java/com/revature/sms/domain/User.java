@@ -34,7 +34,7 @@ public class User {
 	@Column(name = "LAST_NAME", nullable=false)
 	private String lastName;
 	
-	@Column(name = "HASHED_PASSWORD", nullable=false)
+	@Column(name = "HASHED_PASSWORD")
 	private String hashedPassword;
 	
 	@Column(name = "BATCH_TYPE")
