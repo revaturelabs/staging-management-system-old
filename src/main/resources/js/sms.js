@@ -40,7 +40,7 @@
 			})
               // associate page
 			.state( "assoc", {
-				url: "/home",
+				url: "/assocs",
                 views: {
                     "mainView": {
     				    templateUrl: "html/views/associate.html",
