@@ -1,14 +1,8 @@
 package com.revature.sms.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import java.util.List;
+
+import javax.persistence.*;
 
 //This object tracks users on the application
 
@@ -38,6 +32,12 @@ public class User {
 	@JoinColumn(name="BATCH_TYPE")
 	private BatchType batchType;
 	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="ID")
+	private List<AssociateAttendance> attendance;
+
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="ID")
+	private List<AssociateTask> tasks;
+
 	@ManyToOne
 	@JoinColumn(name="user_role")
 	private UserRole userRole;
@@ -45,25 +45,30 @@ public class User {
 	public User() {
 		super();
 	}
-	
-	public User(String username, String firstName, String lastName, UserRole userRole, String hashedPassword) {
-		super();
-		this.username = username;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userRole = userRole;
-		this.hashedPassword = hashedPassword;
-	}
 
-	public User(String username, String firstName, String lastName, UserRole userRole, String hashedPassword,
-			BatchType batchType) {
+	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
+			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.userRole = userRole;
 		this.hashedPassword = hashedPassword;
 		this.batchType = batchType;
+		this.attendance = attendance;
+		this.tasks = tasks;
+		this.userRole = userRole;
+	}
+
+	public User(String username, String firstName, String lastName, String hashedPassword,
+			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole) {
+		super();
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.hashedPassword = hashedPassword;
+		this.attendance = attendance;
+		this.tasks = tasks;
+		this.userRole = userRole;
 	}
 
 	public int getID() {
@@ -98,20 +103,12 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public UserRole getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(UserRole userRole) {
-		this.userRole = userRole;
-	}
-
 	public String getHashedPassword() {
 		return hashedPassword;
 	}
 
-	public void setHashedPassword(String hashPassword) {
-		this.hashedPassword = hashPassword;
+	public void setHashedPassword(String hashedPassword) {
+		this.hashedPassword = hashedPassword;
 	}
 
 	public void blankPassword(){
@@ -127,10 +124,37 @@ public class User {
 		this.batchType = batchType;
 	}
 
+	public List<AssociateAttendance> getAttendance() {
+		return attendance;
+	}
+
+	public void setAttendance(List<AssociateAttendance> attendance) {
+		this.attendance = attendance;
+	}
+
+	public List<AssociateTask> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<AssociateTask> tasks) {
+		this.tasks = tasks;
+	}
+
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
+	}
+
 	@Override
 	public String toString() {
 		return "User [ID=" + ID + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", userRole=" + userRole + ", batchType=" + batchType + "]";
+				+ ", hashedPassword=" + hashedPassword + ", batchType=" + batchType + ", attendance=" + attendance
+				+ ", tasks=" + tasks + ", userRole=" + userRole + "]";
 	}
+
+	
 	
 }

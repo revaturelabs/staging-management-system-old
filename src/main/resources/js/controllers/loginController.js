@@ -16,9 +16,9 @@
                 creds.username = lc.username;
                 creds.inputPass = CryptoJS.SHA1(lc.inputPass).toString();
                 loginService.login( creds, function(response){
-                    lc.user = response;
+                    loginService.addUser(response);
                     lc.toast("Logged in.");
-                    switch (lc.user.userRole.name) {
+                    switch (response.userRole.name) {
                         case "superAdmin":
                             $state.go("super");
                             break;
