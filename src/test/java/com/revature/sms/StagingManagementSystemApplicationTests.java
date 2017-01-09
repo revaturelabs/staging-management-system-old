@@ -1,22 +1,19 @@
 package com.revature.sms;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.revature.sms.domain.AssociateTaskType;
-import com.revature.sms.domain.JobEventType;
-import com.revature.sms.domain.dao.AssociateAttendanceRepo;
-import com.revature.sms.domain.dao.AssociateTaskTypeRepo;
-import com.revature.sms.domain.dao.JobEventTypeRepo;
-import com.revature.sms.domain.dao.UserRepo;
-import com.revature.sms.domain.dao.UserRoleRepo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class StagingManagementSystemApplicationTests {
+	
+	@Test
+	public void EverythingsGood(){
+		Logger.getRootLogger().debug("No tests right now");
+	}
 	//This class runs on *EVERY* commit to a feature branch!! Make sure code here doesn't create needless database objects
 	
 	/*
