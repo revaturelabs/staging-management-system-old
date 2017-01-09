@@ -26,7 +26,7 @@
                         templateUrl: "html/views/topBar.html"
                     },
                     "mainView": {
-    				    templateUrl: "html/views/super.html",
+    				    templateUrl: "html/views/superadmin/super.html",
 	    			    controller: "superCtrl as suCtrl"
                     }
                 }
@@ -39,7 +39,7 @@
                         templateUrl: "html/views/topBar.html"
                     },
                     "mainView": {
-    				    templateUrl: "html/views/admin.html",
+    				    templateUrl: "html/views/admin/admin.html",
 	    			    controller: "adminCtrl as adCtrl"
                     }
                 }
@@ -52,7 +52,7 @@
                         templateUrl: "html/views/topBar.html"
                     },
                     "mainView": {
-    				    templateUrl: "html/views/associate.html",
+    				    templateUrl: "html/views/associate/associate.html",
 	    			    controller: "associateCtrl as assoCtrl"
                     }
                 }

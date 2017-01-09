@@ -9,11 +9,14 @@
             loginResource.save(loginCred, success, error);
         };
 
+          // COOKIES BAD, MKAY
         ls.logout = function() {
-
+            ls.user = {};
+            ls.token = "";
         };
 
         ls.user = {};
+        ls.token = "";
 
         ls.addUser = function(user) {
             ls.user = user;
@@ -23,11 +26,21 @@
             return ls.user;
         };
 
+        ls.addToken = function(token) {
+            ls.token = token;
+        };
+
+        ls.getToken = function() {
+            return ls.token;
+        };
+
         return {
             login: ls.login,
             logout: ls.logout,
             addUser: ls.addUser,
-            getUser: ls.getUser
+            getUser: ls.getUser,
+            addToken: ls.addToken,
+            getToken: ls.getToken
         };
         
     });

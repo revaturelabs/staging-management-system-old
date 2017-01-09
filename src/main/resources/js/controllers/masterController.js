@@ -10,7 +10,7 @@
         };
 
         $scope.$on( "$locationChangeStart", function( event, newURL ) {
-            // var updatedURL = $location.url();
+            var updatedURL = $location.url();
             // $location.url( updatedURL );
         });
 
