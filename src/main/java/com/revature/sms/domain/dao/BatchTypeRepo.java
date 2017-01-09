@@ -7,6 +7,6 @@ import com.revature.sms.domain.BatchType;
 
 @Repository
 public interface BatchTypeRepo extends JpaRepository<BatchType, Integer>{
-
+	BatchType findByType(String type);
 	
 }

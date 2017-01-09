@@ -45,7 +45,8 @@ public class User {
 	public User() {
 		super();
 	}
-
+	
+	//constructor for associate
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole) {
 		super();
@@ -58,16 +59,14 @@ public class User {
 		this.tasks = tasks;
 		this.userRole = userRole;
 	}
-
-	public User(String username, String firstName, String lastName, String hashedPassword,
-			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole) {
+	
+	//constructor for non-associate
+	public User(String username, String firstName, String lastName, String hashedPassword, UserRole userRole) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.hashedPassword = hashedPassword;
-		this.attendance = attendance;
-		this.tasks = tasks;
 		this.userRole = userRole;
 	}
 
