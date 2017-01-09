@@ -17,7 +17,7 @@
             suc.user = {};
             suc.token = "";
             loginService.logout();
-            sup.toast("Logged out.");
+            suc.toast("Logged out.");
             $state.go("login");
         };
 
