@@ -26,40 +26,52 @@ public class LoginController {
 
 	@Autowired
 	UserRepo ur;
-	
-	@Autowired AssociateAttendanceRepo aar;
+
+	@Autowired
+	AssociateAttendanceRepo aar;
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Object login(@RequestBody LoginAttempt in) {
-		System.out.println(in.getUsername() + " " + in.getInputPass());
+		//System.out.println(in.getUsername() + " " + in.getInputPass());
 
 		User u = ur.findByUsername(in.getUsername());
-		System.out.println(u);
+		//System.out.println(u);
 		try {
 			if (u.getHashedPassword().equals(in.getInputPass())) {
 				// Successful login
 				u.blankPassword();
 				u.setID(0);
-				
-				if(u.getUserRole().getName().equals("associate")){
-					// if associate mark attendance as present
-					List<AssociateAttendance> associateAttendanceList = aar.findByDate(new Date(new java.util.Date().getTime()) );
-					
-					for (AssociateAttendance aa : associateAttendanceList) {
-						aa.setCheckedIn(true);
-					}
-					
-					aar.save(associateAttendanceList);
-					
+
+				if ("associate".equals(u.getUserRole().getName())) {
+					markPresent(u);
 				}
-				
+
 				return new ResponseEntity<User>(u, HttpStatus.OK);
 			} else {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid password."), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid password."),
+						HttpStatus.NOT_FOUND);
 			}
 		} catch (NullPointerException e) {
 			Logger.getRootLogger().debug("Bad username", e);
-			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Username does not exist."), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Username does not exist."),
+					HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	private void markPresent(User u){
+		// if associate mark attendance as present
+		List<AssociateAttendance> associateAttendanceList = aar.findByDate(new Date(new java.util.Date().getTime()));
+
+		//if (associateAttendanceList.size() <= 0) {}
+
+		for (AssociateAttendance aa : associateAttendanceList) {
+			if(aa.getAssociate().getID() == u.getID()){
+				aa.setCheckedIn(true);
+			}
+		}
+
+		aar.save(associateAttendanceList);
+		//System.out.println(u + "logged in");
+	}
+	
 }
