@@ -1,17 +1,10 @@
 package com.revature.sms.domain;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.hibernate.annotations.Cascade;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import java.util.List;
+
+import javax.persistence.*;
 
 //This object tracks users on the application
 
@@ -39,7 +32,29 @@ public class User {
 	
 	@Column(name = "BATCH_TYPE")
 	private String batchType;
-	
+
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="ID")
+	private List<AssociateAttendance> attendance;
+
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="ID")
+	private List<AssociateTask> tasks;
+
+	public List<AssociateAttendance> getAttendance() {
+		return attendance;
+	}
+
+	public void setAttendance(List<AssociateAttendance> attendance) {
+		this.attendance = attendance;
+	}
+
+	public List<AssociateTask> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<AssociateTask> tasks) {
+		this.tasks = tasks;
+	}
+
 	@ManyToOne
 	@JoinColumn(name="user_role")
 	private UserRole userRole;
@@ -58,7 +73,7 @@ public class User {
 	}
 
 	public User(String username, String firstName, String lastName, UserRole userRole, String hashedPassword,
-			String batchType) {
+			String batchType, List<AssociateAttendance> attendance, List<AssociateTask> tasks) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -66,6 +81,8 @@ public class User {
 		this.userRole = userRole;
 		this.hashedPassword = hashedPassword;
 		this.batchType = batchType;
+		this.attendance = attendance;
+		this.tasks = tasks;
 	}
 
 	public int getID() {
