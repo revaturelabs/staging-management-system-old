@@ -22,6 +22,9 @@
 			.state( "super", {
 				url: "/home",
                 views: {
+                    "topBarView": {
+                        templateUrl: "html/views/topBar.html"
+                    },
                     "mainView": {
     				    templateUrl: "html/views/super.html",
 	    			    controller: "superCtrl as suCtrl"
@@ -32,6 +35,9 @@
 			.state( "admin", {
 				url: "/home",
                 views: {
+                    "topBarView": {
+                        templateUrl: "html/views/topBar.html"
+                    },
                     "mainView": {
     				    templateUrl: "html/views/admin.html",
 	    			    controller: "adminCtrl as adCtrl"
@@ -42,6 +48,9 @@
 			.state( "assoc", {
 				url: "/home",
                 views: {
+                    "topBarView": {
+                        templateUrl: "html/views/topBar.html"
+                    },
                     "mainView": {
     				    templateUrl: "html/views/associate.html",
 	    			    controller: "associateCtrl as assoCtrl"

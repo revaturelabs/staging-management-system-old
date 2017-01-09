@@ -31,7 +31,6 @@
                         default:
                             break;
                     }
-
                 }, function(error){
                     lc.toast(error.data.errorMessage);
                 });
