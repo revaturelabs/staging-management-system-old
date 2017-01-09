@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class StagingManagementSystemApplicationTests {
 	
 	@Test
-	public void EverythingsGood(){
+	public void everythingsGood(){
 		Logger.getRootLogger().debug("No tests right now");
 	}
 	//This class runs on *EVERY* commit to a feature branch!! Make sure code here doesn't create needless database objects
