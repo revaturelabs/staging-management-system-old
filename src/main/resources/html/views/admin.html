@@ -1,5 +1,27 @@
 
-    <md-card>
-        <div> This is the admin page.
-        </div>
+    
+    <md-card md-whitframe="8">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Menu" ng-click="adCtrl.openMenu()">
+                    <md-tooltip> Menu </md-tooltip>
+                    <md-icon md-svg-icon="img/icons/ic_menu_white_24px.svg"> </md-icon>
+                </md-button>
+            </div>
+            <div flex> </div>
+            <div class="md-toolbar-tools">
+                <md-button class="md-icon-button" aria-label="Menu" ng-click="loginService.logout()">
+                    <md-tooltip> Logout </md-tooltip>
+                    <md-icon md-svg-icon="img/icons/ic_exit_to_app_white_24px.svg"> </md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
     </md-card>
+
+    <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
+        <md-toolbar>
+            <div class="md-toolbar-tools"> Menu </div> 
+        </md-toolbar>
+    </md-sidenav>

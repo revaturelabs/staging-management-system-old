@@ -6,7 +6,6 @@
 
           // functions
         suc.openMenu = function() {
-            console.log("Opening menu.");
             $mdSidenav("left").open();
         };
 
