@@ -24,12 +24,6 @@ public class UserRole {
 
 	public UserRole() {
 	}
-
-	public UserRole(int iD, String name) {
-		super();
-		ID = iD;
-		this.name = name;
-	}
 	
 	public UserRole(String name) {
 		super();

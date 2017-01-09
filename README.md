@@ -4,9 +4,9 @@ An application to track attendance, job status, and requirements of associates
 ## How to Set Up your Envrionment
 
 1. Make sure *Maven* is installed and accessible my the `mvn` command on Git Bash or Windows CommandLine
-2. Make sure your *JAVA_HOME* is set to something like *C:\Program Files\Java\jdk1.8.0_101*
-3. Create a GitHub account, and direct message Christopher with your GitHub username
-4. Make sure you're set up on [JIRA](https://revaturetraining.atlassian.net/secure/RapidBoard.jspa?rapidView=48&projectKey=SMS&view=detail) (Contact Christopher if you don't have a login or if your account is inactive)
+2. Make sure your *JAVA_HOME* environmental variable is set to something like *C:\Program Files\Java\jdk1.8.0_101*
+3. Create a GitHub account, and direct message Chris with your GitHub username
+4. Make sure you're set up on [JIRA](https://revaturetraining.atlassian.net/secure/RapidBoard.jspa?rapidView=48&projectKey=SMS&view=detail) (Contact Chris if you don't have a login or if your account is inactive)
 5. Set up the environmental variables as described in Slack
 6. Clone this project on your local machine (run `git clone https://github.com/revaturelabs/staging-management-system.git` )
 7. In Git Bash, `cd` to the *Jars* folder inside of the project you just cloned, and run this command: `mvn install:install-file -Dfile=ojdbc7.jar -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1.0.1 -Dpackaging=jar`
@@ -28,3 +28,14 @@ An application to track attendance, job status, and requirements of associates
   * Use the SID `ORCL`
   * Test the connection
   * If it works, save it and connect to it
+
+
+## I have a question! Who should I ask?
+
+If your question relates to the Requirements of a userstory, contact Karan or Ankit.
+
+If your question pertains to the UI or Design of the app, contact Ben.
+
+If your question has to do with testing, contact Alex.
+
+If your quetion has to do with your development enviroment, or if you have a problem that impedes your ability to develop, contact Chris.

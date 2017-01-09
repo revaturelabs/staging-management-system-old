@@ -1,16 +1,16 @@
 package com.revature.sms;
 
-import java.sql.Date;
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.revature.sms.domain.AssociateAttendance;
+import com.revature.sms.domain.AssociateTaskType;
+import com.revature.sms.domain.JobEventType;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
+import com.revature.sms.domain.dao.AssociateTaskTypeRepo;
+import com.revature.sms.domain.dao.JobEventTypeRepo;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
 
@@ -26,6 +26,12 @@ public class StagingManagementSystemApplicationTests {
 	
 	@Autowired
 	AssociateAttendanceRepo aar;
+	
+	@Autowired
+	JobEventTypeRepo jetr;
+	
+	@Autowired
+	AssociateTaskTypeRepo attr;
 
 	//Test associate attendance list retrieval
 /*
@@ -48,11 +54,41 @@ public class StagingManagementSystemApplicationTests {
 		urr.save(new UserRole("associate"));
 		urr.save(new UserRole("admin"));
 		urr.save(new UserRole("superAdmin"));
-		ur.save(new User("admin","Admin","Admin",urr.findByName("admin"),"password"));
-		ur.save(new User("superadmin","Super","Admin",urr.findByName("superAdmin"),"password"));
-		ur.save(new User("java","Java","Johnny",urr.findByName("associate"),"password", "Java"));
-		ur.save(new User("dotnet","DotNet","Dave",urr.findByName("associate"),"password", ".NET"));
-		ur.save(new User("setDET","SDET","Sally",urr.findByName("associate"),"password", ".NET"));
-	}*/
+		ur.save(new User("admin","Admin","Admin",urr.findByName("admin"),hashPassword("password")));
+		ur.save(new User("superadmin","Super","Admin",urr.findByName("superAdmin"),hashPassword("password")));
+		ur.save(new User("java","Java","Johnny",urr.findByName("associate"),hashPassword("password"), "Java"));
+		ur.save(new User("dotnet","DotNet","Dave",urr.findByName("associate"),hashPassword("password"), ".NET"));
+		ur.save(new User("sdet","SDET","Sally",urr.findByName("associate"),hashPassword("password"), ".NET"));
+		jetr.save(new JobEventType("Selected"));
+		jetr.save(new JobEventType("Interviewed"));
+		jetr.save(new JobEventType("On Location"));
+		attr.save(new AssociateTaskType("Certification"));
+		attr.save(new AssociateTaskType("Panel"));		
+	}
+	
+	// Defunct hashPassword script. While used to create initial hashed passwords here, actual hashing will take place on the client-side javascript
+	public static String hashPassword(String inputPassword) {
+		try {
+			MessageDigest md;
+			md = MessageDigest.getInstance("SHA");
+			md.update(inputPassword.getBytes());
+			byte byteData[] = md.digest();
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < byteData.length; i++) {
+				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			return sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	*/
+	@Test
+  	public void getUser(){
+		System.out.println(ur.findByUsername("admin"));
+  	}
+	
 	
 }

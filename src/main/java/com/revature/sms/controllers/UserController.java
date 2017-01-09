@@ -12,6 +12,7 @@ import com.revature.sms.domain.User;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dto.LoginAttempt;
 
+
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
