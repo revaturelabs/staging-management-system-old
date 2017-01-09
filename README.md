@@ -1,6 +1,10 @@
 # Staging Management System
 An application to track attendance, job status, and requirements of associates
 
+### Commit early and often!
+
+Aim for 3 commits a day (not including any dummy commits), with the last one being as you leave for the day.
+
 ## How to Set Up your Envrionment
 
 1. Make sure *Maven* is installed and accessible my the `mvn` command on Git Bash or Windows CommandLine
@@ -20,7 +24,9 @@ An application to track attendance, job status, and requirements of associates
   * Use `git checkout -b SMS-24` to create a local branch for your user-story
   * Make a small change to your feature branch and commit it (This could be adding an empty text file or a very small change to a file you're working with. Not anything that would impact any functionality)
   * Type `git push --set-upstream origin SMS-24` to create the branch remotely
-  * On GitHub, you should see a box near the top saying that (TODO: finish writing steps for creating pull requests in GitHub. Still depends on the pipeline)
+  * On GitHub, you should see a box near the top saying that you recently pushed to it, and you'll see a button labeled *Compare & pull request* .
+  * Click that, give your pull request the same name as your branch, and continue working. Each commit will run a feature test
+  * When you're ready for your branch to be merged to the development branch, comment `RFI` on the pull request, and that will notify one of the reviewers that your code is ready to be reviewed
 13. To access the database, use [SQL Developer](http://www.oracle.com/technetwork/developer-tools/sql-developer/downloads/index.html).  
   * Create a new connection with the username and password you found in the Slack information (check the *Save Password* box for your convienance)
   * for the URL, take the URL that you found in the Slack information, and omit `jdbc:oracle:thin:@` at the beginning and `:1521:ORCL` at the end
