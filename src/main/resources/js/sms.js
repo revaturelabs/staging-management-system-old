@@ -1,5 +1,4 @@
-
-    var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "ngResource", "ngCookies", "ui.router"]);
+var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "ngResource", "ngCookies", "ui.router"]);
 
       // URL routing
     sms.config( function( $stateProvider, $urlRouterProvider, $locationProvider ) {
@@ -20,7 +19,7 @@
 			})
               // superadmin page
 			.state( "super", {
-				url: "/home",
+				url: "/super",
                 views: {
                     "mainView": {
     				    templateUrl: "html/views/super.html",
@@ -30,7 +29,7 @@
 			})
               // admin page
 			.state( "admin", {
-				url: "/home",
+				url: "/admin",
                 views: {
                     "mainView": {
     				    templateUrl: "html/views/admin.html",
@@ -56,4 +55,3 @@
             .primaryPalette("indigo")
             .accentPalette("pink");
     });
-    
