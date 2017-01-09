@@ -20,7 +20,7 @@
 			})
               // superadmin page
 			.state( "super", {
-				url: "/home",
+				url: "/super",
                 views: {
                     "mainView": {
     				    templateUrl: "html/views/super.html",
@@ -30,7 +30,7 @@
 			})
               // admin page
 			.state( "admin", {
-				url: "/home",
+				url: "/admin",
                 views: {
                     "mainView": {
     				    templateUrl: "html/views/admin.html",
@@ -40,7 +40,7 @@
 			})
               // associate page
 			.state( "assoc", {
-				url: "/home",
+				url: "/assocs",
                 views: {
                     "mainView": {
     				    templateUrl: "html/views/associate.html",
