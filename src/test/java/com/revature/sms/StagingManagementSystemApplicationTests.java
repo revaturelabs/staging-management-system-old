@@ -17,7 +17,9 @@ import com.revature.sms.domain.dao.UserRoleRepo;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class StagingManagementSystemApplicationTests {
-
+	//This class runs on *EVERY* commit to a feature branch!! Make sure code here doesn't create needless database objects
+	
+	/*
 	@Autowired
 	UserRoleRepo urr;
 	
@@ -34,7 +36,7 @@ public class StagingManagementSystemApplicationTests {
 	AssociateTaskTypeRepo attr;
 
 	//Test associate attendance list retrieval
-/*
+
 	@Test
 	public void testAttendance(){
 		aar.save(new AssociateAttendance(ur.findByUsername("java"), new Date(2017, 1, 7), false, false, null));
@@ -84,11 +86,6 @@ public class StagingManagementSystemApplicationTests {
 		}
 	}
 	
-	*/
-	@Test
-  	public void getUser(){
-		System.out.println(ur.findByUsername("admin"));
-  	}
-	
+	*/	
 	
 }

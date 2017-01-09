@@ -24,13 +24,12 @@ public class Token {
 	@JoinColumn(name="AUTH_USER", nullable=false)
 	private User user;
 	
-	public Token() {
-		super();
-	}
-
 	@Column(name="LAST_ACCESS")
 	private Timestamp mostRecentAccess;
 
+	public Token() {
+		super();
+	}
 	
 	public Token(User user) {
 		super();
