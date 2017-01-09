@@ -62,7 +62,7 @@ public class LoginController {
 		// if associate mark attendance as present
 		List<AssociateAttendance> associateAttendanceList = aar.findByDate(new Date(new java.util.Date().getTime()));
 
-		//if (associateAttendanceList.size() <= 0) {}
+		//if (associateAttendanceList.size() <= 0) {} 
 
 		for (AssociateAttendance aa : associateAttendanceList) {
 			if(aa.getAssociate().getID() == u.getID()){
