@@ -20,7 +20,7 @@
 			})
               // superadmin page
 			.state( "super", {
-				url: "/home",
+				url: "/super",
                 views: {
                     "topBarView": {
                         templateUrl: "html/views/topBar.html"
@@ -33,7 +33,7 @@
 			})
               // admin page
 			.state( "admin", {
-				url: "/home",
+				url: "/admin",
                 views: {
                     "topBarView": {
                         templateUrl: "html/views/topBar.html"
@@ -46,7 +46,7 @@
 			})
               // associate page
 			.state( "assoc", {
-				url: "/home",
+				url: "/assoc",
                 views: {
                     "topBarView": {
                         templateUrl: "html/views/topBar.html"
