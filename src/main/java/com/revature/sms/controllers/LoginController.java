@@ -24,10 +24,7 @@ public class LoginController {
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Object login(@RequestBody LoginAttempt in) {
-		System.out.println(in.getUsername() + " " + in.getInputPass());
-
 		User u = ur.findByUsername(in.getUsername());
-		System.out.println(u);
 		try {
 			if (u.getHashedPassword().equals(in.getInputPass())) {
 				u.blankPassword();
