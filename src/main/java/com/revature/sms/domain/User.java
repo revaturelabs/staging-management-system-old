@@ -34,8 +34,9 @@ public class User {
 	@Column(name = "HASHED_PASSWORD")
 	private String hashedPassword;
 	
-	@Column(name = "BATCH_TYPE")
-	private String batchType;
+	@ManyToOne
+	@JoinColumn(name="BATCH_TYPE")
+	private BatchType batchType;
 	
 	@ManyToOne
 	@JoinColumn(name="user_role")
@@ -55,7 +56,7 @@ public class User {
 	}
 
 	public User(String username, String firstName, String lastName, UserRole userRole, String hashedPassword,
-			String batchType) {
+			BatchType batchType) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -118,11 +119,11 @@ public class User {
 		this.hashedPassword=empty;
 	}
 	
-	public String getBatchType() {
+	public BatchType getBatchType() {
 		return batchType;
 	}
 
-	public void setBatchType(String batchType) {
+	public void setBatchType(BatchType batchType) {
 		this.batchType = batchType;
 	}
 
