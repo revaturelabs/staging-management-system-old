@@ -11,7 +11,7 @@
                 </div>
             </md-toolbar>
 
-            <form name="loginForm" novalidate>
+            <form name="loginForm" ng-submit="logCtrl.login(loginForm.$valid)" novalidate>
                 <div layout="columns" layout-align="space-around center">
 
                     <md-input-container>
@@ -28,7 +28,7 @@
 
                 <div layout="columns">
                     <div flex> </div>
-                    <md-button ng-click="logCtrl.login(loginForm.$valid)" class="md-primary md-raised">
+                    <md-button type="submit" class="md-primary md-raised">
                         Login
                     </md-button>
                 </div>
