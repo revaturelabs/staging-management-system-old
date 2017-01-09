@@ -1,10 +1,30 @@
 package com.revature.sms;
 
+import java.util.List;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.revature.sms.domain.AssociateAttendance;
+import com.revature.sms.domain.AssociateTask;
+import com.revature.sms.domain.AssociateTaskType;
+import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.JobEventType;
+import com.revature.sms.domain.User;
+import com.revature.sms.domain.UserRole;
+import com.revature.sms.domain.dao.AssociateAttendanceRepo;
+import com.revature.sms.domain.dao.AssociateTaskTypeRepo;
+import com.revature.sms.domain.dao.BatchTypeRepo;
+import com.revature.sms.domain.dao.JobEventTypeRepo;
+import com.revature.sms.domain.dao.UserRepo;
+import com.revature.sms.domain.dao.UserRoleRepo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -16,7 +36,7 @@ public class StagingManagementSystemApplicationTests {
 	}
 	//This class runs on *EVERY* commit to a feature branch!! Make sure code here doesn't create needless database objects
 	
-	/*
+	
 	@Autowired
 	UserRoleRepo urr;
 	
@@ -31,10 +51,13 @@ public class StagingManagementSystemApplicationTests {
 	
 	@Autowired
 	AssociateTaskTypeRepo attr;
+	
+	@Autowired
+	BatchTypeRepo btr;
 
 	//Test associate attendance list retrieval
 
-	@Test
+	/*@Test
 	public void testAttendance(){
 		aar.save(new AssociateAttendance(ur.findByUsername("java"), new Date(2017, 1, 7), false, false, null));
 		aar.save(new AssociateAttendance(ur.findByUsername("java"), new Date(2017, 1, 7), false, false, null));
@@ -53,11 +76,14 @@ public class StagingManagementSystemApplicationTests {
 		urr.save(new UserRole("associate"));
 		urr.save(new UserRole("admin"));
 		urr.save(new UserRole("superAdmin"));
-		ur.save(new User("admin","Admin","Admin",urr.findByName("admin"),hashPassword("password")));
-		ur.save(new User("superadmin","Super","Admin",urr.findByName("superAdmin"),hashPassword("password")));
-		ur.save(new User("java","Java","Johnny",urr.findByName("associate"),hashPassword("password"), "Java"));
-		ur.save(new User("dotnet","DotNet","Dave",urr.findByName("associate"),hashPassword("password"), ".NET"));
-		ur.save(new User("sdet","SDET","Sally",urr.findByName("associate"),hashPassword("password"), ".NET"));
+		btr.save(new BatchType("SDET"));
+		btr.save(new BatchType("Java"));
+		btr.save(new BatchType(".NET"));
+		ur.save(new User("admin","Admin","Admin",hashPassword("password"),urr.findByName("admin")));
+		ur.save(new User("superadmin","Super","Admin",hashPassword("password"),urr.findByName("superadmin")));
+		ur.save(new User("java","Java","Johnny",hashPassword("password"),btr.findByType("java"),new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(),urr.findByName("associate")));
+		ur.save(new User("dotnet","DotNet","Dave",hashPassword("password"),btr.findByType(".NET"),new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(),urr.findByName("associate")));
+		ur.save(new User("sdet","SDET","Sally",hashPassword("password"),btr.findByType("SDET"),new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(),urr.findByName("associate")));
 		jetr.save(new JobEventType("Selected"));
 		jetr.save(new JobEventType("Interviewed"));
 		jetr.save(new JobEventType("On Location"));
@@ -82,7 +108,7 @@ public class StagingManagementSystemApplicationTests {
 			return null;
 		}
 	}
-	
-	*/	
+	*/
+
 	
 }
