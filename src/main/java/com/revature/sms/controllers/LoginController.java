@@ -43,6 +43,7 @@ public class LoginController {
 				u.setID(0);
 
 				if ("associate".equals(u.getUserRole().getName())) {
+					// if associate mark attendance as present
 					markPresent(u);
 				}
 
@@ -59,14 +60,13 @@ public class LoginController {
 	}
 	
 	private void markPresent(User u){
-		// if associate mark attendance as present
 		List<AssociateAttendance> associateAttendanceList = aar.findByDate(new Date(new java.util.Date().getTime()));
-
 		//if (associateAttendanceList.size() <= 0) {} 
 
 		for (AssociateAttendance aa : associateAttendanceList) {
 			if(aa.getAssociate().getID() == u.getID()){
 				aa.setCheckedIn(true);
+				break;
 			}
 		}
 
