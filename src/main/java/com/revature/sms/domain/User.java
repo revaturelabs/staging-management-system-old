@@ -39,22 +39,6 @@ public class User {
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="ID")
 	private List<AssociateTask> tasks;
 
-	public List<AssociateAttendance> getAttendance() {
-		return attendance;
-	}
-
-	public void setAttendance(List<AssociateAttendance> attendance) {
-		this.attendance = attendance;
-	}
-
-	public List<AssociateTask> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(List<AssociateTask> tasks) {
-		this.tasks = tasks;
-	}
-
 	@ManyToOne
 	@JoinColumn(name="user_role")
 	private UserRole userRole;
@@ -133,8 +117,25 @@ public class User {
 		this.hashedPassword = hashPassword;
 	}
 
+	public List<AssociateAttendance> getAttendance() {
+		return attendance;
+	}
+
+	public void setAttendance(List<AssociateAttendance> attendance) {
+		this.attendance = attendance;
+	}
+
+	public List<AssociateTask> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<AssociateTask> tasks) {
+		this.tasks = tasks;
+	}
+
 	public void blankPassword(){
-		this.hashedPassword="";
+		String empty="";
+		this.hashedPassword=empty;
 	}
 	
 	public String getBatchType() {
