@@ -23,7 +23,7 @@ Aim for 3 commits a day (not including any dummy commits), with the last one bei
   * Run `git pull` to pull the latest code
   * Use `git checkout -b SMS-24` to create a local branch for your user-story
   * Make a small change to your feature branch and commit it (This could be adding an empty text file or a very small change to a file you're working with. Not anything that would impact any functionality)
-  * Type `git push --set-upstream origin SMS-24` to create the branch remotely
+  * Type `git push --set-upstream origin SMS-24` to create the branch remotely (For subsequent pushes, you can simply use `git push`)
   * On GitHub, you should see a box near the top saying that you recently pushed to it, and you'll see a button labeled *Compare & pull request* .
   * Click that, give your pull request the same name as your branch, and continue working. Each commit will run a feature test
   * When you're ready for your branch to be merged to the development branch, comment `RFI` on the pull request, and that will notify one of the reviewers that your code is ready to be reviewed
