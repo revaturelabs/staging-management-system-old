@@ -17,27 +17,41 @@
                     }
                 }
 			})
+              // superadmin page
+			.state( "super", {
+				url: "/super",
+                views: {
+                    "mainView": {
+    				    templateUrl: "html/views/super.html",
+	    			    controller: "superCtrl as suCtrl"
+                    }
+                }
+			})
+              // admin page
+			.state( "admin", {
+				url: "/admin",
+                views: {
+                    "mainView": {
+    				    templateUrl: "html/views/admin.html",
+	    			    controller: "adminCtrl as adCtrl"
+                    }
+                }
+			})
+              // associate page
+			.state( "assoc", {
+				url: "/assoc",
+                views: {
+                    "mainView": {
+    				    templateUrl: "html/views/associate.html",
+	    			    controller: "associateCtrl as assoCtrl"
+                    }
+                }
+			})
 	});
 
       // theme config
     sms.config( function($mdThemingProvider) {
-
-        // var revOrangeMap = $mdThemingProvider.extendPalette("deep-orange", {
-        //     "800": "#D9510D",
-        //     "500": "#F26925"
-        // });
-
-        // var revBlueMap = $mdThemingProvider.extendPalette("blue-grey", {
-        //     "A200": "#72A4C2",
-        //     "100" : "#C9DCE8"
-        // });
-
-        // $mdThemingProvider.definePalette("revOrange", revOrangeMap);
-        // $mdThemingProvider.definePalette("revBlue", revBlueMap);
-            
         $mdThemingProvider.theme("default")
-            // .primaryPalette("revOrange")
-            // .accentPalette("revBlue");
             .primaryPalette("indigo")
             .accentPalette("pink");
     });

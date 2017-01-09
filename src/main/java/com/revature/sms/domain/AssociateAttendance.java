@@ -28,7 +28,16 @@ public class AssociateAttendance {
 	
 	@Column(name="ATTENDANCE_DATE", nullable=false)
 	private Date date;
+
+	@Column(name="CHECKED_IN", nullable=false)
+	private boolean checkedIn;
 	
+	@Column(name="VERIFIED", nullable=false)
+	private boolean verified;
+	
+	@Column(name="NOTE")
+	private String note;
+
 	public AssociateAttendance() {
 		super();
 	}
@@ -41,16 +50,7 @@ public class AssociateAttendance {
 		this.verified = verified;
 		this.note = note;
 	}
-
-	@Column(name="CHECKED_IN", nullable=false)
-	private boolean checkedIn;
 	
-	@Column(name="VERIFIED", nullable=false)
-	private boolean verified;
-	
-	@Column(name="NOTE")
-	private String note;
-
 	public AssociateAttendance(int iD, User associate, Date date, boolean checkedIn, boolean verified, String note) {
 		super();
 		ID = iD;

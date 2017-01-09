@@ -1,20 +1,39 @@
 
     var sms = angular.module( "sms" );
 
-    sms.controller( "loginCtrl", function( $scope, loginService ){
+    sms.controller( "loginCtrl", function( $scope, $state, loginService ){
         var lc = this;
 
           // functions
+            //calls master controller's toast function
+        lc.toast = function(message){
+            $scope.$parent.mastCtrl.toast(message);
+        };
+
         lc.login = function(isValid) {
             if (isValid) {
                 var creds = {};
                 creds.username = lc.username;
-                creds.inputPass = lc.inputPass;
+                creds.inputPass = CryptoJS.SHA1(lc.inputPass).toString();
                 loginService.login( creds, function(response){
-                    lc.data = response;
-                    console.log("Logged in.");
+                    lc.user = response;
+                    lc.toast("Logged in.");
+                    switch (lc.user.userRole.name) {
+                        case "superAdmin":
+                            $state.go("super");
+                            break;
+                        case "admin":
+                            $state.go("admin");
+                            break;
+                        case "associate":
+                            $state.go("assoc");
+                            break;
+                        default:
+                            break;
+                    }
+
                 }, function(error){
-                    console.log("Error:", error.data.errorMessage);
+                    lc.toast(error.data.errorMessage);
                 });
             }
         };
