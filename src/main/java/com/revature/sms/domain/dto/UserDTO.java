@@ -1,5 +1,6 @@
 package com.revature.sms.domain.dto;
 
+import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.UserRole;
 
 public class UserDTO {
@@ -7,7 +8,8 @@ public class UserDTO {
 	private String username;
 	private String firstName;
 	private String lastName;
-	private String batchType;
+	private String hashedPassword;
+	private BatchType batchType;
 	private UserRole userRole;
 	private String token;
 
@@ -15,20 +17,22 @@ public class UserDTO {
 		super();
 	}
 	
-	public UserDTO(String username, String firstName, String lastName, UserRole userRole) {
+	public UserDTO(String username, String firstName, String lastName,String password, UserRole userRole) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.hashedPassword=password;
 		this.userRole = userRole;
 	}
 
-	public UserDTO(String username, String firstName, String lastName, UserRole userRole,
-			String batchType) {
+	public UserDTO(String username, String firstName, String lastName,String password, UserRole userRole,
+			BatchType batchType) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.hashedPassword=password;
 		this.userRole = userRole;
 		this.batchType = batchType;
 	}
@@ -66,12 +70,20 @@ public class UserDTO {
 	public void setUserRole(UserRole userRole) {
 		this.userRole = userRole;
 	}
+	
+	public String getHashedPassword() {
+		return hashedPassword;
+	}
 
-	public String getBatchType() {
+	public void setHashedPassword(String hashedPassword) {
+		this.hashedPassword = hashedPassword;
+	}
+
+	public BatchType getBatchType() {
 		return batchType;
 	}
 
-	public void setBatchType(String batchType) {
+	public void setBatchType(BatchType batchType) {
 		this.batchType = batchType;
 	}
 	

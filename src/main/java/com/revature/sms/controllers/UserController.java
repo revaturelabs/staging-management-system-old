@@ -95,13 +95,13 @@ public class UserController {
 	 * @param userDTO
 	 * @return
 	 */
-	@RequestMapping(value = "/retrieveUser", method = { RequestMethod.GET}, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object retrieveUser(@RequestParam int id, @RequestBody String token) {
+	@RequestMapping(value = "/retrieveUser", method = { RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Object retrieveUser(@RequestBody UserDTO userDTO) {
 
 		try {
 			// validate token and retrieve associate info
-			if (isValid(token)) {
-				User user = userRepo.findOne(id);
+			if (isValid(userDTO.getToken())) {
+				User user = userRepo.findByUsername(userDTO.getUsername());
 				return new ResponseEntity<User>(user, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid token"),
@@ -121,12 +121,12 @@ public class UserController {
 	 * @param userDTO
 	 * @return
 	 */
-	@RequestMapping(value = "/retrieveAll", method = { RequestMethod.GET}, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object retrieveAll(@RequestBody String token) {
+	@RequestMapping(value = "/retrieveAll", method = { RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Object retrieveAll(@RequestBody UserDTO userDTO) {
 
 		try {
 			// validate token and retrieve all associates info
-			if (isValid(token)) {
+			if (isValid(userDTO.getToken())) {
 				List<User> user = userRepo.findAll();
 				return new ResponseEntity<List<User>>(user, HttpStatus.OK);
 			} else {
