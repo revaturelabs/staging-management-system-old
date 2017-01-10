@@ -46,14 +46,7 @@ public class AssociateAttendance {
 		this.note = note;
 	}
 	
-	public AssociateAttendance(int iD, User associate, Date date, boolean checkedIn, boolean verified, String note) {
-		super();
-		ID = iD;
-		this.date = date;
-		this.checkedIn = checkedIn;
-		this.verified = verified;
-		this.note = note;
-	}
+
 
 	public int getID() {
 		return ID;

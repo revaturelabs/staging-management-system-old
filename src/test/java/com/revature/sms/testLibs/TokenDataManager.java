@@ -1,5 +1,13 @@
 package com.revature.sms.testLibs;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.revature.sms.domain.Token;
+import com.revature.sms.domain.User;
+import com.revature.sms.domain.dao.TokenRepo;
 
 /**
  * 
@@ -14,4 +22,40 @@ package com.revature.sms.testLibs;
 
 public class TokenDataManager {
 
+	List<Token> createdTokens = new ArrayList<>();
+	
+	@Autowired
+	TokenRepo tr;
+	
+	
+	/**
+	 * createTestToken is a setup method that is called to create an authorization token for testing.
+	 * The cleanup method RemoveAllTestTokens must be called after an instance of this class is done being used.
+	 * 
+	 * @return The token object that is created in the database
+	 */
+	
+	public Token createTestToken(User user){
+		Token newToken = new Token(user);
+		tr.save(newToken);
+		createdTokens.add(newToken);
+		return newToken;
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * A cleanup method that must be called when an instance of the class is done being used.
+	 */
+	
+	public void removeAllTestTokens(){
+		for(Token i:createdTokens){
+			tr.delete(i);
+		}
+		createdTokens.clear();
+	}
+	
 }
