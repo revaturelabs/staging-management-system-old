@@ -1,15 +1,67 @@
+<md-table-container>
+  <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+    <thead md-head md-order="query.order" md-on-reorder="getDesserts">
+      <tr md-row>
+        <th md-column md-order-by="nameToLower"><span>Dessert (100g serving)</span></th>
+        <th md-column md-numeric md-order-by="calories.value"><span>Calories</span></th>
+        <th md-column md-numeric>Fat (g)</th>
+        <th md-column md-numeric>Carbs (g)</th>
+        <th md-column md-numeric>Protein (g)</th>
+        <th md-column md-numeric>Sodium (mg)</th>
+        <th md-column md-numeric>Calcium (%)</th>
+        <th md-column md-numeric>Iron (%)</th>
+      </tr>
+    </thead>
+    <tbody md-body>
+      <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="dessert in desserts.data">
+        <td md-cell>{{dessert.name}}</td>
+        <td md-cell>{{dessert.calories.value}}</td>
+        <td md-cell>{{dessert.fat.value | number: 1}}</td>
+        <td md-cell>{{dessert.carbs.value}}</td>
+        <td md-cell>{{dessert.protein.value | number: 1}}</td>
+        <td md-cell>{{dessert.sodium.value}}</td>
+        <td md-cell>{{dessert.calcium.value}}{{dessert.calcium.unit}}</td>
+        <td md-cell>{{dessert.iron.value}}{{dessert.iron.unit}}</td>
+      </tr>
+    </tbody>
+  </table>
+</md-table-container>
+
+<md-table-pagination 	md-limit="query.limit" 
+						md-limit-options="[5, 10, 15]" 
+						md-page="query.page" 
+						md-total="{{desserts.count}}" 
+						md-on-paginate="getDesserts" 
+						md-page-select>
+</md-table-pagination>
+
+
+
+
+
 <table>
 	<thead>
 		<tr>
-			<th data-field="id">Name</th>
-			<th data-field="name">Item Name</th>
-			<th data-field="price">Item Price</th>
+			<th data-field="assocName">Associate Name</th>
+			<th data-field="monday">Monday</th>
+			<th data-field="tuesday">Tuesday</th>
+			<th data-field="wednesday">Wednesday</th>
+			<th data-field="thursday">Thursday</th>
+			<th data-field="friday">Friday</th>
+		</tr>
+		<tr>
+			<th></th>
+			<th>{{ monday }}</th>
+			<th>{{ tuesday }}</th>
+			<th>{{ wednesday }}</th>
+			<th>{{ thursday }}</th>
+			<th>{{ friday }}</th>
 		</tr>
 	</thead>
 
 	<tbody>
 		<tr>
-			<td>Alvin</td>
+			<td>Bob</td>
 			<td>Eclair</td>
 			<td>$0.87</td>
 		</tr>
@@ -25,3 +77,5 @@
 		</tr>
 	</tbody>
 </table>
+
+<div id="currentDay"></div>
