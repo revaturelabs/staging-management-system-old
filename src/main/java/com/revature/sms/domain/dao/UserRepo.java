@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.User;
 /**
  * DAO repo for User objects.
@@ -20,17 +21,19 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 	 * @return User object matching supplied username.
 	 */
 	User findByUsername(String username);
-	/**
-	 * Method to retrieve list of Users matching a specific BatchType.
-	 * @param batchType String value of the BatchType used to find users.
-	 * @return object containing users of a specific batchType.
-	 */
-	List<User> findByBatchType(String batchType);
-	/**
-	 * Method to retrieve list of users by firstName.
-	 * @param firstName String representing the first name of users in the list.
-	 * @return object containing all users with the supplied first name.
-	 */
+
+/**
+ * Method to retrieve list of Users matching a specific BatchType.
+ * @param batchType String value of the BatchType used to find users.
+ * @return object containing users of a specific batchType.
+ */
+	List<User> findByBatchType(BatchType batchType);
+/**
+ * Method to retrieve list of users by firstName.
+ * @param firstName String representing the first name of users in the list.
+ * @return object containing all users with the supplied first name.
+ */
+
 	List<User> findByFirstName(String firstName);
 	
 	
