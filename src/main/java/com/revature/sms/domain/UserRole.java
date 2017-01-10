@@ -39,7 +39,7 @@ public class UserRole {
 	}
 	/**
 	 * Constructor that sets the name of the UserRole object based on the supplied name.
-	 * @param name - String value that represents the name of the UserRole.
+	 * @param name String value that represents the name of the UserRole.
 	 */
 	public UserRole(String name) {
 		super();
@@ -47,28 +47,28 @@ public class UserRole {
 	}
 /**
  * Method that retrieves the ID of the UserRole object.
- * @return ID - int value that represents the ID of the UserRole.
+ * @return ID int value that represents the ID of the UserRole.
  */
 	public int getID() {
 		return ID;
 	}
 /**
  * Method that sets the ID of the UserRole object.
- * @param iD - int value of the id to be set.
+ * @param iD int value of the id to be set.
  */
 	public void setID(int iD) {
 		ID = iD;
 	}
 /**
  * Method that retrieves the name of the UserRole object. 
- * @return name - String value that represents the name of the UserRole.
+ * @return name String value that represents the name of the UserRole.
  */
 	public String getName() {
 		return name;
 	}
 /**
  * Method that sets the name of the UserRole object.
- * @param name - String value of the name to be set.
+ * @param name String value of the name to be set.
  */
 	public void setName(String name) {
 		this.name = name;

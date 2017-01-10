@@ -13,7 +13,7 @@ import com.revature.sms.domain.Token;
 public interface TokenRepo extends JpaRepository<Token, Integer>{
 	/**
 	 * Method that retrieves Token by supplied String for authToken.
-	 * @param token - String containing token value.
+	 * @param token String containing token value.
 	 * @return Token object matching supplied String.
 	 */
 	Token findByauthToken(String token);

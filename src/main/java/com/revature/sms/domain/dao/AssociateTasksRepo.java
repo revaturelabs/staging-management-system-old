@@ -19,7 +19,7 @@ public interface AssociateTasksRepo extends JpaRepository<AssociateTask, Integer
 	
 	/**
 	 * Returns a list of tasks based on a given type.
-	 * @param taskType - AssociateTaskType of the type of task 
+	 * @param taskType AssociateTaskType of the type of task 
 	 * @return List of all tasks of the given type
 	 */
 	List<AssociateTask> findByTaskType(AssociateTaskType taskType);

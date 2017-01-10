@@ -30,7 +30,7 @@ public class LoginController {
 	UserRepo ur;
 /**
  * Method that's called via Http Post method. Used for submitting a login attempt when trying to login.
- * @param in - LoginAttempt object that contains the user name and password of the user trying to login.
+ * @param in LoginAttempt object that contains the user name and password of the user trying to login.
  * @return ResponseEntity object containing user information if the login is successful,
  * otherwise it returns ResponseEntity with an error message if login fails. 
  */

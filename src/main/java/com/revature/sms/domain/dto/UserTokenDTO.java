@@ -17,14 +17,14 @@ public class UserTokenDTO {
     private String authToken;
 /**
  * Method that retrieves the authToken of this UserTokenDTO object
- * @return authToken - String value that contains the actual Token of the object.
+ * @return authToken String value that contains the actual Token of the object.
  */
     public String getToken() {
         return authToken;
     }
 /**
  * Method to set the value of the authToken instance variable.
- * @param authToken - String value that contains the actual token of this UserTokenDTO object.
+ * @param authToken String value that contains the actual token of this UserTokenDTO object.
  */
     public void setToken(String authToken) {
         this.authToken = authToken;
@@ -39,7 +39,7 @@ public class UserTokenDTO {
     }
 /**
  * Method to set the user of this UserTokenDTO object.
- * @param user - User object to be set with this token.
+ * @param user User object to be set with this token.
  */
     public void setUser(User user) {
         this.user = user;

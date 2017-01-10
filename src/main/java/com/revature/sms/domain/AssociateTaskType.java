@@ -41,7 +41,7 @@ public class AssociateTaskType {
 
 	/**
 	 * Parameterized constructor for AssociateTaskType.
-	 * @param type - String value that represents a type of task that an associate can be working on
+	 * @param type String value that represents a type of task that an associate can be working on
 	 */
 	public AssociateTaskType(String type) {
 		super();
@@ -50,7 +50,7 @@ public class AssociateTaskType {
 
 	/**
 	 * Get method for ID.
-	 * @return ID - int value that represents the primary key of the record
+	 * @return ID int value that represents the primary key of the record
 	 */
 	public int getID() {
 		return ID;
@@ -58,7 +58,7 @@ public class AssociateTaskType {
 	
 	/**
 	 * Set method for ID.
-	 * @param iD - int value that represents the primary key of the record
+	 * @param iD int value that represents the primary key of the record
 	 */
 	public void setID(int iD) {
 		ID = iD;
@@ -66,7 +66,7 @@ public class AssociateTaskType {
 	
 	/**
 	 * Get method for type.
-	 * @return type - String value that represents a type of task that an associate can be working on
+	 * @return type String value that represents a type of task that an associate can be working on
 	 */
 	public String getType() {
 		return type;
@@ -74,7 +74,7 @@ public class AssociateTaskType {
 	
 	/**
 	 * Set method for type.
-	 * @param type - String value that represents a type of task that an associate can be working on
+	 * @param type String value that represents a type of task that an associate can be working on
 	 */
 	public void setType(String type) {
 		this.type = type;

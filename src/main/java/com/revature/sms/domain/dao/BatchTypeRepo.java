@@ -15,8 +15,8 @@ public interface BatchTypeRepo extends JpaRepository<BatchType, Integer>{
 	
 	/**
 	 * Return a list of all batch types.
-	 * @param type - String of the batch type
-	 * @return BatchType - BatchType object for the given string
+	 * @param type String of the batch type
+	 * @return BatchType BatchType object for the given string
 	 */
 	BatchType findByType(String type);
 	

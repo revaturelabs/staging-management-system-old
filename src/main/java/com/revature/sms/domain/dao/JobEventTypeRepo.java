@@ -11,7 +11,7 @@ import com.revature.sms.domain.JobEventType;
 public interface JobEventTypeRepo extends JpaRepository<JobEventType, Integer> {
 /**
  * Method to retrieve JobEventType by supplied String representing the type.
- * @param type - String value of the JobEventType to retrieve
+ * @param type String value of the JobEventType to retrieve
  * @return JobEventType object matching supplied String.
  */
 	JobEventType findByType(String type);

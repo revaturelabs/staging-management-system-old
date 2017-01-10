@@ -81,14 +81,14 @@ public class User {
 	 * Constructor for User object. This constructor is specifically designed to
 	 * be used for creating a User who is an associate. Initializes all instance variables except for ID, as that is
 	 * automatically generated on creation. 
-	 * @param username - String that represents the username of the User object.
-	 * @param firstName - String that represents the first name of the User object.
-	 * @param lastName - String that represents the last name of the User object.
-	 * @param hashedPassword - String that represents the hashedPassword of the User object.
-	 * @param batchType - BatchType object that represents the specific BatchType that the User belongs to.
-	 * @param attendance - List containing AssociateAttendence objects that keeps track of the user's attendance.
-	 * @param tasks - List containing AssociateTask objects that keeps track of the user's tasks.
-	 * @param userRole - UserRole object that keeps track of the user's specific role.
+	 * @param username String that represents the username of the User object.
+	 * @param firstName String that represents the first name of the User object.
+	 * @param lastName String that represents the last name of the User object.
+	 * @param hashedPassword String that represents the hashedPassword of the User object.
+	 * @param batchType BatchType object that represents the specific BatchType that the User belongs to.
+	 * @param attendance List containing AssociateAttendence objects that keeps track of the user's attendance.
+	 * @param tasks List containing AssociateTask objects that keeps track of the user's tasks.
+	 * @param userRole UserRole object that keeps track of the user's specific role.
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole) {
@@ -108,11 +108,11 @@ public class User {
 	 * Constructor for User object. This constructor is meant to be used to create
 	 * users who aren't associates. Initializes the username, firsName, lastName, hashedPassword,
 	 * and userRole variables of the user object based on the supplied values.
-	 * @param username - String that represents the username of the User object.
-	 * @param firstName - String that represents the first name of the User object.
-	 * @param lastName - String that represents the last name of the User object.
-	 * @param hashedPassword - String that represents the hashedPassword of the User object.
-	 * @param userRole - UserRole object that keeps track of the user's specific role.
+	 * @param username String that represents the username of the User object.
+	 * @param firstName String that represents the first name of the User object.
+	 * @param lastName String that represents the last name of the User object.
+	 * @param hashedPassword String that represents the hashedPassword of the User object.
+	 * @param userRole UserRole object that keeps track of the user's specific role.
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, UserRole userRole) {
 		super();
@@ -124,21 +124,21 @@ public class User {
 	}
 /**
  * Method to retrieve the ID value of the User object.
- * @return ID - int value that represents the id of the User.
+ * @return ID int value that represents the id of the User.
  */
 	public int getID() {
 		return ID;
 	}
 /**
  * Method to manually set the ID value of the current User object.
- * @param iD - int value that represents the id to be set.
+ * @param iD int value that represents the id to be set.
  */
 	public void setID(int iD) {
 		ID = iD;
 	}
 /**
  * Method to retrieve the username of the User object.
- * @return username - String value that represents the username of the User.
+ * @return username String value that represents the username of the User.
  */
 	public String getUsername() {
 		
@@ -146,49 +146,49 @@ public class User {
 	}
 /**
  * Method to manually set the username of the current User object.
- * @param username - String value that represents the username to be set.
+ * @param username String value that represents the username to be set.
  */
 	public void setUsername(String username) {
 		this.username = username;
 	}
 /**
  * Method to retrieve the first name of the User object.
- * @return firstName - String value that represents the first name of the User.
+ * @return firstName String value that represents the first name of the User.
  */
 	public String getFirstName() {
 		return firstName;
 	}
 /**
  * Method to manually set the first name of the current User object.
- * @param firstName - String value that represents the first name to be set.
+ * @param firstName String value that represents the first name to be set.
  */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 	/**
 	 * Method to retrieve the last name of the User object.
-	 * @return lastName - String value that represents the first name of the User.
+	 * @return lastName String value that represents the first name of the User.
 	 */
 	public String getLastName() {
 		return lastName;
 	}
 	/**
 	 * Method to manually set the last name of the current User object.
-	 * @param lastName - String value that represents the last name to be set.
+	 * @param lastName String value that represents the last name to be set.
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 /**
  * Method to retrieve the hashedPassword of the current User object.
- * @return hashedPassword - String value that represents the hashedPassword to be set.
+ * @return hashedPassword String value that represents the hashedPassword to be set.
  */
 	public String getHashedPassword() {
 		return hashedPassword;
 	}
 /**
  * Method to manually set the hashedPassword of the User object.
- * @param hashedPassword - String value that represents the hashedPassword to be set.
+ * @param hashedPassword String value that represents the hashedPassword to be set.
  */
 	public void setHashedPassword(String hashedPassword) {
 		this.hashedPassword = hashedPassword;
@@ -202,7 +202,7 @@ public class User {
 	}
 /**
  * Method that retrieves the BatchType object of the current User object.
- * @return batchType - BatchType object that represents the specific BatchType that the User 
+ * @return batchType BatchType object that represents the specific BatchType that the User 
  * belongs to.
  */
 	public BatchType getBatchType() {
@@ -210,7 +210,7 @@ public class User {
 	}
 /**
  * Method that sets the BatchType object of the current User object.
- * @param batchType - BatchType object that represents the specific BatchType that the User 
+ * @param batchType BatchType object that represents the specific BatchType that the User 
  * belongs to.
  */
 	public void setBatchType(BatchType batchType) {
@@ -218,7 +218,7 @@ public class User {
 	}
 /**
  * Method that retrieves the list of AssociateAttendence objects that represents the User's attendance.
- * @return attendance - List containing all the AssociateAttendence objects that belongs to 
+ * @return attendance List containing all the AssociateAttendence objects that belongs to 
  * the User object.
  */
 	public List<AssociateAttendance> getAttendance() {
@@ -226,7 +226,7 @@ public class User {
 	}
 /**
  * Method that sets the list of AssociateAttendence objects that represents the User's attendance.
- * @param attendance - List containing all the AssociateAttendence objects that belongs to 
+ * @param attendance List containing all the AssociateAttendence objects that belongs to 
  * the User object.
  */
 	public void setAttendance(List<AssociateAttendance> attendance) {
@@ -234,7 +234,7 @@ public class User {
 	}
 	/**
 	 * Method that retrieves the list of AssociateTask objects that represents the User's tasks.
-	 * @return tasks - List containing all the AssociateTask objects that belongs to 
+	 * @return tasks List containing all the AssociateTask objects that belongs to 
 	 * the User object.
 	 */
 	public List<AssociateTask> getTasks() {
@@ -242,7 +242,7 @@ public class User {
 	}
 	/**
 	 * Method that sets the list of AssociateTasks objects that represents the User's tasks.
-	 * @param tasks - List containing all the AssociateTask objects that belongs to 
+	 * @param tasks List containing all the AssociateTask objects that belongs to 
 	 * the User object.
 	 */
 	public void setTasks(List<AssociateTask> tasks) {
@@ -250,14 +250,14 @@ public class User {
 	}
 /**
  * Method that retrieves the role of the current user.
- * @return userRole - UserRole object that represents the current user's role.
+ * @return userRole UserRole object that represents the current user's role.
  */
 	public UserRole getUserRole() {
 		return userRole;
 	}
 /**
  * Method that manually sets the role of the User object.
- * @param userRole - UserRole object that represents the role that the user has.
+ * @param userRole UserRole object that represents the role that the user has.
  */
 	public void setUserRole(UserRole userRole) {
 		this.userRole = userRole;

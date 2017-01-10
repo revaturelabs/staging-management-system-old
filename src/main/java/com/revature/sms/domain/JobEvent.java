@@ -72,11 +72,11 @@ public class JobEvent {
 
 	/**
 	 * Parameterized constructor for JobEvent.
-	 * @param associate - User object that represents the associate in this job assignment record
-	 * @param assignment - JobAssignment object that represents the job that an associate has been assigned to
-	 * @param type - JobEventType object that represents the type of job an associate is assigned to
-	 * @param date - Date object that represents the start date for an associate's job assignment
-	 * @param note - String value that allows an admin to include an optional note regarding the associate's job status
+	 * @param associate User object that represents the associate in this job assignment record
+	 * @param assignment JobAssignment object that represents the job that an associate has been assigned to
+	 * @param type JobEventType object that represents the type of job an associate is assigned to
+	 * @param date Date object that represents the start date for an associate's job assignment
+	 * @param note String value that allows an admin to include an optional note regarding the associate's job status
 	 */
 	public JobEvent(User associate, JobAssignment assignment, JobEventType type, Date date, String note) {
 		super();
@@ -89,7 +89,7 @@ public class JobEvent {
 	
 	/**
 	 * Get method for ID.
-	 * @return ID - int value that represents the primary key of the record
+	 * @return ID int value that represents the primary key of the record
 	 */
 	public int getID() {
 		return ID;
@@ -97,7 +97,7 @@ public class JobEvent {
 
 	/**
 	 * Set method for ID.
-	 * @param iD - int value that represents the primary key of the record
+	 * @param iD int value that represents the primary key of the record
 	 */
 	public void setID(int iD) {
 		ID = iD;
@@ -105,7 +105,7 @@ public class JobEvent {
 	
 	/**
 	 * Get method for associate.
-	 * @return associate - User object that represents the associate in this job assignment record
+	 * @return associate User object that represents the associate in this job assignment record
 	 */
 	public User getAssociate() {
 		return associate;
@@ -113,7 +113,7 @@ public class JobEvent {
 	
 	/**
 	 * Set method for associate.
-	 * @param associate - User object that represents the associate in this job assignment record
+	 * @param associate User object that represents the associate in this job assignment record
 	 */
 	public void setAssociate(User associate) {
 		this.associate = associate;
@@ -121,7 +121,7 @@ public class JobEvent {
 	
 	/**
 	 * Get method for assignment.
-	 * @return assignment - JobAssignment object that represents the job that an associate has been assigned to
+	 * @return assignment JobAssignment object that represents the job that an associate has been assigned to
 	 */
 	public JobAssignment getAssignment() {
 		return assignment;
@@ -129,7 +129,7 @@ public class JobEvent {
 	
 	/**
 	 * Set method for assignment.
-	 * @param assignment - JobAssignment object that represents the job that an associate has been assigned to
+	 * @param assignment JobAssignment object that represents the job that an associate has been assigned to
 	 */
 	public void setAssignment(JobAssignment assignment) {
 		this.assignment = assignment;
@@ -137,7 +137,7 @@ public class JobEvent {
 	
 	/**
 	 * Get method for type.
-	 * @return type - JobEventType object that represents the type of job an associate is assigned to
+	 * @return type JobEventType object that represents the type of job an associate is assigned to
 	 */
 	public JobEventType getType() {
 		return type;
@@ -145,7 +145,7 @@ public class JobEvent {
 	
 	/**
 	 * Set method for type.
-	 * @param type - JobEventType object that represents the type of job an associate is assigned to
+	 * @param type JobEventType object that represents the type of job an associate is assigned to
 	 */
 	public void setType(JobEventType type) {
 		this.type = type;
@@ -153,7 +153,7 @@ public class JobEvent {
 
 	/**
 	 * Get method for date.
-	 * @return date - Date object that represents the start date for an associate's job assignment
+	 * @return date Date object that represents the start date for an associate's job assignment
 	 */
 	public Date getDate() {
 		return date;
@@ -161,7 +161,7 @@ public class JobEvent {
 	
 	/**
 	 * Set method for date.
-	 * @param date - Date object that represents the start date for an associate's job assignment
+	 * @param date Date object that represents the start date for an associate's job assignment
 	 */
 	public void setDate(Date date) {
 		this.date = date;
@@ -169,7 +169,7 @@ public class JobEvent {
 	
 	/**
 	 * Get method for note.
-	 * @return note - String value that allows an admin to include an optional note regarding the associate's job status
+	 * @return note String value that allows an admin to include an optional note regarding the associate's job status
 	 */
 	public String getNote() {
 		return note;
@@ -177,7 +177,7 @@ public class JobEvent {
 	
 	/**
 	 * Set method for note.
-	 * @param note - String value that allows an admin to include an optional note regarding the associate's job status
+	 * @param note String value that allows an admin to include an optional note regarding the associate's job status
 	 */
 	public void setNote(String note) {
 		this.note = note;

@@ -41,7 +41,7 @@ public class BatchType {
 
 	/**
 	 * Parameterized constructor for BatchType.
-	 * @param type - String value that represents a type batch that an associate is from
+	 * @param type String value that represents a type batch that an associate is from
 	 */
 	public BatchType(String type) {
 		super();
@@ -50,7 +50,7 @@ public class BatchType {
 	
 	/**
 	 * Get method for ID.
-	 * @return ID - int value that represents the primary key of the record
+	 * @return ID int value that represents the primary key of the record
 	 */
 	public int getID() {
 		return ID;
@@ -58,7 +58,7 @@ public class BatchType {
 	
 	/**
 	 * Set method for ID.
-	 * @param iD - int value that represents the primary key of the record
+	 * @param iD int value that represents the primary key of the record
 	 */
 	public void setID(int iD) {
 		ID = iD;
@@ -66,7 +66,7 @@ public class BatchType {
 	
 	/**
 	 * Get method for type.
-	 * @return type - String value that represents a type batch that an associate is from
+	 * @return type String value that represents a type batch that an associate is from
 	 */
 	public String getType() {
 		return type;
@@ -74,7 +74,7 @@ public class BatchType {
 	
 	/**
 	 * Set method for type
-	 * @param type - String value that represents a type batch that an associate is from
+	 * @param type String value that represents a type batch that an associate is from
 	 */
 	public void setType(String type) {
 		this.type = type;

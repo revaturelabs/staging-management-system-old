@@ -63,10 +63,10 @@ public class AssociateAttendance {
 	
 	/**
 	 * Parameterized constructor for AssociateAttendance where ID is automatically generated.
-	 * @param date - Date object that represents the date of attendance 
-	 * @param checkedIn - Boolean value representing if the associate has logged in 
-	 * @param verified - Boolean value that represents whether an admin has verified an associates attendance
-	 * @param note - String value that allows admin to include an optional note regarding the associates attendance 
+	 * @param date Date object that represents the date of attendance 
+	 * @param checkedIn Boolean value representing if the associate has logged in 
+	 * @param verified Boolean value that represents whether an admin has verified an associates attendance
+	 * @param note String value that allows admin to include an optional note regarding the associates attendance 
 	 */
 	public AssociateAttendance(Date date, boolean checkedIn, boolean verified, String note) {
 		super();
@@ -78,12 +78,12 @@ public class AssociateAttendance {
 	
 	/**
 	 * Parameterized constructor for AssociateAttendance where ID is set.
-	 * @param iD - int value that represents the primary key of the record 
-	 * @param associate - User object that represents the associate in this attendance record  
-	 * @param date - Date object that represents the date of attendance 
-	 * @param checkedIn - Boolean value representing if the associate has logged in 
-	 * @param verified - Boolean value that represents whether an admin has verified an associates attendance
-	 * @param note - String value that allows admin to include an optional note regarding the associates attendance 
+	 * @param iD int value that represents the primary key of the record 
+	 * @param associate User object that represents the associate in this attendance record  
+	 * @param date Date object that represents the date of attendance 
+	 * @param checkedIn Boolean value representing if the associate has logged in 
+	 * @param verified Boolean value that represents whether an admin has verified an associates attendance
+	 * @param note String value that allows admin to include an optional note regarding the associates attendance 
 	 */
 	public AssociateAttendance(int iD, User associate, Date date, boolean checkedIn, boolean verified, String note) {
 		super();
@@ -96,7 +96,7 @@ public class AssociateAttendance {
 
 	/**
 	 * Get method for ID
-	 * @return ID - int value that represents the primary key of the record 
+	 * @return ID int value that represents the primary key of the record 
 	 */
 	public int getID() {
 		return ID;
@@ -104,7 +104,7 @@ public class AssociateAttendance {
 	
 	/**
 	 * Set method for ID.
-	 * @param iD - int value that represents the primary key of the record 
+	 * @param iD int value that represents the primary key of the record 
 	 */
 	public void setID(int iD) {
 		ID = iD;
@@ -115,7 +115,7 @@ public class AssociateAttendance {
 
 	/**
 	 * Set method for date.
-	 * @param date - Date object that represents the date of attendance
+	 * @param date Date object that represents the date of attendance
 	 */
 	public void setDate(Date date) {
 		this.date = date;
@@ -123,7 +123,7 @@ public class AssociateAttendance {
 
 	/**
 	 * Get method for checkedIn.
-	 * @return checkedIn - Boolean value representing if the associate has logged in
+	 * @return checkedIn Boolean value representing if the associate has logged in
 	 */
 	public boolean isCheckedIn() {
 		return checkedIn;
@@ -131,7 +131,7 @@ public class AssociateAttendance {
 	
 	/**
 	 * Set method for checkedIn.
-	 * @param checkedIn - Boolean value representing if the associate has logged in
+	 * @param checkedIn Boolean value representing if the associate has logged in
 	 */
 	public void setCheckedIn(boolean checkedIn) {
 		this.checkedIn = checkedIn;
@@ -139,7 +139,7 @@ public class AssociateAttendance {
 
 	/**
 	 * Get method for verified.
-	 * @return verified - Boolean value that represents whether an admin has verified an associates attendance
+	 * @return verified Boolean value that represents whether an admin has verified an associates attendance
 	 */
 	public boolean isVerified() {
 		return verified;
@@ -147,7 +147,7 @@ public class AssociateAttendance {
 
 	/**
 	 * Set method for verified.
-	 * @param verified - Boolean value that represents whether an admin has verified an associates attendance
+	 * @param verified Boolean value that represents whether an admin has verified an associates attendance
 	 */
 	public void setVerified(boolean verified) {
 		this.verified = verified;
@@ -155,7 +155,7 @@ public class AssociateAttendance {
 
 	/**
 	 * Get method for note.
-	 * @return note - String value that allows admin to include an optional note regarding the associates attendance 
+	 * @return note String value that allows admin to include an optional note regarding the associates attendance 
 	 */
 	public String getNote() {
 		return note;
@@ -163,7 +163,7 @@ public class AssociateAttendance {
 	
 	/**
 	 * Set method for note.
-	 * @param note - String value that allows admin to include an optional note regarding the associates attendance
+	 * @param note String value that allows admin to include an optional note regarding the associates attendance
 	 */
 	public void setNote(String note) {
 		this.note = note;

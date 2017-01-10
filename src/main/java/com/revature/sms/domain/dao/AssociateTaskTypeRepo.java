@@ -15,8 +15,8 @@ public interface AssociateTaskTypeRepo extends JpaRepository<AssociateTaskType, 
 
 	/**
 	 * Return a list of all associate task types.
-	 * @param type - String of the task type
-	 * @return AssosicateTaskType - AssociateTaskType object for the given string.
+	 * @param type String of the task type
+	 * @return AssosicateTaskType AssociateTaskType object for the given string.
 	 */
 	AssociateTaskType findByType(String type);
 }

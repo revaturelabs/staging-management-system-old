@@ -10,7 +10,7 @@ public class ResponseErrorEntity {
     private String errorMessage;
 /**
  * Constructor that creates the ResponseErrorEntity object.
- * @param errorMessage - String containing the error message.
+ * @param errorMessage String containing the error message.
  */
     public ResponseErrorEntity(String errorMessage) {
         this.errorMessage = errorMessage;
@@ -24,7 +24,7 @@ public class ResponseErrorEntity {
     }
 /**
  * Method to set the error message manually.
- * @param errorMessage - String representing what the error message will be set to.
+ * @param errorMessage String representing what the error message will be set to.
  */
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;

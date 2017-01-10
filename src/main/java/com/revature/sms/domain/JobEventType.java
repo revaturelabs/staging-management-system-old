@@ -36,7 +36,7 @@ public class JobEventType {
 /**
  * Constructor for JobEventType that creates a JobEventType object with the name of the
  * String value supplied.
- * @param type - String value that contains the specific name of the JobEventType.
+ * @param type String value that contains the specific name of the JobEventType.
  */
 	public JobEventType(String type) {
 		super();
@@ -58,14 +58,14 @@ public class JobEventType {
 	}
 /**
  * Method to set the ID instance variable of the JobEventType object manually.
- * @param iD - int value to set the ID value of the object to.
+ * @param iD int value to set the ID value of the object to.
  */
 	public void setID(int iD) {
 		ID = iD;
 	}
 /**
  * Method to retrieve the type instance variable of the JobEventType object.
- * @return type - String value that represents the name of the JobEventType.
+ * @return type String value that represents the name of the JobEventType.
  */
 	public String getType() {
 		return type;
@@ -73,7 +73,7 @@ public class JobEventType {
 
 	/**
 	 * Method to set the type instance variable of the JobEventType object manually.
-	 * @param type - String value that represents the name of the JobEventType object.
+	 * @param type String value that represents the name of the JobEventType object.
 	 */
 	public void setType(String type) {
 		this.type = type;

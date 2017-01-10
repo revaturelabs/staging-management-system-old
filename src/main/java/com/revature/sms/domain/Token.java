@@ -50,7 +50,7 @@ public class Token {
 	 * Constructor that creates the Token object and initializes the User Instance variable
 	 * based on the supplied user in the constructor. Also initializes the mostRecentAccess
 	 * instance variable to the value of the current date and time that the object is created.
-	 * @param user - User object that's attached to this token.
+	 * @param user User object that's attached to this token.
 	 */
 	public Token(User user) {
 		super();
@@ -63,7 +63,7 @@ public class Token {
 	/**
 	 * Method that creates a random string for use as the authToken. Used in the
 	 * constructor to dynamically create the randomAuthToken.
-	 * @return s.toString() - String value of the StringBuilder object that was used to generate
+	 * @return s.toString() String value of the StringBuilder object that was used to generate
 	 * the random token.
 	 */
 	private static String getRandomAuthToken(){
@@ -75,7 +75,7 @@ public class Token {
 	}
 /**
  * Method to get the value of the mostRecentAccess variable for the Token object.
- * @return mostRecentAccess - String value that represents the last time the token was updated.
+ * @return mostRecentAccess String value that represents the last time the token was updated.
  */
 	public Timestamp getMostRecentAccess() {
 		return mostRecentAccess;
@@ -83,21 +83,21 @@ public class Token {
 /**
  * Method to set the mostRecentAccess variable of this Token object based on the supplied
  * TimeStamp object.
- * @param mostRecentAccess - TimeStamp object that represents the time the Token is updated.
+ * @param mostRecentAccess TimeStamp object that represents the time the Token is updated.
  */
 	public void setMostRecentAccess(Timestamp mostRecentAccess) {
 		this.mostRecentAccess = mostRecentAccess;
 	}
 /**
  * Method that returns the authToken variable of the Token object.
- * @return authToken - String value that represents the token String of this Token object.
+ * @return authToken String value that represents the token String of this Token object.
  */
 	public String getAuthToken() {
 		return authToken;
 	}
 /**
  * Method that returns the User variable of the Token object.
- * @return user - User variable that is attatched to this Token.
+ * @return user User variable that is attatched to this Token.
  */
 	public User getUser() {
 		return user;

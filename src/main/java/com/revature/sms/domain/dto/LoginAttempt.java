@@ -26,8 +26,8 @@ public class LoginAttempt {
 	
 	/**
 	 * Parameterized constructor that takes in a username and password and attempts to login.
-	 * @param username - Input username
-	 * @param inputPass - Input password
+	 * @param username Input username
+	 * @param inputPass Input password
 	 */
 	public LoginAttempt(String username, String inputPass) {
 		super();
@@ -37,7 +37,7 @@ public class LoginAttempt {
 	
 	/**
 	 * Get method for username.
-	 * @return username - String value for the username
+	 * @return username String value for the username
 	 */
 	public String getUsername() {
 		return username;
@@ -45,7 +45,7 @@ public class LoginAttempt {
 
 	/**
 	 * Set method for the username.
-	 * @param username - Input username
+	 * @param username Input username
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -53,7 +53,7 @@ public class LoginAttempt {
 
 	/**
 	 * Get method for the input password
-	 * @return password - String value for the password
+	 * @return password String value for the password
 	 */
 	public String getInputPass() {
 		return inputPass;
@@ -61,7 +61,7 @@ public class LoginAttempt {
 
 	/**
 	 * Set method for the input password
-	 * @param inputPass - Input password
+	 * @param inputPass Input password
 	 */
 	public void setInputPass(String inputPass) {
 		this.inputPass = inputPass;

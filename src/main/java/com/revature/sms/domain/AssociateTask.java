@@ -58,9 +58,9 @@ public class AssociateTask {
 	
 	/**
 	 * Parameterized constructor for AssociateTask. 
-	 * @param taskType - AssociateTaskType object that refers to the type of task an associate is working on  
-	 * @param date - Date object that represents the date an associate started a task
-	 * @param note - String value that allows an admin to include an optional note regarding the associate's task
+	 * @param taskType AssociateTaskType object that refers to the type of task an associate is working on  
+	 * @param date Date object that represents the date an associate started a task
+	 * @param note String value that allows an admin to include an optional note regarding the associate's task
 	 */
 
 	public AssociateTask(AssociateTaskType taskType, Date date, String note) {
@@ -72,7 +72,7 @@ public class AssociateTask {
 
 	/**
 	 * Get method for ID.
-	 * @return ID - int value that represents the primary key of the record
+	 * @return ID int value that represents the primary key of the record
 	 */
 	public int getID() {
 		return ID;
@@ -80,7 +80,7 @@ public class AssociateTask {
 	
 	/**
 	 * Set method for ID
-	 * @param iD - int value that represents the primary key of the record
+	 * @param iD int value that represents the primary key of the record
 	 */
 	public void setID(int iD) {
 		ID = iD;
@@ -91,7 +91,7 @@ public class AssociateTask {
 	
 	/**
 	 * Set method for taskType.
-	 * @param taskType - AssociateTaskType object that refers to the type of task an associate is working on
+	 * @param taskType AssociateTaskType object that refers to the type of task an associate is working on
 	 */
 	public void setTaskType(AssociateTaskType taskType) {
 		this.taskType = taskType;
@@ -99,7 +99,7 @@ public class AssociateTask {
 	
 	/**
 	 * Get method for date.
-	 * @return date - Date object that represents the date an associate started a task
+	 * @return date Date object that represents the date an associate started a task
 	 */
 	public Date getDate() {
 		return date;
@@ -107,7 +107,7 @@ public class AssociateTask {
 	
 	/**
 	 * Set method for date.
-	 * @param date - Date object that represents the date an associate started a task
+	 * @param date Date object that represents the date an associate started a task
 	 */
 	public void setDate(Date date) {
 		this.date = date;
@@ -115,7 +115,7 @@ public class AssociateTask {
 	
 	/**
 	 * Get method for note.
-	 * @return note - String value that allows an admin to include an optional note regarding the associate's task
+	 * @return note String value that allows an admin to include an optional note regarding the associate's task
 	 */
 	public String getNote() {
 		return note;
@@ -123,7 +123,7 @@ public class AssociateTask {
 	
 	/**
 	 * Set method for note.
-	 * @param note - String value that allows an admin to include an optional note regarding the associate's task
+	 * @param note String value that allows an admin to include an optional note regarding the associate's task
 	 */
 	public void setNote(String note) {
 		this.note = note;

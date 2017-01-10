@@ -46,9 +46,9 @@ public class JobAssignment {
 
 	/**
 	 * Parameterized constructor for JobAssignment.
-	 * @param companyName - String value that represents the company name
-	 * @param location - String value that represents the location of the company
-	 * @param jobTitle - String value for the title an associate is assigned for a job
+	 * @param companyName String value that represents the company name
+	 * @param location String value that represents the location of the company
+	 * @param jobTitle String value for the title an associate is assigned for a job
 	 */
 	public JobAssignment(String companyName, String location, String jobTitle) {
 		super();
@@ -66,7 +66,7 @@ public class JobAssignment {
 	
 	/**
 	 * Get method for ID.
-	 * @return ID - int value that represents the primary key of the record
+	 * @return ID int value that represents the primary key of the record
 	 */
 	public int getID() {
 		return ID;
@@ -74,7 +74,7 @@ public class JobAssignment {
 	
 	/**
 	 * Set method for ID.
-	 * @param iD - int value that represents the primary key of the record
+	 * @param iD int value that represents the primary key of the record
 	 */
 	public void setID(int iD) {
 		ID = iD;
@@ -82,7 +82,7 @@ public class JobAssignment {
 	
 	/**
 	 * Get method for companyName.
-	 * @return companyName - String value that represents the company name
+	 * @return companyName String value that represents the company name
 	 */
 	public String getCompanyName() {
 		return companyName;
@@ -90,7 +90,7 @@ public class JobAssignment {
 	
 	/**
 	 * Set method for companyName.
-	 * @param companyName - String value that represents the company name
+	 * @param companyName String value that represents the company name
 	 */
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
@@ -98,7 +98,7 @@ public class JobAssignment {
 	
 	/**
 	 * Get method for location.
-	 * @return location - String value that represents the location of the company
+	 * @return location String value that represents the location of the company
 	 */
 	public String getLocation() {
 		return location;
@@ -106,7 +106,7 @@ public class JobAssignment {
 	
 	/**
 	 * Set method for location.
-	 * @param location - String value that represents the location of the company
+	 * @param location String value that represents the location of the company
 	 */
 	public void setLocation(String location) {
 		this.location = location;
@@ -114,7 +114,7 @@ public class JobAssignment {
 	
 	/**
 	 * Get method for jobTitle.
-	 * @return jobTitle - jobTitle - String value for the title an associate is assigned for a job
+	 * @return jobTitle jobTitle String value for the title an associate is assigned for a job
 	 */
 	public String getJobTitle() {
 		return jobTitle;
@@ -122,7 +122,7 @@ public class JobAssignment {
 
 	/**
 	 * Set method for jobTitle.
-	 * @param jobTitle - jobTitle - String value for the title an associate is assigned for a job
+	 * @param jobTitle jobTitle String value for the title an associate is assigned for a job
 	 */
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
