@@ -16,14 +16,24 @@ import com.revature.sms.domain.Token;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dto.LoginAttempt;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
-
+/**
+ * Server-side controller to handle logging into the application. 
+ *
+ */
 @RestController
 @RequestMapping("/api/v1/login")
 public class LoginController {
-
+/**
+ * Autowired UserRepo object. Spring handles setting this up for actual use.
+ */
 	@Autowired
 	UserRepo ur;
-
+/**
+ * Method that's called via Http Post method. Used for submitting a login attempt when trying to login.
+ * @param in - LoginAttempt object that contains the user name and password of the user trying to login.
+ * @return ResponseEntity<UserTokenDTO> object containing user information if the login is successful,
+ * otherwise it returns ResponseEntity<ResponseErrorEntity> with an error message if login fails. 
+ */
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Object login(@RequestBody LoginAttempt in) {
 		User u = ur.findByUsername(in.getUsername());
