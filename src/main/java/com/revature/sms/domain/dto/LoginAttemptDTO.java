@@ -1,15 +1,15 @@
 package com.revature.sms.domain.dto;
 
-public class LoginAttempt {
+public class LoginAttemptDTO {
 	
 	private String username;
 	private String inputPass;
 	
-	public LoginAttempt() {
+	public LoginAttemptDTO() {
 		super();
 	}
 	
-	public LoginAttempt(String username, String inputPass) {
+	public LoginAttemptDTO(String username, String inputPass) {
 		super();
 		this.username = username;
 		this.inputPass = inputPass;

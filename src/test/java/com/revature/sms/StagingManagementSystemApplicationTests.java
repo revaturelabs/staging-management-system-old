@@ -1,6 +1,9 @@
 package com.revature.sms;
 
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,7 +74,7 @@ public class StagingManagementSystemApplicationTests {
 		attr.save(new AssociateTaskType("Certification"));
 		attr.save(new AssociateTaskType("Panel"));		
 	}
-	
+	*/
 	// Defunct hashPassword script. While used to create initial hashed passwords here, actual hashing will take place on the client-side javascript
 	public static String hashPassword(String inputPassword) {
 		try {
@@ -89,7 +92,7 @@ public class StagingManagementSystemApplicationTests {
 			return null;
 		}
 	}
-	*/
+	
 
 	
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.Token;
 import com.revature.sms.domain.dao.UserRepo;
-import com.revature.sms.domain.dto.LoginAttempt;
+import com.revature.sms.domain.dto.LoginAttemptDTO;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
 
 @RestController
@@ -25,7 +25,7 @@ public class LoginController {
 	UserRepo ur;
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Object login(@RequestBody LoginAttempt in) {
+	public Object login(@RequestBody LoginAttemptDTO in) {
 		User u = ur.findByUsername(in.getUsername());
 		try {
 			if (u.getHashedPassword().equals(in.getInputPass())) {
