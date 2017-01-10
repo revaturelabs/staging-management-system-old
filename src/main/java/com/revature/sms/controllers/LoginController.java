@@ -37,14 +37,13 @@ public class LoginController {
 		try {
 			if (u.getHashedPassword().equals(in.getInputPass())) {
 				// Successful login
-				//u.blankPassword();
-				//u.setID(0);
-
 				if ("associate".equals(u.getUserRole().getName())) {
 					// if associate mark attendance as present
-					markPresent(u);
+					//markPresent(u.getUsername());
 				}
-
+				System.out.println("finished Marking as presnet");
+				u.blankPassword();
+				u.setID(0);
 				Token token = new Token(u);
 				UserTokenDTO userToken = new UserTokenDTO();
 				userToken.setUser(u);
@@ -65,9 +64,11 @@ public class LoginController {
 	 * Marks an associate as present
 	 * @param u User to be marked as present
 	 */
-	private void markPresent(User user) {
+	private void markPresent(String username) {
+		User user = ur.findByUsername(username);
 		Date d = new Date(new java.util.Date().getTime());
 		List<AssociateAttendance> associateAttendanceList = aar.findByAssociate(user);
+		
 		if (!associateAttendanceList.isEmpty()) {
 			for (AssociateAttendance aa : associateAttendanceList) {
 				if (d.toString().equals(aa.getDate().toString())) {
@@ -76,6 +77,19 @@ public class LoginController {
 					break;
 				}
 			}
+		}
+		else{
+			//create an AssociateAttendance row
+			AssociateAttendance aa = new AssociateAttendance(user,d,true,false,"");
+
+			aar.save(aa); 
+			
+/*			List<AssociateAttendance> l = user.getAttendance();
+			l.add(aa);
+			user.setAttendance(l);
+			
+			System.out.println("update user");
+			ur.save(user);*/
 		}
 	}
 
