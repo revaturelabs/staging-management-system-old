@@ -80,6 +80,7 @@ public class LoginController {
 				}
 			}
 		}
+		// Something is wrong here
 /*		else{
 			//create an AssociateAttendance row
 			AssociateAttendance aa = new AssociateAttendance();
@@ -89,13 +90,19 @@ public class LoginController {
 			aa.setDate(d);
 			aa.setVerified(false);
 			aa.setID((int) (Math.random()*1000));
+
+			
+			List<AssociateAttendance> l = user.getAttendance();
+			l.add(aa);
+			user.setAttendance(l);
+			
+			System.out.println("update user");
+			ur.save(user);
+
 			
 			System.out.println("update aa");
 			aar.save(aa); 
-			
-			user.getAttendance().add(aa);
-			System.out.println("update user");
-			ur.save(user);
+
 
 		}*/
 	}
