@@ -37,8 +37,8 @@ public class LoginController {
 		try {
 			if (u.getHashedPassword().equals(in.getInputPass())) {
 				// Successful login
-				u.blankPassword();
-				u.setID(0);
+				//u.blankPassword();
+				//u.setID(0);
 
 				if ("associate".equals(u.getUserRole().getName())) {
 					// if associate mark attendance as present
@@ -58,22 +58,39 @@ public class LoginController {
 			Logger.getRootLogger().debug("Bad username", e);
 			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Username does not exist."),
 					HttpStatus.NOT_FOUND);
-		} 
+		}
 	}
-	
-	private void markPresent(User u){
-		List<AssociateAttendance> associateAttendanceList = aar.findByDate(new Date(new java.util.Date().getTime()));
-		//if (associateAttendanceList.size() <= 0) {} 
 
-		for (AssociateAttendance aa : associateAttendanceList) {
-			if(aa.getAssociate().getID() == u.getID()){
-				aa.setCheckedIn(true);
-				break;
+	/**
+	 * Marks an associate as present
+	 * @param u User to be marked as present
+	 */
+	private void markPresent(User user) {
+		Date d = new Date(new java.util.Date().getTime());
+		List<AssociateAttendance> associateAttendanceList = aar.findByAssociate(user);
+		if (associateAttendanceList.size() > 0) {
+			System.out.println("\n" + associateAttendanceList.size() + " : size of associateAttendanceList on " + d);
+			for (AssociateAttendance aa : associateAttendanceList) {
+				System.out.println(d.toString() + " : " + aa.getDate().toString());
+				if (d.toString().equals(aa.getDate().toString())) {
+					aa.setCheckedIn(true);
+					aar.save(aa);
+					System.out.println("\n" + aa.getAssociate().getUsername() + " marked as present");
+					break;
+				}
 			}
 		}
-
-		aar.save(associateAttendanceList);
-		//System.out.println(u + "logged in");
+		else{
+			//create an AssociateAttendance row
+			AssociateAttendance aa = new AssociateAttendance();
+			aa.setAssociate(user);
+			aa.setCheckedIn(true);
+			aa.setDate(d);
+			aa.setVerified(false);
+			aa.setID((int) (Math.random()*1000));
+			System.out.println("\n\n\nadding new AssociateAttendance: " + aa + "\n\n\n");
+			aar.save(aa);
+		}
 	}
-	
+
 }
