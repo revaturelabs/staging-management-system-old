@@ -56,7 +56,7 @@ public class LoginController {
 			Logger.getRootLogger().debug("Bad username", e);
 			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Username does not exist."),
 					HttpStatus.NOT_FOUND);
-		}
+		} 
 	}
 	
 	private void markPresent(User u){
