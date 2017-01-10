@@ -3,12 +3,29 @@ package com.revature.sms;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.revature.sms.domain.AssociateAttendance;
+import com.revature.sms.domain.AssociateTask;
+import com.revature.sms.domain.AssociateTaskType;
+import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.JobEventType;
+import com.revature.sms.domain.User;
+import com.revature.sms.domain.UserRole;
+import com.revature.sms.domain.dao.AssociateAttendanceRepo;
+import com.revature.sms.domain.dao.AssociateTaskTypeRepo;
+import com.revature.sms.domain.dao.BatchTypeRepo;
+import com.revature.sms.domain.dao.JobEventTypeRepo;
+import com.revature.sms.domain.dao.UserRepo;
+import com.revature.sms.domain.dao.UserRoleRepo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -19,7 +36,7 @@ public class StagingManagementSystemApplicationTests {
 		Logger.getRootLogger().debug("No tests right now");
 	}
 	//This class runs on *EVERY* commit to a feature branch!! Make sure code here doesn't create needless database objects
-	/*
+	
 	
 	@Autowired
 	UserRoleRepo urr;
@@ -38,7 +55,7 @@ public class StagingManagementSystemApplicationTests {
 	
 	@Autowired
 	BatchTypeRepo btr;
-*/
+
 	//Test associate attendance list retrieval
 
 	/*@Test
