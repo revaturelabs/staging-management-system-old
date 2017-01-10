@@ -1,7 +1,6 @@
 package com.revature.sms.controllers;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -65,7 +64,6 @@ public class LoginController {
 				}
 
 				u.blankPassword();
-				u.setID(0);
 				Token token = new Token(u);
 				UserTokenDTO userToken = new UserTokenDTO();
 				userToken.setUser(u);
