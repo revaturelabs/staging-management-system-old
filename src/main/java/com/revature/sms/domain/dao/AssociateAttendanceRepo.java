@@ -20,14 +20,14 @@ public interface AssociateAttendanceRepo extends JpaRepository<AssociateAttendan
 	/**
 	 * Returns a list of attendance records for a specific date.
 	 * @param date - Date object for the date of desired attendance records
-	 * @return List<AssociateAttendance> - List of all attendance records for associates on the given date
+	 * @return List of all attendance records for associates on the given date
 	 */
 	List<AssociateAttendance> findByDate(Date date);
 	
 	/**
 	 * Returns a list of attendance records for a specific associate.
 	 * @param associate - User object for the associate of desired attendance records
-	 * @return List<AssociateAttendance> - List of all attendance records for the given associate
+	 * @return List of all attendance records for the given associate
 	 */ 
 	List<AssociateAttendance> findByAssociate(User associate);
 }

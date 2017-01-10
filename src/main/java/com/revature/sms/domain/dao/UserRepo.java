@@ -23,13 +23,13 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 	/**
 	 * Method to retrieve list of Users matching a specific BatchType.
 	 * @param batchType - String value of the BatchType used to find users.
-	 * @return List<User> object containing users of a specific batchType.
+	 * @return object containing users of a specific batchType.
 	 */
 	List<User> findByBatchType(String batchType);
 	/**
 	 * Method to retrieve list of users by firstName.
 	 * @param firstName - String representing the first name of users in the list.
-	 * @return List<User> object containing all users with the supplied first name.
+	 * @return object containing all users with the supplied first name.
 	 */
 	List<User> findByFirstName(String firstName);
 	
