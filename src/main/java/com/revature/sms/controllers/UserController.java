@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
+import com.revature.sms.domain.dao.TokenRepo;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
 import com.revature.sms.domain.dto.UserDTO;
@@ -25,6 +28,9 @@ import com.revature.sms.domain.dto.UserDTO;
 public class UserController {
 	@Autowired
 	UserRepo userRepo;
+	
+	@Autowired
+	TokenRepo tokenRepo;
 
 	/**
 	 * To create user 
@@ -170,10 +176,10 @@ public class UserController {
 	 */
 	public boolean isValid(String tokenDTO) {
 		boolean valid = false;
-		// String token = tokenRepo.findByToken(tokenDTO);
-		// if (token == tokenDTO) {
-		// valid = true;
-		// }
+		 Token token = tokenRepo.findByauthToken(tokenDTO);
+		 if (token !=null) {
+		 valid = true;
+		 }
 		return valid;
 	}
 	/**
