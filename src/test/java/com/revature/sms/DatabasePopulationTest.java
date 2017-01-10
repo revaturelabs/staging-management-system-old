@@ -55,23 +55,9 @@ public class DatabasePopulationTest {
 
 	@Autowired
 	BatchTypeRepo btr;
-	//Test associate attendance list retrieval
-
-	@Ignore
-	@Test
-	public void testAttendance(){
-		aar.save(new AssociateAttendance(ur.findByUsername("java"), new Date(1483765200000L), false, false, null));   //The long passed to the Date constructor is the number of milliseconds since Jan. 1 1970.
-		aar.save(new AssociateAttendance(ur.findByUsername("java"), new Date(1483765200000L), false, false, null));
-		List<AssociateAttendance> list = aar.findByAssociate(ur.findByUsername("java"));
-		for (AssociateAttendance associateAttendance : list) {
-			System.out.println(associateAttendance);
-		}
-		
-	}
-	
 	
 	//Initialize Test Data:
-	
+
 	@Ignore
 	@Test
 	public void makeData(){
@@ -91,6 +77,18 @@ public class DatabasePopulationTest {
 		jetr.save(new JobEventType("On Location"));
 		attr.save(new AssociateTaskType("Certification"));
 		attr.save(new AssociateTaskType("Panel"));		
+	}
+	
+	
+	//Test associate attendance list retrieval
+	@Ignore
+	@Test
+	public void testAttendance(){
+		aar.save(new AssociateAttendance(new Date(1483765200000L), false, false, null));   //The long passed to the Date constructor is the number of milliseconds since Jan. 1 1970.
+		List<AssociateAttendance> list = aar.findByDate(ur.findByUsername("java"));
+		for (AssociateAttendance associateAttendance : list) {
+			System.out.println(associateAttendance);
+		}
 	}
 	
 	

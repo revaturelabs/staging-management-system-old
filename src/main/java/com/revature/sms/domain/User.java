@@ -31,7 +31,7 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name="BATCH_TYPE")
 	private BatchType batchType;
-	
+
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="ASSOCIATE")
 	private List<AssociateAttendance> attendance;
