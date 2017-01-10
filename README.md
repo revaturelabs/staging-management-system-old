@@ -17,6 +17,7 @@ Aim for 3 commits a day (not including any dummy commits), with the last one bei
 8. Download and use [Spring Tool Suite](https://spring.io/tools/sts/all) for the development of this application
 9. In Spring Tool Suite, select `File->Import...` In the `General` folder, select `Projects from Folders or Archive`. Then, select the folder of the repo you just copied
 10. At this point, you should be able to run the project as a Spring Boot App and access the project on your browser at `http://localhost`
+  * NOTE: If you don't want to run the appliation, locally, at port 80, you can override the default port by setting the environment variable `SERVER_PORT`
 11. Log in to [JIRA](https://revaturetraining.atlassian.net/secure/RapidBoard.jspa?rapidView=48&projectKey=SMS&view=detail), drag an issue you would like to work on to the *In Progress* column, and push the `A` key on your keyboard. Click `Assign to Me`, and the `Assign` button at the bottom of the modal box that pops up
 12. Create a feature branch and pull request for the issue you're working (please name it according to the issue number, such as `SMS-24`) To do this:
   * On Git Bash, use `git checkout development` to make sure you're on the development branch
