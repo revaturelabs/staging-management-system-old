@@ -33,7 +33,7 @@ public class LoginController {
 		try {
 			if (u.getHashedPassword().equals(in.getInputPass())) {
 				u.blankPassword();
-				//u.setID(0);
+				u.setID(0);
 				Token token = new Token(u);
 				token=tokenRepo.save(token);
 				UserTokenDTO userToken = new UserTokenDTO();
