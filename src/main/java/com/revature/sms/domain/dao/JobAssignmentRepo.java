@@ -1,8 +1,5 @@
 package com.revature.sms.domain.dao;
 
-/**
- * DAO repository for the JobAssignment
- */
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
