@@ -12,7 +12,5 @@ import com.revature.sms.domain.User;
 @Repository
 public interface AssociateTasksRepo extends JpaRepository<AssociateTask, Integer>{
 
-	List<AssociateTask> findByAssociate(User associate);
-	
 	List<AssociateTask> findByTaskType(AssociateTaskType taskType);
 }
