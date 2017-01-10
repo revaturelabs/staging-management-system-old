@@ -1,6 +1,6 @@
 package com.revature.sms.domain;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +27,7 @@ public class AssociateTask {
 	private AssociateTaskType taskType;
 	
 	@Column(name="TASK_DATE", nullable=false)
-	private Date date;
+	private Timestamp date;
 	
 	@Column(name="Note")
 	private String note;
@@ -36,7 +36,7 @@ public class AssociateTask {
 		super();
 	}
 
-	public AssociateTask(User associate, AssociateTaskType taskType, Date date, String note) {
+	public AssociateTask(AssociateTaskType taskType, Timestamp date, String note) {
 		super();
 		this.taskType = taskType;
 		this.date = date;
@@ -51,8 +51,6 @@ public class AssociateTask {
 		ID = iD;
 	}
 
-
-
 	public AssociateTaskType getTaskType() {
 		return taskType;
 	}
@@ -61,11 +59,11 @@ public class AssociateTask {
 		this.taskType = taskType;
 	}
 
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 
@@ -76,4 +74,15 @@ public class AssociateTask {
 	public void setNote(String note) {
 		this.note = note;
 	}
+<<<<<<< HEAD
+=======
+
+	@Override
+	public String toString() {
+		return "AssociateTasks [ID=" + ID + ", taskType=" + taskType.getType() + ", date=" + date
+				+ ", note=" + note + "]";
+	}
+	
+	
+>>>>>>> 4e571aba5f53ead8e10d381c1d089b86a5bb6a62
 }

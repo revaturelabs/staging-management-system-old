@@ -1,14 +1,12 @@
 package com.revature.sms.domain;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -23,7 +21,7 @@ public class AssociateAttendance {
 	private int ID;
 
 	@Column(name="ATTENDANCE_DATE", nullable=false)
-	private Date date;
+	private Timestamp date;
 
 	@Column(name="CHECKED_IN", nullable=false)
 	private boolean checkedIn;
@@ -38,7 +36,8 @@ public class AssociateAttendance {
 		super();
 	}
 
-	public AssociateAttendance(Date date, boolean checkedIn, boolean verified, String note) {
+
+	public AssociateAttendance(Timestamp date, boolean checkedIn, boolean verified, String note) {
 		super();
 		this.date = date;
 		this.checkedIn = checkedIn;
@@ -46,7 +45,7 @@ public class AssociateAttendance {
 		this.note = note;
 	}
 	
-	public AssociateAttendance(int iD, Date date, boolean checkedIn, boolean verified, String note) {
+	public AssociateAttendance(int iD, User associate, Timestamp date, boolean checkedIn, boolean verified, String note) {
 		super();
 		ID = iD;
 		this.date = date;
@@ -63,11 +62,11 @@ public class AssociateAttendance {
 		ID = iD;
 	}
 
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 
@@ -93,5 +92,11 @@ public class AssociateAttendance {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	@Override
+	public String toString() {
+		return "AssociateAttendance [ID=" + ID + ", date=" + date + ", checkedIn="
+				+ checkedIn + ", verified=" + verified + ", note=" + note + "]";
 	}
 }
