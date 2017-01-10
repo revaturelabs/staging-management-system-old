@@ -8,16 +8,27 @@
         </md-toolbar>
 
         <div class="newAssociateGroup" layout="rows">
+            
+            <md-chips ng-model="bACtrl.associates" readonly="true" md-removable="true">
+                <md-chip ng-repeat="associate in bACtrl.associates">
+                    {{ associate.firstName }} {{ associate.lastName }}
+                </md-chip>
+            </md-chips>
+            
             <div class="newAssociate md-padding" layout="columns">
                 <md-input-container>
                     <label> First name </label>
-                    <input type="text" ng-model="newAssoCtrl.firstName">
+                    <input type="text" ng-model="bACtrl.firstName">
                 </md-input-container>
                 <md-input-container>
                     <label> Last name </label>
-                    <input type="text" ng-model="newAssoCtrl.lastName">
+                    <input type="text" ng-model="bACtrl.lastName">
                 </md-input-container>
+                <md-button class="md-icon-button" aria-label="More" ng-click="bACtrl.addNew()">
+                    <md-icon md-svg-icon="img/icons/ic_add_circle_black_24px.svg"> </md-icon>
+                </md-button>
             </div>
+
         </div>
 
     </div>

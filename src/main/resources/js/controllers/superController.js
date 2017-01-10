@@ -24,7 +24,7 @@
         suc.newAssociate = function() {
             $mdDialog.show({
                 templateUrl: "html/templates/batchAdd.html",
-                
+                controller: "batchAddCtrl as bACtrl"
             });
         };
 
