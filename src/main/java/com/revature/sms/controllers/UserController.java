@@ -32,44 +32,7 @@ public class UserController {
 	@Autowired
 	AssociateAttendanceRepo attendanceRepo;
 
-	/**
-	 * To check in the associate upon login
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/attendance", method = { RequestMethod.POST,
-			RequestMethod.PUT }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object checkIn(@RequestBody UserDTO userDTO) {
-
-		try {
-			// validate token before saving attendance info
-
-			if (isValid(userDTO.getToken())) {
-				AssociateAttendance attendance = new AssociateAttendance();
-				User associate = new User();
-				String[] ignoreProperties = { "token" };
-				BeanUtils.copyProperties(userDTO, associate, ignoreProperties);
-				attendance.setAssociate(associate);
-				Calendar currentTime = Calendar.getInstance();
-				Date sqlDate = new Date((currentTime.getTime()).getTime());
-				attendance.setDate(sqlDate);
-				attendance.setVerified(true);
-				attendance.setCheckedIn(true);
-				attendanceRepo.save(attendance);
-				return new ResponseEntity<User>(HttpStatus.OK);
-			} else {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid token."),
-						HttpStatus.FORBIDDEN);
-			}
-		} catch (Exception e) {
-			Logger.getRootLogger().debug("Exception while  verificating associate attendance", e);
-			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Attendance verification failed."),
-					HttpStatus.EXPECTATION_FAILED);
-
-		}
-
-	}
-
+	
 	/**
 	 * To find user by first name
 	 * 
