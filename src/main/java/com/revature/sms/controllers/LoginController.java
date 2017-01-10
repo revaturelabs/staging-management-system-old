@@ -1,6 +1,6 @@
 package com.revature.sms.controllers;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +70,7 @@ public class LoginController {
 	 */
 	private void markPresent(String username) {
 		User user = ur.findByUsername(username);
-		Date d = new Date(new java.util.Date().getTime());
+		Timestamp d = new Timestamp(new java.util.Date().getTime());
 		List<AssociateAttendance> associateAttendanceList = user.getAttendance();
 
 		if (!associateAttendanceList.isEmpty()) {
