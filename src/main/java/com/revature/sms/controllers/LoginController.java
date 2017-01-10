@@ -39,7 +39,7 @@ public class LoginController {
 				// Successful login
 				if ("associate".equals(u.getUserRole().getName())) {
 					// if associate mark attendance as present
-					//markPresent(u.getUsername());
+					markPresent(u.getUsername());
 				}
 				System.out.println("finished Marking as presnet");
 				u.blankPassword();
@@ -70,21 +70,21 @@ public class LoginController {
 		List<AssociateAttendance> associateAttendanceList = aar.findByAssociate(user);
 		
 		if (!associateAttendanceList.isEmpty()) {
-			for (AssociateAttendance aa : associateAttendanceList) {
+			/*for (AssociateAttendance aa : associateAttendanceList) {
 				if (d.toString().equals(aa.getDate().toString())) {
 					aa.setCheckedIn(true);
 					aar.save(aa);
 					break;
 				}
-			}
+			}*/
 		}
 		else{
+			System.out.println("Making a new attendance List");
 			//create an AssociateAttendance row
 			AssociateAttendance aa = new AssociateAttendance(user,d,true,false,"");
-
-			aar.save(aa); 
+			aar.save(aa);
 			
-/*			List<AssociateAttendance> l = user.getAttendance();
+			/*List<AssociateAttendance> l = user.getAttendance();
 			l.add(aa);
 			user.setAttendance(l);
 			

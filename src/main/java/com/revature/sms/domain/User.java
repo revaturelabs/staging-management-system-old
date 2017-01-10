@@ -32,10 +32,10 @@ public class User {
 	@JoinColumn(name="BATCH_TYPE")
 	private BatchType batchType;
 	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="associate")
+	@OneToMany(mappedBy="associate")
 	private List<AssociateAttendance> attendance;
 
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="associate")
+	@OneToMany(mappedBy="associate")
 	private List<AssociateTask> tasks;
 
 	@ManyToOne

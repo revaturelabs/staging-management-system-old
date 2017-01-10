@@ -70,7 +70,7 @@ public class StagingManagementSystemApplicationTests {
 	
 	
 	//Initialize Test Data:
-	
+	/*
 	@Test
 	public void makeData(){
 		urr.save(new UserRole("associate"));
@@ -108,7 +108,7 @@ public class StagingManagementSystemApplicationTests {
 			return null;
 		}
 	}
-	
+	*/
 
 	
 }
