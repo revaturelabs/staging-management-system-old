@@ -22,10 +22,6 @@ public class AssociateAttendance {
 	@GeneratedValue(generator = "associateAttendanceSeq", strategy = GenerationType.SEQUENCE)
 	private int ID;
 	
-	@ManyToOne
-	@JoinColumn(name="ASSOCIATE")
-	private User associate;
-	
 	@Column(name="ATTENDANCE_DATE", nullable=false)
 	private Date date;
 
@@ -42,9 +38,8 @@ public class AssociateAttendance {
 		super();
 	}
 
-	public AssociateAttendance(User associate, Date date, boolean checkedIn, boolean verified, String note) {
+	public AssociateAttendance(Date date, boolean checkedIn, boolean verified, String note) {
 		super();
-		this.associate = associate;
 		this.date = date;
 		this.checkedIn = checkedIn;
 		this.verified = verified;
@@ -54,7 +49,6 @@ public class AssociateAttendance {
 	public AssociateAttendance(int iD, User associate, Date date, boolean checkedIn, boolean verified, String note) {
 		super();
 		ID = iD;
-		this.associate = associate;
 		this.date = date;
 		this.checkedIn = checkedIn;
 		this.verified = verified;
@@ -67,14 +61,6 @@ public class AssociateAttendance {
 
 	public void setID(int iD) {
 		ID = iD;
-	}
-
-	public User getAssociate() {
-		return associate;
-	}
-
-	public void setAssociate(User associate) {
-		this.associate = associate;
 	}
 
 	public Date getDate() {
@@ -111,7 +97,7 @@ public class AssociateAttendance {
 
 	@Override
 	public String toString() {
-		return "AssociateAttendance [ID=" + ID + ", associate=" + associate + ", date=" + date + ", checkedIn="
+		return "AssociateAttendance [ID=" + ID + ", date=" + date + ", checkedIn="
 				+ checkedIn + ", verified=" + verified + ", note=" + note + "]";
 	}
 }
