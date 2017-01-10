@@ -26,11 +26,7 @@
         <div class="toastContainer">
 
             <div>
-                <!--<ng-include src="'html/views/menu.html'"/>-->
-            </div>
-
-            <div>
-                <div id="view" ng-view></div>
+                <ui-view name="topBarView"> </ui-view>
                 <ui-view name="mainView"> </ui-view>
             </div>
         
@@ -60,10 +56,10 @@
         <script type="text/javascript" src="js/controllers/superController.js"></script>
         <script type="text/javascript" src="js/controllers/adminController.js"></script>
         <script type="text/javascript" src="js/controllers/associateController.js"></script>
+        <script type="text/javascript" src="js/controllers/superAttendanceController.js"></script>
             
             <!-- Services -->
         <script type="text/javascript" src="js/services/loginService.js"></script>
-        <script type="text/javascript" src="js/services/userService.js"></script>
             
             <!-- Filters -->
 

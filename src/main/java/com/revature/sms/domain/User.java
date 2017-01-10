@@ -1,14 +1,8 @@
 package com.revature.sms.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import java.util.List;
+
+import javax.persistence.*;
 
 //This object tracks users on the application
 
@@ -34,9 +28,16 @@ public class User {
 	@Column(name = "HASHED_PASSWORD")
 	private String hashedPassword;
 	
-	@Column(name = "BATCH_TYPE")
-	private String batchType;
+	@ManyToOne
+	@JoinColumn(name="BATCH_TYPE")
+	private BatchType batchType;
 	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="ID")
+	private List<AssociateAttendance> attendance;
+
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="ID")
+	private List<AssociateTask> tasks;
+
 	@ManyToOne
 	@JoinColumn(name="user_role")
 	private UserRole userRole;
@@ -45,24 +46,28 @@ public class User {
 		super();
 	}
 	
-	public User(String username, String firstName, String lastName, UserRole userRole, String hashedPassword) {
+	//constructor for associate
+	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
+			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.userRole = userRole;
-		this.hashedPassword = hashedPassword;
-	}
-
-	public User(String username, String firstName, String lastName, UserRole userRole, String hashedPassword,
-			String batchType) {
-		super();
-		this.username = username;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userRole = userRole;
 		this.hashedPassword = hashedPassword;
 		this.batchType = batchType;
+		this.attendance = attendance;
+		this.tasks = tasks;
+		this.userRole = userRole;
+	}
+	
+	//constructor for non-associate
+	public User(String username, String firstName, String lastName, String hashedPassword, UserRole userRole) {
+		super();
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.hashedPassword = hashedPassword;
+		this.userRole = userRole;
 	}
 
 	public int getID() {
@@ -97,6 +102,43 @@ public class User {
 		this.lastName = lastName;
 	}
 
+	public String getHashedPassword() {
+		return hashedPassword;
+	}
+
+	public void setHashedPassword(String hashedPassword) {
+		this.hashedPassword = hashedPassword;
+	}
+
+	public void blankPassword(){
+		String empty="";
+		this.hashedPassword=empty;
+	}
+	
+	public BatchType getBatchType() {
+		return batchType;
+	}
+
+	public void setBatchType(BatchType batchType) {
+		this.batchType = batchType;
+	}
+
+	public List<AssociateAttendance> getAttendance() {
+		return attendance;
+	}
+
+	public void setAttendance(List<AssociateAttendance> attendance) {
+		this.attendance = attendance;
+	}
+
+	public List<AssociateTask> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<AssociateTask> tasks) {
+		this.tasks = tasks;
+	}
+
 	public UserRole getUserRole() {
 		return userRole;
 	}
@@ -105,31 +147,13 @@ public class User {
 		this.userRole = userRole;
 	}
 
-	public String getHashedPassword() {
-		return hashedPassword;
-	}
-
-	public void setHashedPassword(String hashPassword) {
-		this.hashedPassword = hashPassword;
-	}
-
-	public void blankPassword(){
-		String empty="";
-		this.hashedPassword=empty;
-	}
-	
-	public String getBatchType() {
-		return batchType;
-	}
-
-	public void setBatchType(String batchType) {
-		this.batchType = batchType;
-	}
-
 	@Override
 	public String toString() {
 		return "User [ID=" + ID + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", userRole=" + userRole + ", batchType=" + batchType + "]";
+				+ ", hashedPassword=" + hashedPassword + ", batchType=" + batchType + ", attendance=" + attendance
+				+ ", tasks=" + tasks + ", userRole=" + userRole + "]";
 	}
+
+	
 	
 }
