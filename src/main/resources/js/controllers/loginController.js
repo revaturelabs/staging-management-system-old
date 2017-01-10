@@ -24,7 +24,7 @@
                             $state.go("superAttendance");
                             break;
                         case "admin":
-                            $state.go("admin");
+                            $state.go("adminAttendance");
                             break;
                         case "associate":
                             $state.go("assoc");

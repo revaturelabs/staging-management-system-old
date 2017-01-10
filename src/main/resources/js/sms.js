@@ -55,6 +55,17 @@
                     }
                 }
 			})
+				 // admin view all attendance
+	                .state( "adminAttendance", {
+	                    url: "/attendance",
+	                    parent: "admin",
+	                    views: {
+	                        "mainAdminView": {
+	                            templateUrl: "html/views/admin/associate-attendance-table.html",
+	                            controller: "adminAttendanceCtrl as adAttCtrl"
+	                        }
+	                    }
+	                })
               // associate page
 			.state( "assoc", {
 				url: "/assoc",
