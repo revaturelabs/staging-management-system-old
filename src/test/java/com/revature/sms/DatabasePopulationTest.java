@@ -1,7 +1,5 @@
 package com.revature.sms;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +31,11 @@ import com.revature.sms.util.Utils;
 @SpringBootTest
 public class DatabasePopulationTest {
 	
+	@Ignore
 	@Test
 	public void everythingsGood(){
 		Logger.getRootLogger().debug("No tests right now");
 	}
-	//This class runs on *EVERY* commit to a feature branch!! Make sure code here doesn't create needless database objects
 	
 	
 	@Autowired
