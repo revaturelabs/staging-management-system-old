@@ -23,16 +23,36 @@ import com.revature.sms.domain.dto.LoginAttempt;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
 import com.revature.sms.domain.dto.UserTokenDTO;
 
+/**
+ * Server-side controller to handle logging into the application.
+ *
+ */
 @RestController
 @RequestMapping("/api/v1/login")
 public class LoginController {
-
+	/**
+	 * Autowired UserRepo object. Spring handles setting this up for actual use.
+	 */
 	@Autowired
 	UserRepo ur;
-
+	/**
+	 * Autowired AssociateAttendenceRepo object. Spring handles setting this up
+	 * for actual use.
+	 */
 	@Autowired
 	AssociateAttendanceRepo aar;
 
+	/**
+	 * Method that's called via Http Post method. Used for submitting a login
+	 * attempt when trying to login.
+	 * 
+	 * @param in
+	 *            LoginAttempt object that contains the user name and password
+	 *            of the user trying to login.
+	 * @return ResponseEntity object containing user information if the login is
+	 *         successful, otherwise it returns ResponseEntity with an error
+	 *         message if login fails.
+	 */
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Object login(@RequestBody LoginAttempt in) {
 		User u = ur.findByUsername(in.getUsername());
@@ -65,7 +85,7 @@ public class LoginController {
 	/**
 	 * Marks an associate as present
 	 * 
-	 * @param u
+	 * @param username
 	 *            User to be marked as present
 	 */
 	private void markPresent(String username) {
@@ -74,7 +94,7 @@ public class LoginController {
 		List<AssociateAttendance> associateAttendanceList = user.getAttendance();
 
 		if (!associateAttendanceList.isEmpty()) {
-			
+
 			for (AssociateAttendance aa : associateAttendanceList) {
 				if (d.toString().equals(aa.getDate().toString())) {
 					// Associate has checked in before and current day exists
@@ -88,7 +108,7 @@ public class LoginController {
 		// or
 		// Associate has checked in before but current day does not exist
 		AssociateAttendance aa = new AssociateAttendance(d, true, false, "");
-		
+
 		List<AssociateAttendance> l = user.getAttendance();
 		l.add(aa);
 		user.setAttendance(l);
