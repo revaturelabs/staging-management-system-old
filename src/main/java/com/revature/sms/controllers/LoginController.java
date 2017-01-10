@@ -69,13 +69,10 @@ public class LoginController {
 		Date d = new Date(new java.util.Date().getTime());
 		List<AssociateAttendance> associateAttendanceList = aar.findByAssociate(user);
 		if (!associateAttendanceList.isEmpty()) {
-			System.out.println("\n" + associateAttendanceList.size() + " : size of associateAttendanceList on " + d);
 			for (AssociateAttendance aa : associateAttendanceList) {
-				System.out.println(d.toString() + " : " + aa.getDate().toString());
 				if (d.toString().equals(aa.getDate().toString())) {
 					aa.setCheckedIn(true);
 					aar.save(aa);
-					System.out.println("\n" + aa.getAssociate().getUsername() + " marked as present");
 					break;
 				}
 			}
