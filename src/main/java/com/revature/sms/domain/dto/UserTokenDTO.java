@@ -5,14 +5,14 @@ import com.revature.sms.domain.User;
 
 public class UserTokenDTO {
     private User user;
-    private Token token;
+    private String authToken;
 
-    public Token getToken() {
-        return token;
+    public String getToken() {
+        return authToken;
     }
 
-    public void setToken(Token token) {
-        this.token = token;
+    public void setToken(String authToken) {
+        this.authToken = authToken;
     }
 
     public User getUser() {

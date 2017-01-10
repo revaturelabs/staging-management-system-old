@@ -31,6 +31,17 @@
                     }
                 }
 			})
+                  // superadmin view all attendance
+                .state( "superAttendance", {
+                    url: "^/attendance",
+                    parent: "super",
+                    views: {
+                        "mainSuperView": {
+                            templateUrl: "html/views/superadmin/superAttendance.html",
+                            controller: "superAttendanceCtrl as supAttCtrl"
+                        }
+                    }
+                })
               // admin page
 			.state( "admin", {
 				url: "/admin",

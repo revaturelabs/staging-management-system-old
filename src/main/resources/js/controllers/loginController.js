@@ -21,7 +21,7 @@
                     lc.toast("Logged in.");
                     switch (response.user.userRole.name) {
                         case "superAdmin":
-                            $state.go("super");
+                            $state.go("superAttendance");
                             break;
                         case "admin":
                             $state.go("admin");

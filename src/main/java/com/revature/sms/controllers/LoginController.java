@@ -31,10 +31,10 @@ public class LoginController {
 			if (u.getHashedPassword().equals(in.getInputPass())) {
 				u.blankPassword();
 				u.setID(0);
-				Token authToken = new Token(u);
+				Token token = new Token(u);
 				UserTokenDTO userToken = new UserTokenDTO();
 				userToken.setUser(u);
-				userToken.setToken(authToken);
+				userToken.setToken(token.getAuthToken());
 				return new ResponseEntity<UserTokenDTO>(userToken, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid password."), HttpStatus.NOT_FOUND);
