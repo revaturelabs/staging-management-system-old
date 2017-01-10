@@ -1,6 +1,6 @@
 package com.revature.sms.testLibs;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class AssociateAttendanceDataManager {
 	 * @return The associateAttendance object that is created in the database
 	 */
 	
-	public AssociateAttendance createTestAssociateAttendance(Date date, boolean checkedIn, boolean verified, String note){
+	public AssociateAttendance createTestAssociateAttendance(Timestamp date, boolean checkedIn, boolean verified, String note){
 		AssociateAttendance newAssociateAttendance = new AssociateAttendance(date, checkedIn, verified, note);
 		tr.save(newAssociateAttendance);
 		createdAssociateAttendances.add(newAssociateAttendance);

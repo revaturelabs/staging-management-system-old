@@ -1,6 +1,6 @@
 package com.revature.sms.testLibs;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class AssociateTaskDataManager {
 	 * @return The associateTask object that is created in the database
 	 */
 	
-	public AssociateTask createTestAssociateTask(AssociateTaskType taskType, Date date, String note){
+	public AssociateTask createTestAssociateTask(AssociateTaskType taskType, Timestamp date, String note){
 		AssociateTask newAssociateTask = new AssociateTask(taskType, date, note);
 		atr.save(newAssociateTask);
 		createdAssociateTasks.add(newAssociateTask);
