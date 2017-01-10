@@ -22,18 +22,35 @@
 			.state( "super", {
 				url: "/super",
                 views: {
+                    "topBarView": {
+                        templateUrl: "html/views/topBar.html"
+                    },
                     "mainView": {
-    				    templateUrl: "html/views/super.html",
+    				    templateUrl: "html/views/superadmin/super.html",
 	    			    controller: "superCtrl as suCtrl"
                     }
                 }
 			})
+                  // superadmin view all attendance
+                .state( "superAttendance", {
+                    url: "^/attendance",
+                    parent: "super",
+                    views: {
+                        "mainSuperView": {
+                            templateUrl: "html/views/superadmin/superAttendance.html",
+                            controller: "superAttendanceCtrl as supAttCtrl"
+                        }
+                    }
+                })
               // admin page
 			.state( "admin", {
 				url: "/admin",
                 views: {
+                    "topBarView": {
+                        templateUrl: "html/views/topBar.html"
+                    },
                     "mainView": {
-    				    templateUrl: "html/views/admin.html",
+    				    templateUrl: "html/views/admin/admin.html",
 	    			    controller: "adminCtrl as adCtrl"
                     }
                 }
@@ -42,8 +59,11 @@
 			.state( "assoc", {
 				url: "/assoc",
                 views: {
+                    "topBarView": {
+                        templateUrl: "html/views/topBar.html"
+                    },
                     "mainView": {
-    				    templateUrl: "html/views/associate.html",
+    				    templateUrl: "html/views/associate/associate.html",
 	    			    controller: "associateCtrl as assoCtrl"
                     }
                 }
