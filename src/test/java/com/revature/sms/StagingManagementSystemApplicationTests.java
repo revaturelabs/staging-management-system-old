@@ -62,7 +62,7 @@ public class StagingManagementSystemApplicationTests {
 		btr.save(new BatchType(".NET"));
 		ur.save(new User("admin","Admin","Admin",hashPassword("password"),urr.findByName("admin")));
 		ur.save(new User("superadmin","Super","Admin",hashPassword("password"),urr.findByName("superAdmin")));
-		ur.save(new User("java","Java","Johnny",hashPassword("password"),btr.findByType("java"),new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(),urr.findByName("associate")));
+		ur.save(new User("java","Java","Johnny",hashPassword("password"),btr.findByType("Java"),new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(),urr.findByName("associate")));
 		ur.save(new User("dotnet","DotNet","Dave",hashPassword("password"),btr.findByType(".NET"),new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(),urr.findByName("associate")));
 		ur.save(new User("sdet","SDET","Sally",hashPassword("password"),btr.findByType("SDET"),new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(),urr.findByName("associate")));
 		jetr.save(new JobEventType("Selected"));
