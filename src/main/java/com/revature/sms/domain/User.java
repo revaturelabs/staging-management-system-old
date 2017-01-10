@@ -52,15 +52,17 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name = "BATCH_TYPE")
 	private BatchType batchType;
-	/**
-	 * List containing AssociateAttendence objects that keeps track of the user's attendance.
-	 */
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="associate")
+/**
+ * List containing AssociateAttendence objects that keeps track of the user's attendance.
+ */
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="ASSOCIATE")
 	private List<AssociateAttendance> attendance;
 	/**
 	 * List containing AssociateTask objects that keeps track of the user's tasks.
 	 */
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="associate")
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="ASSOCIATE")
 	private List<AssociateTask> tasks;
 	/**
 	 * UserRole object that keeps track of the user's specific role.

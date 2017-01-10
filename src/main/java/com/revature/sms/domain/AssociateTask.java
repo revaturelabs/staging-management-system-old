@@ -34,13 +34,6 @@ public class AssociateTask {
 	 * User object that represents the associate in this task record.
 	 */
 	@ManyToOne
-	@JoinColumn(name="ASSOCIATE")
-	private User associate;
-	
-	/**
-	 * AssociateTaskType object that refers to the type of task an associate is working on.
-	 */
-	@ManyToOne
 	@JoinColumn(name="TASK_TYPE")
 	private AssociateTaskType taskType;
 	
@@ -65,14 +58,13 @@ public class AssociateTask {
 	
 	/**
 	 * Parameterized constructor for AssociateTask. 
-	 * @param associate - User object that represents the associate in this task record
 	 * @param taskType - AssociateTaskType object that refers to the type of task an associate is working on  
 	 * @param date - Date object that represents the date an associate started a task
 	 * @param note - String value that allows an admin to include an optional note regarding the associate's task
 	 */
-	public AssociateTask(User associate, AssociateTaskType taskType, Date date, String note) {
+
+	public AssociateTask(AssociateTaskType taskType, Date date, String note) {
 		super();
-		this.associate = associate;
 		this.taskType = taskType;
 		this.date = date;
 		this.note = note;
@@ -93,27 +85,6 @@ public class AssociateTask {
 	public void setID(int iD) {
 		ID = iD;
 	}
-	
-	/**
-	 * Get method for Associate.
-	 * @return associate - User object that represents the associate in this task record
-	 */
-	public User getAssociate() {
-		return associate;
-	}
-	
-	/**
-	 * Set method for associate.
-	 * @param associate - User object that represents the associate in this task record
-	 */
-	public void setAssociate(User associate) {
-		this.associate = associate;
-	}
-	
-	/**
-	 * Get method for taskType.
-	 * @return taskType - AssociateTaskType object that refers to the type of task an associate is working on
-	 */
 	public AssociateTaskType getTaskType() {
 		return taskType;
 	}
@@ -164,7 +135,7 @@ public class AssociateTask {
 	 */
 	@Override
 	public String toString() {
-		return "AssociateTasks [ID=" + ID + ", associate=" + associate.getUsername() + ", taskType=" + taskType.getType() + ", date=" + date
+		return "AssociateTasks [ID=" + ID + ", taskType=" + taskType.getType() + ", date=" + date
 				+ ", note=" + note + "]";
 	}
 	

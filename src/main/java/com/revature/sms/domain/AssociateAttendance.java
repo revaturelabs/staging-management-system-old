@@ -29,14 +29,7 @@ public class AssociateAttendance {
 	@SequenceGenerator(allocationSize = 1, name = "associateAttendanceSeq", sequenceName = "ASSOCIATE_ATTENDANCE_SEQ")
 	@GeneratedValue(generator = "associateAttendanceSeq", strategy = GenerationType.SEQUENCE)
 	private int ID;
-	
-	/**
-	 * User object that represents the associate in this attendance record.
-	 */
-	@ManyToOne
-	@JoinColumn(name="ASSOCIATE")
-	private User associate;
-	
+
 	/**
 	 * Date object that represents the date of attendance.
 	 */
@@ -70,15 +63,13 @@ public class AssociateAttendance {
 	
 	/**
 	 * Parameterized constructor for AssociateAttendance where ID is automatically generated.
-	 * @param associate - User object that represents the associate in this attendance record  
 	 * @param date - Date object that represents the date of attendance 
 	 * @param checkedIn - Boolean value representing if the associate has logged in 
 	 * @param verified - Boolean value that represents whether an admin has verified an associates attendance
 	 * @param note - String value that allows admin to include an optional note regarding the associates attendance 
 	 */
-	public AssociateAttendance(User associate, Date date, boolean checkedIn, boolean verified, String note) {
+	public AssociateAttendance(Date date, boolean checkedIn, boolean verified, String note) {
 		super();
-		this.associate = associate;
 		this.date = date;
 		this.checkedIn = checkedIn;
 		this.verified = verified;
@@ -97,7 +88,6 @@ public class AssociateAttendance {
 	public AssociateAttendance(int iD, User associate, Date date, boolean checkedIn, boolean verified, String note) {
 		super();
 		ID = iD;
-		this.associate = associate;
 		this.date = date;
 		this.checkedIn = checkedIn;
 		this.verified = verified;
@@ -119,27 +109,6 @@ public class AssociateAttendance {
 	public void setID(int iD) {
 		ID = iD;
 	}
-	
-	/**
-	 * Get method for associate.
-	 * @return associate - User object that represents the associate in this attendance record
-	 */
-	public User getAssociate() {
-		return associate;
-	}
-
-	/**
-	 * Set method for associate.
-	 * @param associate - User object that represents the associate in this attendance record
-	 */
-	public void setAssociate(User associate) {
-		this.associate = associate;
-	}
-	
-	/**
-	 * Get method for date.
-	 * @return date - Date object that represents the date of attendance
-	 */
 	public Date getDate() {
 		return date;
 	}
@@ -206,7 +175,7 @@ public class AssociateAttendance {
 	 */
 	@Override
 	public String toString() {
-		return "AssociateAttendance [ID=" + ID + ", associate=" + associate + ", date=" + date + ", checkedIn="
+		return "AssociateAttendance [ID=" + ID + ", date=" + date + ", checkedIn="
 				+ checkedIn + ", verified=" + verified + ", note=" + note + "]";
 	}
 }
