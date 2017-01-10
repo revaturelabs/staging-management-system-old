@@ -35,17 +35,17 @@ public class UserController {
 	/**
 	 * To create user 
 	 * 
-	 * @param userDTO
+	 * @param UserDTO
 	 * @return
 	 */
 	@RequestMapping(value = "/createUser", method = { RequestMethod.POST,
 			RequestMethod.PUT }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object createUser(@RequestBody UserDTO userDTO) {
+	public @ResponseBody Object createUser(@RequestBody UserDTO UserDTO) {
 
 		try {
 			// validate token and create user
-			if (isValid(userDTO.getToken())) {
-				User user=getUser(userDTO);
+			if (isValid(UserDTO.getToken())) {
+				User user=getUser(UserDTO);
 				user=userRepo.save(user);
 				return new ResponseEntity<User>(user, HttpStatus.CREATED);
 			} else {
@@ -64,7 +64,7 @@ public class UserController {
 	/**
 	 * To update user info
 	 * 
-	 * @param userDTO
+	 * @param UserDTO
 	 * @return
 	 */
 	@RequestMapping(value = "/updateUser", method = { RequestMethod.POST,
@@ -74,9 +74,9 @@ public class UserController {
 		try {
 			// validate token and update user info
 			if (isValid(userDTO.getToken())) {
-				User user=getUser(userDTO);
-				user=userRepo.save(user);
-				return new ResponseEntity<User>(user, HttpStatus.OK);
+				User oldUser=updateValidation(userDTO);
+				userRepo.save(oldUser);
+				return new ResponseEntity<User>(oldUser, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid token"),
 						HttpStatus.FORBIDDEN);
@@ -92,7 +92,7 @@ public class UserController {
 	/**
 	 * To retrieve user by ID
 	 * 
-	 * @param userDTO
+	 * @param UserDTO
 	 * @return
 	 */
 	@RequestMapping(value = "/retrieveUser", method = { RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -118,7 +118,7 @@ public class UserController {
 	/**
 	 * To retrieve all user
 	 * 
-	 * @param userDTO
+	 * @param UserDTO
 	 * @return
 	 */
 	@RequestMapping(value = "/retrieveAll", method = { RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -144,18 +144,18 @@ public class UserController {
 	/**
 	 * To delete user by username
 	 * 
-	 * @param userDTO
+	 * @param UserDTO
 	 * @return
 	 */
 	@RequestMapping(value = "/deleteUser", method = { RequestMethod.POST,
 			RequestMethod.PUT }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object deleteByUserName(@RequestParam int id, @RequestBody String token) {
+	public @ResponseBody Object deleteByUserName(@RequestBody UserDTO userDTO) {
 
 		try {
 			// validate token and delete associate
-			if (isValid(token)) {
-				userRepo.delete(id);;
-				return new ResponseEntity<User>(HttpStatus.OK);
+			if (isValid(userDTO.getToken())) {
+				Long result=userRepo.deleteByUsername(userDTO.getUsername());
+				return new ResponseEntity<Long>(result,HttpStatus.OK);
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid token"),
 						HttpStatus.FORBIDDEN);
@@ -183,8 +183,8 @@ public class UserController {
 		return valid;
 	}
 	/**
-	 * To transform UserDTO object into an User object
-	 * @param userDTO
+	 * To transform UserInformationChangeDTO object into an User object
+	 * @param UserDTO
 	 * @return
 	 */
 	
@@ -193,6 +193,39 @@ public class UserController {
 		String[] ignoreProperties = { "token" };
 		BeanUtils.copyProperties(userDTO, user, ignoreProperties);
 		return user;
+	}
+	
+	/**
+	 * To validate user to be updated
+	 * @param userDTO
+	 * @return
+	 */
+	
+	public User updateValidation(UserDTO userDTO){
+		User oldUser=userRepo.findByUsername(userDTO.getUsername());
+		if(userDTO.getUserRole()!=null)
+		{
+			oldUser.setUserRole(userDTO.getUserRole());
+		}
+		if(userDTO.getBatchType()!=null)
+		{
+			oldUser.setBatchType(userDTO.getBatchType());
+		}
+		if(userDTO.getHashedPassword()!=null)
+		{
+			oldUser.setHashedPassword(userDTO.getHashedPassword());
+		}
+		if(userDTO.getFirstName()!=null)
+		{
+			oldUser.setFirstName(userDTO.getFirstName());
+		}
+		if(userDTO.getLastName()!=null)
+		{
+			oldUser.setLastName(userDTO.getLastName());
+		}
+		
+		return oldUser;
+		
 	}
 
 }
