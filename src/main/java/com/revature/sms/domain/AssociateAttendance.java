@@ -56,7 +56,7 @@ public class AssociateAttendance {
 	private boolean verified;
 	
 	/**
-	 * String value that allows admin to include an optional note regarding the associates attendance.
+	 * String value that allows an admin to include an optional note regarding the associate's attendance.
 	 */
 	@Column(name="NOTE")
 	private String note;
@@ -121,7 +121,7 @@ public class AssociateAttendance {
 	}
 	
 	/**
-	 * Get method for Associate.
+	 * Get method for associate.
 	 * @return associate - User object that represents the associate in this attendance record
 	 */
 	public User getAssociate() {
