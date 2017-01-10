@@ -1,13 +1,12 @@
 package com.revature.sms.domain;
 
-import java.sql.Date;
+
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -34,7 +33,7 @@ public class AssociateAttendance {
 	 * Date object that represents the date of attendance.
 	 */
 	@Column(name="ATTENDANCE_DATE", nullable=false)
-	private Date date;
+	private Timestamp date;
 
 	/**
 	 * Boolean value representing if the associate has logged in.
@@ -60,15 +59,18 @@ public class AssociateAttendance {
 	public AssociateAttendance() {
 		super();
 	}
+
 	
 	/**
 	 * Parameterized constructor for AssociateAttendance where ID is automatically generated.
-	 * @param date Date object that represents the date of attendance 
+	 * @param date Timestamp object that represents the date of attendance 
 	 * @param checkedIn Boolean value representing if the associate has logged in 
 	 * @param verified Boolean value that represents whether an admin has verified an associates attendance
 	 * @param note String value that allows admin to include an optional note regarding the associates attendance 
 	 */
-	public AssociateAttendance(Date date, boolean checkedIn, boolean verified, String note) {
+
+	public AssociateAttendance(Timestamp date, boolean checkedIn, boolean verified, String note) {
+
 		super();
 		this.date = date;
 		this.checkedIn = checkedIn;
@@ -76,16 +78,17 @@ public class AssociateAttendance {
 		this.note = note;
 	}
 	
+
 	/**
 	 * Parameterized constructor for AssociateAttendance where ID is set.
 	 * @param iD int value that represents the primary key of the record 
 	 * @param associate User object that represents the associate in this attendance record  
-	 * @param date Date object that represents the date of attendance 
+	 * @param date Timestamp object that represents the date of attendance 
 	 * @param checkedIn Boolean value representing if the associate has logged in 
 	 * @param verified Boolean value that represents whether an admin has verified an associates attendance
 	 * @param note String value that allows admin to include an optional note regarding the associates attendance 
 	 */
-	public AssociateAttendance(int iD, User associate, Date date, boolean checkedIn, boolean verified, String note) {
+	public AssociateAttendance(int iD, User associate, Timestamp date, boolean checkedIn, boolean verified, String note) {
 		super();
 		ID = iD;
 		this.date = date;
@@ -109,15 +112,20 @@ public class AssociateAttendance {
 	public void setID(int iD) {
 		ID = iD;
 	}
-	public Date getDate() {
+
+/**
+ * Get method for date	
+ * @return Timestamp object that represents the date of attendance.
+ */
+	public Timestamp getDate() {
 		return date;
 	}
-
 	/**
 	 * Set method for date.
-	 * @param date Date object that represents the date of attendance
+	 * @param date Timestamp object that represents the date of attendance
 	 */
-	public void setDate(Date date) {
+	public void setDate(Timestamp date) {
+
 		this.date = date;
 	}
 

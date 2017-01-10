@@ -52,6 +52,7 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name = "BATCH_TYPE")
 	private BatchType batchType;
+
 /**
  * List containing AssociateAttendence objects that keeps track of the user's attendance.
  */

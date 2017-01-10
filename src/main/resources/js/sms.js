@@ -1,5 +1,4 @@
-
-    var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "ngResource", "ngCookies", "ui.router"]);
+var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "ngResource", "ngCookies", "ui.router"]);
 
       // URL routing
     sms.config( function( $stateProvider, $urlRouterProvider, $locationProvider ) {
