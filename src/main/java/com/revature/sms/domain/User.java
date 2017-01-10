@@ -23,16 +23,19 @@ public class User {
 	@SequenceGenerator(allocationSize = 1, name = "userSeq", sequenceName = "USER_SEQ")
 	@GeneratedValue(generator = "userSeq", strategy = GenerationType.SEQUENCE)
 	private int ID;
+	
 	/**
 	 * String that represents the username of the User object.
 	 */
 	@Column(name = "USERNAME", unique = true, nullable = false)
 	private String username;
+	
 	/**
 	 * String that represents the first name of the User object.
 	 */
 	@Column(name = "FIRST_NAME", nullable = false)
 	private String firstName;
+	
 	/**
 	 * String that represents the last name of the User object.
 	 */
@@ -44,6 +47,7 @@ public class User {
 	 */
 	@Column(name = "HASHED_PASSWORD")
 	private String hashedPassword;
+	
 	/**
 	 * BatchType object that represents the specific BatchType that the User
 	 * belongs to. Different BatchTypes would imply different skills that the
@@ -71,9 +75,10 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name = "user_role")
 	private UserRole userRole;
-/**
- * Null args constructor. Doesn't initialize any of the User instance variables.
- */
+	
+	/**
+	 * Null args constructor. Doesn't initialize any of the User instance variables.
+	 */
 	public User() {
 		super();
 	}
@@ -123,49 +128,58 @@ public class User {
 		this.hashedPassword = hashedPassword;
 		this.userRole = userRole;
 	}
-/**
- * Method to retrieve the ID value of the User object.
- * @return ID int value that represents the id of the User.
- */
+	
+	/**
+	 * Method to retrieve the ID value of the User object.
+	 * @return ID int value that represents the id of the User.
+	 */
 	public int getID() {
 		return ID;
 	}
-/**
- * Method to manually set the ID value of the current User object.
- * @param iD int value that represents the id to be set.
- */
+
+	/**
+	 * Method to manually set the ID value of the current User object.
+	 * 
+	 * @param iD
+	 *            int value that represents the id to be set.
+	 */
 	public void setID(int iD) {
 		ID = iD;
 	}
-/**
- * Method to retrieve the username of the User object.
- * @return username String value that represents the username of the User.
- */
+	
+	/**
+	 * Method to retrieve the username of the User object.
+	 * @return username String value that represents the username of the User.
+	 */
 	public String getUsername() {
 		
 		return username;
 	}
-/**
- * Method to manually set the username of the current User object.
- * @param username String value that represents the username to be set.
- */
+	
+	/**
+	 * Method to manually set the username of the current User object.
+	 * @param username String value that represents the username to be set.
+	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
-/**
- * Method to retrieve the first name of the User object.
- * @return firstName String value that represents the first name of the User.
- */
+	
+	/**
+	 * Method to retrieve the first name of the User object.
+	 * @return firstName String value that represents the first name of the User.
+	 */
 	public String getFirstName() {
 		return firstName;
 	}
-/**
- * Method to manually set the first name of the current User object.
- * @param firstName String value that represents the first name to be set.
- */
+	
+	/**
+	 * Method to manually set the first name of the current User object.
+	 * @param firstName String value that represents the first name to be set.
+	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+	
 	/**
 	 * Method to retrieve the last name of the User object.
 	 * @return lastName String value that represents the first name of the User.
@@ -173,6 +187,7 @@ public class User {
 	public String getLastName() {
 		return lastName;
 	}
+	
 	/**
 	 * Method to manually set the last name of the current User object.
 	 * @param lastName String value that represents the last name to be set.
@@ -180,59 +195,67 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-/**
- * Method to retrieve the hashedPassword of the current User object.
- * @return hashedPassword String value that represents the hashedPassword to be set.
- */
+	
+	/**
+	 * Method to retrieve the hashedPassword of the current User object.
+	 * @return hashedPassword String value that represents the hashedPassword to be set.
+	 */
 	public String getHashedPassword() {
 		return hashedPassword;
 	}
-/**
- * Method to manually set the hashedPassword of the User object.
- * @param hashedPassword String value that represents the hashedPassword to be set.
- */
+	
+	/**
+	 * Method to manually set the hashedPassword of the User object.
+	 * @param hashedPassword String value that represents the hashedPassword to be set.
+	 */
 	public void setHashedPassword(String hashedPassword) {
 		this.hashedPassword = hashedPassword;
 	}
-/**
- * Method that sets the password of the current User to an empty password.
- */
+	
+	/**
+	 * Method that sets the password of the current User to an empty password.
+	 */
 	public void blankPassword() {
 		String empty = "";
 		this.hashedPassword = empty;
 	}
-/**
- * Method that retrieves the BatchType object of the current User object.
- * @return batchType BatchType object that represents the specific BatchType that the User 
- * belongs to.
- */
+	
+	/**
+	 * Method that retrieves the BatchType object of the current User object.
+	 * @return batchType BatchType object that represents the specific BatchType that the User 
+	 * belongs to.
+	 */
 	public BatchType getBatchType() {
 		return batchType;
 	}
-/**
- * Method that sets the BatchType object of the current User object.
- * @param batchType BatchType object that represents the specific BatchType that the User 
- * belongs to.
- */
+	
+	/**
+	 * Method that sets the BatchType object of the current User object.
+	 * @param batchType BatchType object that represents the specific BatchType that the User 
+	 * belongs to.
+	 */
 	public void setBatchType(BatchType batchType) {
 		this.batchType = batchType;
 	}
-/**
- * Method that retrieves the list of AssociateAttendence objects that represents the User's attendance.
- * @return attendance List containing all the AssociateAttendence objects that belongs to 
- * the User object.
- */
+	
+	/**
+	 * Method that retrieves the list of AssociateAttendence objects that represents the User's attendance.
+	 * @return attendance List containing all the AssociateAttendence objects that belongs to 
+	 * the User object.
+	 */
 	public List<AssociateAttendance> getAttendance() {
 		return attendance;
 	}
-/**
- * Method that sets the list of AssociateAttendence objects that represents the User's attendance.
- * @param attendance List containing all the AssociateAttendence objects that belongs to 
- * the User object.
- */
+	
+	/**
+	 * Method that sets the list of AssociateAttendence objects that represents the User's attendance.
+	 * @param attendance List containing all the AssociateAttendence objects that belongs to 
+	 * the User object.
+	 */
 	public void setAttendance(List<AssociateAttendance> attendance) {
 		this.attendance = attendance;
 	}
+	
 	/**
 	 * Method that retrieves the list of AssociateTask objects that represents the User's tasks.
 	 * @return tasks List containing all the AssociateTask objects that belongs to 
@@ -241,6 +264,7 @@ public class User {
 	public List<AssociateTask> getTasks() {
 		return tasks;
 	}
+	
 	/**
 	 * Method that sets the list of AssociateTasks objects that represents the User's tasks.
 	 * @param tasks List containing all the AssociateTask objects that belongs to 
@@ -249,23 +273,26 @@ public class User {
 	public void setTasks(List<AssociateTask> tasks) {
 		this.tasks = tasks;
 	}
-/**
- * Method that retrieves the role of the current user.
- * @return userRole UserRole object that represents the current user's role.
- */
+	
+	/**
+	 * Method that retrieves the role of the current user.
+	 * @return userRole UserRole object that represents the current user's role.
+	 */
 	public UserRole getUserRole() {
 		return userRole;
 	}
-/**
- * Method that manually sets the role of the User object.
- * @param userRole UserRole object that represents the role that the user has.
- */
+	
+	/**
+	 * Method that manually sets the role of the User object.
+	 * @param userRole UserRole object that represents the role that the user has.
+	 */
 	public void setUserRole(UserRole userRole) {
 		this.userRole = userRole;
 	}
-/**
- * Method that returns a string representation of the current User object.
- */
+	
+	/**
+	 * Method that returns a string representation of the current User object.
+	 */
 	@Override
 	public String toString() {
 		return "User [ID=" + ID + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
