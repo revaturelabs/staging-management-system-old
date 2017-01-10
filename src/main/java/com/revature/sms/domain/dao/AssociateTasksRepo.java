@@ -9,10 +9,25 @@ import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.AssociateTaskType;
 import com.revature.sms.domain.User;
 
+/**
+ * 
+ * DAO repository for AssociateTasks.
+ *
+ */
 @Repository
 public interface AssociateTasksRepo extends JpaRepository<AssociateTask, Integer>{
 
+	/**
+	 * Returns the list of tasks that an associate has worked on.
+	 * @param associate - User object for the associate of desired tasks
+	 * @return List<AssociateTask> - List of all tasks that an associate has worked on
+	 */
 	List<AssociateTask> findByAssociate(User associate);
 	
+	/**
+	 * Returns a list of tasks based on a given type.
+	 * @param taskType - AssociateTaskType of the type of task 
+	 * @return List<AssociateTask> - List of all tasks of the given type
+	 */
 	List<AssociateTask> findByTaskType(AssociateTaskType taskType);
 }
