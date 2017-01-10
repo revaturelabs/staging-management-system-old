@@ -16,11 +16,12 @@
                 creds.username = lc.username;
                 creds.inputPass = CryptoJS.SHA1(lc.inputPass).toString();
                 loginService.login( creds, function(response){
-                    lc.user = response;
+                    loginService.addUser(response.user);
+                    loginService.addToken(response.token);
                     lc.toast("Logged in.");
-                    switch (lc.user.userRole.name) {
+                    switch (response.user.userRole.name) {
                         case "superAdmin":
-                            $state.go("super");
+                            $state.go("superAttendance");
                             break;
                         case "admin":
                             $state.go("admin");
@@ -31,7 +32,6 @@
                         default:
                             break;
                     }
-
                 }, function(error){
                     lc.toast(error.data.errorMessage);
                 });
