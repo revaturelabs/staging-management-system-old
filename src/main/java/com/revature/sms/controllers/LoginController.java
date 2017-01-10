@@ -68,7 +68,7 @@ public class LoginController {
 	private void markPresent(User user) {
 		Date d = new Date(new java.util.Date().getTime());
 		List<AssociateAttendance> associateAttendanceList = aar.findByAssociate(user);
-		if (associateAttendanceList.isEmpty()) {
+		if (!associateAttendanceList.isEmpty()) {
 			System.out.println("\n" + associateAttendanceList.size() + " : size of associateAttendanceList on " + d);
 			for (AssociateAttendance aa : associateAttendanceList) {
 				System.out.println(d.toString() + " : " + aa.getDate().toString());
@@ -81,7 +81,7 @@ public class LoginController {
 			}
 		}
 		// Something is wrong here
-/*		else{
+		else{
 			//create an AssociateAttendance row
 			AssociateAttendance aa = new AssociateAttendance();
 
@@ -92,19 +92,19 @@ public class LoginController {
 			aa.setID((int) (Math.random()*1000));
 
 			
-			List<AssociateAttendance> l = user.getAttendance();
+/*			List<AssociateAttendance> l = user.getAttendance();
 			l.add(aa);
 			user.setAttendance(l);
 			
 			System.out.println("update user");
-			ur.save(user);
+			ur.save(user);*/
 
 			
 			System.out.println("update aa");
 			aar.save(aa); 
 
 
-		}*/
+		}
 	}
 
 }
