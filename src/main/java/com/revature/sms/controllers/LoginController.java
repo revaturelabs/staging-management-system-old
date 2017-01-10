@@ -80,17 +80,24 @@ public class LoginController {
 				}
 			}
 		}
-		else{
+/*		else{
 			//create an AssociateAttendance row
 			AssociateAttendance aa = new AssociateAttendance();
+
 			aa.setAssociate(user);
 			aa.setCheckedIn(true);
 			aa.setDate(d);
 			aa.setVerified(false);
 			aa.setID((int) (Math.random()*1000));
-			System.out.println("\n\n\nadding new AssociateAttendance: " + aa + "\n\n\n");
-			aar.save(aa);
-		}
+			
+			System.out.println("update aa");
+			aar.save(aa); 
+			
+			user.getAttendance().add(aa);
+			System.out.println("update user");
+			ur.save(user);
+
+		}*/
 	}
 
 }
