@@ -23,10 +23,6 @@ public class AssociateTask {
 	private int ID;
 	
 	@ManyToOne
-	@JoinColumn(name="ASSOCIATE")
-	private User associate;
-	
-	@ManyToOne
 	@JoinColumn(name="TASK_TYPE")
 	private AssociateTaskType taskType;
 	
@@ -40,9 +36,8 @@ public class AssociateTask {
 		super();
 	}
 
-	public AssociateTask(User associate, AssociateTaskType taskType, Date date, String note) {
+	public AssociateTask(AssociateTaskType taskType, Date date, String note) {
 		super();
-		this.associate = associate;
 		this.taskType = taskType;
 		this.date = date;
 		this.note = note;
@@ -54,14 +49,6 @@ public class AssociateTask {
 
 	public void setID(int iD) {
 		ID = iD;
-	}
-
-	public User getAssociate() {
-		return associate;
-	}
-
-	public void setAssociate(User associate) {
-		this.associate = associate;
 	}
 
 	public AssociateTaskType getTaskType() {
@@ -90,7 +77,7 @@ public class AssociateTask {
 
 	@Override
 	public String toString() {
-		return "AssociateTasks [ID=" + ID + ", associate=" + associate.getUsername() + ", taskType=" + taskType.getType() + ", date=" + date
+		return "AssociateTasks [ID=" + ID + ", taskType=" + taskType.getType() + ", date=" + date
 				+ ", note=" + note + "]";
 	}
 	

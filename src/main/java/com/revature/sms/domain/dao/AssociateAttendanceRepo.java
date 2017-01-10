@@ -13,6 +13,4 @@ import com.revature.sms.domain.User;
 public interface AssociateAttendanceRepo extends JpaRepository<AssociateAttendance, Integer> {
 
 	List<AssociateAttendance> findByDate(Date date);
-	
-	List<AssociateAttendance> findByAssociate(User associate);
 }
