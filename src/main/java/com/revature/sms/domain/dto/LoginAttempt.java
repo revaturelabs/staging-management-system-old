@@ -1,5 +1,10 @@
 package com.revature.sms.domain.dto;
 
+/**
+ * 
+ * Takes in input username and password in attempt to login to the system.
+ *
+ */
 public class LoginAttempt {
 	
 	/**
