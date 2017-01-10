@@ -68,7 +68,7 @@ public class LoginController {
 	private void markPresent(User user) {
 		Date d = new Date(new java.util.Date().getTime());
 		List<AssociateAttendance> associateAttendanceList = aar.findByAssociate(user);
-		if (associateAttendanceList.size() > 0) {
+		if (associateAttendanceList.isEmpty()) {
 			System.out.println("\n" + associateAttendanceList.size() + " : size of associateAttendanceList on " + d);
 			for (AssociateAttendance aa : associateAttendanceList) {
 				System.out.println(d.toString() + " : " + aa.getDate().toString());
