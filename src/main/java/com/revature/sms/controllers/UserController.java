@@ -1,6 +1,5 @@
 package com.revature.sms.controllers;
 
-
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -9,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,34 +23,47 @@ import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
 import com.revature.sms.domain.dto.UserDTO;
 
+/**
+ * Server-side controller to handle User CRUD operations (Create, Retrieve, Update, Delete)
+ *
+ */
+
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
 	@Autowired
-	UserRepo userRepo;
-	
+
+	private UserRepo userRepo;
+
 	@Autowired
-	TokenRepo tokenRepo;
+	private TokenRepo tokenRepo;
+
+	private String role;
 
 	/**
-	 * To create user 
+	 * To create user
 	 * 
-	 * @param UserDTO
-	 * @return
+	 * @param token 
+	 * 			Authorization token to make sure the user of the method has appropriate access to run the command
+	 * @param userDTO
+	 * 			User Data Transfer Object that carries user information
+	 * @return ResponseEntity object containing the newly created user object if it succeeds, or an error if there was a problem while creating the user
 	 */
-	@RequestMapping(value = "/createUser", method = { RequestMethod.POST,
-			RequestMethod.PUT }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object createUser(@RequestBody UserDTO UserDTO) {
+	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Object createUser(@RequestHeader(value = "Authorization") String token,
+			@RequestBody UserDTO userDTO) {
 
 		try {
 			// validate token and create user
-			if (isValid(UserDTO.getToken())) {
-				User user=getUser(UserDTO);
-				user=userRepo.save(user);
+			if (isValid(token) && isSuperAdmin(role)) {
+
+				User user = getUser(userDTO);
+				user = userRepo.save(user);
 				return new ResponseEntity<User>(user, HttpStatus.CREATED);
 			} else {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid token"),
-						HttpStatus.FORBIDDEN);
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
+						HttpStatus.UNAUTHORIZED);
+
 			}
 		} catch (Exception e) {
 			Logger.getRootLogger().debug("Exception while creating user", e);
@@ -59,27 +72,30 @@ public class UserController {
 		}
 
 	}
-	
-	
+
+
 	/**
 	 * To update user info
 	 * 
-	 * @param UserDTO
-	 * @return
+	 * @param token
+	 * 			Authorization token to make sure the user of the method has appropriate access to run the command
+	 * @param userDTO
+	 * 			User Data Transfer Object that carries only the new information to be updated
+	 * @return ResponseEntity object containing the updated user object if it succeeds, or an error if there was a problem while updating the user
 	 */
-	@RequestMapping(value = "/updateUser", method = { RequestMethod.POST,
-			RequestMethod.PUT }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object updateUser(@RequestBody UserDTO userDTO) {
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Object updateUser(@RequestHeader(value = "Authorization") String token,
+			@RequestBody UserDTO userDTO) {
 
 		try {
 			// validate token and update user info
-			if (isValid(userDTO.getToken())) {
-				User oldUser=updateValidation(userDTO);
-				userRepo.save(oldUser);
-				return new ResponseEntity<User>(oldUser, HttpStatus.OK);
+			if (isValid(token)) {
+				User oldUser = updateValidation(userDTO);
+				User newUser = userRepo.save(oldUser);
+				return new ResponseEntity<User>(newUser, HttpStatus.OK);
 			} else {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid token"),
-						HttpStatus.FORBIDDEN);
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
+						HttpStatus.UNAUTHORIZED);
 			}
 		} catch (Exception e) {
 			Logger.getRootLogger().debug("Exception while updating user info", e);
@@ -90,75 +106,100 @@ public class UserController {
 	}
 
 	/**
-	 * To retrieve user by ID
+
+	 * To retrieve a given user based on their username
 	 * 
-	 * @param UserDTO
-	 * @return
+	 * @param token
+	 * 			Authorization token to make sure the user of the method has appropriate access to run the command
+	 * @return ResponseEntity object containing the requested user object if it succeeds, or an error if there was a problem while retrieving the user
 	 */
-	@RequestMapping(value = "/retrieveUser", method = { RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object retrieveUser(@RequestBody UserDTO userDTO) {
+	@RequestMapping(value = "/{username}", method = {
+			RequestMethod.GET }, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Object retrieveUser(@RequestHeader(value = "Authorization") String token,
+			@PathVariable String username) {
 
 		try {
 			// validate token and retrieve associate info
-			if (isValid(userDTO.getToken())) {
-				User user = userRepo.findByUsername(userDTO.getUsername());
+			if (isValid(token)) {
+				User user = userRepo.findByUsername(username);
+				user.blankPassword();
+				user.setID(0);
 				return new ResponseEntity<User>(user, HttpStatus.OK);
 			} else {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid token"),
-						HttpStatus.FORBIDDEN);
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
+						HttpStatus.UNAUTHORIZED);
+
 			}
 		} catch (Exception e) {
-			Logger.getRootLogger().debug("Exception while retrieving associate info", e);
+			Logger.getRootLogger().debug("Exception while retrieving user info", e);
 			return new ResponseEntity<ResponseErrorEntity>(
-					new ResponseErrorEntity("Problem occurred while retrieving associate info."), HttpStatus.NOT_FOUND);
+					new ResponseErrorEntity("Problem occurred while retrieving user info."), HttpStatus.NOT_FOUND);
 		}
 
 	}
-	
+
+
 	/**
-	 * To retrieve all user
-	 * 
-	 * @param UserDTO
+	 * To retrieve all users
+	 *
+	 * @param token
+	 * 			Authorization token to make sure the user of the method has appropriate access to run the command
 	 * @return
+	 * 			ResponseEntity object containing a list of the user objects if it succeeds, or an error if there was a problem while retrieving the users
 	 */
-	@RequestMapping(value = "/retrieveAll", method = { RequestMethod.POST}, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object retrieveAll(@RequestBody UserDTO userDTO) {
+	@RequestMapping(method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Object retrieveAll(@RequestHeader(value = "Authorization") String token) {
 
 		try {
 			// validate token and retrieve all associates info
-			if (isValid(userDTO.getToken())) {
+			if (isValid(token) && (role != "associate")) {
 				List<User> user = userRepo.findAll();
+				for (User user2 : user) {
+					user2.blankPassword();
+					user2.setID(0);
+				}
 				return new ResponseEntity<List<User>>(user, HttpStatus.OK);
 			} else {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid token"),
-						HttpStatus.FORBIDDEN);
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
+						HttpStatus.UNAUTHORIZED);
+
+	
+
 			}
 		} catch (Exception e) {
 			Logger.getRootLogger().debug("Exception while retrieving all associates info", e);
 			return new ResponseEntity<ResponseErrorEntity>(
-					new ResponseErrorEntity("Problem occurred while retrieving all associates info."), HttpStatus.NOT_FOUND);
+
+					new ResponseErrorEntity("Problem occurred while retrieving all associates info."),
+					HttpStatus.NOT_FOUND);
+
 		}
 
 	}
 
 	/**
-	 * To delete user by username
+
+	 * To delete a given user based on their username
 	 * 
-	 * @param UserDTO
+	 * @param token
+	 * 			Authorization token to make sure the user of the method has appropriate access to run the command
 	 * @return
+	 * 			ResponseEntity object containing the ID of the user that was deleted if it succeeds, or an error if there was a problem while retrieving the users
 	 */
-	@RequestMapping(value = "/deleteUser", method = { RequestMethod.POST,
-			RequestMethod.PUT }, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object deleteByUserName(@RequestBody UserDTO userDTO) {
+	@RequestMapping(value = "/{username}", method = {
+			RequestMethod.DELETE, }, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Object deleteUser(@RequestHeader(value = "Authorization") String token,
+			@PathVariable String username) {
 
 		try {
 			// validate token and delete associate
-			if (isValid(userDTO.getToken())) {
-				Long result=userRepo.deleteByUsername(userDTO.getUsername());
-				return new ResponseEntity<Long>(result,HttpStatus.OK);
+			if (isValid(token) && isSuperAdmin(role)) {
+				long result = userRepo.deleteByUsername(username);
+				return new ResponseEntity<Long>(result, HttpStatus.OK);
 			} else {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid token"),
-						HttpStatus.FORBIDDEN);
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
+						HttpStatus.UNAUTHORIZED);
+
 			}
 		} catch (Exception e) {
 			Logger.getRootLogger().debug("User not found", e);
@@ -169,63 +210,93 @@ public class UserController {
 	}
 
 	/**
-	 * To validate the token from the request
+
+	 * To validate the token from the request and set the user role
 	 * 
-	 * @param tokenDTO
+	 * @param tokenString
+	 * 		String containing the actual auth token
 	 * @return
+	 * 		Boolean, true if token is valid, false if not
 	 */
-	public boolean isValid(String tokenDTO) {
+	public boolean isValid(String tokenString) {
 		boolean valid = false;
-		 Token token = tokenRepo.findByauthToken(tokenDTO);
-		 if (token !=null) {
-		 valid = true;
-		 }
+
+		Token token = tokenRepo.findByauthToken(tokenString);
+		if (token != null) {
+			role = token.getUser().getUserRole().getName();
+			valid = true;
+		}
 		return valid;
 	}
+	
+	/**
+	 * To verify superAdmin role
+	 * @param role
+	 * 		String with the role name
+	 * @return
+	 * 		Boolean, true if role is a superadmin, false if not
+	 */
+
+	public boolean isSuperAdmin(String role) {
+		boolean authorized = false;
+		if (("superAdmin".equalsIgnoreCase(role))) {
+			authorized = true;
+		}
+
+		return authorized;
+	}
+
 	/**
 	 * To transform UserInformationChangeDTO object into an User object
-	 * @param UserDTO
+	 * 
+	 * @param userDTO
+	 * 		User Data Transfer Object with all relevant attributes included
 	 * @return
+	 * 		Standard user object
 	 */
-	
-	public User getUser(UserDTO userDTO){
+
+	public User getUser(UserDTO userDTO) {
 		User user = new User();
-		String[] ignoreProperties = { "token" };
-		BeanUtils.copyProperties(userDTO, user, ignoreProperties);
+		BeanUtils.copyProperties(userDTO, user);
 		return user;
 	}
-	
+
+
+		
 	/**
 	 * To validate user to be updated
+	 * 
 	 * @param userDTO
+	 * 		User Data Transfer Object with attributes that are to be updated
 	 * @return
+	 * 		Updated user object
 	 */
 	
 	public User updateValidation(UserDTO userDTO){
-		User oldUser=userRepo.findByUsername(userDTO.getUsername());
+		User user=userRepo.findByUsername(userDTO.getUsername());
 		if(userDTO.getUserRole()!=null)
 		{
-			oldUser.setUserRole(userDTO.getUserRole());
+			user.setUserRole(userDTO.getUserRole());
 		}
 		if(userDTO.getBatchType()!=null)
 		{
-			oldUser.setBatchType(userDTO.getBatchType());
+			user.setBatchType(userDTO.getBatchType());
 		}
 		if(userDTO.getHashedPassword()!=null)
 		{
-			oldUser.setHashedPassword(userDTO.getHashedPassword());
+			user.setHashedPassword(userDTO.getHashedPassword());
 		}
 		if(userDTO.getFirstName()!=null)
 		{
-			oldUser.setFirstName(userDTO.getFirstName());
+			user.setFirstName(userDTO.getFirstName());
 		}
 		if(userDTO.getLastName()!=null)
 		{
-			oldUser.setLastName(userDTO.getLastName());
+			user.setLastName(userDTO.getLastName());
 		}
 		
-		return oldUser;
-		
+		return user;
+
 	}
 
 }
