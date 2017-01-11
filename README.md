@@ -27,7 +27,7 @@ Aim for 3 commits a day (not including any dummy commits), with the last one bei
     1. Run `touch dummy.txt`
     1. Run `git commit -am "added dummy"` )
   * Type `git push --set-upstream origin SMS-24` to create the branch remotely (For subsequent pushes, you can simply use `git push`)
-  * If you created a dummy file, revert it with the followig steps:
+  * If you created a dummy file, revert it with the following steps:
     1. `git rm dummy.txt`
     1. `git commit -am "removed dummy file"`
     1. `git push`
