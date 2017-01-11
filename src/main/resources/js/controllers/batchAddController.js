@@ -4,10 +4,14 @@
         var bac = this;
 
           // function
-        bac.addNew = function() {
-            bac.associates.push( { firstName: bac.firstName, lastName: bac.lastName } );
-            bac.firstName = "";
-            bac.lastName = "";
+        bac.addNew = function(isValid) {
+            if (isValid) {
+                bac.associates.push( { firstName: bac.firstName, lastName: bac.lastName } );
+                bac.firstName = "";
+                bac.lastName = "";
+                $scope.newAssociate.$setUntouched();
+                $scope.newAssociate.$setPristine();
+            }
         };
 
           // data

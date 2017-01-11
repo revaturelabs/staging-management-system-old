@@ -1,9 +1,5 @@
 package com.revature.sms.controllers;
 
-<<<<<<< HEAD
-import org.apache.log4j.Logger;
-=======
-
 import java.util.List;
 
 import org.apache.log4j.Logger;

@@ -7,7 +7,7 @@
             </div>
         </md-toolbar>
 
-        <div class="md-padding">
+        <div class="md-padding batchAddChips">
             <md-chips ng-model="bACtrl.associates" readonly="true" md-removable="true">
                 <md-chip-template>
                     {{ $chip.firstName }} {{ $chip.lastName }}
@@ -17,19 +17,21 @@
 
         <div class="newAssociateGroup" layout>
             
-            <div class="newAssociate md-padding" layout="columns">
-                <md-input-container>
-                    <label> First name </label>
-                    <input type="text" ng-model="bACtrl.firstName">
-                </md-input-container>
-                <md-input-container>
-                    <label> Last name </label>
-                    <input type="text" ng-model="bACtrl.lastName">
-                </md-input-container>
-                <md-button class="md-icon-button" aria-label="More" ng-click="bACtrl.addNew()">
-                    <md-icon md-svg-icon="img/icons/ic_add_circle_black_24px.svg"> </md-icon>
-                </md-button>
-            </div>
+            <form name="newAssociate" ng-submit="bACtrl.addNew(newAssociate.$valid)" novalidate>
+                <div class="newAssociate md-padding" layout="columns">
+                    <md-input-container>
+                        <label> First name </label>
+                        <input type="text" ng-model="bACtrl.firstName" required>
+                    </md-input-container>
+                    <md-input-container>
+                        <label> Last name </label>
+                        <input type="text" ng-model="bACtrl.lastName" required>
+                    </md-input-container>
+                    <md-button type="submit" class="md-primary" aria-label="More">
+                        ADD
+                    </md-button>
+                </div>
+            </form>
 
         </div>
 
