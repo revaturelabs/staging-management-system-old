@@ -25,10 +25,9 @@ Aim for 3 commits a day (not including any dummy commits), with the last one bei
   * Use `git checkout -b SMS-24` to create a local branch for your user-story
   * Make a small change to your feature branch and commit it (One option for doing this is to touch a dummy file, to do that, follow these steps:
     1. Run `touch dummy.txt`
-    1. Run `git add dummy.txt`
     1. Run `git commit -am "added dummy"` )
   * Type `git push --set-upstream origin SMS-24` to create the branch remotely (For subsequent pushes, you can simply use `git push`)
-  * If you created a dummy file, revert it with the followig steps:
+  * If you created a dummy file, revert it with the following steps:
     1. `git rm dummy.txt`
     1. `git commit -am "removed dummy file"`
     1. `git push`
@@ -55,3 +54,14 @@ If your question pertains to the UI or Design of the app, contact Ben.
 If your question has to do with testing, contact Alex.
 
 If your quetion has to do with your development enviroment, or if you have a problem that impedes your ability to develop, contact Chris.
+
+## I haven't used Git Bash in a long while! How do I...
+* generally use it? After you've cloned as above and created your branch, the general flow is:
+  1. Before you start working, run a `git pull` to make sure you have the most up to date code
+  1. Work on your stuff
+  1. Add files by running `git add [files you created]`
+  1. Commit your changes by running `git commit -am "[message about what you did]"`
+  1. Push your changes by running `git push` (use `git push --set-upstream origin [branch name]` if it's your first time pushing to the branch)
+* store my credentials? Run `git config --global credential.helper wincred`
+* deal with a merge conflict? Cry. Loudly. 
+* actually deal with a merge conflict? Run `git status` to see what files have conflicts and read through the conflicts. A merge conflict will be set off by `<<<<<<<<<<`, and the two conflicting segments are separated by `=======`. The line `>>>>>>>> [SHA hash]` signifies the end of the conflicts.  The code before the `=======` is normally what was there before you tried to merge, and after is what would replace it. Use this information to try to figure things out on your own, but if you want a second opinion, or need help figuring things out, don't be afraid to ask someone for help.
