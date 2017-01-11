@@ -27,6 +27,14 @@ public class TestUserProvider {
 	static UserRoleRepo urr;
 	
 	/**
+	 * The nullary constructor is provided to prevent instantiation of this utility class.
+	 */
+	
+	private TestUserProvider(){
+		super();
+	}
+	
+	/**
 	 * getAssociate creates and returns a specific associate-role User
 	 * @return The associate user
 	 * username - TestAssociateOne

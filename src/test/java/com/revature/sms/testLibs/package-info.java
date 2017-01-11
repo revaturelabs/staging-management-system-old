@@ -2,5 +2,5 @@
  * This package contains tools used by various test suites
  * @author chris
  */
-package com.revature.sms.testLibs;
+package com.revature.sms.testlibs;
 
