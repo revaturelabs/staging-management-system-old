@@ -3,7 +3,6 @@ package com.revature.sms;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -12,13 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.revature.sms.domain.AssociateAttendance;
-import com.revature.sms.domain.AssociateTask;
-import com.revature.sms.domain.AssociateTaskType;
-import com.revature.sms.domain.BatchType;
-import com.revature.sms.domain.JobEventType;
-import com.revature.sms.domain.User;
-import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
 import com.revature.sms.domain.dao.AssociateTaskTypeRepo;
 import com.revature.sms.domain.dao.BatchTypeRepo;
@@ -90,6 +82,7 @@ public class StagingManagementSystemApplicationTests {
 		attr.save(new AssociateTaskType("Certification"));
 		attr.save(new AssociateTaskType("Panel"));		
 	}
+	*/
 	
 	// Defunct hashPassword script. While used to create initial hashed passwords here, actual hashing will take place on the client-side javascript
 	public static String hashPassword(String inputPassword) {
@@ -98,17 +91,17 @@ public class StagingManagementSystemApplicationTests {
 			md = MessageDigest.getInstance("SHA");
 			md.update(inputPassword.getBytes());
 			byte byteData[] = md.digest();
-			StringBuffer sb = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < byteData.length; i++) {
 				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
 			}
 			return sb.toString();
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+			Logger.getRootLogger().error("No such Algorithm", e);
 			return null;
 		}
 	}
-	*/
+	
 
 	
 }
