@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 /**
- * Class that represents specific user roles.
+ * Object that represents specific user roles.
  *
  */
 @Entity
