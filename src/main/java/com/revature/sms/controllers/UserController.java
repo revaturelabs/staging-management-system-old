@@ -27,6 +27,7 @@ import com.revature.sms.domain.dto.UserDTO;
 @RequestMapping("/api/v1/user")
 public class UserController {
 	@Autowired
+
 	private UserRepo userRepo;
 
 	@Autowired
@@ -55,6 +56,7 @@ public class UserController {
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
 						HttpStatus.UNAUTHORIZED);
+
 			}
 		} catch (Exception e) {
 			Logger.getRootLogger().debug("Exception while creating user", e);
@@ -63,6 +65,7 @@ public class UserController {
 		}
 
 	}
+
 
 	/**
 	 * To update user info
@@ -84,6 +87,10 @@ public class UserController {
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
 						HttpStatus.UNAUTHORIZED);
+
+	
+	
+
 			}
 		} catch (Exception e) {
 			Logger.getRootLogger().debug("Exception while updating user info", e);
@@ -94,6 +101,7 @@ public class UserController {
 	}
 
 	/**
+
 	 * To retrieve user
 	 * 
 	 * @param token
@@ -113,6 +121,7 @@ public class UserController {
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
 						HttpStatus.UNAUTHORIZED);
+
 			}
 		} catch (Exception e) {
 			Logger.getRootLogger().debug("Exception while retrieving associate info", e);
@@ -121,6 +130,7 @@ public class UserController {
 		}
 
 	}
+
 
 	/**
 	 * To retrieve all user
@@ -140,17 +150,23 @@ public class UserController {
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
 						HttpStatus.UNAUTHORIZED);
+
+	
+
 			}
 		} catch (Exception e) {
 			Logger.getRootLogger().debug("Exception while retrieving all associates info", e);
 			return new ResponseEntity<ResponseErrorEntity>(
+
 					new ResponseErrorEntity("Problem occurred while retrieving all associates info."),
 					HttpStatus.NOT_FOUND);
+
 		}
 
 	}
 
 	/**
+
 	 * To delete user
 	 * 
 	 * @param token
@@ -170,6 +186,7 @@ public class UserController {
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
 						HttpStatus.UNAUTHORIZED);
+
 			}
 		} catch (Exception e) {
 			Logger.getRootLogger().debug("User not found", e);
@@ -180,6 +197,7 @@ public class UserController {
 	}
 
 	/**
+
 	 * To validate the token from the request and set the user role
 	 * 
 	 * @param tokenDTO
@@ -187,6 +205,7 @@ public class UserController {
 	 */
 	public boolean isValid(String tokenDTO) {
 		boolean valid = false;
+
 		Token token = tokenRepo.findByauthToken(tokenDTO);
 		if (token != null) {
 			role = token.getUser().getUserRole().getName();
@@ -222,31 +241,37 @@ public class UserController {
 		return user;
 	}
 
+
+		
 	/**
 	 * To validate user to be updated
-	 * 
 	 * @param userDTO
 	 * @return
 	 */
-
-	public User updateValidation(UserDTO userDTO) {
-		User oldUser = userRepo.findByUsername(userDTO.getUsername());
-		if (userDTO.getUserRole() != null) {
+	
+	public User updateValidation(UserDTO userDTO){
+		User oldUser=userRepo.findByUsername(userDTO.getUsername());
+		if(userDTO.getUserRole()!=null)
+		{
 			oldUser.setUserRole(userDTO.getUserRole());
 		}
-		if (userDTO.getBatchType() != null) {
+		if(userDTO.getBatchType()!=null)
+		{
 			oldUser.setBatchType(userDTO.getBatchType());
 		}
-		if (userDTO.getHashedPassword() != null) {
+		if(userDTO.getHashedPassword()!=null)
+		{
 			oldUser.setHashedPassword(userDTO.getHashedPassword());
 		}
-		if (userDTO.getFirstName() != null) {
+		if(userDTO.getFirstName()!=null)
+		{
 			oldUser.setFirstName(userDTO.getFirstName());
 		}
-		if (userDTO.getLastName() != null) {
+		if(userDTO.getLastName()!=null)
+		{
 			oldUser.setLastName(userDTO.getLastName());
 		}
-
+		
 		return oldUser;
 
 	}
