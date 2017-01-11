@@ -64,6 +64,11 @@
 			<artifactId>selenium-java</artifactId>
 		</dependency>
 		
+		<dependency>
+	  		<groupId>com.codoid.products</groupId>
+	  		<artifactId>fillo</artifactId>
+	  		<version>1.15</version>
+		</dependency>
 		
 		<!-- Required for javadoc parsing -->
 		<dependency>

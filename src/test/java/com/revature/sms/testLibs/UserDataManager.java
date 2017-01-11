@@ -1,9 +1,6 @@
 package com.revature.sms.testLibs;
 
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
@@ -35,7 +32,7 @@ public class UserDataManager {
 	 * Each element of createdUsers is removed from the database when removeAllTestUsers is called.
 	 */
 	
-	private List<User> createdUsers = new ArrayList<>();
+	public List<User> createdUsers = new ArrayList<>();
 	
 	@Autowired
 	UserRepo ur;
