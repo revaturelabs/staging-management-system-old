@@ -20,11 +20,14 @@
         <div>
             <ui-view name="mainAssociateView"> </ui-view>
         </div>
-        
+
     </md-card>
 
     <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
         <md-toolbar>
-            <div class="md-toolbar-tools"> Menu </div> 
+            <div class="md-toolbar-tools"> Menu </div>
         </md-toolbar>
+        <ul>
+        	<li><button type ="button" ng-click="assoCtrl.updateInformation()">Update Information</a>
+        </ul>
     </md-sidenav>

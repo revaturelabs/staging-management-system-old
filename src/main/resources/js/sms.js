@@ -17,6 +17,49 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                     }
                 }
 			})
+			
+			
+		
+			
+			  // Associate update information
+                .state( "ASupdateInfo", {
+                    url: "^/AupdateInformation",
+                    parent: "assoc",
+                    views: {
+                        "mainAssociateView": {
+                            templateUrl: "html/views/updateInformation.html",
+                            controller: "updateInfoCrtl as uInfoctrl"
+                        }
+                    }
+                })
+                
+             // Admin update information
+                .state( "ADupdateInfo", {
+                    url: "^/AupdateInformation",
+                    parent: "assoc",
+                    views: {
+                        "mainAssociateView": {
+                            templateUrl: "html/views/updateInformation.html",
+                            controller: "updateInfoCrtl as uInfoctrl"
+                        }
+                    }
+                })
+			
+             // SuperAdmin update information
+                .state( "SAupdateInfo", {
+                    url: "^/SA-updateInformation",
+                    parent: "super",
+                    views: {
+                        "mainAssociateView": {
+                            templateUrl: "html/views/updateInformation.html",
+                            controller: "updateInfoCrtl as uInfoctrl"
+                        }
+                    }
+                })
+			
+			
+			
+			
               // superadmin page
 			.state( "super", {
 				url: "/super",
