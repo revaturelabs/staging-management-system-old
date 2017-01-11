@@ -1,6 +1,6 @@
 //Test associate attendance list retrieval
 
-	/*@Test
+	
 	public void testAttendance(){
 		aar.save(new AssociateAttendance(ur.findByUsername("java"), new Date(2017, 1, 7), false, false, null));
 		aar.save(new AssociateAttendance(ur.findByUsername("java"), new Date(2017, 1, 7), false, false, null));
@@ -12,9 +12,10 @@
 	}*/
 	
 	
-	//Initialize Test Data:
+	//Initialize Data:
+	//Note that the string batchType has been replaced by a database object
 	/*
-	@Test
+	
 	public void makeData(){
 		urr.save(new UserRole("associate"));
 		urr.save(new UserRole("admin"));

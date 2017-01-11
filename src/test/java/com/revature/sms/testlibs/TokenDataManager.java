@@ -1,4 +1,4 @@
-package com.revature.sms.testLibs;
+package com.revature.sms.testlibs;
 
 import java.util.ArrayList;
 import java.util.List;
