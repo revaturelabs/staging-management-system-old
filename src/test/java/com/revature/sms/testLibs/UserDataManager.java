@@ -12,7 +12,7 @@ import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.UserRepo;
 
-import static com.revature.sms.StagingManagementSystemApplicationTests.hashPassword;
+import static com.revature.sms.util.Utils.hashPassword;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +28,6 @@ import java.util.List;
  * 
  */
 
-
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class UserDataManager {
 	
 	/**
