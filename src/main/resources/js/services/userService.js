@@ -2,12 +2,20 @@
     var sms = angular.module( "sms" );
 
     sms.service( "userService", function( $resource, loginService ){
-        var userResource = $resource("api/v1/user/:username",{id: "@username"},{ save:{method:"POST",url:"api/v1/user"}, update:{method:"PUT",url:"api/v1/user"} });
+        var userResource = $resource("api/v1/user/:username", 
+            { id: "@username" }, 
+            { 
+                save  : { method: "POST", url: "api/v1/user", headers: { Authorization: loginService.getToken() } }, 
+                query : { headers: { Authorization: loginService.getToken() } }, 
+                get   : { headers: { Authorization: loginService.getToken() } }, 
+                update: { method: "PUT", url: "api/v1/user",  headers: { Authorization: loginService.getToken() } },
+                remove: { headers: { Authorization: loginService.getToken() } } 
+            } 
+        );
         var us = this;
 
         us.create = function(user, success, error) {
-            var userToken = { user: user, authToken: loginService.getToken() };
-            userToken.$save(success, error);
+            user.$save(success, error);
         };
 
         us.getAll = function(success, error) {
@@ -19,12 +27,10 @@
         };
 
         us.update = function(user, success, error) {
-            var userToken = { user: user, authToken: loginService.getToken() };
-            userToken.$update(success, error);
+            user.$update(success, error);
         };
 
         us.remove = function(user, success, error) {
-            var userToken = { user: user, authToken: loginService.getToken() };
-            userToken.$remove(success, error);
+            user.$remove(success, error);
         };
     });
