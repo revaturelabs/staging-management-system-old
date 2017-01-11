@@ -5,7 +5,7 @@
         var userResource = $resource("api/v1/user/:id",{id: "@id"},{ save:{method:"POST",url:"api/v1/user"}, update:{method:"PUT",url:"api/v1/user"} });
         var us = this;
 
-        us.create = function(user, sucess, error) {
+        us.create = function(user, success, error) {
             user.$save(success, error);
         };
 
