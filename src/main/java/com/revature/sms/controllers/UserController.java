@@ -221,7 +221,7 @@ public class UserController {
 
 	public boolean isAuthorized(String role) {
 		boolean authorized = false;
-		if ((role.equalsIgnoreCase("superAdmin"))) {
+		if (("superAdmin".equalsIgnoreCase(role))) {
 			authorized = true;
 		}
 
