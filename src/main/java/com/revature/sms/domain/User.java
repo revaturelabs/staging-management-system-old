@@ -45,7 +45,7 @@ public class User {
 	 * String that represents the hashedPassword of the User object. All
 	 * passwords are hashed in the database.
 	 */
-	@Column(name = "HASHED_PASSWORD")
+	@Column(name = "HASHED_PASSWORD", nullable = false)
 	private String hashedPassword;
 	
 	/**
