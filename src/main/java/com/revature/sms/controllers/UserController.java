@@ -146,19 +146,17 @@ public class UserController {
 
 		try {
 			// validate token and retrieve all associates info
+			System.out.println(authToken);
 			Token userToken = tokenRepo.findByauthToken(authToken);
+			System.out.println(userToken.getAuthToken());
 			if (userToken == null) {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("AuthToken invalid."), HttpStatus.NOT_FOUND);
-			} else if (userTo)
-			if (isValid(token) && (role != "associate")) {
+			} else if ( (userToken.getUser().getUserRole().getName().equalsIgnoreCase("superadmin") || userToken.getUser().getUserRole().getName().equalsIgnoreCase("admin")) ) {
 				List<User> user = userRepo.findAll();
 				return new ResponseEntity<List<User>>(user, HttpStatus.OK);
 			} else {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized to access information."),
 						HttpStatus.UNAUTHORIZED);
-
-	
-
 			}
 		} catch (Exception e) {
 			Logger.getRootLogger().debug("Exception while retrieving all associates info", e);

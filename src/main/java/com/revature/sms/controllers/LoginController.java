@@ -3,6 +3,7 @@ package com.revature.sms.controllers;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.revature.sms.domain.dao.TokenRepo;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,10 @@ public class LoginController {
 	 */
 	@Autowired
 	UserRepo ur;
+
+	@Autowired
+	TokenRepo tr;
+
 	/**
 	 * Autowired AssociateAttendenceRepo object. Spring handles setting this up
 	 * for actual use.
@@ -63,8 +68,10 @@ public class LoginController {
 					markPresent(u.getUsername());
 				}
 
-				u.blankPassword();
 				Token token = new Token(u);
+				tr.save(token);
+				u.blankPassword();
+
 				UserTokenDTO userToken = new UserTokenDTO();
 				userToken.setUser(u);
 				userToken.setToken(token.getAuthToken());

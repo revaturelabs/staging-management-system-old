@@ -5,11 +5,11 @@
         var userResource = $resource("api/v1/user/:username", 
             { id: "@username" }, 
             { 
-                save  : { method: "POST", url: "api/v1/user", headers: { Authorization: loginService.getToken() } }, 
-                query : { headers: { Authorization: loginService.getToken() } }, 
-                get   : { headers: { Authorization: loginService.getToken() } }, 
-                update: { method: "PUT", url: "api/v1/user",  headers: { Authorization: loginService.getToken() } },
-                remove: { headers: { Authorization: loginService.getToken() } } 
+                save  : { headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8;", "Authorization": loginService.getToken() }, method: "POST", url: "api/v1/user" }, 
+                query : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } }, 
+                get   : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } }, 
+                update: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "PUT", url: "api/v1/user" },
+                remove: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } } 
             } 
         );
         var us = this;

@@ -30,12 +30,12 @@
 
           // data
         suc.user = loginService.getUser();
-        suc.token = loginService.getToken();
 
         userService.getAll(function(response){
             suc.users = response;
         }, function(error){
             suc.toast("Error retrieving all users.");
+            console.log(error);
         });
 
     });
