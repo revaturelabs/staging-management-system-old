@@ -7,13 +7,15 @@
             </div>
         </md-toolbar>
 
-        <div class="newAssociateGroup" layout="rows">
-            
+        <div class="md-padding">
             <md-chips ng-model="bACtrl.associates" readonly="true" md-removable="true">
-                <md-chip ng-repeat="associate in bACtrl.associates">
-                    {{ associate.firstName }} {{ associate.lastName }}
-                </md-chip>
+                <md-chip-template>
+                    {{ $chip.firstName }} {{ $chip.lastName }}
+                </md-chip-template>
             </md-chips>
+        </div>
+
+        <div class="newAssociateGroup" layout>
             
             <div class="newAssociate md-padding" layout="columns">
                 <md-input-container>

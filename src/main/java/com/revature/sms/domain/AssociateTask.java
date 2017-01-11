@@ -74,15 +74,10 @@ public class AssociateTask {
 	public void setNote(String note) {
 		this.note = note;
 	}
-<<<<<<< HEAD
-=======
 
-	@Override
+ 	@Override
 	public String toString() {
 		return "AssociateTasks [ID=" + ID + ", taskType=" + taskType.getType() + ", date=" + date
 				+ ", note=" + note + "]";
 	}
-	
-	
->>>>>>> 4e571aba5f53ead8e10d381c1d089b86a5bb6a62
 }

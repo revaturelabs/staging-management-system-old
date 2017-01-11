@@ -3,10 +3,7 @@ package com.revature.sms;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
->>>>>>> 4e571aba5f53ead8e10d381c1d089b86a5bb6a62
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
