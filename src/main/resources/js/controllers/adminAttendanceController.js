@@ -37,11 +37,13 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     }
     
     /*set all days based on monday*/
+    var setMonday = new Date();
+    setMonday.setDate(m.getDate());
     monday = m;
-    tuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1),9,0,0,0);
-    wednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2),9,0,0,0);
-    thursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3),9,0,0,0);
-    friday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4),9,0,0,0);
+    tuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
+    wednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
+    thursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
+    friday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
     
     /*set all scope days to print on top of table*/
     console.log(monday);
@@ -72,6 +74,52 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     //create a confirm function
     
     
-	//change week
-	
+    
+    
+    
+    
+	//change week functions
+	$scope.goBackOneWeek = function() {
+		m = new Date();
+        m.setFullYear(setMonday.getFullYear(), setMonday.getMonth(), (setMonday.getDate()-7));
+        
+        setMonday.setFullYear(m.getFullYear(), m.getMonth(), m.getDate());
+        monday = m;
+        tuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
+        wednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
+        thursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
+        friday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
+        
+        /*set all scope days to print on top of table*/
+        console.log(monday);
+        aac.monday = (monday.getMonth()+1)+"/"+monday.getDate();
+        aac.tuesday = (tuesday.getMonth()+1)+"/"+tuesday.getDate();
+        aac.wednesday = (wednesday.getMonth()+1)+"/"+wednesday.getDate();
+        aac.thursday = (thursday.getMonth()+1)+"/"+thursday.getDate();
+        aac.friday = (friday.getMonth()+1)+"/"+friday.getDate();
+        
+        
+    };
+    
+    $scope.goForwardOneWeek = function() {
+        m = new Date();
+        m.setFullYear(setMonday.getFullYear(), setMonday.getMonth(), (setMonday.getDate()+7));
+        
+        setMonday.setFullYear(m.getFullYear(), m.getMonth(), m.getDate());
+        monday = m;
+        tuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
+        wednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
+        thursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
+        friday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
+        
+        /*set all scope days to print on top of table*/
+        console.log(monday);
+        aac.monday = (monday.getMonth()+1)+"/"+monday.getDate();
+        aac.tuesday = (tuesday.getMonth()+1)+"/"+tuesday.getDate();
+        aac.wednesday = (wednesday.getMonth()+1)+"/"+wednesday.getDate();
+        aac.thursday = (thursday.getMonth()+1)+"/"+thursday.getDate();
+        aac.friday = (friday.getMonth()+1)+"/"+friday.getDate();
+        
+        
+    };
 });
