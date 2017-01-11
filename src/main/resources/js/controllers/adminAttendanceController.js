@@ -1,12 +1,18 @@
 var sms = angular.module("sms");
-sms.controller("adminAttendanceCtrl", function($scope, $state) {
+sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $filter) {
+	var aac = this;
 	
+	aac.toast = function(message){
+		$scope.$parent.$parent.mastCtrl.toast(message);
+	};
+	
+	/*SET DATE HEADERS IN TABLE*/
 	//set current day
 	var today = new Date();
     var day = today.getDate();
     var w = today.getDay();
-    /*day is the day of the week*/
-    /*w is the day of the month*/
+    /*day is the day of the month*/
+    /*w is the day of the week*/
     
     
     /*set monday based on what day of the week it is*/
@@ -39,18 +45,33 @@ sms.controller("adminAttendanceCtrl", function($scope, $state) {
     
     /*set all scope days to print on top of table*/
     console.log(monday);
-    $scope.monday = (monday.getMonth()+1)+"/"+monday.getDate();
-    $scope.tuesday = (tuesday.getMonth()+1)+"/"+tuesday.getDate();
-    $scope.wednesday = (wednesday.getMonth()+1)+"/"+wednesday.getDate();
-    $scope.thursday = (thursday.getMonth()+1)+"/"+thursday.getDate();
-    $scope.friday = (friday.getMonth()+1)+"/"+friday.getDate();
+    aac.monday = (monday.getMonth()+1)+"/"+monday.getDate();
+    aac.tuesday = (tuesday.getMonth()+1)+"/"+tuesday.getDate();
+    aac.wednesday = (wednesday.getMonth()+1)+"/"+wednesday.getDate();
+    aac.thursday = (thursday.getMonth()+1)+"/"+thursday.getDate();
+    aac.friday = (friday.getMonth()+1)+"/"+friday.getDate();
     
 	//get all attendance for the week for all associates
+    
+    var allThisWeekAttendance = [];
+    
+    userService.getAll(function(response){
+    	
+    	aac.users = $filter("associateFilter")(response);
+    	aac.users.forEach(function(user){
+    		thisWeekAttendance = $filter("weekFilter")(user, monday);
+    		allThisWeekAttendance.push(thisWeekAttendance);
+    	});
+    	
+    }, function(error){
+    	aac.toast("Error in retrieving all associates.");
+    });
+    
     
     
     //create a confirm function
     
     
-	
+	//change week
 	
 });

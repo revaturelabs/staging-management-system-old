@@ -51,15 +51,16 @@
 		</tr>
 		<tr>
 			<th></th>
-			<th>{{ monday }}</th>
-			<th>{{ tuesday }}</th>
-			<th>{{ wednesday }}</th>
-			<th>{{ thursday }}</th>
-			<th>{{ friday }}</th>
+			<th>{{ adAttCtrl.monday }}</th>
+			<th>{{ adAttCtrl.tuesday }}</th>
+			<th>{{ adAttCtrl.wednesday }}</th>
+			<th>{{ adAttCtrl.thursday }}</th>
+			<th>{{ adAttCtrl.friday }}</th>
 		</tr>
 	</thead>
 
 	<tbody>
+		<tr ng-repeat = "associate in adAttCtrl.users">
 		<tr>
 			<td>Bob</td>
 			<td>Eclair</td>
