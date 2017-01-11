@@ -17,16 +17,16 @@ sms.filter("weekFilter", function(){
 	    
 		user.attendance.forEach(function(day){
 			day = new Date(day);
-			if(day.getDate()==monday.getDate() && day.getMonth()==friday.getMonth()){
+			if(day.getDate()==monday.getDate() && day.getMonth()==monday.getMonth()){
 				thisWeek.monday = day;
 			}
-			if(day.getDate()==tuesday.getDate() && day.getMonth()==friday.getMonth()){
+			if(day.getDate()==tuesday.getDate() && day.getMonth()==tuesday.getMonth()){
 				thisWeek.tuesday = day;
 			}
-			if(day.getDate()==wednesday.getDate() && day.getMonth()==friday.getMonth()){
+			if(day.getDate()==wednesday.getDate() && day.getMonth()==wednesday.getMonth()){
 				thisWeek.wednesday = day;
 			}
-			if(day.getDate()==thursday.getDate() && day.getMonth()==friday.getMonth()){
+			if(day.getDate()==thursday.getDate() && day.getMonth()==thursday.getMonth()){
 				thisWeek.thursday = day;
 			}
 			if(day.getDate()==friday.getDate() && day.getMonth()==friday.getMonth()){
