@@ -1,7 +1,7 @@
 
     var sms = angular.module( "sms" );
 
-    sms.controller( "superCtrl", function( $scope, $state, $mdSidenav, $mdDialog, loginService ){
+    sms.controller( "superCtrl", function( $scope, $state, $mdSidenav, $mdDialog, loginService, userService ){
         var suc = this;
 
           // functions
@@ -31,5 +31,11 @@
           // data
         suc.user = loginService.getUser();
         suc.token = loginService.getToken();
+
+        userService.getAll(function(response){
+            suc.users = response;
+        }, function(error){
+            suc.toast("Error retrieving all users.");
+        });
 
     });

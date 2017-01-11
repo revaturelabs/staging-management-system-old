@@ -150,10 +150,14 @@ public class UserController {
 	 * 			ResponseEntity object containing a list of the user objects if it succeeds, or an error if there was a problem while retrieving the users
 	 */
 	@RequestMapping(method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object retrieveAll(@RequestHeader(value = "Authorization") String token) {
+	public @ResponseBody Object retrieveAll(@RequestHeader(value = "Authorization") String authToken) {
 
 		try {
 			// validate token and retrieve all associates info
+			Token userToken = tokenRepo.findByauthToken(authToken);
+			if (userToken == null) {
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("AuthToken invalid."), HttpStatus.NOT_FOUND);
+			} else if (userTo)
 			if (isValid(token) && (role != "associate")) {
 				List<User> user = userRepo.findAll();
 				for (User user2 : user) {
