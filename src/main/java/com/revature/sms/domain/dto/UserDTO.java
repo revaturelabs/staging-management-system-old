@@ -11,8 +11,7 @@ public class UserDTO {
 	private String hashedPassword;
 	private BatchType batchType;
 	private UserRole userRole;
-	private String token;
-
+	
 	public UserDTO() {
 		super();
 	}
@@ -87,12 +86,5 @@ public class UserDTO {
 		this.batchType = batchType;
 	}
 	
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
 
 }
