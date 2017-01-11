@@ -79,17 +79,4 @@ public class DatabasePopulationTest {
 		attr.save(new AssociateTaskType("Panel"));		
 	}
 	
-	
-	//Test associate attendance list retrieval
-	@Ignore
-	@Test
-	public void testAttendance(){
-		aar.save(new AssociateAttendance(new Date(1483765200000L), false, false, null));   //The long passed to the Date constructor is the number of milliseconds since Jan. 1 1970.
-		List<AssociateAttendance> list = aar.findByDate(ur.findByUsername("java"));
-		for (AssociateAttendance associateAttendance : list) {
-			System.out.println(associateAttendance);
-		}
-	}
-	
-	
 }
