@@ -1,12 +1,8 @@
 package com.revature.sms.controllers;
 
-<<<<<<< HEAD
-import com.revature.sms.domain.dto.UserTokenDTO;
-=======
 import java.sql.Timestamp;
 import java.util.List;
 
->>>>>>> 3e344ce9fecb25e8c32208a7482e0a4497c8022c
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.sms.domain.User;
+import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.Token;
-import com.revature.sms.domain.dao.TokenRepo;
+import com.revature.sms.domain.User;
+import com.revature.sms.domain.dao.AssociateAttendanceRepo;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dto.LoginAttempt;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
+import com.revature.sms.domain.dto.UserTokenDTO;
 
 /**
  * Server-side controller to handle logging into the application.
@@ -36,15 +34,12 @@ public class LoginController {
 	 */
 	@Autowired
 	UserRepo ur;
-<<<<<<< HEAD
-=======
 	/**
 	 * Autowired AssociateAttendenceRepo object. Spring handles setting this up
 	 * for actual use.
 	 */
->>>>>>> 3e344ce9fecb25e8c32208a7482e0a4497c8022c
 	@Autowired
-	TokenRepo tokenRepo;
+	AssociateAttendanceRepo aar;
 
 	/**
 	 * Method that's called via Http Post method. Used for submitting a login
@@ -62,24 +57,28 @@ public class LoginController {
 		User u = ur.findByUsername(in.getUsername());
 		try {
 			if (u.getHashedPassword().equals(in.getInputPass())) {
+				// Successful login
+				if ("associate".equals(u.getUserRole().getName())) {
+					// if associate mark attendance as present
+					markPresent(u.getUsername());
+				}
+
 				u.blankPassword();
 				Token token = new Token(u);
-				token=tokenRepo.save(token);
 				UserTokenDTO userToken = new UserTokenDTO();
 				userToken.setUser(u);
 				userToken.setToken(token.getAuthToken());
 				return new ResponseEntity<UserTokenDTO>(userToken, HttpStatus.OK);
 			} else {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid password."), HttpStatus.NOT_FOUND);
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid password."),
+						HttpStatus.NOT_FOUND);
 			}
 		} catch (NullPointerException e) {
 			Logger.getRootLogger().debug("Bad username", e);
-			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Username does not exist."), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Username does not exist."),
+					HttpStatus.NOT_FOUND);
 		}
 	}
-<<<<<<< HEAD
-}
-=======
 
 	/**
 	 * Marks an associate as present
@@ -116,4 +115,3 @@ public class LoginController {
 	}
 
 }
->>>>>>> 3e344ce9fecb25e8c32208a7482e0a4497c8022c
