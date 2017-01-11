@@ -45,9 +45,10 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
 	            		  "Content-Type":"application/json"
 	            	  },
 	      
-	            	  data:{
-	            		  "userDTO" : uic.userDTO
-	            	  }
+/*	            	  data:{
+	            		  uic.userDTO
+	            	  }*/
+	            	  data:{"username": uic.user.username, "oldPassword": oldPassH, "newPassword":newPassH}
 	            	}).then(function successCallback(response) {
 
 	            		console.log("password changed successfully");
