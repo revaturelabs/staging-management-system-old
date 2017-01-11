@@ -1,6 +1,7 @@
 package com.revature.sms;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +27,7 @@ public class LoginTestSuite {
 	void testAssociateLogin(){
 		User testUser = TestUserProvider.getAssociate();
 		udm.createTestUser(testUser);
+		Assert.assertTrue(true);
 		//TODO: Write a test case that succeeds when a test logs in using valid Associate credentials
 	}
 	
