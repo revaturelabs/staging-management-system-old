@@ -40,6 +40,7 @@
                             templateUrl: "html/views/superadmin/superAttendance.html",
                             controller: "superAttendanceCtrl as supAttCtrl"
                         }
+                        
                     }
                 })
               // admin page
@@ -68,6 +69,20 @@
                     }
                 }
 			})
+			//.....................................................................
+			// superadmin view all attendance
+                .state( "assocAttendance", {
+                    url: "^/weeklyattendence",
+                    parent: "assoc",
+                    views: {
+                        "mainAssociateView": {
+                            templateUrl: "html/views/associate/associateWeeklyAttendence.html",
+                            controller: "associateWeeklyAttendenceCtrl as assWeekAttCtrl"
+                        }
+                        
+                    }
+                })
+			//........................................................................
 	});
 
       // theme config

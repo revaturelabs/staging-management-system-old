@@ -27,7 +27,7 @@
                             $state.go("admin");
                             break;
                         case "associate":
-                            $state.go("assoc");
+                            $state.go("assocAttendance");
                             break;
                         default:
                             break;
