@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,6 @@ import com.revature.sms.domain.dao.UserRoleRepo;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class StagingManagementSystemApplicationTests {
-	
-	@Test
-	public void everythingsGood(){
-		Logger.getRootLogger().debug("No tests right now");
-	}
-	//This class runs on *EVERY* commit to a feature branch!! Make sure code here doesn't create needless database objects
 	
 	
 	@Autowired
@@ -46,6 +41,20 @@ public class StagingManagementSystemApplicationTests {
 	
 	@Autowired
 	BatchTypeRepo btr;
+	
+	/**
+	 * everythingsGood is a test method that is executed every time the pipeline checks the code.
+	 * it is used to ensure that testing 
+	 */
+	
+	@Test
+	public void everythingsGood(){
+		Assert.assertTrue("Test executed", true);
+		
+	}
+	//This class runs on *EVERY* commit to a feature branch!! Make sure code here doesn't create needless database objects
+	
+	
 
 	//Test associate attendance list retrieval
 
