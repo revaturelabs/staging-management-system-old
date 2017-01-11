@@ -2,10 +2,10 @@
     var sms = angular.module( "sms" );
 
     sms.service( "userService", function($resource){
-        var userResource = $resource("api/v1/user/:id",{id: "@id"},{ save:{method:"POST",url:"api/v1/user"}, update:{method:"PUT",url:"api/v1/user"} });
+        var userResource = $resource("api/v1/user/:username",{id: "@username"},{ save:{method:"POST",url:"api/v1/user"}, update:{method:"PUT",url:"api/v1/user"} });
         var us = this;
 
-        us.create = function(user, sucess, error) {
+        us.create = function(user, success, error) {
             user.$save(success, error);
         };
 
@@ -13,8 +13,8 @@
             userResource.query(success, error);
         };
 
-        us.retrieve = function(id, success, error) {
-            userResource.get({id: id}, success, error);
+        us.retrieve = function(username, success, error) {
+            userResource.get({username: username}, success, error);
         };
 
         us.update = function(user, success, error) {
