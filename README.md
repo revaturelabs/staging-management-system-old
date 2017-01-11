@@ -47,13 +47,13 @@ Aim for 3 commits a day (not including any dummy commits), with the last one bei
 
 ## I have a question! Who should I ask?
 
-If your question relates to the Requirements of a userstory, contact Karan or Ankit.
+If your question relates to the requirements of a userstory, contact Karan or Ankit.
 
-If your question pertains to the UI or Design of the app, contact Ben.
+If your question pertains to the UI or design of the app, contact Ben.
 
 If your question has to do with testing, contact Alex.
 
-If your quetion has to do with your development enviroment, or if you have a problem that impedes your ability to develop, contact Chris.
+If your question has to do with your development enviroment, or if you have a problem that impedes your ability to develop, contact Chris.
 
 ## I haven't used Git Bash in a long while! How do I...
 * generally use it? After you've cloned as above and created your branch, the general flow is:
