@@ -1,5 +1,20 @@
-update info<br>
-old password: <input id="oldPass" ng-model="uic.oldPass" type = "password"><br>
-new password: <input id="newPass" ng-model="uic.newPass"  type = "password"><br>
-confirm password: <input id="confirmPass" ng-bind="uic.confirmPass"  type = "password"><br>
-<button type="button" ng-click="uInfoctrl.submit()">Submit</button>
+<md-card-title>
+          <md-card-title-text>Update Information</md-card-title-text>
+</md-card-title>
+
+<md-input-container class="md-block" flex-gt-sm>
+	<label style="text-align: center">oldPass</label>
+	<input id="oldPass" ng-bind="uic.oldPass"  style="text-align: center" type = "password">
+ </md-input-container>
+ 
+ <md-input-container class="md-block" flex-gt-sm>
+	<label style="text-align: center">New Password</label>
+	<input id="newPass" ng-bind="uic.newPass" style="text-align: center" type = "password">
+ </md-input-container>
+ 
+ <md-input-container class="md-block" flex-gt-sm>
+	<label style="text-align: center">Confirm Password</label>
+	<input id="confirmPass" ng-bind="uic.confirmPass" style="text-align: center"  type = "password">
+ </md-input-container>
+ 
+ <md-button class="md-raised" ng-click="uInfoctrl.submit()">Submit</md-button>
