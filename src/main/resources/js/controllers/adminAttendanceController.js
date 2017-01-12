@@ -17,23 +17,30 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     
     /*set monday based on what day of the week it is*/
     var m = new Date();
+    aac.activeDay = 1;
     if(w==0){
     	m.setDate(day+1);
+    	aac.activeDay = 0;
     }
     if(w==2){
     	m.setDate(day-1);
+    	aac.activeDay = 2;
     }
     if(w==3){
     	m.setDate(day-2);
+    	aac.activeDay = 3;
     }
     if(w==4){
     	m.setDate(day-3);
+    	aac.activeDay = 4;
     }
     if(w==5){
     	m.setDate(day-4);
+    	aac.activeDay = 5;
     }
     if(w==6){
     	m.setDate(day-5);
+    	aac.activeDay = 6;
     }
     
     /*set all days based on monday*/
@@ -55,15 +62,16 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     
 	//get all attendance for the week for all associates
     
-    var allThisWeekAttendance = [];
+    /*aac.allThisWeekAttendance = [];*/
     
     userService.getAll(function(response){
     	
     	aac.users = $filter("associateFilter")(response);
-    	aac.users.forEach(function(user){
+    	aac.users = $filter("weekFilter")(aac.users, monday);
+    	/*aac.users.forEach(function(user){
     		thisWeekAttendance = $filter("weekFilter")(user, monday);
-    		allThisWeekAttendance.push(thisWeekAttendance);
-    	});
+    		aac.allThisWeekAttendance.push(thisWeekAttendance);
+    	});*/
     	
     }, function(error){
     	aac.toast("Error in retrieving all associates.");
@@ -80,6 +88,7 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     
 	//change week functions
 	$scope.goBackOneWeek = function() {
+		/*set the new week up*/
 		m = new Date();
         m.setFullYear(setMonday.getFullYear(), setMonday.getMonth(), (setMonday.getDate()-7));
         
@@ -98,10 +107,18 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
         aac.thursday = (thursday.getMonth()+1)+"/"+thursday.getDate();
         aac.friday = (friday.getMonth()+1)+"/"+friday.getDate();
         
+        /*make data change for new week*/
+        allThisWeekAttendance = [];
+        aac.users.forEach(function(user){
+    		thisWeekAttendance = $filter("weekFilter")(user, monday);
+    		allThisWeekAttendance.push(thisWeekAttendance);
+    	});
+        
         
     };
     
     $scope.goForwardOneWeek = function() {
+    	/*set the new week up*/
         m = new Date();
         m.setFullYear(setMonday.getFullYear(), setMonday.getMonth(), (setMonday.getDate()+7));
         
@@ -120,6 +137,12 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
         aac.thursday = (thursday.getMonth()+1)+"/"+thursday.getDate();
         aac.friday = (friday.getMonth()+1)+"/"+friday.getDate();
         
+        /*make data change for new week*/
+        allThisWeekAttendance = [];
+        aac.users.forEach(function(user){
+    		thisWeekAttendance = $filter("weekFilter")(user, monday);
+    		allThisWeekAttendance.push(thisWeekAttendance);
+    	});
         
     };
 });
