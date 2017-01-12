@@ -9,7 +9,7 @@
 
         bac.addNew = function(isValid) {
             if (isValid) {
-                bac.associates.push( { firstName: bac.firstName, lastName: bac.lastName } );
+                bac.associates.push( { firstName: bac.firstName, lastName: bac.lastName, batchType: bac.selectedBatchType } );
                 bac.firstName = "";
                 bac.lastName = "";
                 $scope.newAssociate.$setUntouched();
@@ -30,9 +30,7 @@
 		userRole.name = "associate";
 		userRole.id = 1;
 		
-		var batchType = {};
-		batchType.type = ".NET";
-		batchType.id = 3;
+
 		
         bac.save = function(list){
         	if (list.length != 0){
@@ -41,7 +39,6 @@
         		+ addUser.lastName.toLowerCase();
         		addUser.hashedPassword = CryptoJS.SHA1(addUser.username).toString();
         		addUser.userRole = userRole;
-        		addUser.batchType = batchType;
         		//call rest controller to save user via userService
         		userService.create(addUser, function(response){        			
         		}, function(error){        			
