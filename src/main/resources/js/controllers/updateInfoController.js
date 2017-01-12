@@ -10,7 +10,6 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
     //When user decides to cancel password update
     uic.cancel = function(){
     	//route to the appropriate homepage
-    	console.log(loginService.getUser());
 		switch(loginService.getUser().userRole.name){
 		case "associate":$state.go("assoc"); break;
 		case "admin" : $state.go("admin"); break;
