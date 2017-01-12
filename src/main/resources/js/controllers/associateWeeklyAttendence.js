@@ -7,7 +7,7 @@
     	var ascatt = this;
     	
     	//used to get todays date
-    	var d = new Date();
+    	//var d = new Date();
     		
     	// create a list of all the days in the week
     	ascatt.days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -28,8 +28,7 @@
         // get the current ussers attendence and stores it in this variable
         var as = ascatt.user.attendance;
         
-        // test
-        alert(new Date((as[0].date)));
+       
         
         //999999999999999999999999999999999999999999999999999999999999
         //set current day
@@ -103,46 +102,40 @@
         	var comparedYear = comparedDate.getFullYear();
         	
         	// if the users attendence of this monday matches the monday we want
-        	if((monday.getMonth()+1) == comparedMonth &&  monday.getDate() == comparedDayNumber && monday.getFullYear()){
+        	if((monday.getMonth()+1) == comparedMonth &&  monday.getDate() == comparedDayNumber && comparedYear == monday.getFullYear()){
         		
         		// save what the index of this day was from the users attendence list
         		daypositions[1] = i; 
         	}
         	// if the users attendence of this tuesday matches the monday we want
-        	else if((tuesday.getMonth()+1) == comparedMonth &&  tuesday.getDate() == comparedDayNumber && tuesday.getFullYear()){
+        	else if((tuesday.getMonth()+1) == comparedMonth &&  tuesday.getDate() == comparedDayNumber && comparedYear == tuesday.getFullYear()){
         	
         		// save what the index of this day was from the users attendence list
         		daypositions[2] = i;
         	}
         	// if the users attendence of this wednesday matches the monday we want
-        	else if((wednesday.getMonth()+1) == comparedMonth &&  wednesday.getDate() == comparedDayNumber && wednesday.getFullYear()){
+        	else if((wednesday.getMonth()+1) == comparedMonth &&  wednesday.getDate() == comparedDayNumber  && comparedYear == wednesday.getFullYear()){
         	
         		// save what the index of this day was from the users attendence list
         		daypositions[3] = i;
         	}
         	// if the users attendence of this thursday matches the monday we want
-        	else if((thursday.getMonth()+1) == comparedMonth &&  thursday.getDate() == comparedDayNumber && thursday.getFullYear()){
+        	else if((thursday.getMonth()+1) == comparedMonth &&  thursday.getDate() == comparedDayNumber && comparedYear == thursday.getFullYear()){
         		
         		// save what the index of this day was from the users attendence list
         		daypositions[4] = i;
         	}
         	// if the users attendence of this friday matches the monday we want
-        	else if((friday.getMonth()+1) == comparedMonth &&  friday.getDate() == comparedDayNumber && friday.getFullYear()){
+        	else if((friday.getMonth()+1) == comparedMonth &&  friday.getDate() == comparedDayNumber && comparedYear == friday.getFullYear()){
         		
         		// save what the index of this day was from the users attendence list
         		daypositions[5] = i;
         	}
         }
         
-        // important test
-        alert(daypositions);
+   
         
-        //***************************************************************
-        /*// //test if checked in on monday
-        alert("Friday checked in " + as[daypositions[5]].checkedIn);
-        
-        // //test if checked if verified
-        alert("Friday verified in " + as[daypositions[5]].verified);*/
+
     
         // used to save each day of the week was marked as
         ascatt.daypositionstring = [];
@@ -164,43 +157,42 @@
          ]; 
         
         // for each of the chosen days
-        for(var i  = 0; i < daypositions.length; i++){
+        for(var j  = 0; j < daypositions.length; j++){
         	
         	// if we didnt have an entry for that day in our database table
-        	if(daypositions[i] == -1){
+        	if(daypositions[j] == -1){
         		
-        		alert(i + ") none");
+        		
         		
         		// set this days icon data
         		ascatt.daypositionstring.push(iconData[3]);
         	}
         	// if you checked in and were verified
-        	else if(as[daypositions[i]].checkedIn && as[daypositions[i]].verified){
+        	else if(as[daypositions[j]].checkedIn && as[daypositions[j]].verified){
         		//TODO return a proper string
-        		alert(i + ") if you checked in and were verified");
+ 
         		
         		// set this days icon data
         		ascatt.daypositionstring.push(iconData[2]);
             }
         	// if you checked in but were NOT yet verified
-        	else if(as[daypositions[i]].checkedIn && (!(as[daypositions[i]].verified))){
+        	else if(as[daypositions[j]].checkedIn && (!(as[daypositions[j]].verified))){
         		
-        		alert(i + ") if you checked in but were NOT yet verified");
+        	
         		
         		// set this days icon data
         		ascatt.daypositionstring.push(iconData[0]);
         	}
         	// if you were NOT checked in but were verified
-        	else if((!(as[daypositions[i]].checkedIn)) && as[daypositions[i]].verified){
-        		alert(i + ") if you were NOT checked in but were verified");
-        		
+        	else if((!(as[daypositions[j]].checkedIn)) && as[daypositions[j]].verified){
+        	
         		
         		//TODO may want to change this // set this days icon data
         		ascatt.daypositionstring.push(iconData[2]);
         	}
         	// if you were NOT checked in and NOT verified
-        	else if((!(as[daypositions[i]].checkedIn)) && (!(as[daypositions[i]].verified))){
-        		alert(i + ") if you were NOT checked in and NOT verified");
+        	else if((!(as[daypositions[j]].checkedIn)) && (!(as[daypositions[j]].verified))){
+        		
         		
         		// set this days icon data
         		ascatt.daypositionstring.push(iconData[1]);
