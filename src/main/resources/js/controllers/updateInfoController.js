@@ -21,7 +21,6 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
 	            uic.user = loginService.getUser();
 	            uic.token = loginService.getToken();
 	            
-	            console.log(uic.token);
 	            $http({
 	            	  method: 'PUT',
 	            	  url: '/api/v1/login',
@@ -47,6 +46,7 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
 	            		switch(response.status){
 	            		case 404:uic.toast("Password mismatch");break;
 	            		case 401:uic.toast("User is unauthorized");break;
+	            		default: uic.toast("An error has occured"); break;
 	            		}
 	            	  });
 	            uic.user = "";
