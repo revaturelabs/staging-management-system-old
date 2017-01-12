@@ -10,21 +10,20 @@
     	var d = new Date();
     		
     	// create a list of all the days in the week
-    	$scope.days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    	ascatt.days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     	
     	//need this to hold which day of the week is witch 0 for sunday 6 for saturday etc
-    	$scope.daynumbercount = [0,1,2,3,4,5,6];
+    	ascatt.daynumbercount = [0,1,2,3,4,5,6];
     	
     	// TODO test to change text color by day of week doesnt work 
     	
     	//test
-    	$scope.firstname = "John";	
-    	//test
-        $scope.$parent.mastCtrl.toast("Here");
+    	ascatt.firstname = "John";	
+    	/*//test
+    	ascatt.$parent.mastCtrl.toast("Here");*/
         
         // get the logged in  user
         ascatt.user = loginService.getUser();
-        console.log(ascatt.user);
         
         // get the current ussers attendence and stores it in this variable
         var as = ascatt.user.attendance;
@@ -74,12 +73,11 @@
         
         //test
         //set all scope days to print on top of table
-        console.log(monday);
-        $scope.monday = (monday.getMonth()+1)+"/"+monday.getDate();
-        $scope.tuesday = (tuesday.getMonth()+1)+"/"+tuesday.getDate();
-        $scope.wednesday = (wednesday.getMonth()+1)+"/"+wednesday.getDate();
-        $scope.thursday = (thursday.getMonth()+1)+"/"+thursday.getDate();
-        $scope.friday = (friday.getMonth()+1)+"/"+friday.getDate();
+        ascatt.monday = (monday.getMonth()+1)+"/"+monday.getDate();
+        ascatt.tuesday = (tuesday.getMonth()+1)+"/"+tuesday.getDate();
+        ascatt.wednesday = (wednesday.getMonth()+1)+"/"+wednesday.getDate();
+        ascatt.thursday = (thursday.getMonth()+1)+"/"+thursday.getDate();
+        ascatt.friday = (friday.getMonth()+1)+"/"+friday.getDate();
         //99999999999999999999999999999999999999999999999999999999999
         
         //holds the position of the 5 days -1 if it does not exist
@@ -143,7 +141,7 @@
         alert("Friday verified in " + as[daypositions[5]].verified);*/
     
         // used to save each day of the week was marked as
-        $scope.daypositionstring = [];
+        ascatt.daypositionstring = [];
         
         // a list of all usable icons
         var iconData = [
@@ -154,7 +152,7 @@
          ];
         
         //used as a legend to display what the icon data is
-        $scope.legend = [
+        ascatt.legend = [
             {name: 'done'  , color: "#00A", description: "if you checked in but were NOT yet verified" },
             {name: 'close', color: "#A00" , description: "if you were NOT checked in and NOT verified"},
             {name: 'done_all' , color: "rgb(89, 226, 168)" , description: "if you were verified" },
@@ -170,7 +168,7 @@
         		alert(i + ") none");
         		
         		// set this days icon data
-        		$scope.daypositionstring.push(iconData[3]);
+        		ascatt.daypositionstring.push(iconData[3]);
         	}
         	// if you checked in and were verified
         	else if(as[daypositions[i]].checkedIn && as[daypositions[i]].verified){
@@ -178,7 +176,7 @@
         		alert(i + ") if you checked in and were verified");
         		
         		// set this days icon data
-        		$scope.daypositionstring.push(iconData[2]);
+        		ascatt.daypositionstring.push(iconData[2]);
             }
         	// if you checked in but were NOT yet verified
         	else if(as[daypositions[i]].checkedIn && (!(as[daypositions[i]].verified))){
@@ -186,7 +184,7 @@
         		alert(i + ") if you checked in but were NOT yet verified");
         		
         		// set this days icon data
-        		$scope.daypositionstring.push(iconData[0]);
+        		ascatt.daypositionstring.push(iconData[0]);
         	}
         	// if you were NOT checked in but were verified
         	else if((!(as[daypositions[i]].checkedIn)) && as[daypositions[i]].verified){
@@ -194,14 +192,14 @@
         		
         		
         		//TODO may want to change this // set this days icon data
-        		$scope.daypositionstring.push(iconData[2]);
+        		ascatt.daypositionstring.push(iconData[2]);
         	}
         	// if you were NOT checked in and NOT verified
         	else if((!(as[daypositions[i]].checkedIn)) && (!(as[daypositions[i]].verified))){
         		alert(i + ") if you were NOT checked in and NOT verified");
         		
         		// set this days icon data
-        		$scope.daypositionstring.push(iconData[1]);
+        		ascatt.daypositionstring.push(iconData[1]);
         	}
         }
         
