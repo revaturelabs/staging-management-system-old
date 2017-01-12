@@ -1,5 +1,5 @@
-<div layout="row" layout-wrap>
-    <div flex="37"></div>
+<div layout="row">
+    <div flex="40"> </div>
     <div flex="60">
         <md-toolbar class="md-table-toolbar md-default">
 
@@ -10,8 +10,10 @@
 
         </md-toolbar>
     </div>
+</div>
+<div layout="row" style=" padding-bottom: 2%;">
     <div flex="33"></div>
-    <div flex="66">
+    <div flex="67">
         <!-- holds table -->
         <md-table-container>
 
@@ -30,7 +32,7 @@
                 </thead>
                 <!-- enter in the body data -->
                 <tbody md-body>
-                    <tr>
+                    <tr align="center">
                         <td>
                             <p>{{assWeekAttCtrl.sunday}}</p>
                         </td>
@@ -76,8 +78,10 @@
             </table>
         </md-table-container>
     </div>
+</div>
 
-    <div flex="32"></div>
+<div layout="row">
+    <div flex="35"></div>
     <div flex="60">
         <li ng-repeat="legitem in assWeekAttCtrl.legend">
 
