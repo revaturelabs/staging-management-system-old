@@ -36,10 +36,11 @@
                     </md-button>
                 
                 </div>
- 				</form>
-                <div class="md-padding" layout="columns">
-                    
-                    <form name="batchAdd" ng-submit="bACtrl.save(batchAdd.$valid, bACtrl.associates)" novalidate>
+ 			</form>
+
+            <div class="md-padding" layout="columns">
+                
+                <form name="batchAdd" ng-submit="bACtrl.save(batchAdd.$valid)" novalidate>
                     <md-input-container flex>
                         <label> Curriculum </label>
                         <md-select ng-model="bACtrl.selectedBatchType" required>
@@ -49,10 +50,9 @@
 
                     <md-button type="submit" class="md-primary md-raised" aria-label="Submit All"> SUBMIT </md-button>
                     <md-button type="button" class="md-primary md-raised" ng-click="bACtrl.cancel()" aria-label="Cancel"> CANCEL </md-button>
-					</form>                
-                </div>
+                </form>        
 
-           
+            </div>
 
         </div>
 

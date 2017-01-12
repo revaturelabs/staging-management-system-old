@@ -3,8 +3,10 @@ package com.revature.sms.controllers;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +57,7 @@ public class UserController {
 	public @ResponseBody Object createUser(@RequestHeader(value = "Authorization") String token,
 			@RequestBody UserDTO userDTO) {
 
+		System.out.println("UserDTO username: " + userDTO.getUsername());
 		try {
 			// validate token and create user
 			if (isValid(token) && isSuperAdmin(role)) {
@@ -67,7 +70,12 @@ public class UserController {
 						HttpStatus.UNAUTHORIZED);
 
 			}
+		} catch (DataIntegrityViolationException dive) {
+			Logger.getRootLogger().debug("Username already exists.", dive);
+			return new ResponseEntity<ResponseErrorEntity>(
+					new ResponseErrorEntity("Username already exists."), HttpStatus.CONFLICT);
 		} catch (Exception e) {
+			e.printStackTrace();
 			Logger.getRootLogger().debug("Exception while creating user", e);
 			return new ResponseEntity<ResponseErrorEntity>(
 					new ResponseErrorEntity("Problem occurred while creating user."), HttpStatus.SERVICE_UNAVAILABLE);
