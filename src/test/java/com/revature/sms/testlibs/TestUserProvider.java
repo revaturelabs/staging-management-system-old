@@ -5,7 +5,7 @@ import static com.revature.sms.StagingManagementSystemApplicationTests.hashPassw
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.stereotype.Service;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
@@ -19,20 +19,19 @@ import com.revature.sms.domain.dao.UserRoleRepo;
  *
  */
 
-@Configurable
+@Service
 public class TestUserProvider {
 	
 	
-	@Autowired
-	private BatchTypeRepo btr;
+	
 	@Autowired
 	private UserRoleRepo urr;
-	
-	
+	@Autowired
+	private BatchTypeRepo btr;
 	
 	
 	/**
-	 * This nullary constructor does little.
+	 * This nullary constructor does little
 	 */
 	
 	public TestUserProvider(){
@@ -54,7 +53,8 @@ public class TestUserProvider {
 	
 	public User getAssociate(){
 
-	return new User("TestAssociateOne", "Albert", "Einstein", hashPassword("E=MC^2"), btr.findByType("Java"), new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(), urr.findByName("associate"));
+		
+		return new User("TestAssociateOne", "Albert", "Einstein", hashPassword("E=MC^2"), btr.findByType("Java"), new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(), urr.findByName("associate"));
 		
 	}
 	

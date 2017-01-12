@@ -10,7 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.dao.BatchTypeRepo;
-import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
 import com.revature.sms.testlibs.TestUserProvider;
 import com.revature.sms.testlibs.UserDataManager;
@@ -25,13 +24,12 @@ import com.revature.sms.testlibs.UserDataManager;
 @SpringBootTest
 public class LoginTest {
 	
+	
 	@Autowired
-	static BatchTypeRepo btr;
+	private UserDataManager udm;
 	
-	UserDataManager udm = new UserDataManager();
-	
-	
-	TestUserProvider users = new TestUserProvider();
+	@Autowired
+	private TestUserProvider users;
 	
 	
 	
@@ -43,10 +41,10 @@ public class LoginTest {
 	
 	@Test
 	public void testAssociateLogin(){
-		Assert.assertEquals(btr.findByType("SDET"),"Wampwamp");
-		/*User testUser = users.getAssociate();
+		
+		User testUser = users.getAssociate();
 		udm.createTestUser(testUser);
-		Assert.assertTrue(true);*/
+		Assert.assertTrue(true);
 		//TODO: Write a test case that succeeds when a test logs in using valid Associate credentials
 	}
 	

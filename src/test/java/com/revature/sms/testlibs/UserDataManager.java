@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
@@ -25,7 +27,7 @@ import com.revature.sms.domain.dao.UserRepo;
  * 
  */
 
-
+@Service
 public class UserDataManager {
 	
 	/**
