@@ -50,7 +50,7 @@
 				<th md-column>Friday</th>
 			</tr>
 			<tr>
-				<th md-column></th>
+				<th md-column><input type="text" ng-model="searchBox" /></th>
 				<th md-column>{{ adAttCtrl.monday }}</th>
 				<th md-column>{{ adAttCtrl.tuesday }}</th>
 				<th md-column>{{ adAttCtrl.wednesday }}</th>
@@ -60,21 +60,14 @@
 		</thead>
 	
 		<tbody>
-			<tr ng-repeat = "associate in adAttCtrl.users"></tr>
-			<tr>
-				<td>Bob</td>
-				<td>Eclair</td>
-				<td>$0.87</td>
-			</tr>
-			<tr>
-				<td>Alan</td>
-				<td>Jellybean</td>
-				<td>$3.76</td>
-			</tr>
-			<tr>
-				<td>Jonathan</td>
-				<td>Lollipop</td>
-				<td>$7.00</td>
+			<tr ng-repeat = "as in adAttCtrl.users | filter:searchBox track by as.username">
+				<td>{{ as.firstName }} {{ as.lastName }}</td>
+				<td>v :{{ as.thisWeek[0].verified }}<br> c : {{ as.thisWeek[0].checkedIn }}</td>
+				<td>v :{{ as.thisWeek[1].verified }}<br> c : {{ as.thisWeek[1].checkedIn }}</td>
+				<td>v :{{ as.thisWeek[2].verified }}<br> c : {{ as.thisWeek[2].checkedIn }}</td>
+				<td>v :{{ as.thisWeek[3].verified }}<br> c : {{ as.thisWeek[3].checkedIn }}</td>
+				<td>v :{{ as.thisWeek[4].verified }}<br> c : {{ as.thisWeek[4].checkedIn }}</td>
+				
 			</tr>
 		</tbody>
 	</table>
