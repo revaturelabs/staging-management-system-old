@@ -2,6 +2,7 @@
 sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginService, $http){
 	var uic = this;
 	
+	//for notifications
     uic.toast = function(message){
         $scope.$parent.mastCtrl.toast(message);
     };
@@ -18,13 +19,9 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
 	    		//old and new passwords are different
     			
 	            uic.user = loginService.getUser();
-	            //uic.token = loginService.getToken();
-	            //associate
-	            //uic.token = "7fp;^0Ssm2g[_RM8PI<rkBhPm6<5:1b9DA9A2N:<";
+	            uic.token = loginService.getToken();
 	            
-	            // super admin
-	            uic.token = "=>I:bIVuQe;8Jr5>ABQl]LhoV5M?IO9YuQXg96R8";
-	            
+	            console.log(uic.token);
 	            $http({
 	            	  method: 'PUT',
 	            	  url: '/api/v1/login',
@@ -38,17 +35,16 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
 	            		//password changed successfully
 	            		uic.toast("password changed successfully");
 	            		
+	            		//route to the appropriate homepage
 	            		switch(response.data.userRole.name){
 	            		case "associate":$state.go("assoc"); break;
 	            		case "admin" : $state.go("admin"); break;
 	            		case "superAdmin" : $state.go("super"); break;
 	            		}
 	            		
-	            		
 	            	}, function errorCallback(response) {
 	            		// password change went wrong
 	            		switch(response.status){
-	            		//should this be different?
 	            		case 404:uic.toast("Password mismatch");break;
 	            		case 401:uic.toast("User is unauthorized");break;
 	            		}
