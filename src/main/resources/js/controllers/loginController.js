@@ -18,16 +18,18 @@
                 loginService.login( creds, function(response){
                     loginService.addUser(response.user);
                     loginService.addToken(response.token);
-                    lc.toast("Logged in.");
                     switch (response.user.userRole.name) {
                         case "superAdmin":
                             $state.go("superAttendance");
+                            lc.toast("Logged in.");
                             break;
                         case "admin":
                             $state.go("adminAttendance");
+                            lc.toast("Logged in.");
                             break;
                         case "associate":
                             $state.go("assoc");
+                            lc.toast("Logged in and attendance logged.");
                             break;
                         default:
                             break;

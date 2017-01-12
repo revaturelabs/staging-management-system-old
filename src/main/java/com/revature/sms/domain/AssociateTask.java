@@ -131,7 +131,7 @@ public class AssociateTask {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	
+
 	/**
 	 * toString method for AssociateTask.
 	 * 
@@ -141,6 +141,4 @@ public class AssociateTask {
 		return "AssociateTasks [ID=" + ID + ", taskType=" + taskType.getType() + ", date=" + date
 				+ ", note=" + note + "]";
 	}
-	
-	
 }
