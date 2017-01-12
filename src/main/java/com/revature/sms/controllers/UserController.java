@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +32,7 @@ import com.revature.sms.domain.dto.UserDTO;
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
+
 	@Autowired
 
 	private UserRepo userRepo;
@@ -147,29 +149,27 @@ public class UserController {
 	 * @return
 	 * 			ResponseEntity object containing a list of the user objects if it succeeds, or an error if there was a problem while retrieving the users
 	 */
-	@RequestMapping(method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object retrieveAll(@RequestHeader(value = "Authorization") String token) {
-
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Object retrieveAll(@RequestHeader(value = "Authorization") String authToken) {
 		try {
 			// validate token and retrieve all associates info
-			if (isValid(token) && (role != "associate")) {
-				List<User> user = userRepo.findAll();
-				for (User user2 : user) {
-					user2.blankPassword();
-					user2.setID(0);
+			Token userToken = tokenRepo.findByauthToken(authToken);
+			if (userToken == null) {
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("AuthToken invalid."), HttpStatus.NOT_FOUND);
+			} else if ( ("superadmin".equalsIgnoreCase(userToken.getUser().getUserRole().getName()) || "admin".equalsIgnoreCase(userToken.getUser().getUserRole().getName()) ) ) {
+				List<User> users = userRepo.findAll();
+				for (User user : users) {
+					user.blankPassword();
+					user.setID(0);
 				}
-				return new ResponseEntity<List<User>>(user, HttpStatus.OK);
+				return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 			} else {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized to access information."),
 						HttpStatus.UNAUTHORIZED);
-
-	
-
 			}
 		} catch (Exception e) {
 			Logger.getRootLogger().debug("Exception while retrieving all associates info", e);
 			return new ResponseEntity<ResponseErrorEntity>(
-
 					new ResponseErrorEntity("Problem occurred while retrieving all associates info."),
 					HttpStatus.NOT_FOUND);
 
