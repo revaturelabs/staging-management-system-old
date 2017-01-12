@@ -1,5 +1,6 @@
 package com.revature.sms.domain.dto;
 
+
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.UserRole;
 
@@ -13,6 +14,7 @@ public class UserDTO {
 	private UserRole userRole;
 	private String oldPassword;
 	private String newPassword;
+	private boolean verified;
 	
 	public UserDTO() {
 		super();
@@ -101,6 +103,14 @@ public class UserDTO {
 
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
+	}
+	
+	public boolean getVerified() {
+		return verified;
+	}
+
+	public void setVerified(boolean verified) {
+		this.verified = verified;
 	}
 	
 

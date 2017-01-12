@@ -1,5 +1,6 @@
 package com.revature.sms.controllers;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -17,15 +18,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
+import com.revature.sms.domain.dao.AssociateAttendanceRepo;
 import com.revature.sms.domain.dao.TokenRepo;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
 import com.revature.sms.domain.dto.UserDTO;
 
 /**
- * Server-side controller to handle User CRUD operations (Create, Retrieve, Update, Delete)
+ * Server-side controller to handle User CRUD operations (Create, Retrieve,
+ * Update, Delete)
  *
  */
 
@@ -40,16 +44,26 @@ public class UserController {
 	@Autowired
 	private TokenRepo tokenRepo;
 
+	/**
+	 * Autowired AssociateAttendenceRepo object. Spring handles setting this up
+	 * for actual use.
+	 */
+	@Autowired
+	AssociateAttendanceRepo aar;
+
 	private String role;
 
 	/**
 	 * To create user
 	 * 
-	 * @param token 
-	 * 			Authorization token to make sure the user of the method has appropriate access to run the command
+	 * @param token
+	 *            Authorization token to make sure the user of the method has
+	 *            appropriate access to run the command
 	 * @param userDTO
-	 * 			User Data Transfer Object that carries user information
-	 * @return ResponseEntity object containing the newly created user object if it succeeds, or an error if there was a problem while creating the user
+	 *            User Data Transfer Object that carries user information
+	 * @return ResponseEntity object containing the newly created user object if
+	 *         it succeeds, or an error if there was a problem while creating
+	 *         the user
 	 */
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Object createUser(@RequestHeader(value = "Authorization") String token,
@@ -75,15 +89,18 @@ public class UserController {
 
 	}
 
-
 	/**
 	 * To update user info
 	 * 
 	 * @param token
-	 * 			Authorization token to make sure the user of the method has appropriate access to run the command
+	 *            Authorization token to make sure the user of the method has
+	 *            appropriate access to run the command
 	 * @param userDTO
-	 * 			User Data Transfer Object that carries only the new information to be updated
-	 * @return ResponseEntity object containing the updated user object if it succeeds, or an error if there was a problem while updating the user
+	 *            User Data Transfer Object that carries only the new
+	 *            information to be updated
+	 * @return ResponseEntity object containing the updated user object if it
+	 *         succeeds, or an error if there was a problem while updating the
+	 *         user
 	 */
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Object updateUser(@RequestHeader(value = "Authorization") String token,
@@ -92,7 +109,7 @@ public class UserController {
 		try {
 			// validate token and update user info
 			if (isValid(token)) {
-				User oldUser = updateValidation(userDTO);
+				User oldUser = (User) updateValidation(userDTO);
 				User newUser = userRepo.save(oldUser);
 				return new ResponseEntity<User>(newUser, HttpStatus.OK);
 			} else {
@@ -108,12 +125,15 @@ public class UserController {
 	}
 
 	/**
-
+	 * 
 	 * To retrieve a given user based on their username
 	 * 
 	 * @param token
-	 * 			Authorization token to make sure the user of the method has appropriate access to run the command
-	 * @return ResponseEntity object containing the requested user object if it succeeds, or an error if there was a problem while retrieving the user
+	 *            Authorization token to make sure the user of the method has
+	 *            appropriate access to run the command
+	 * @return ResponseEntity object containing the requested user object if it
+	 *         succeeds, or an error if there was a problem while retrieving the
+	 *         user
 	 */
 	@RequestMapping(value = "/{username}", method = {
 			RequestMethod.GET }, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -140,14 +160,15 @@ public class UserController {
 
 	}
 
-
 	/**
 	 * To retrieve all users
 	 *
 	 * @param token
-	 * 			Authorization token to make sure the user of the method has appropriate access to run the command
-	 * @return
-	 * 			ResponseEntity object containing a list of the user objects if it succeeds, or an error if there was a problem while retrieving the users
+	 *            Authorization token to make sure the user of the method has
+	 *            appropriate access to run the command
+	 * @return ResponseEntity object containing a list of the user objects if it
+	 *         succeeds, or an error if there was a problem while retrieving the
+	 *         users
 	 */
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Object retrieveAll(@RequestHeader(value = "Authorization") String authToken) {
@@ -155,8 +176,10 @@ public class UserController {
 			// validate token and retrieve all associates info
 			Token userToken = tokenRepo.findByauthToken(authToken);
 			if (userToken == null) {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("AuthToken invalid."), HttpStatus.NOT_FOUND);
-			} else if ( ("superadmin".equalsIgnoreCase(userToken.getUser().getUserRole().getName()) || "admin".equalsIgnoreCase(userToken.getUser().getUserRole().getName()) ) ) {
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("AuthToken invalid."),
+						HttpStatus.NOT_FOUND);
+			} else if (("superadmin".equalsIgnoreCase(userToken.getUser().getUserRole().getName())
+					|| "admin".equalsIgnoreCase(userToken.getUser().getUserRole().getName()))) {
 				List<User> users = userRepo.findAll();
 				for (User user : users) {
 					user.blankPassword();
@@ -164,7 +187,8 @@ public class UserController {
 				}
 				return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 			} else {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized to access information."),
+				return new ResponseEntity<ResponseErrorEntity>(
+						new ResponseErrorEntity("User is unauthorized to access information."),
 						HttpStatus.UNAUTHORIZED);
 			}
 		} catch (Exception e) {
@@ -178,13 +202,15 @@ public class UserController {
 	}
 
 	/**
-
+	 * 
 	 * To delete a given user based on their username
 	 * 
 	 * @param token
-	 * 			Authorization token to make sure the user of the method has appropriate access to run the command
-	 * @return
-	 * 			ResponseEntity object containing the ID of the user that was deleted if it succeeds, or an error if there was a problem while retrieving the users
+	 *            Authorization token to make sure the user of the method has
+	 *            appropriate access to run the command
+	 * @return ResponseEntity object containing the ID of the user that was
+	 *         deleted if it succeeds, or an error if there was a problem while
+	 *         retrieving the users
 	 */
 	@RequestMapping(value = "/{username}", method = {
 			RequestMethod.DELETE, }, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -210,13 +236,12 @@ public class UserController {
 	}
 
 	/**
-
+	 * 
 	 * To validate the token from the request and set the user role
 	 * 
 	 * @param tokenString
-	 * 		String containing the actual auth token
-	 * @return
-	 * 		Boolean, true if token is valid, false if not
+	 *            String containing the actual auth token
+	 * @return Boolean, true if token is valid, false if not
 	 */
 	public boolean isValid(String tokenString) {
 		boolean valid = false;
@@ -228,13 +253,13 @@ public class UserController {
 		}
 		return valid;
 	}
-	
+
 	/**
 	 * To verify superAdmin role
+	 * 
 	 * @param role
-	 * 		String with the role name
-	 * @return
-	 * 		Boolean, true if role is a superadmin, false if not
+	 *            String with the role name
+	 * @return Boolean, true if role is a superadmin, false if not
 	 */
 
 	public boolean isSuperAdmin(String role) {
@@ -250,9 +275,9 @@ public class UserController {
 	 * To transform UserInformationChangeDTO object into an User object
 	 * 
 	 * @param userDTO
-	 * 		User Data Transfer Object with all relevant attributes included
-	 * @return
-	 * 		Standard user object
+	 *            User Data Transfer Object with all relevant attributes
+	 *            included
+	 * @return Standard user object
 	 */
 
 	public User getUser(UserDTO userDTO) {
@@ -261,42 +286,78 @@ public class UserController {
 		return user;
 	}
 
-
-		
 	/**
 	 * To validate user to be updated
 	 * 
 	 * @param userDTO
-	 * 		User Data Transfer Object with attributes that are to be updated
-	 * @return
-	 * 		Updated user object
+	 *            User Data Transfer Object with attributes that are to be
+	 *            updated
+	 * @return Updated user object
 	 */
-	
-	public User updateValidation(UserDTO userDTO){
-		User user=userRepo.findByUsername(userDTO.getUsername());
-		if(userDTO.getUserRole()!=null)
-		{
+
+	public Object updateValidation(UserDTO userDTO)throws Exception {
+		User user = userRepo.findByUsername(userDTO.getUsername());
+		if (userDTO.getUserRole() != null) {
 			user.setUserRole(userDTO.getUserRole());
 		}
-		if(userDTO.getBatchType()!=null)
-		{
+		if (userDTO.getBatchType() != null) {
 			user.setBatchType(userDTO.getBatchType());
 		}
-		if(userDTO.getHashedPassword()!=null)
-		{
+		if (userDTO.getHashedPassword() != null) {
 			user.setHashedPassword(userDTO.getHashedPassword());
 		}
-		if(userDTO.getFirstName()!=null)
-		{
+		if (userDTO.getFirstName() != null) {
 			user.setFirstName(userDTO.getFirstName());
 		}
-		if(userDTO.getLastName()!=null)
-		{
+		if (userDTO.getLastName() != null) {
 			user.setLastName(userDTO.getLastName());
 		}
-		
+		if (userDTO.getVerified() == true) {
+			if (!("associate".equalsIgnoreCase(role))) {
+				markPresent(userDTO.getUsername());
+			}else{
+				throw new Exception(); 
+			}
+		}
+
 		return user;
 
+	}
+
+	/**
+	 * Marks an associate as present
+	 * 
+	 * @param username
+	 *            User to be marked as present
+	 */
+	private void markPresent(String username) {
+		User user = userRepo.findByUsername(username);
+		Timestamp d = new Timestamp(new java.util.Date().getTime());
+		List<AssociateAttendance> associateAttendanceList = user.getAttendance();
+
+		if (!associateAttendanceList.isEmpty()) {
+
+			for (AssociateAttendance aa : associateAttendanceList) {
+				if (d.getDate() == aa.getDate().getDate() && d.getDay() == aa.getDate().getDay()
+						&& d.getYear() == aa.getDate().getYear()) {
+					// Associate has checked in before and current day exists
+					aa.setVerified(true);
+					aar.save(aa);
+					return;
+				}
+			}
+		}
+
+		// Associate has not checked in before
+		// or
+		// Associate has checked in before but current day does not exist
+		AssociateAttendance aa = new AssociateAttendance(d, false, true, "");
+
+		List<AssociateAttendance> l = user.getAttendance();
+		l.add(aa);
+		user.setAttendance(l);
+
+		userRepo.save(user);
 	}
 
 }
