@@ -1,8 +1,8 @@
 package com.revature.sms.controllers;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
-import com.revature.sms.domain.dto.UserTokenDTO;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,23 +14,44 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.sms.domain.AssociateAttendance;
+import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
-import com.revature.sms.domain.Token;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dto.LoginAttempt;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
+import com.revature.sms.domain.dto.UserTokenDTO;
 
+/**
+ * Server-side controller to handle logging into the application.
+ *
+ */
 @RestController
 @RequestMapping("/api/v1/login")
 public class LoginController {
-
+	/**
+	 * Autowired UserRepo object. Spring handles setting this up for actual use.
+	 */
 	@Autowired
 	UserRepo ur;
-
+	/**
+	 * Autowired AssociateAttendenceRepo object. Spring handles setting this up
+	 * for actual use.
+	 */
 	@Autowired
 	AssociateAttendanceRepo aar;
 
+	/**
+	 * Method that's called via Http Post method. Used for submitting a login
+	 * attempt when trying to login.
+	 * 
+	 * @param in
+	 *            LoginAttempt object that contains the user name and password
+	 *            of the user trying to login.
+	 * @return ResponseEntity object containing user information if the login is
+	 *         successful, otherwise it returns ResponseEntity with an error
+	 *         message if login fails.
+	 */
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Object login(@RequestBody LoginAttempt in) {
 		User u = ur.findByUsername(in.getUsername());
@@ -39,11 +60,10 @@ public class LoginController {
 				// Successful login
 				if ("associate".equals(u.getUserRole().getName())) {
 					// if associate mark attendance as present
-					//markPresent(u.getUsername());
+					markPresent(u.getUsername());
 				}
-				System.out.println("finished Marking as presnet");
+
 				u.blankPassword();
-				u.setID(0);
 				Token token = new Token(u);
 				UserTokenDTO userToken = new UserTokenDTO();
 				userToken.setUser(u);
@@ -62,35 +82,36 @@ public class LoginController {
 
 	/**
 	 * Marks an associate as present
-	 * @param u User to be marked as present
+	 * 
+	 * @param username
+	 *            User to be marked as present
 	 */
 	private void markPresent(String username) {
 		User user = ur.findByUsername(username);
-		Date d = new Date(new java.util.Date().getTime());
-		List<AssociateAttendance> associateAttendanceList = aar.findByAssociate(user);
-		
+		Timestamp d = new Timestamp(new java.util.Date().getTime());
+		List<AssociateAttendance> associateAttendanceList = user.getAttendance();
+
 		if (!associateAttendanceList.isEmpty()) {
+
 			for (AssociateAttendance aa : associateAttendanceList) {
 				if (d.toString().equals(aa.getDate().toString())) {
+					// Associate has checked in before and current day exists
 					aa.setCheckedIn(true);
 					aar.save(aa);
-					break;
+					return;
 				}
 			}
 		}
-		else{
-			//create an AssociateAttendance row
-			AssociateAttendance aa = new AssociateAttendance(user,d,true,false,"");
+		// Associate has not checked in before
+		// or
+		// Associate has checked in before but current day does not exist
+		AssociateAttendance aa = new AssociateAttendance(d, true, false, "");
 
-			aar.save(aa); 
-			
-/*			List<AssociateAttendance> l = user.getAttendance();
-			l.add(aa);
-			user.setAttendance(l);
-			
-			System.out.println("update user");
-			ur.save(user);*/
-		}
+		List<AssociateAttendance> l = user.getAttendance();
+		l.add(aa);
+		user.setAttendance(l);
+
+		ur.save(user);
 	}
 
 }
