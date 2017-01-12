@@ -5,8 +5,20 @@
 </md-toolbar>
 <p id = "me">First name: {{firstname}}</p>
 
-
 <p>{{monday}}</p><p>{{tuesday}}</p><p>{{wednesday}}</p><p>{{thursday}}</p><p>{{friday}}</p>
+
+<li ng-repeat="legitem in legend">
+
+<!-- set the icon data -->
+<md-icon ng-style="{color: '{{legitem.color}}'}" aria-label='{{legitem.name}}' class="material-icons step" ng-class="md-48">
+            
+ <!-- changing the text changes the icon-->
+ {{legitem.name}}
+ </md-icon>
+
+{{legitem.description}}
+</li>
+
 
 <!-- holds table -->
 <md-table-container class="md-whiteframe-24dp">

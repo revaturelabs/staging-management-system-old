@@ -15,23 +15,12 @@
     	//need this to hold which day of the week is witch 0 for sunday 6 for saturday etc
     	$scope.daynumbercount = [0,1,2,3,4,5,6];
     	
-    	//test to change text color by day of week doesnt work 
-    	/*
-    	 * var children = document.getElementById("weekrow").children();
-    	 * var i =0;
-    	for (;i < days[d.getDay()]; i++ ){
-    		children = children.next();
-    	}
-    	children.style.color = "red";
-    	*/
-    	
+    	// TODO test to change text color by day of week doesnt work 
     	
     	//test
     	$scope.firstname = "John";	
     	//test
         $scope.$parent.mastCtrl.toast("Here");
-        
-        
         
         // get the logged in  user
         ascatt.user = loginService.getUser();
@@ -42,8 +31,6 @@
         
         // test
         alert(new Date((as[0].date)));
-        
-        
         
         //999999999999999999999999999999999999999999999999999999999999
         //set current day
@@ -149,11 +136,11 @@
         alert(daypositions);
         
         //***************************************************************
-        // //test if checked in on monday
+        /*// //test if checked in on monday
         alert("Friday checked in " + as[daypositions[5]].checkedIn);
         
         // //test if checked if verified
-        alert("Friday verified in " + as[daypositions[5]].verified);
+        alert("Friday verified in " + as[daypositions[5]].verified);*/
     
         // used to save each day of the week was marked as
         $scope.daypositionstring = [];
@@ -163,9 +150,16 @@
             {name: 'done'  , color: "#00A" },
             {name: 'close', color: "#A00" },
             {name: 'done_all' , color: "rgb(89, 226, 168)" },
-            {name: 'stars'          , color: "#777" }
+            {name: 'stars' , color: "#777" }
          ];
         
+        //used as a legend to display what the icon data is
+        $scope.legend = [
+            {name: 'done'  , color: "#00A", description: "if you checked in but were NOT yet verified" },
+            {name: 'close', color: "#A00" , description: "if you were NOT checked in and NOT verified"},
+            {name: 'done_all' , color: "rgb(89, 226, 168)" , description: "if you were verified" },
+            {name: 'stars' , color: "#777", description: "not available" }
+         ]; 
         
         // for each of the chosen days
         for(var i  = 0; i < daypositions.length; i++){
@@ -210,9 +204,6 @@
         		$scope.daypositionstring.push(iconData[1]);
         	}
         }
-        
-        //test
-        alert($scope.daypositionstring[6].name);
         
         //***************************************************************
     });
