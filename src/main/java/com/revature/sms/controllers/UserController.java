@@ -156,7 +156,7 @@ public class UserController {
 			Token userToken = tokenRepo.findByauthToken(authToken);
 			if (userToken == null) {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("AuthToken invalid."), HttpStatus.NOT_FOUND);
-			} else if ( (userToken.getUser().getUserRole().getName().equalsIgnoreCase("superadmin") || userToken.getUser().getUserRole().getName().equalsIgnoreCase("admin")) ) {
+			} else if ( ("superadmin".equalsIgnoreCase(userToken.getUser().getUserRole().getName()) || "admin".equalsIgnoreCase(userToken.getUser().getUserRole().getName()) ) ) {
 				List<User> users = userRepo.findAll();
 				for (User user : users) {
 					user.blankPassword();
