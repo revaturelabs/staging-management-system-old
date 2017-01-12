@@ -20,6 +20,12 @@
             suc.toast("Logged out.");
             $state.go("login");
         };
+        
+        suc.updateInformation = function(){
+        	$mdSidenav("left").close();
+        	$state.go("SUupdateInfo");
+        	
+        };
 
         suc.newAssociate = function() {
             $mdDialog.show({

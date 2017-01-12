@@ -1,10 +1,11 @@
-package com.revature.sms.testLibs;
+package com.revature.sms.testlibs;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.revature.sms.domain.JobAssignment;
 import com.revature.sms.domain.JobEvent;
@@ -23,12 +24,13 @@ import com.revature.sms.domain.dao.JobEventRepo;
  * 
  */
 
+@Service
 public class JobEventDataManager {
 
-	List<JobEvent> createdJobEvents = new ArrayList<>();
+	private List<JobEvent> createdJobEvents = new ArrayList<>();
 	
 	@Autowired
-	JobEventRepo jer;
+	private JobEventRepo jer;
 	
 	
 	/**
