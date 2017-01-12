@@ -5,6 +5,7 @@ import static com.revature.sms.StagingManagementSystemApplicationTests.hashPassw
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
@@ -13,29 +14,33 @@ import com.revature.sms.domain.dao.BatchTypeRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
 
 /**
- * TestUserProvider is a class that provides static factory methods that provide well-defined users to be used in test cases.
+ * TestUserProvider is a class that provides factory methods that provide well-defined users to be used in test cases.
  * @author Sage
  *
  */
 
+@Configurable
 public class TestUserProvider {
 	
-	@Autowired
-	static BatchTypeRepo btr;
 	
 	@Autowired
-	static UserRoleRepo urr;
+	BatchTypeRepo btr;
+	@Autowired
+	UserRoleRepo urr;
+	
 	
 	/**
-	 * The nullary constructor is provided to prevent instantiation of this utility class.
+	 * This nullary constructor does little.
 	 */
 	
-	private TestUserProvider(){
+	public TestUserProvider(){
 		super();
 	}
 	
 	/**
 	 * getAssociate creates and returns a specific associate-role User
+	 * @param urr2
+	 * @param btr 
 	 * @return The associate user
 	 * username - TestAssociateOne
 	 * firstname - Albert
@@ -45,8 +50,10 @@ public class TestUserProvider {
 	 * UserRole - Associate
 	 */
 	
-	public static User getAssociate(){
-		return new User("TestAssociateOne", "Albert", "Einstein", hashPassword("E=MC^2"), btr.findByType("Java"), new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(), urr.findByName("associate"));
+	public User getAssociate(){
+
+	return new User("TestAssociateOne", "Albert", "Einstein", hashPassword("E=MC^2"), btr.findByType("Java"), new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(), urr.findByName("associate"));
+		
 	}
 	
 	/**
@@ -59,7 +66,7 @@ public class TestUserProvider {
 	 * UserRole - Admin
 	 */
 
-	public static User getAdmin(){
+	public User getAdmin(){
 		return new User("TestAdminOne", "Alan", "Turing", hashPassword("DaisyDaisy"), urr.findByName("admin"));
 	}
 	
@@ -73,7 +80,7 @@ public class TestUserProvider {
 	 * UserRole - Super Admin
 	 */
 	
-	public static User getSuperAdmin(){
+	public User getSuperAdmin(){
 		return new User("TestSuperAdminOne", "John", "Conway", hashPassword("LifeIsButAGame"), urr.findByName("superAdmin"));
 	}
 	

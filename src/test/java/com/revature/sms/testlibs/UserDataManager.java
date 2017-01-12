@@ -5,17 +5,13 @@ import static com.revature.sms.StagingManagementSystemApplicationTests.hashPassw
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
-import com.revature.sms.domain.dao.BatchTypeRepo;
 import com.revature.sms.domain.dao.UserRepo;
 
 /**
@@ -30,8 +26,6 @@ import com.revature.sms.domain.dao.UserRepo;
  */
 
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class UserDataManager {
 	
 	/**
@@ -42,10 +36,9 @@ public class UserDataManager {
 	private List<User> createdUsers = new ArrayList<>();
 	
 	@Autowired
-	UserRepo ur;
+	private UserRepo ur;
 	
-	@Autowired
-	BatchTypeRepo btr;
+	
 	
 	
 	/**
