@@ -5,7 +5,7 @@ package com.revature.sms.domain.dto;
  * Takes in input username and password in attempt to login to the system.
  *
  */
-public class LoginAttempt {
+public class LoginAttemptDTO {
 	
 	/**
 	 * Input username
@@ -17,19 +17,19 @@ public class LoginAttempt {
 	 */
 	private String inputPass;
 	
-	/**
+    /**
 	 * Default constructor for LoginAttempt.
 	 */
-	public LoginAttempt() {
+	public LoginAttemptDTO() {
 		super();
 	}
 	
-	/**
+    /**
 	 * Parameterized constructor that takes in a username and password and attempts to login.
 	 * @param username Input username
 	 * @param inputPass Input password
 	 */
-	public LoginAttempt(String username, String inputPass) {
+	public LoginAttemptDTO(String username, String inputPass) {
 		super();
 		this.username = username;
 		this.inputPass = inputPass;
