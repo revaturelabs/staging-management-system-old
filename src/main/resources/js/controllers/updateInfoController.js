@@ -19,6 +19,21 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
     
     //when user submits updated password
     uic.submit = function(){
+    	if(oldPass.value === ""){
+    		uic.toast("Enter your password.");
+    		return;
+    	}
+    	
+    	if(newPass.value === ""){
+    		uic.toast("Enter a new password");
+    		return;
+    	}
+    	
+    	if(confirmPass.value === ""){
+    		uic.toast("Confirm your new password.");
+    		return;
+    	}
+    	
     	var oldPassH = CryptoJS.SHA1(oldPass.value).toString();
     	var newPassH = CryptoJS.SHA1(newPass.value).toString();
     	var confirmPassH = CryptoJS.SHA1(confirmPass.value).toString();
