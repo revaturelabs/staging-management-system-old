@@ -1,37 +1,47 @@
 package com.revature.sms.util;
 
-//Manage these connections at C:\Windows\SysWOW64\odbcad32.exe
-//import java.sql.*;
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.SQLException;
+import java.util.ArrayList;
 
-import java.lang.reflect.Method;
+import org.apache.log4j.Logger;
+
+import com.codoid.products.exception.FilloException;
 import com.codoid.products.fillo.Connection;
 import com.codoid.products.fillo.Fillo;
 import com.codoid.products.fillo.Recordset;
 
 public class ExcelHelper {
-	static Fillo fillo;
-	static Connection conn; 
-    static Recordset rs;
-  
-    public static String getValue(String file, String sheet, String key, String valueColumn, String keyColumn) {
-		String value = "";
+    
+	private final String file = "C:/Users/User/Desktop/SMS_Project/staging-management-system/src/test/resources/database_input.xlsx";
+	private final String sheet = "Sheet1";
+	private int columns;
+	
+	public ExcelHelper(int columns) {
+		this.columns = columns;
+	}
+	
+    public ArrayList<String> getValues(String key) {
+    	
 		try {
-			fillo = new Fillo();
-			conn = fillo.getConnection(file);
-			String query = "SELECT "+valueColumn+" FROM "+sheet+" WHERE "+keyColumn+"='"+key+"'";
-			rs = conn.executeQuery(query);
+			Fillo fillo = new Fillo();
+			Connection conn = fillo.getConnection(file);
+			ArrayList<String> values = new ArrayList<String>();
+			
+			String query = "SELECT * FROM "+sheet+" WHERE "+"KeyColumn='"+key+"'";
+			System.out.println(query);
+			Recordset rs = conn.executeQuery(query);
+			
 			while (rs.next()) {
-				value = rs.getField(valueColumn);
+				int i = 1;
+				while (i<=columns) {
+					values.add(rs.getField(String.valueOf(i)));
+					i++;
+				}
 			}
-        } catch (Exception e) {
-          e.printStackTrace();
-      }
-		return value;
-  
-  
-  }
+			return values;
+        } catch (FilloException e) {
+        	Logger.getRootLogger().debug("You got a FilloException", e);
+        }
+		return null;
+    }
   
 }

@@ -23,6 +23,7 @@ import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.testLibs.UserDataManager;
+import com.revature.sms.util.ExcelHelper;
 import com.revature.sms.util.Initializer;
 import com.revature.sms.util.TestSetup;
 
@@ -30,23 +31,32 @@ import com.revature.sms.util.TestSetup;
 @SpringBootTest
 public class ViewAssociatesTest {
 
-	private Properties input;
-	private WebDriver driver;
+	static WebDriver driver;
+	static UserDataManager udm;
 	
 	@Autowired
 	UserRepo ur;
 	
 	@Ignore
 	@BeforeClass
-	public void beforeClass() {
-		input = TestSetup.getProperties("input.properties");
+	public static void beforeClass() {
+		System.out.println("here");
+		int userNumber = 2;
 		driver = TestSetup.getChrome();
-		udm = Initializer.initializeUsers(input);
-		for (User user:udm.createdUsers) {
-			
-			user.attendance()
+		udm = Initializer.initializeUsers(userNumber);
+		 
+		/*
+		String key = "checkedIn";
+		int columns = 10;
+		ArrayList<String> values = ExcelHelper.getValues(file, sheet, key, columns);
+		for(String value:values) {
+			System.out.println(value);
 		}
 		
+		Initializer.initializeAttendance(input);
+		for (User user:udm.createdUsers) {
+		}
+		*/
 	}
 	
 	@Ignore
@@ -59,7 +69,7 @@ public class ViewAssociatesTest {
 	@Ignore
 	@Test
 	public void viewAsAdmin() {
-		fail("Not yet implemented");
+		System.out.println("here3");
 	}
 
 	
