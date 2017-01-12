@@ -105,7 +105,6 @@ public class LoginController {
 		if (!associateAttendanceList.isEmpty()) {
 
 			for (AssociateAttendance aa : associateAttendanceList) {
-				System.out.println("\t\t\t" + (d.getDate() == aa.getDate().getDate() && d.getDay() == aa.getDate().getDay() && d.getYear() == aa.getDate().getYear()));
 				if (d.getDate() == aa.getDate().getDate() && d.getDay() == aa.getDate().getDay() && d.getYear() == aa.getDate().getYear()) {
 					// Associate has checked in before and current day exists
 					aa.setCheckedIn(true);
