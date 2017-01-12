@@ -20,6 +20,12 @@
             adc.toast("Logged out.");
             $state.go("login");
         };
+        
+        adc.updateInformation = function(){
+        	$mdSidenav("left").close();
+        	$state.go("ADupdateInfo");
+        	
+        };
 
           // data
         adc.user = loginService.getUser();

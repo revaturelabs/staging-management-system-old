@@ -1,5 +1,4 @@
-
-    var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "ngResource", "ngCookies", "ui.router"]);
+var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "ngResource", "ngCookies", "ui.router"]);
 
       // URL routing
     sms.config( function( $stateProvider, $urlRouterProvider, $locationProvider ) {
@@ -18,6 +17,7 @@
                     }
                 }
 			})
+               
               // superadmin page
 			.state( "super", {
 				url: "/super",
@@ -42,6 +42,18 @@
                         }
                     }
                 })
+                // superAdmin update information
+                .state( "SUupdateInfo", {
+                    url: "^/updateInformation",
+                    parent: "super",
+                    views: {
+                        "mainSuperView": {
+                            templateUrl: "html/views/updateInformation.html",
+                            controller: "updateInfoCrtl as uInfoctrl"
+                        }
+                    }
+                })
+                
               // admin page
 			.state( "admin", {
 				url: "/admin",
@@ -66,6 +78,19 @@
 	                        }
 	                    }
 	                })
+			
+			// Admin update information
+                .state( "ADupdateInfo", {
+                    url: "^/updateInformation",
+                    parent: "admin",
+                    views: {
+                        "mainAdminView": {
+                            templateUrl: "html/views/updateInformation.html",
+                            controller: "updateInfoCrtl as uInfoctrl"
+                        }
+                    }
+                })
+			
               // associate page
 			.state( "assoc", {
 				url: "/assoc",
@@ -79,6 +104,18 @@
                     }
                 }
 			})
+			
+			// Associate update information
+                .state( "ASupdateInfo", {
+                    url: "^/updateInformation",
+                    parent: "assoc",
+                    views: {
+                        "mainAssociateView": {
+                            templateUrl: "html/views/updateInformation.html",
+                            controller: "updateInfoCrtl as uInfoctrl"
+                        }
+                    }
+                })
 	});
 
       // theme config
@@ -87,4 +124,3 @@
             .primaryPalette("indigo")
             .accentPalette("pink");
     });
-    
