@@ -1,5 +1,6 @@
 package com.revature.sms;
 
+import org.aspectj.lang.annotation.Before;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.revature.sms.domain.User;
-import com.revature.sms.domain.dao.BatchTypeRepo;
-import com.revature.sms.domain.dao.UserRoleRepo;
 import com.revature.sms.testlibs.TestUserProvider;
 import com.revature.sms.testlibs.UserDataManager;
 
@@ -32,12 +31,6 @@ public class LoginTest {
 	private TestUserProvider users;
 	
 	
-	
-	/*@Before
-	public void setDataManager(){
-		 udm = new UserDataManager();
-		 users = new TestUserProvider();
-	}*/
 	
 	@Test
 	public void testAssociateLogin(){
