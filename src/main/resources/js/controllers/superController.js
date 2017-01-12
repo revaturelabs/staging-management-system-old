@@ -36,7 +36,7 @@
             console.log(response);
         }, function(error){
             suc.toast("Error retrieving all users.");
-            console.log(error);
+            // console.log(error);
         });
 
     });
