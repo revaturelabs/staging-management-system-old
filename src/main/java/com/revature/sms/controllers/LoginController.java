@@ -3,7 +3,6 @@ package com.revature.sms.controllers;
 import java.sql.Timestamp;
 import java.util.List;
 
-import com.revature.sms.domain.dao.TokenRepo;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
