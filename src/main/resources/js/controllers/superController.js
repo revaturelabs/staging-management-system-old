@@ -35,7 +35,6 @@
             suc.users = response;
         }, function(error){
             suc.toast("Error retrieving all users.");
-            // console.log(error);
         });
 
     });
