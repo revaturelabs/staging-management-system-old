@@ -65,19 +65,23 @@
         }
         
         //set all days based on monday
+        sunday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()-1),9,0,0,0);
         monday = m;
         tuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1),9,0,0,0);
         wednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2),9,0,0,0);
         thursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3),9,0,0,0);
         friday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4),9,0,0,0);
+        saturday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+5),9,0,0,0);
         
         //test
         //set all scope days to print on top of table
+        ascatt.sunday = (sunday.getMonth()+1)+"/"+sunday.getDate();
         ascatt.monday = (monday.getMonth()+1)+"/"+monday.getDate();
         ascatt.tuesday = (tuesday.getMonth()+1)+"/"+tuesday.getDate();
         ascatt.wednesday = (wednesday.getMonth()+1)+"/"+wednesday.getDate();
         ascatt.thursday = (thursday.getMonth()+1)+"/"+thursday.getDate();
         ascatt.friday = (friday.getMonth()+1)+"/"+friday.getDate();
+        ascatt.saturday = (saturday.getMonth()+1)+"/"+saturday.getDate();
         //99999999999999999999999999999999999999999999999999999999999
         
         //holds the position of the 5 days -1 if it does not exist
