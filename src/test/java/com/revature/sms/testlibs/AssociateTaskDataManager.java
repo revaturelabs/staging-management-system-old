@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.AssociateTaskType;
@@ -21,12 +22,13 @@ import com.revature.sms.domain.dao.AssociateTasksRepo;
  * 
  */
 
+@Service
 public class AssociateTaskDataManager {
 
-	List<AssociateTask> createdAssociateTasks = new ArrayList<>();
+	private List<AssociateTask> createdAssociateTasks = new ArrayList<>();
 	
 	@Autowired
-	AssociateTasksRepo atr;
+	private AssociateTasksRepo atr;
 	
 	
 	/**

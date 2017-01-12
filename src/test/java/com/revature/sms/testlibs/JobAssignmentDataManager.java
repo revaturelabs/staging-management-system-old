@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.revature.sms.domain.JobAssignment;
 import com.revature.sms.domain.dao.JobAssignmentRepo;
@@ -19,12 +20,13 @@ import com.revature.sms.domain.dao.JobAssignmentRepo;
  * 
  */
 
+@Service
 public class JobAssignmentDataManager {
 
-	List<JobAssignment> createdJobAssignments = new ArrayList<>();
+	private List<JobAssignment> createdJobAssignments = new ArrayList<>();
 	
 	@Autowired
-	JobAssignmentRepo jaRepo;
+	private JobAssignmentRepo jaRepo;
 	
 	
 	/**
