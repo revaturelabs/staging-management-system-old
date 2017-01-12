@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.revature.sms.domain.User;
-import com.revature.sms.testLibs.TestUserProvider;
-import com.revature.sms.testLibs.UserDataManager;
+import com.revature.sms.testlibs.TestUserProvider;
+import com.revature.sms.testlibs.UserDataManager;
 
 /**
  * LoginTest is a test suite class that tests login functionality.
