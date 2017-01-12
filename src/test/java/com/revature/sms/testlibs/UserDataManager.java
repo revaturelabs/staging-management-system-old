@@ -1,4 +1,4 @@
-package com.revature.sms.testlibs;
+package com.revature.sms.testLibs;
 
 import static com.revature.sms.StagingManagementSystemApplicationTests.hashPassword;
 

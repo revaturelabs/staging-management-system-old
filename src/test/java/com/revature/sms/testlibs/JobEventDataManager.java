@@ -1,4 +1,4 @@
-package com.revature.sms.testlibs;
+package com.revature.sms.testLibs;
 
 import java.sql.Date;
 import java.util.ArrayList;
