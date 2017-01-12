@@ -1,9 +1,13 @@
-package com.revature.sms.testLibs;
+package com.revature.sms.testlibs;
 
-import org.junit.runner.RunWith;
+import static com.revature.sms.StagingManagementSystemApplicationTests.hashPassword;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
@@ -11,11 +15,6 @@ import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.UserRepo;
-
-import static com.revature.sms.StagingManagementSystemApplicationTests.hashPassword;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 
@@ -28,9 +27,7 @@ import java.util.List;
  * 
  */
 
-
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@Service
 public class UserDataManager {
 	
 	/**
@@ -41,7 +38,9 @@ public class UserDataManager {
 	private List<User> createdUsers = new ArrayList<>();
 	
 	@Autowired
-	UserRepo ur;
+	private UserRepo ur;
+	
+	
 	
 	
 	/**
@@ -53,9 +52,22 @@ public class UserDataManager {
 	
 	public User createTestAdmin(String username, String firstName, String lastName, String unhashedPassword, UserRole userRole){
 		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), userRole);
-		ur.save(newUser);
-		createdUsers.add(newUser);
-		return newUser;
+		
+		return createTestUser(newUser);
+	}
+	
+	/**
+	 * createTestUser is a setup method that is called to create a user of any type for testing.
+	 * The cleanup method RemoveAllTestUsers must be called after an instance of this class is done being used.
+	 * 
+	 * @param user The user object to be added to the database
+	 * @return The user object that is created in the database
+	 */
+	
+	public User createTestUser(User user){
+		ur.save(user);
+		createdUsers.add(user);
+		return user;
 	}
 	
 	
@@ -66,12 +78,11 @@ public class UserDataManager {
 	 * @return The user object that is created in the database
 	 */
 	
-	public User createTestAssociate(String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
+	public User createTestUser(String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole){
 		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole);
-		ur.save(newUser);
-		createdUsers.add(newUser);
-		return newUser;
+		
+		return createTestUser(newUser);
 	}
 	
 	
@@ -86,5 +97,7 @@ public class UserDataManager {
 		}
 		createdUsers.clear();
 	}
+	
+	
 	
 }

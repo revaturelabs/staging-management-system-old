@@ -17,6 +17,7 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                     }
                 }
 			})
+               
               // superadmin page
 			.state( "super", {
 				url: "/super",
@@ -42,6 +43,18 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                         
                     }
                 })
+                // superAdmin update information
+                .state( "SUupdateInfo", {
+                    url: "^/updateInformation",
+                    parent: "super",
+                    views: {
+                        "mainSuperView": {
+                            templateUrl: "html/views/updateInformation.html",
+                            controller: "updateInfoCrtl as uInfoctrl"
+                        }
+                    }
+                })
+                
               // admin page
 			.state( "admin", {
 				url: "/admin",
@@ -55,6 +68,19 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                     }
                 }
 			})
+			
+			// Admin update information
+                .state( "ADupdateInfo", {
+                    url: "^/updateInformation",
+                    parent: "admin",
+                    views: {
+                        "mainAdminView": {
+                            templateUrl: "html/views/updateInformation.html",
+                            controller: "updateInfoCrtl as uInfoctrl"
+                        }
+                    }
+                })
+			
               // associate page
 			.state( "assoc", {
 				url: "/assoc",
@@ -68,6 +94,7 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                     }
                 }
 			})
+
 			//.....................................................................
 			// superadmin view all attendance
                 .state( "assocAttendance", {
@@ -82,6 +109,20 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                     }
                 })
 			//........................................................................
+
+			
+			// Associate update information
+                .state( "ASupdateInfo", {
+                    url: "^/updateInformation",
+                    parent: "assoc",
+                    views: {
+                        "mainAssociateView": {
+                            templateUrl: "html/views/updateInformation.html",
+                            controller: "updateInfoCrtl as uInfoctrl"
+                        }
+                    }
+                })
+
 	});
 
       // theme config
