@@ -25,12 +25,15 @@ import com.revature.sms.testlibs.UserDataManager;
 @SpringBootTest
 public class LoginTest {
 	
-	
+	@Autowired
+	static BatchTypeRepo btr;
 	
 	UserDataManager udm = new UserDataManager();
 	
 	
 	TestUserProvider users = new TestUserProvider();
+	
+	
 	
 	/*@Before
 	public void setDataManager(){
@@ -40,10 +43,10 @@ public class LoginTest {
 	
 	@Test
 	public void testAssociateLogin(){
-		
-		User testUser = users.getAssociate();
+		Assert.assertEquals(btr.findByType("SDET"),"Wampwamp");
+		/*User testUser = users.getAssociate();
 		udm.createTestUser(testUser);
-		Assert.assertTrue(true);
+		Assert.assertTrue(true);*/
 		//TODO: Write a test case that succeeds when a test logs in using valid Associate credentials
 	}
 	

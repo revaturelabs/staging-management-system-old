@@ -59,7 +59,6 @@ public class AssociateAttendance {
 	public AssociateAttendance() {
 		super();
 	}
-
 	
 	/**
 	 * Parameterized constructor for AssociateAttendance where ID is automatically generated.

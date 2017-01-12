@@ -24,9 +24,11 @@ public class TestUserProvider {
 	
 	
 	@Autowired
-	BatchTypeRepo btr;
+	private BatchTypeRepo btr;
 	@Autowired
-	UserRoleRepo urr;
+	private UserRoleRepo urr;
+	
+	
 	
 	
 	/**

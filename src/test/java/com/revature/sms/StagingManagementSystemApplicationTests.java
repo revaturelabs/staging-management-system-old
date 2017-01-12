@@ -60,6 +60,7 @@ public class StagingManagementSystemApplicationTests {
 		Assert.assertTrue("Test executed", true);
 		
 	}
+
 	
 	
 	
@@ -71,6 +72,7 @@ public class StagingManagementSystemApplicationTests {
 	 * @param inputPassword
 	 * @return The hashed password
 	 */
+
 	public static String hashPassword(String inputPassword) {
 		try {
 			MessageDigest md;
