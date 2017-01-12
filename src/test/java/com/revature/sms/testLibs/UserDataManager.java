@@ -1,6 +1,7 @@
 package com.revature.sms.testLibs;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
@@ -25,6 +26,7 @@ import java.util.List;
  * 
  */
 
+@Service
 public class UserDataManager {
 	
 	/**
@@ -32,10 +34,10 @@ public class UserDataManager {
 	 * Each element of createdUsers is removed from the database when removeAllTestUsers is called.
 	 */
 	
-	public List<User> createdUsers = new ArrayList<>();
+	private List<User> createdUsers = new ArrayList<>();
 	
 	@Autowired
-	UserRepo ur;
+	private UserRepo ur;
 	
 	
 	/**
@@ -63,6 +65,7 @@ public class UserDataManager {
 	public User createTestAssociate(String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole){
 		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole);
+		System.out.println(ur.getClass());
 		ur.save(newUser);
 		createdUsers.add(newUser);
 		return newUser;

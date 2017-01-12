@@ -32,18 +32,15 @@ import com.revature.sms.util.TestSetup;
 public class ViewAssociatesTest {
 
 	static WebDriver driver;
-	static UserDataManager udm;
+	//static UserDataManager udm;
 	
-	@Autowired
-	UserRepo ur;
 	
-	@Ignore
 	@BeforeClass
 	public static void beforeClass() {
 		System.out.println("here");
 		int userNumber = 2;
 		driver = TestSetup.getChrome();
-		udm = Initializer.initializeUsers(userNumber);
+		Initializer.initializeUsers(userNumber);
 		 
 		/*
 		String key = "checkedIn";
@@ -59,14 +56,13 @@ public class ViewAssociatesTest {
 		*/
 	}
 	
-	@Ignore
 	@Before
 	public void before() {
 		driver.get("localhost:81");
 	}
 	
 	
-	@Ignore
+
 	@Test
 	public void viewAsAdmin() {
 		System.out.println("here3");
