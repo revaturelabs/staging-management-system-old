@@ -75,4 +75,3 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
             .primaryPalette("indigo")
             .accentPalette("pink");
     });
-    
