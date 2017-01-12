@@ -18,21 +18,39 @@
         <div class="newAssociateGroup" layout>
             
             <form name="newAssociate" ng-submit="bACtrl.addNew(newAssociate.$valid)" novalidate>
+                
                 <div class="newAssociate md-padding" layout="columns">
-                    <md-input-container>
+                    
+                    <md-input-container flex>
                         <label> First name </label>
                         <input id="firstName" type="text" ng-model="bACtrl.firstName" required>
                     </md-input-container>
-                    <md-input-container>
+                    
+                    <md-input-container flex>
                         <label> Last name </label>
                         <input type="text" ng-model="bACtrl.lastName" required>
                     </md-input-container>
-                    <md-button type="submit" class="md-primary md-raised" aria-label="More">
-                        ADD
+                    
+                    <md-button type="submit" class="md-fab md-mini" aria-label="Add to list"> 
+                        <md-icon md-svg-icon="img/icons/ic_add_white_24px.svg"> </md-icon>
                     </md-button>
-                    <md-button type="button" class="md-primary" ng-click="bACtrl.save(bACtrl.associates)" aria-label="Submit All">SUBMIT ALL</md-button>
-                    <md-button type="button" class="md-primary" ng-click="bACtrl.cancel()" aria-label="Cancel">CANCEL</md-button>
+                
                 </div>
+
+                <div class="md-padding" layout="columns">
+                    
+                    <md-input-container flex>
+                        <label> Curriculum </label>
+                        <md-select ng-model="bACtrl.selectedBatchType">
+                                <md-option ng-value="batchType" ng-repeat="batchType in bACtrl.batchTypes"> {{ batchType.type }} </md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-button type="button" class="md-primary md-raised" ng-click="bACtrl.save(bACtrl.associates)" aria-label="Submit All"> SUBMIT </md-button>
+                    <md-button type="button" class="md-primary md-raised" ng-click="bACtrl.cancel()" aria-label="Cancel"> CANCEL </md-button>
+                
+                </div>
+
             </form>
 
         </div>
