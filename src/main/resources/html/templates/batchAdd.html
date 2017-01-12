@@ -1,0 +1,40 @@
+
+    <div role="dialog">
+        
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                Create new batch
+            </div>
+        </md-toolbar>
+
+        <div class="md-padding batchAddChips">
+            <md-chips ng-model="bACtrl.associates" readonly="true" md-removable="true">
+                <md-chip-template>
+                    {{ $chip.firstName }} {{ $chip.lastName }}
+                </md-chip-template>
+            </md-chips>
+        </div>
+
+        <div class="newAssociateGroup" layout>
+            
+            <form name="newAssociate" ng-submit="bACtrl.addNew(newAssociate.$valid)" novalidate>
+                <div class="newAssociate md-padding" layout="columns">
+                    <md-input-container>
+                        <label> First name </label>
+                        <input id="firstName" type="text" ng-model="bACtrl.firstName" required>
+                    </md-input-container>
+                    <md-input-container>
+                        <label> Last name </label>
+                        <input type="text" ng-model="bACtrl.lastName" required>
+                    </md-input-container>
+                    <md-button type="submit" class="md-primary md-raised" aria-label="More">
+                        ADD
+                    </md-button>
+                    <md-button type="button" class="md-primary" ng-click="bACtrl.save(bACtrl.associates)" aria-label="Submit All">SUBMIT ALL</md-button>
+                    <md-button type="button" class="md-primary" ng-click="bACtrl.cancel()" aria-label="Cancel">CANCEL</md-button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>

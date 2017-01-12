@@ -1,7 +1,7 @@
 
     var sms = angular.module( "sms" );
 
-    sms.controller( "superCtrl", function( $scope, $state, $mdSidenav, loginService ){
+    sms.controller( "superCtrl", function( $scope, $state, $mdSidenav, $mdDialog, loginService, userService ){
         var suc = this;
 
           // functions
@@ -27,8 +27,21 @@
         	
         };
 
+        suc.newAssociate = function() {
+            $mdDialog.show({
+                templateUrl: "html/templates/batchAdd.html",
+                controller: "batchAddCtrl as bACtrl"
+            });
+        };
+
           // data
         suc.user = loginService.getUser();
-        suc.token = loginService.getToken();
+
+        userService.getAll(function(response){
+            suc.users = response;
+        }, function(error){
+            suc.toast("Error retrieving all users.");
+            // console.log(error);
+        });
 
     });
