@@ -20,6 +20,12 @@
             asc.toast("Logged out.");
             $state.go("login");
         };
+        
+        asc.updateInformation = function(){
+        	$mdSidenav("left").close();
+        	$state.go("ASupdateInfo");
+        	
+        };
 
           // data
         asc.user = loginService.getUser();
