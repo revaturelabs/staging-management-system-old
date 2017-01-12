@@ -27,7 +27,7 @@ Aim for 3 commits a day (not including any dummy commits), with the last one bei
     1. Run `touch dummy.txt`
     1. Run `git commit -am "added dummy"` )
   * Type `git push --set-upstream origin SMS-24` to create the branch remotely (For subsequent pushes, you can simply use `git push`)
-  * If you created a dummy file, revert it with the followig steps:
+  * If you created a dummy file, revert it with the following steps:
     1. `git rm dummy.txt`
     1. `git commit -am "removed dummy file"`
     1. `git push`
@@ -47,13 +47,13 @@ Aim for 3 commits a day (not including any dummy commits), with the last one bei
 
 ## I have a question! Who should I ask?
 
-If your question relates to the Requirements of a userstory, contact Karan or Ankit.
+If your question relates to the requirements of a userstory, contact Karan or Ankit.
 
-If your question pertains to the UI or Design of the app, contact Ben.
+If your question pertains to the UI or design of the app, contact Ben.
 
 If your question has to do with testing, contact Alex.
 
-If your quetion has to do with your development enviroment, or if you have a problem that impedes your ability to develop, contact Chris.
+If your question has to do with your development enviroment, or if you have a problem that impedes your ability to develop, contact Chris.
 
 ## I haven't used Git Bash in a long while! How do I...
 * generally use it? After you've cloned as above and created your branch, the general flow is:
