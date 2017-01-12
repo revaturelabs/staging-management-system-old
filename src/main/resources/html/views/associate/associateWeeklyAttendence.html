@@ -9,6 +9,20 @@
         </div>
 
     </md-toolbar>
+    <div flex="33"></div>
+    <div flex="66">
+        <li ng-repeat="legitem in assWeekAttCtrl.legend">
+
+            <!-- set the icon data -->
+            <md-icon ng-style="{color: '{{legitem.color}}'}" aria-label='{{legitem.name}}' class="material-icons step" ng-class="md-48">
+
+                <!-- changing the text changes the icon-->
+                {{legitem.name}}
+            </md-icon>
+
+            {{legitem.description}}
+    </div>
+    </li>
 </div>
 <p id="me">First name: {{assWeekAttCtrl.firstname}}</p>
 
@@ -18,17 +32,7 @@
 <p>{{assWeekAttCtrl.thursday}}</p>
 <p>{{assWeekAttCtrl.friday}}</p>
 
-<li ng-repeat="legitem in assWeekAttCtrl.legend">
 
-    <!-- set the icon data -->
-    <md-icon ng-style="{color: '{{legitem.color}}'}" aria-label='{{legitem.name}}' class="material-icons step" ng-class="md-48">
-
-        <!-- changing the text changes the icon-->
-        {{legitem.name}}
-    </md-icon>
-
-    {{legitem.description}}
-</li>
 
 <!-- holds table -->
 <md-table-container class="md-whiteframe-24dp">
