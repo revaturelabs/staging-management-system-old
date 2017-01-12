@@ -45,7 +45,6 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
     			
 	            uic.user = loginService.getUser();
 	            uic.token = loginService.getToken();
-	            console.log(uic.token);
 	            $http({
 	            	  method: 'PUT',
 	            	  url: '/api/v1/login',
