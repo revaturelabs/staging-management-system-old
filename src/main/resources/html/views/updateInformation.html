@@ -4,22 +4,25 @@
 
 <form name="updateInfoForm" ng-submit="uInfoctrl.submit()" novalidate>
 
-		<!-- md-block makes input span entire width -->
-		<md-input-container class="md-block"> 
-			<label style="text-align: center">oldPass</label> 
-			<input id="oldPass" ng-bind="uic.oldPass" style="text-align: center" type="password">
-		</md-input-container>
-		<md-input-container class="md-block"> 
-			<label style="text-align: center">New Password</label> 
-			<input id="newPass" ng-bind="uic.newPass" style="text-align: center" type="password">
-		</md-input-container>
+	<!-- md-block makes input span entire width -->
+	<md-input-container class="md-block"> 
+		<label style="text-align: center">Old Password</label> 
+		<input id="oldPass" ng-bind="uic.oldPass" style="text-align: center" type="password">
+	</md-input-container>
 
-		<md-input-container class="md-block"> 
-			<label style="text-align: center">Confirm Password</label> 
-			<input id="confirmPass" ng-bind="uic.confirmPass" style="text-align: center" type="password"> 
-		</md-input-container>
+	<md-input-container class="md-block"> 
+		<label style="text-align: center">New Password</label> 
+		<input id="newPass" ng-bind="uic.newPass" style="text-align: center" type="password">
+	</md-input-container>
+
+	<md-input-container class="md-block"> 
+		<label style="text-align: center">Confirm Password</label> 
+		<input id="confirmPass" ng-bind="uic.confirmPass" style="text-align: center" type="password"> 
+	</md-input-container>
 
 	<div layout="row" layout-align="center">
-		<md-button type="submit" class="md-raised md-primary" style="width:100%; text-align: center">Submit</md-button>
+		<md-button type="button" class="md-raised md-warn" style="width:25%; text-align: center" ng-click="uInfoctrl.cancel()">Cancel</md-button>
+		<md-button type="submit" class="md-raised md-primary" style="width:75%; text-align: center">Submit</md-button>
 	</div>
+
 </form>

@@ -7,6 +7,17 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
         $scope.$parent.mastCtrl.toast(message);
     };
     
+    //When user decides to cancel password update
+    uic.cancel = function(){
+    	//route to the appropriate homepage
+    	console.log(loginService.getUser());
+		switch(loginService.getUser().userRole.name){
+		case "associate":$state.go("assoc"); break;
+		case "admin" : $state.go("admin"); break;
+		case "superAdmin" : $state.go("super"); break;
+		}
+    }
+    
     //when user submits updated password
     uic.submit = function(){
     	var oldPassH = CryptoJS.SHA1(oldPass.value).toString();
