@@ -11,6 +11,8 @@ public class UserDTO {
 	private String hashedPassword;
 	private BatchType batchType;
 	private UserRole userRole;
+	private String oldPassword;
+	private String newPassword;
 	
 	public UserDTO() {
 		super();
@@ -84,6 +86,21 @@ public class UserDTO {
 
 	public void setBatchType(BatchType batchType) {
 		this.batchType = batchType;
+	}
+	
+	public String getOldPassword() {
+		return oldPassword;
+	}
+
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
 	}
 	
 
