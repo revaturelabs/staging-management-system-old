@@ -33,6 +33,7 @@
 
         userService.getAll(function(response){
             suc.users = response;
+            console.log(response);
         }, function(error){
             suc.toast("Error retrieving all users.");
             console.log(error);

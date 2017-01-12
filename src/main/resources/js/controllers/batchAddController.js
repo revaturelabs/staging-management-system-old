@@ -44,11 +44,9 @@
         		addUser.batchType = batchType;
         		//call rest controller to save user via userService
         		userService.create(addUser, function(response){
-        			console.log("works!");
-        			console.log(response.data);
+        			
         		}, function(error){
-        			console.log("Fail!");
-        			console.log(error);
+        			
         		});
         		this.save(list);
         	}
