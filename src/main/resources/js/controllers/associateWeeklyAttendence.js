@@ -167,8 +167,8 @@
         		// set this days icon data
         		ascatt.daypositionstring.push(iconData[3]);
         	}
-        	// if you checked in and were verified
-        	else if(as[daypositions[j]].checkedIn && as[daypositions[j]].verified){
+        	// if you checked in and were verified or you were NOT checked in but were verified
+        	else if((as[daypositions[j]].checkedIn && as[daypositions[j]].verified)||((!(as[daypositions[j]].checkedIn)) && as[daypositions[j]].verified)){
         		//TODO return a proper string
  
         		
@@ -182,13 +182,6 @@
         		
         		// set this days icon data
         		ascatt.daypositionstring.push(iconData[0]);
-        	}
-        	// if you were NOT checked in but were verified
-        	else if((!(as[daypositions[j]].checkedIn)) && as[daypositions[j]].verified){
-        	
-        		
-        		//TODO may want to change this // set this days icon data
-        		ascatt.daypositionstring.push(iconData[2]);
         	}
         	// if you were NOT checked in and NOT verified
         	else if((!(as[daypositions[j]].checkedIn)) && (!(as[daypositions[j]].verified))){
