@@ -19,9 +19,11 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
     			
 	            uic.user = loginService.getUser();
 	            //uic.token = loginService.getToken();
-	            uic.token = "7fp;^0Ssm2g[_RM8PI<rkBhPm6<5:1b9DA9A2N:<";
+	            //associate
+	            //uic.token = "7fp;^0Ssm2g[_RM8PI<rkBhPm6<5:1b9DA9A2N:<";
 	            
-	            //old and new passwords not be the same
+	            // super admin
+	            uic.token = "=>I:bIVuQe;8Jr5>ABQl]LhoV5M?IO9YuQXg96R8";
 	            
 	            $http({
 	            	  method: 'PUT',
@@ -35,8 +37,14 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
 	            	}).then(function successCallback(response) {
 	            		//password changed successfully
 	            		uic.toast("password changed successfully");
-	            		console.log(uic.user);
-	            		$state.go("assoc");
+	            		
+	            		switch(response.data.userRole.name){
+	            		case "associate":$state.go("assoc"); break;
+	            		case "admin" : $state.go("admin"); break;
+	            		case "superAdmin" : $state.go("super"); break;
+	            		}
+	            		
+	            		
 	            	}, function errorCallback(response) {
 	            		// password change went wrong
 	            		switch(response.status){
