@@ -71,7 +71,7 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     	
     	aac.users = $filter("associateFilter")(response);
     	console.log(aac.users);
-    	aac.users = $filter("weekFilter")(aac.users, monday);
+    	aac.users = $filter("weekFilter")(aac.users, aac.thisMonday);
     	console.log(aac.users);
     	
     	
@@ -133,7 +133,6 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
         aac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
         
         /*set all scope days to print on top of table*/
-        console.log(monday);
         aac.monday = (aac.thisMonday.getMonth()+1)+"/"+aac.thisMonday.getDate();
         aac.tuesday = (aac.thisTuesday.getMonth()+1)+"/"+aac.thisTuesday.getDate();
         aac.wednesday = (aac.thisWednesday.getMonth()+1)+"/"+aac.thisWednesday.getDate();
@@ -141,7 +140,7 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
         aac.friday = (aac.thisFriday.getMonth()+1)+"/"+aac.thisFriday.getDate();
         
         /*make data change for new week*/
-        aac.users = $filter("weekFilter")(aac.users, monday);
+        aac.users = $filter("weekFilter")(aac.users, aac.thisMonday);
         
         /*setting active days*/
         /*remove active day*/
@@ -167,7 +166,6 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
         aac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
         
         /*set all scope days to print on top of table*/
-        console.log(monday);
         aac.monday = (aac.thisMonday.getMonth()+1)+"/"+aac.thisMonday.getDate();
         aac.tuesday = (aac.thisTuesday.getMonth()+1)+"/"+aac.thisTuesday.getDate();
         aac.wednesday = (aac.thisWednesday.getMonth()+1)+"/"+aac.thisWednesday.getDate();
@@ -175,7 +173,7 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
         aac.friday = (aac.thisFriday.getMonth()+1)+"/"+aac.thisFriday.getDate();
         
         /*make data change for new week*/
-        aac.users = $filter("weekFilter")(aac.users, monday);
+        aac.users = $filter("weekFilter")(aac.users, aac.thisMonday);
         
         /*setting active days*/
         /*remove active day*/
