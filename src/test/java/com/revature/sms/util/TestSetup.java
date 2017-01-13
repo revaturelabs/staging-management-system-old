@@ -16,7 +16,7 @@ import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.UserRole;
-import com.revature.sms.testLibs.UserDataManager;
+import com.revature.sms.testlibs.UserDataManager;
 
 public class TestSetup {
 	

@@ -27,7 +27,7 @@ public class ExcelHelper {
 			ArrayList<String> values = new ArrayList<String>();
 			
 			String query = "SELECT * FROM "+sheet+" WHERE "+"KeyColumn='"+key+"'";
-			System.out.println(query);
+			//System.out.println(query);
 			Recordset rs = conn.executeQuery(query);
 			
 			while (rs.next()) {

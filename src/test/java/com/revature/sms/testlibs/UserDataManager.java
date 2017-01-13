@@ -1,13 +1,11 @@
 package com.revature.sms.testlibs;
 
-import static com.revature.sms.StagingManagementSystemApplicationTests.hashPassword;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.runner.RunWith;
+import org.hibernate.TransientPropertyValueException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import com.revature.sms.domain.AssociateAttendance;
@@ -15,12 +13,10 @@ import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
+import com.revature.sms.domain.dao.BatchTypeRepo;
 import com.revature.sms.domain.dao.UserRepo;
 
 import static com.revature.sms.util.Utils.hashPassword;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 
@@ -45,6 +41,9 @@ public class UserDataManager {
 	
 	@Autowired
 	private UserRepo ur;
+	
+	@Autowired
+	private BatchTypeRepo btr;
 	
 	
 	
@@ -72,6 +71,7 @@ public class UserDataManager {
 	
 	public User createTestUser(User user){
 		ur.save(user);
+		System.out.println("Added User");
 		createdUsers.add(user);
 		return user;
 	}
@@ -87,7 +87,6 @@ public class UserDataManager {
 	public User createTestUser(String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole){
 		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole);
-		System.out.println(ur.getClass());
 		return createTestUser(newUser);
 	}
 	

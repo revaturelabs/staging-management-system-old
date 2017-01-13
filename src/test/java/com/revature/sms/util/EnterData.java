@@ -1,30 +1,36 @@
 package com.revature.sms.util;
 
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.UserRole;
-import com.revature.sms.testLibs.AssociateAttendanceDataManager;
-import com.revature.sms.testLibs.UserDataManager;
+import com.revature.sms.domain.dao.BatchTypeRepo;
+import com.revature.sms.domain.dao.UserRoleRepo;
+import com.revature.sms.testlibs.UserDataManager;
 
-public class Initializer {
+@Service
+public class EnterData {
 
-	private Initializer() {
+	@Autowired
+	private UserDataManager udm;
+	
+	@Autowired
+	private BatchTypeRepo btr;
+	
+	@Autowired
+	private UserRoleRepo urr;
+	
+	private EnterData() {
 		super();
 	}
 	
-	public static UserDataManager initializeUsers(int userNumber) {
-		UserDataManager udm = new UserDataManager();
+	public UserDataManager initializeUsers(int userNumber) {
 		ExcelHelper eh = new ExcelHelper(userNumber);
 		
 		ArrayList<String> usernames = eh.getValues("username");
@@ -38,10 +44,13 @@ public class Initializer {
 		
 		int i = 0;
 		while (i < userNumber) {
-			BatchType batchType = new BatchType(batchTypes.get(i));
-			UserRole userRole = new UserRole(userRoles.get(i));
-			System.out.println("here2");
-			udm.createTestAssociate(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole);
+			System.out.println(i);
+			System.out.println(usernames.get(i));
+			BatchType batchType = btr.findByType(batchTypes.get(i));
+			UserRole userRole = urr.findByName(userRoles.get(i));
+			System.out.println(batchType.getType());
+			udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole);
+			i++;
 		}
 		
 		
