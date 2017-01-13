@@ -301,7 +301,7 @@ public class UserController {
 	 * @return Updated user object
 	 */
 
-	public Object updateValidation(UserDTO userDTO)throws Exception {
+	public Object updateValidation(UserDTO userDTO) {
 		User user = userRepo.findByUsername(userDTO.getUsername());
 		if (userDTO.getUserRole() != null) {
 			user.setUserRole(userDTO.getUserRole());
