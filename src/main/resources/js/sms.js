@@ -40,6 +40,7 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                             templateUrl: "html/views/superadmin/superAttendance.html",
                             controller: "superAttendanceCtrl as supAttCtrl"
                         }
+                        
                     }
                 })
                 // superAdmin update information
@@ -104,6 +105,22 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                     }
                 }
 			})
+
+			//.....................................................................
+			// superadmin view all attendance
+                .state( "assocAttendance", {
+                    url: "^/weeklyattendence",
+                    parent: "assoc",
+                    views: {
+                        "mainAssociateView": {
+                            templateUrl: "html/views/associate/associateWeeklyAttendence.html",
+                            controller: "associateWeeklyAttendenceCtrl as assWeekAttCtrl"
+                        }
+                        
+                    }
+                })
+			//........................................................................
+
 			
 			// Associate update information
                 .state( "ASupdateInfo", {
@@ -116,6 +133,7 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                         }
                     }
                 })
+
 	});
 
       // theme config
