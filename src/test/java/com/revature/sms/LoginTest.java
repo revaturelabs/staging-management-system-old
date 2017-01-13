@@ -3,8 +3,11 @@ package com.revature.sms;
 import org.aspectj.lang.annotation.Before;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -30,14 +33,23 @@ public class LoginTest {
 	@Autowired
 	private TestUserProvider users;
 	
+	private static WebDriver driver;
 	
+	@BeforeClass
+	public static void loadDriver(){
+		 driver = new HtmlUnitDriver();
+	}
 	
 	@Test
 	public void testAssociateLogin(){
 		
 		User testUser = users.getAssociate();
 		udm.createTestUser(testUser);
-		Assert.assertTrue(true);
+		
+		
+		
+		driver.get("http://dev.revature.pro");
+		Assert.assertTrue(driver.getTitle().contains("Staging"));
 		//TODO: Write a test case that succeeds when a test logs in using valid Associate credentials
 	}
 	
