@@ -49,7 +49,7 @@
             // returns array that represents the difference between the two input arrays
         suc.diffArray = function( bigArray, smallArray ){
 
-            var diff = [];
+            var diff;
             // var bigCopy = bigArray;
             // bigCopy.forEach( function(obj) {
             //     if (smallArray.indexOf(obj) != -1) {
@@ -57,7 +57,7 @@
             //     }
             // });
             diff = $(bigArray).not(smallArray).get();
-            console.log(diff);
+            // console.log(diff);
             return diff;
         };
           // data
