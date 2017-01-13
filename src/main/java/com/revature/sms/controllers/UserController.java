@@ -75,7 +75,6 @@ public class UserController {
 			return new ResponseEntity<ResponseErrorEntity>(
 					new ResponseErrorEntity("Username already exists."), HttpStatus.CONFLICT);
 		} catch (Exception e) {
-			e.printStackTrace();
 			Logger.getRootLogger().debug("Exception while creating user", e);
 			return new ResponseEntity<ResponseErrorEntity>(
 					new ResponseErrorEntity("Problem occurred while creating user."), HttpStatus.SERVICE_UNAVAILABLE);
