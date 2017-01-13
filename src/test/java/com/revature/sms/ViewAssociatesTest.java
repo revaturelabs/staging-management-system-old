@@ -1,3 +1,4 @@
+/*
 package com.revature.sms;
 
 import static org.junit.Assert.*;
@@ -74,3 +75,4 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	
 	
 }
+*/
