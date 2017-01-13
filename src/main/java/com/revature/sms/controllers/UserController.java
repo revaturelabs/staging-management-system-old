@@ -1,6 +1,6 @@
 package com.revature.sms.controllers;
 
-import java.sql.Timestamp;
+
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
@@ -312,52 +311,13 @@ public class UserController {
 		if (userDTO.getLastName() != null) {
 			user.setLastName(userDTO.getLastName());
 		}
-		if (userDTO.getVerified() == true) {
-			if (!("associate".equalsIgnoreCase(role))) {
-				markPresent(userDTO.getUsername());
-			}else{
-				throw new Exception(); 
-			}
+		if (userDTO.getAttendance() != null) {
+			user.setAttendance(userDTO.getAttendance());
 		}
-
+		
 		return user;
 
 	}
 
-	/**
-	 * Marks an associate as present
-	 * 
-	 * @param username
-	 *            User to be marked as present
-	 */
-	private void markPresent(String username) {
-		User user = userRepo.findByUsername(username);
-		Timestamp d = new Timestamp(new java.util.Date().getTime());
-		List<AssociateAttendance> associateAttendanceList = user.getAttendance();
-
-		if (!associateAttendanceList.isEmpty()) {
-
-			for (AssociateAttendance aa : associateAttendanceList) {
-				if (d.getDate() == aa.getDate().getDate() && d.getDay() == aa.getDate().getDay()
-						&& d.getYear() == aa.getDate().getYear()) {
-					// Associate has checked in before and current day exists
-					aa.setVerified(true);
-					aar.save(aa);
-					return;
-				}
-			}
-		}
-
-		// Associate has not checked in before
-		// or
-		// Associate has checked in before but current day does not exist
-		AssociateAttendance aa = new AssociateAttendance(d, false, true, "");
-
-		List<AssociateAttendance> l = user.getAttendance();
-		l.add(aa);
-		user.setAttendance(l);
-
-		userRepo.save(user);
-	}
-
+	
 }
