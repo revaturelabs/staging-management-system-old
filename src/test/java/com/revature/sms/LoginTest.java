@@ -3,10 +3,11 @@ package com.revature.sms;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.revature.sms.domain.User;
 import com.revature.sms.testlibs.TestUserProvider;
 import com.revature.sms.testlibs.UserDataManager;
+import com.revature.sms.testlibs.WebElementStaticProvider;
 
 /**
  * LoginTest is a test suite class that tests login functionality.
@@ -36,8 +38,14 @@ public class LoginTest {
 	
 	@BeforeClass
 	public static void loadDriver(){
-		 driver = new HtmlUnitDriver();
+		 driver = new ChromeDriver();
+		 driver.navigate().to("http://dev.revature.pro");
 	}
+	
+	
+	/**
+	 * This is a unit test to ensure that an associate user is able to log in and observe any content appropriate to an associate.
+	 */
 	
 	@Test
 	public void testAssociateLogin(){
@@ -47,11 +55,18 @@ public class LoginTest {
 		
 		
 		
-		driver.get("http://dev.revature.pro");
-		Assert.assertTrue(driver.getTitle().contains("Staging"));
+		
+		
+		
+		WebElementStaticProvider.getLoginUsernameInput(driver).sendKeys("TestAssociateOne");
+		WebElementStaticProvider.getLoginPasswordInput(driver).sendKeys("E=MC^2");
+		WebElementStaticProvider.getLoginSubmit(driver).click();
+		
+		Assert.assertTrue(driver.getCurrentUrl().contains("assoc"));
 		//TODO: Write a test case that succeeds when a test logs in using valid Associate credentials
 	}
 	
+	@Ignore
 	@Test
 	public void testAdminLogin(){
 		User testUser = users.getAdmin();
@@ -59,6 +74,7 @@ public class LoginTest {
 		//TODO: Write a test case that succeeds when a test logs in using valid Admin credentials
 	}
 	
+	@Ignore
 	@Test
 	public void testSuperAdminLogin(){
 		User testUser = users.getSuperAdmin();
@@ -66,6 +82,7 @@ public class LoginTest {
 		//TODO: Write a test case that succeeds when a test logs in using valid Super Admin credentials
 	}
 	
+	@Ignore
 	@Test
 	public void testWrongPasswordLogin(){
 		User loginAttemptingUser = users.getAssociate();
@@ -75,12 +92,14 @@ public class LoginTest {
 		//TODO: Write a negative test case that fails when the test fails to log in with an invalid password, with another user's password, and without a password.
 	}
 	
+	@Ignore
 	@Test
 	public void testWrongUserLogin(){
 		
 		//TODO:  Write a negative test case that succeeds when the test fails to log in with an invalid username and without entering a username.
 	}
 	
+	@Ignore
 	@Test
 	public void testLogout(){
 		User testUser = users.getSuperAdmin();
