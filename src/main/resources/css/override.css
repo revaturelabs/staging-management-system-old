@@ -1,4 +1,4 @@
 
-    .batchAddChips md-chips-wrap {
-        border-bottom: 0px;
+    md-dialog {
+        max-width: 60%;
     }
