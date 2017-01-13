@@ -98,9 +98,7 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
         }
     	
         user.attendance.forEach(function(attendance){
-    		console.log(attendance);
 			day = new Date(attendance.date);
-			console.log(day);
 			if(day.getDate()==thisDay.getDate() && day.getMonth()==thisDay.getMonth()){
 				attendance.verified = true;
 				attendance.checkedIn = true;
