@@ -43,17 +43,7 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                         
                     }
                 })
-                // superAdmin update information
-                .state( "SUupdateInfo", {
-                    url: "^/updateInformation",
-                    parent: "super",
-                    views: {
-                        "mainSuperView": {
-                            templateUrl: "html/views/updateInformation.html",
-                            controller: "updateInfoCrtl as uInfoctrl"
-                        }
-                    }
-                })
+
                 
               // admin page
 			.state( "admin", {
@@ -80,17 +70,7 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
 	                    }
 	                })
 			
-			// Admin update information
-                .state( "ADupdateInfo", {
-                    url: "^/updateInformation",
-                    parent: "admin",
-                    views: {
-                        "mainAdminView": {
-                            templateUrl: "html/views/updateInformation.html",
-                            controller: "updateInfoCrtl as uInfoctrl"
-                        }
-                    }
-                })
+
 			
               // associate page
 			.state( "assoc", {
@@ -122,9 +102,34 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
 			//........................................................................
 
 			
+            /*
+             * User can change their password
+             */
+            // superAdmin update information
+                .state( "SUupdateInfo", {
+                    url: "^/updateInformation-sa",
+                    parent: "super",
+                    views: {
+                        "mainSuperView": {
+                            templateUrl: "html/views/updateInformation.html",
+                            controller: "updateInfoCrtl as uInfoctrl"
+                        }
+                    }
+                })
+            // Admin update information
+                .state( "ADupdateInfo", {
+                    url: "^/updateInformation-a",
+                    parent: "admin",
+                    views: {
+                        "mainAdminView": {
+                            templateUrl: "html/views/updateInformation.html",
+                            controller: "updateInfoCrtl as uInfoctrl"
+                        }
+                    }
+                })
 			// Associate update information
                 .state( "ASupdateInfo", {
-                    url: "^/updateInformation",
+                    url: "^/updateInformation-as",
                     parent: "assoc",
                     views: {
                         "mainAssociateView": {

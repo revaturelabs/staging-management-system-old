@@ -1,28 +1,33 @@
 <md-card-title> 
-	<md-card-title-text style="text-align: center"><h1>Update Information</h1></md-card-title-text> 
+	<md-card-title-text style="text-align: center"><h1>Update Password</h1></md-card-title-text> 
 </md-card-title>
 
 <form name="updateInfoForm" ng-submit="uInfoctrl.submit()" novalidate>
 
-	<!-- md-block makes input span entire width -->
-	<md-input-container class="md-block"> 
-		<label style="text-align: center">Old Password</label> 
-		<input id="oldPass" ng-bind="uic.oldPass" style="text-align: center" type="password">
-	</md-input-container>
+	<div layout="column" layout-align="center center">
+		<md-input-container style="width:75%;"> 
+			<label style="text-align: center">Old Password</label> 
+			<input id="oldPass" ng-bind="uic.oldPass" style="text-align: center" type="password">
+		</md-input-container>
+	</div>
+	
+	<div layout="column" layout-align="center center">
+		<md-input-container style="width:75%;"> 
+			<label style="text-align: center">New Password</label> 
+			<input id="newPass" ng-bind="uic.newPass" style="text-align: center" type="password">
+		</md-input-container>
+	</div>
+	
+	<div layout="column" layout-align="center center">
+		<md-input-container style="width:75%;"> 
+			<label style="text-align: center">Confirm Password</label> 
+			<input id="confirmPass" ng-bind="uic.confirmPass" style="text-align: center" type="password"> 
+		</md-input-container>
+	</div>
 
-	<md-input-container class="md-block"> 
-		<label style="text-align: center">New Password</label> 
-		<input id="newPass" ng-bind="uic.newPass" style="text-align: center" type="password">
-	</md-input-container>
-
-	<md-input-container class="md-block"> 
-		<label style="text-align: center">Confirm Password</label> 
-		<input id="confirmPass" ng-bind="uic.confirmPass" style="text-align: center" type="password"> 
-	</md-input-container>
-
-	<div layout="row" layout-align="center">
-		<md-button type="button" class="md-raised md-warn" style="width:25%; text-align: center" ng-click="uInfoctrl.cancel()">Cancel</md-button>
-		<md-button type="submit" class="md-raised md-primary" style="width:75%; text-align: center">Submit</md-button>
+	<div layout="row" layout-align="center center">
+		<md-button type="button" class="md-raised md-warn" style="width:37%; align: center" ng-click="uInfoctrl.cancel()">Cancel</md-button>
+		<md-button type="submit" class="md-raised md-primary" style="width:37%; align: center">Submit</md-button>
 	</div>
 
 </form>
