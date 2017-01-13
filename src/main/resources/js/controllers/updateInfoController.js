@@ -19,13 +19,14 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
     
     //when user submits updated password
     uic.submit = function(){
+    	//check for empty passwords
     	if(oldPass.value === ""){
     		uic.toast("Enter your password.");
     		return;
     	}
     	
     	if(newPass.value === ""){
-    		uic.toast("Enter a new password");
+    		uic.toast("Enter a new password.");
     		return;
     	}
     	
@@ -34,6 +35,7 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
     		return;
     	}
     	
+    	//hash passwords
     	var oldPassH = CryptoJS.SHA1(oldPass.value).toString();
     	var newPassH = CryptoJS.SHA1(newPass.value).toString();
     	var confirmPassH = CryptoJS.SHA1(confirmPass.value).toString();
@@ -56,7 +58,7 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
 	            		    "newPassword":newPassH}
 	            	}).then(function successCallback(response) {
 	            		//password changed successfully
-	            		uic.toast("password changed successfully");
+	            		uic.toast("Password changed successfully.");
 	            		
 	            		//route to the appropriate homepage
 	            		switch(response.data.userRole.name){
@@ -68,9 +70,9 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
 	            	}, function errorCallback(response) {
 	            		// password change went wrong
 	            		switch(response.status){
-	            		case 404:uic.toast("Password mismatch");break;
-	            		case 401:uic.toast("User is unauthorized");break;
-	            		default: uic.toast("An error has occured"); break;
+	            		case 404:uic.toast("Incorrect password.");break;
+	            		case 401:uic.toast("Unauthorized user.");break;
+	            		default: uic.toast("An error has occured."); break;
 	            		}
 	            	  });
 	            uic.user = "";
@@ -78,12 +80,12 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
 	            
     		}else{
     			//old password and new password are the same
-    			uic.toast("Old password and new pasword are the same.");
+    			uic.toast("Old password and new password are the same.");
     		}
     	}
     	else{
     		// passwords don't match
-    		uic.toast("password confirmation does not match.");
+    		uic.toast("Password confirmation does not match.");
     	}
     }
 });
