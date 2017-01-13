@@ -91,6 +91,9 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
 			//........................................................................
 
 			
+            /*
+             * User can change their password
+             */
             // superAdmin update information
                 .state( "SUupdateInfo", {
                     url: "^/updateInformation-sa",

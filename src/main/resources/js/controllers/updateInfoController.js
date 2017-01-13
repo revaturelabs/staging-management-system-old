@@ -11,9 +11,9 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
     uic.cancel = function(){
     	//route to the appropriate homepage
 		switch(loginService.getUser().userRole.name){
-		case "associate":$state.go("assocAttendance"); break;
+		case "associate":$state.go("assoc"); break;
 		case "admin" : $state.go("admin"); break;
-		case "superAdmin" : $state.go("superAttendance"); break;
+		case "superAdmin" : $state.go("super"); break;
 		}
     }
     
@@ -62,9 +62,9 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
 	            		
 	            		//route to the appropriate homepage
 	            		switch(response.data.userRole.name){
-	            		case "associate":$state.go("assocAttendance"); break;
+	            		case "associate":$state.go("assoc"); break;
 	            		case "admin" : $state.go("admin"); break;
-	            		case "superAdmin" : $state.go("superAttendance"); break;
+	            		case "superAdmin" : $state.go("super"); break;
 	            		}
 	            		
 	            	}, function errorCallback(response) {
