@@ -28,6 +28,7 @@ sms.controller("batchAddCtrl", function($scope, $mdDialog, userService,
 	}, function(error) {
 		$mdDialog.cancel();
 	});
+
 	// Hard coded value for userRole object of associate
 	var userRole = {};
 	userRole.name = "associate";
@@ -36,17 +37,13 @@ sms.controller("batchAddCtrl", function($scope, $mdDialog, userService,
     bac.save = function(isValid) {
         if (isValid) {
             var list = bac.associates;
-            console.log(list);
             bac.saveHelper(list);
         }
     };
 
 	bac.saveHelper = function(list) {
 
-        if (bac.recursion == 2) { return; }
-
         if (list.length != 0) {
-
             var addUser = list.shift();
             if (!addUser.username) {
                 addUser.batchType = bac.selectedBatchType;
@@ -55,18 +52,13 @@ sms.controller("batchAddCtrl", function($scope, $mdDialog, userService,
             }    
             addUser.hashedPassword = CryptoJS.SHA1(addUser.username).toString();
             
-            console.log(addUser.username);
-
             // call rest controller to save user via userService
             userService.create(addUser, function(response) {
             }, function(error) {
-                console.log(error);
                 if (error.status == 409) {
                     if (addUser.username.search("[0-9]+") == -1) {
                         addUser.username += "1";
-                        console.log(addUser.username);
                         list.unshift(addUser);
-                        bac.recursion += 1;
                         bac.saveHelper(list);
                     } else {
                         var num = parseInt(addUser.username.substring( addUser.username.search("[0-9]+"), addUser.username.length ) );
@@ -74,7 +66,6 @@ sms.controller("batchAddCtrl", function($scope, $mdDialog, userService,
                         baseUN += (num + 1).toString();
                         addUser.username = baseUN;
                         list.unshift(addUser);
-                        bac.recursion += 1;
                         bac.saveHelper(list);
                     }
                 }
