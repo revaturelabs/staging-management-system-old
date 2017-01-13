@@ -145,7 +145,9 @@
             {name: 'done'  , color: "#00A" },
             {name: 'close', color: "#A00" },
             {name: 'done_all' , color: "rgb(89, 226, 168)" },
-            {name: 'stars' , color: "#777" }
+
+            {name: '     ' , color: "#777" }
+
          ];
         
         //used as a legend to display what the icon data is
@@ -153,7 +155,9 @@
             {name: 'done'  , color: "#00A", description: "if you checked in but were NOT yet verified" },
             {name: 'close', color: "#A00" , description: "if you were NOT checked in and NOT verified"},
             {name: 'done_all' , color: "rgb(89, 226, 168)" , description: "if you were verified" },
-            {name: 'stars' , color: "#777", description: "not available" }
+
+            {name: '    ' , color: "#777", description: "not available" }
+
          ]; 
         
         // for each of the chosen days

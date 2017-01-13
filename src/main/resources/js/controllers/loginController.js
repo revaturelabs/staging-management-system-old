@@ -23,7 +23,9 @@ sms.controller("loginCtrl", function($scope, $state, loginService) {
 					lc.toast("Logged in.");
 					break;
 				case "admin":
+
 					$state.go("adminAttendance");
+
 					lc.toast("Logged in.");
 					break;
 				case "associate":
