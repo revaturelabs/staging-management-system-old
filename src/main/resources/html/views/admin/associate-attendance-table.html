@@ -42,36 +42,58 @@
 	<table md-table>
 		<thead md-head>
 			<tr md-row>
-				<th md-column>Associate Name</th>
-				<th md-column>Monday</th>
-				<th md-column>Tuesday</th>
-				<th md-column>Wednesday</th>
+				<th md-column >Associate Name</th>
+				<th md-column ng-class="{highlightToday : (adAttCtrl.activeDay == 1)}">Monday</th>
+				<th md-column ng-class="{highlightToday : (adAttCtrl.activeDay == 2)}">Tuesday</th>
+				<th md-column ng-class="{highlightToday : (adAttCtrl.activeDay == 3)}">Wednesday</th>
 				<th md-column ng-class="{highlightToday : (adAttCtrl.activeDay == 4)}">Thursday</th>
-				<th md-column>Friday</th>
+				<th md-column ng-class="{highlightToday : (adAttCtrl.activeDay == 5)}">Friday</th>
 			</tr>
-			<tr>
+			<tr md-row>
 				<th md-column><input type="text" ng-model="searchBox" /></th>
-				<th md-column>{{ adAttCtrl.monday }}</th>
-				<th md-column>{{ adAttCtrl.tuesday }}</th>
-				<th md-column>{{ adAttCtrl.wednesday }}</th>
-				<th md-column>{{ adAttCtrl.thursday }}</th>
-				<th md-column>{{ adAttCtrl.friday }}</th>
+				<th md-column ng-class="{highlightToday : (adAttCtrl.activeDay == 1)}">{{ adAttCtrl.monday }}</th>
+				<th md-column ng-class="{highlightToday : (adAttCtrl.activeDay == 2)}">{{ adAttCtrl.tuesday }}</th>
+				<th md-column ng-class="{highlightToday : (adAttCtrl.activeDay == 3)}">{{ adAttCtrl.wednesday }}</th>
+				<th md-column ng-class="{highlightToday : (adAttCtrl.activeDay == 4)}">{{ adAttCtrl.thursday }}</th>
+				<th md-column ng-class="{highlightToday : (adAttCtrl.activeDay == 5)}">{{ adAttCtrl.friday }}</th>
 			</tr>
 		</thead>
 	
-		<tbody>
-			<tr ng-repeat = "as in adAttCtrl.users | filter:searchBox track by as.username">
+		<tbody md-body>
+			<tr md-row ng-repeat = "as in adAttCtrl.users | filter:searchBox track by as.username">
 				<td>{{ as.firstName }} {{ as.lastName }}</td>
-				<td>v :{{ as.thisWeek[0].verified }}<br> c : {{ as.thisWeek[0].checkedIn }}</td>
-				<td>v :{{ as.thisWeek[1].verified }}<br> c : {{ as.thisWeek[1].checkedIn }}</td>
-				<td>v :{{ as.thisWeek[2].verified }}<br> c : {{ as.thisWeek[2].checkedIn }}</td>
-				<td>v :{{ as.thisWeek[3].verified }}<br> c : {{ as.thisWeek[3].checkedIn }}</td>
-				<td>v :{{ as.thisWeek[4].verified }}<br> c : {{ as.thisWeek[4].checkedIn }}</td>
+				<td md-cell ng-class="{highlightToday : (adAttCtrl.activeDay == 1), isCheckedIn : (as.thisWeek[0].checkedIn), isVerified : (as.thisWeek[0].verified) }">
+					<span ng-if="as.thisWeek[0].verified == false || as.thisWeek[0].verified == null">
+						<i class="material-icons" >check_circle</i>
+					</span>
+					{{ as.thisWeek[0].verified }}<br> c : {{ as.thisWeek[0].checkedIn }}</td>
+				<td md-cell ng-class="{highlightToday : (adAttCtrl.activeDay == 2), isCheckedIn : (as.thisWeek[1].checkedIn), isVerified : (as.thisWeek[1].verified) }">
+					<span ng-if="as.thisWeek[1].verified == false || as.thisWeek[1].verified == null">
+						<i class="material-icons" >check_circle</i>
+					</span>
+					{{ as.thisWeek[1].verified }}<br> c : {{ as.thisWeek[1].checkedIn }}</td>
+				<td md-cell ng-class="{highlightToday : (adAttCtrl.activeDay == 3), isCheckedIn : (as.thisWeek[2].checkedIn), isVerified : (as.thisWeek[2].verified) }">
+					<span ng-if="as.thisWeek[2].verified == false || as.thisWeek[2].verified == null">
+						<i class="material-icons" >check_circle</i>
+					</span>
+					{{ as.thisWeek[2].verified }}<br> c : {{ as.thisWeek[2].checkedIn }}</td>
+				<td md-cell ng-class="{highlightToday : (adAttCtrl.activeDay == 4), isCheckedIn : (as.thisWeek[3].checkedIn), isVerified : (as.thisWeek[3].verified) }">
+					<span ng-if="as.thisWeek[3].verified == false || as.thisWeek[3].verified == null">
+						<i class="material-icons" >check_circle</i>
+					</span>
+					{{ as.thisWeek[3].verified }}<br> c : {{ as.thisWeek[3].checkedIn }}</td>
+				<td md-cell ng-class="{highlightToday : (adAttCtrl.activeDay == 5), isCheckedIn : (as.thisWeek[4].checkedIn), isVerified : (as.thisWeek[4].verified) }">
+					<span ng-if="as.thisWeek[4].verified == false || as.thisWeek[4].verified == null" ng-click="verifyAttendance(as, 5)">
+						<i class="material-icons" >check_circle</i>
+					</span>
+					{{ as.thisWeek[4].verified }}<br> c : {{ as.thisWeek[4].checkedIn }}</td>
 				
 			</tr>
 		</tbody>
 	</table>
+<md-table-container>
 
+<i class="material-icons">check_circle</i>
 
 <button ng-click="goBackOneWeek()">prev</button>
 <button ng-click="goForwardOneWeek()">next</button>
@@ -81,5 +103,11 @@
 <style>
 .highlightToday{
 	background:blue;
+}
+.isCheckedIn{
+	background:fuchsia;
+}
+.isVerified{
+	background: lime;
 }
 </style>
