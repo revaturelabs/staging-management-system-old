@@ -1,5 +1,6 @@
 package com.revature.sms;
 
+import org.aspectj.lang.annotation.Before;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -46,7 +47,6 @@ public class LoginTest {
 	/**
 	 * This is a unit test to ensure that an associate user is able to log in and observe any content appropriate to an associate.
 	 */
-	
 	@Test
 	public void testAssociateLogin(){
 		
