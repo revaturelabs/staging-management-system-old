@@ -1,7 +1,6 @@
 var sms = angular.module("sms");
 
-sms.controller("batchAddCtrl", function($scope, $mdDialog, userService,
-		batchTypeService) {
+sms.controller( "batchAddCtrl", function( $scope, $mdDialog, userService, batchTypeService, batchAddFactory ) {
 	var bac = this;
 
 	// functions
@@ -54,6 +53,8 @@ sms.controller("batchAddCtrl", function($scope, $mdDialog, userService,
             
             // call rest controller to save user via userService
             userService.create(addUser, function(response) {
+                batchAddFactory.addOneAssociate(response);
+                bac.saveHelper(list);
             }, function(error) {
                 if (error.status == 409) {
                     if (addUser.username.search("[0-9]+") == -1) {
