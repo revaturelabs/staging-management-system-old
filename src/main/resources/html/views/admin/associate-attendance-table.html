@@ -9,9 +9,9 @@
 
 <md-table-container>
 	<table md-table>
-		<thead md-head md-order="myOrder">
+		<thead md-head>
 			<tr md-row>
-				<th md-column md-order-by="nameToLower">Associate Name</th>
+				<th md-column>Associate Name</th>
 				<th md-column ng-class="{highlightToday : (adAttCtrl.activeDay == 1)}">Monday</th>
 				<th md-column ng-class="{highlightToday : (adAttCtrl.activeDay == 2)}">Tuesday</th>
 				<th md-column ng-class="{highlightToday : (adAttCtrl.activeDay == 3)}">Wednesday</th>
@@ -32,37 +32,75 @@
 			<tr md-row ng-repeat = "as in adAttCtrl.users | filter:searchBox track by as.username">
 				<td>{{ as.firstName }} {{ as.lastName }}</td>
 				<td md-cell ng-class="{highlightToday : (adAttCtrl.activeDay == 1), isCheckedIn : (as.thisWeek[0].checkedIn), isVerified : (as.thisWeek[0].verified) }">
-					<span ng-if="as.thisWeek[0].verified == false || as.thisWeek[0].verified == null">
-						<i class="material-icons" >check_circle</i>
+					<span ng-if="as.thisWeek[0].verified == false || as.thisWeek[0].verified == null" >
+						<i class="material-icons"  ng-click="verifyAttendance(as, 0)">check_circle</i>
 					</span>
-					{{ as.thisWeek[0].verified }}<br> c : {{ as.thisWeek[0].checkedIn }}</td>
+					<span ng-if="as.thisWeek[0].verified == false && as.thisWeek[0].checkedIn == true">
+						<i class="material-icons">done</i>
+					</span>
+					<span ng-if="as.thisWeek[0].verified == false && as.thisWeek[0].checkedIn == false">
+						<i class="material-icons">clear</i>
+					</span>
+					<span ng-if="as.thisWeek[0].verified == true">
+						<i class="material-icons">done_all</i>
+					</span>
 				<td md-cell ng-class="{highlightToday : (adAttCtrl.activeDay == 2), isCheckedIn : (as.thisWeek[1].checkedIn), isVerified : (as.thisWeek[1].verified) }">
-					<span ng-if="as.thisWeek[1].verified == false || as.thisWeek[1].verified == null">
-						<i class="material-icons" >check_circle</i>
+					<span ng-if="as.thisWeek[1].verified == false || as.thisWeek[1].verified == null" >
+						<i class="material-icons"  ng-click="verifyAttendance(as, 1)">check_circle</i>
 					</span>
-					{{ as.thisWeek[1].verified }}<br> c : {{ as.thisWeek[1].checkedIn }}</td>
+					<span ng-if="as.thisWeek[1].verified == false && as.thisWeek[1].checkedIn == true">
+						<i class="material-icons">done</i>
+					</span>
+					<span ng-if="as.thisWeek[1].verified == false && as.thisWeek[1].checkedIn == false">
+						<i class="material-icons">clear</i>
+					</span>
+					<span ng-if="as.thisWeek[1].verified == true">
+						<i class="material-icons">done_all</i>
+					</span>
 				<td md-cell ng-class="{highlightToday : (adAttCtrl.activeDay == 3), isCheckedIn : (as.thisWeek[2].checkedIn), isVerified : (as.thisWeek[2].verified) }">
-					<span ng-if="as.thisWeek[2].verified == false || as.thisWeek[2].verified == null">
-						<i class="material-icons" >check_circle</i>
+					<span ng-if="as.thisWeek[2].verified == false || as.thisWeek[2].verified == null" >
+						<i class="material-icons"  ng-click="verifyAttendance(as, 2)">check_circle</i>
 					</span>
-					{{ as.thisWeek[2].verified }}<br> c : {{ as.thisWeek[2].checkedIn }}</td>
+					<span ng-if="as.thisWeek[2].verified == false && as.thisWeek[2].checkedIn == true">
+						<i class="material-icons">done</i>
+					</span>
+					<span ng-if="as.thisWeek[2].verified == false && as.thisWeek[2].checkedIn == false">
+						<i class="material-icons">clear</i>
+					</span>
+					<span ng-if="as.thisWeek[2].verified == true">
+						<i class="material-icons">done_all</i>
+					</span>
 				<td md-cell ng-class="{highlightToday : (adAttCtrl.activeDay == 4), isCheckedIn : (as.thisWeek[3].checkedIn), isVerified : (as.thisWeek[3].verified) }">
-					<span ng-if="as.thisWeek[3].verified == false || as.thisWeek[3].verified == null">
-						<i class="material-icons" >check_circle</i>
+					<span ng-if="as.thisWeek[3].verified == false || as.thisWeek[3].verified == null" >
+						<i class="material-icons"  ng-click="verifyAttendance(as, 3)">check_circle</i>
 					</span>
-					{{ as.thisWeek[3].verified }}<br> c : {{ as.thisWeek[3].checkedIn }}</td>
+					<span ng-if="as.thisWeek[3].verified == false && as.thisWeek[3].checkedIn == true">
+						<i class="material-icons">done</i>
+					</span>
+					<span ng-if="as.thisWeek[3].verified == false && as.thisWeek[3].checkedIn == false">
+						<i class="material-icons">clear</i>
+					</span>
+					<span ng-if="as.thisWeek[3].verified == true">
+						<i class="material-icons">done_all</i>
+					</span>
 				<td md-cell ng-class="{highlightToday : (adAttCtrl.activeDay == 5), isCheckedIn : (as.thisWeek[4].checkedIn), isVerified : (as.thisWeek[4].verified) }">
-					<span ng-if="as.thisWeek[4].verified == false || as.thisWeek[4].verified == null" ng-click="verifyAttendance(as, 5)">
-						<i class="material-icons" >check_circle</i>
+					<span ng-if="as.thisWeek[4].verified == false || as.thisWeek[4].verified == null" >
+						<i class="material-icons"  ng-click="verifyAttendance(as, 4)">check_circle</i>
 					</span>
-					{{ as.thisWeek[4].verified }}<br> c : {{ as.thisWeek[4].checkedIn }}</td>
+					<span ng-if="as.thisWeek[4].verified == false && as.thisWeek[4].checkedIn == true">
+						<i class="material-icons">done</i>
+					</span>
+					<span ng-if="as.thisWeek[4].verified == false && as.thisWeek[4].checkedIn == false">
+						<i class="material-icons">clear</i>
+					</span>
+					<span ng-if="as.thisWeek[4].verified == true">
+						<i class="material-icons">done_all</i>
+					</span>
 				
 			</tr>
 		</tbody>
 	</table>
 </md-table-container>
-
-<i class="material-icons">check_circle</i>
 
 <button ng-click="goBackOneWeek()">prev</button>
 <button ng-click="goForwardOneWeek()">next</button>

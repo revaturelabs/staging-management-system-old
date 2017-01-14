@@ -89,19 +89,19 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     
     /*create a verify attendance function*/
     
-    $scope.verifyAttendance = function(user, w){
+    $scope.verifyAttendance = function(user, selectedDay){
     	//figure out which day was clicked
     	thisDay = aac.thisMonday;
-    	if(w==2){
+    	if(selectedDay==1){
         	thisDay = aac.thisTuesday;
         }
-        if(w==3){
+        if(selectedDay==2){
         	thisDay = aac.thisWednesday;
         }
-        if(w==4){
+        if(selectedDay==3){
         	thisDay = aac.thisThursday;
         }
-        if(w==5){
+        if(selectedDay==4){
         	thisDay = aac.thisFriday;
         }
     	
@@ -149,7 +149,7 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
         aac.thursday = (aac.thisThursday.getMonth()+1)+"/"+aac.thisThursday.getDate();
         aac.friday = (aac.thisFriday.getMonth()+1)+"/"+aac.thisFriday.getDate();
         
-        /*make data change for new week*/
+        /*filter the week so only the current week is visible*/
         aac.users = $filter("weekFilter")(aac.users, aac.thisMonday);
         
         /*setting active days*/
@@ -182,7 +182,7 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
         aac.thursday = (aac.thisThursday.getMonth()+1)+"/"+aac.thisThursday.getDate();
         aac.friday = (aac.thisFriday.getMonth()+1)+"/"+aac.thisFriday.getDate();
         
-        /*make data change for new week*/
+        /*filter the week so only the current week is visible*/
         aac.users = $filter("weekFilter")(aac.users, aac.thisMonday);
         
         /*setting active days*/
