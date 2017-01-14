@@ -6,18 +6,20 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
 		$scope.$parent.$parent.mastCtrl.toast(message);
 	};
 	
-	/*SET DATE HEADERS IN TABLE*/
+	/*This block sets the DATE HEADERS IN TABLE*/
 	//set current day
 	var today = new Date();
+	//Remove the timestamp from the object, just need the date
 	today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     var day = today.getDate();
     var w = today.getDay();
-    /*day is the day of the month*/
-    /*w is the day of the week*/
+    //day is the day of the month
+    //w is the day of the week
     
     
-    /*set monday based on what day of the week it is*/
+    // the following block sets monday based on what day of the week it is
     var m = new Date();
+    //set an active day for week change functions for the column highlighting
     aac.activeDay = 1;
     if(w==0){
     	m.setDate(day+1);
@@ -43,10 +45,10 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     	m.setDate(day-5);
     	aac.activeDay = 6;
     }
-    /*set global monday for day week change functions*/
+    //set global monday for day week change functions
     aac.thisCurrentMonday = m;
     
-    /*set all days based on monday*/
+    //set all days of the week based on monday
     var setMonday = new Date();
     setMonday.setDate(m.getDate());
     aac.thisMonday = m;
@@ -55,34 +57,40 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     aac.thisThursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
     aac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
     
-    /*set all scope days to print on top of table*/
-    console.log(aac.thisMonday);
+    //data bind all scope days to print on top of table
     aac.monday = (aac.thisMonday.getMonth()+1)+"/"+aac.thisMonday.getDate();
     aac.tuesday = (aac.thisTuesday.getMonth()+1)+"/"+aac.thisTuesday.getDate();
     aac.wednesday = (aac.thisWednesday.getMonth()+1)+"/"+aac.thisWednesday.getDate();
     aac.thursday = (aac.thisThursday.getMonth()+1)+"/"+aac.thisThursday.getDate();
     aac.friday = (aac.thisFriday.getMonth()+1)+"/"+aac.thisFriday.getDate();
     
-	//get all attendance for the week for all associates
+    /* this is the end of the setting up the week block */
     
-    /*aac.allThisWeekAttendance = [];*/
     
+    
+	/*get all attendance for the week for all associates*/
+    
+    //run user service to get all users
     userService.getAll(function(response){
     	
+    	//in the response filter out users that aren't associates
     	aac.users = $filter("associateFilter")(response);
-    	console.log(aac.users);
-    	aac.users = $filter("weekFilter")(aac.users, aac.thisMonday);
-    	console.log(aac.users);
-    	
+    	//filter the associates to get the date objects that are only for the current week
+    	aac.users = $filter("weekFilter")(aac.users, aac.thisMonday);    	
     	
     }, function(error){
     	aac.toast("Error in retrieving all associates.");
     });
     
+    /*this is the end of getting the users*/
     
     
-    //create a confirm function
+    
+    
+    /*create a verify attendance function*/
+    
     $scope.verifyAttendance = function(user, w){
+    	//figure out which day was clicked
     	thisDay = aac.thisMonday;
     	if(w==2){
         	thisDay = aac.thisTuesday;
@@ -97,14 +105,18 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
         	thisDay = aac.thisFriday;
         }
     	
+        //get the attendance object that matches the clicked on day
+        //accomplish this by doing a for each loop that looks through each object
         user.attendance.forEach(function(attendance){
 			day = new Date(attendance.date);
 			if(day.getDate()==thisDay.getDate() && day.getMonth()==thisDay.getMonth()){
+				//set the status to true on the object
 				attendance.verified = true;
 				attendance.checkedIn = true;
 			}
 		})
     	
+		//call user service to send the update to the database
     	userService.update(user, function(response){
     		aac.toast("Successful update");
     	}, function(error){
