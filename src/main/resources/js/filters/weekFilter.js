@@ -1,5 +1,5 @@
 var sms = angular.module("sms");
-sms.filter("weekFilter", function(){
+sms.filter("weekFilter", function($filter){
 	return function(users, monday){
 		//filter associate attendance by current viewing monday
 		var thisWeek = {};
@@ -26,26 +26,32 @@ sms.filter("weekFilter", function(){
 					thisWeek.monday = {};
 					thisWeek.monday.verified = attendance.verified;
 					thisWeek.monday.checkedIn = attendance.checkedIn;
+					thisWeek.monday = $filter("iconFilter")(thisWeek.monday);
 				}
 				if(day.getDate()==tuesday.getDate() && day.getMonth()==tuesday.getMonth()){
 					thisWeek.tuesday = {};
 					thisWeek.tuesday.verified = attendance.verified;
 					thisWeek.tuesday.checkedIn = attendance.checkedIn;
+					thisWeek.tuesday = $filter("iconFilter")(thisWeek.tuesday);
 				}
 				if(day.getDate()==wednesday.getDate() && day.getMonth()==wednesday.getMonth()){
 					thisWeek.wednesday = {};
 					thisWeek.wednesday.verified = attendance.verified;
 					thisWeek.wednesday.checkedIn = attendance.checkedIn;
+					thisWeek.wednesday = $filter("iconFilter")(thisWeek.wednesday);
 				}
 				if(day.getDate()==thursday.getDate() && day.getMonth()==thursday.getMonth()){
 					thisWeek.thursday = {};
 					thisWeek.thursday.verified = attendance.verified;
 					thisWeek.thursday.checkedIn = attendance.checkedIn;
+					thisWeek.thursday = $filter("iconFilter")(thisWeek.thursday);
+					
 				}
 				if(day.getDate()==friday.getDate() && day.getMonth()==friday.getMonth()){
 					thisWeek.friday = {};
 					thisWeek.friday.verified = attendance.verified;
 					thisWeek.friday.checkedIn = attendance.checkedIn;
+					thisWeek.friday = $filter("iconFilter")(thisWeek.friday);
 				}
 				//fill out each day with day objects based on values received during for loop
 				user.thisWeek[0] = thisWeek.monday;
@@ -54,7 +60,7 @@ sms.filter("weekFilter", function(){
 				user.thisWeek[3] = thisWeek.thursday;
 				user.thisWeek[4] = thisWeek.friday;
 			})
-			//after this user is filled out, reset all ojects values to null for next user
+			//after this user is filled out, reset all objects values to null for next user
 			thisWeek.monday = null;
 			thisWeek.tuesday = null;
 			thisWeek.wednesday = null;

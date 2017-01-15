@@ -45,6 +45,7 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     	m.setDate(day-5);
     	aac.activeDay = 6;
     }
+        
     //set global monday for day week change functions
     aac.thisCurrentMonday = m;
     
@@ -76,7 +77,7 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     	//in the response filter out users that aren't associates
     	aac.users = $filter("associateFilter")(response);
     	//filter the associates to get the date objects that are only for the current week
-    	aac.users = $filter("weekFilter")(aac.users, aac.thisMonday);    	
+    	aac.users = $filter("weekFilter")(aac.users, aac.thisMonday);
     	
     }, function(error){
     	aac.toast("Error in retrieving all associates.");
@@ -84,7 +85,20 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     
     /*this is the end of getting the users*/
     
+    /*create a legend for the table symbols*/
     
+    //used as a legend to display what the icon data is
+    aac.legend = [
+    	{name: 'check_circle'  , color: "orange", description: "click to verify attendance" },
+        {name: 'done'  , color: "#00A", description: "if the associate checked in but has NOT yet been verified" },
+        {name: 'close', color: "#A00" , description: "if the associate is NOT checked in and NOT verified"},
+        {name: 'done_all' , color: "rgb(89, 226, 168)" , description: "if the associate's attendance has been verified" },
+
+        {name: '    ' , color: "#777", description: "no information available yet" }
+
+     ]; 
+    
+    /*end of legend creation*/
     
     
     /*create a verify attendance function*/
