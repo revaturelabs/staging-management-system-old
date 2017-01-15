@@ -1,4 +1,4 @@
-var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "ngResource", "ngCookies", "ui.router"]);
+var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "md.data.table", "ngResource", "ngCookies", "ui.router"]);
 
       // URL routing
     sms.config( function( $stateProvider, $urlRouterProvider, $locationProvider ) {
@@ -43,17 +43,7 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                         
                     }
                 })
-                // superAdmin update information
-                .state( "SUupdateInfo", {
-                    url: "^/updateInformation",
-                    parent: "super",
-                    views: {
-                        "mainSuperView": {
-                            templateUrl: "html/views/updateInformation.html",
-                            controller: "updateInfoCrtl as uInfoctrl"
-                        }
-                    }
-                })
+
                 
               // admin page
 			.state( "admin", {
@@ -68,18 +58,19 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                     }
                 }
 			})
+				 // admin view all attendance
+	                .state( "adminAttendance", {
+	                    url: "/attendance",
+	                    parent: "admin",
+	                    views: {
+	                        "mainAdminView": {
+	                            templateUrl: "html/views/admin/associate-attendance-table.html",
+	                            controller: "adminAttendanceCtrl as adAttCtrl"
+	                        }
+	                    }
+	                })
 			
-			// Admin update information
-                .state( "ADupdateInfo", {
-                    url: "^/updateInformation",
-                    parent: "admin",
-                    views: {
-                        "mainAdminView": {
-                            templateUrl: "html/views/updateInformation.html",
-                            controller: "updateInfoCrtl as uInfoctrl"
-                        }
-                    }
-                })
+
 			
               // associate page
 			.state( "assoc", {
@@ -111,9 +102,34 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
 			//........................................................................
 
 			
+            /*
+             * User can change their password
+             */
+            // superAdmin update information
+                .state( "SUupdateInfo", {
+                    url: "^/updateInformation-sa",
+                    parent: "super",
+                    views: {
+                        "mainSuperView": {
+                            templateUrl: "html/views/updateInformation.html",
+                            controller: "updateInfoCrtl as uInfoctrl"
+                        }
+                    }
+                })
+            // Admin update information
+                .state( "ADupdateInfo", {
+                    url: "^/updateInformation-a",
+                    parent: "admin",
+                    views: {
+                        "mainAdminView": {
+                            templateUrl: "html/views/updateInformation.html",
+                            controller: "updateInfoCrtl as uInfoctrl"
+                        }
+                    }
+                })
 			// Associate update information
                 .state( "ASupdateInfo", {
-                    url: "^/updateInformation",
+                    url: "^/updateInformation-as",
                     parent: "assoc",
                     views: {
                         "mainAssociateView": {
