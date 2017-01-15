@@ -1,11 +1,8 @@
 <md-toolbar class="md-table-toolbar md-default">
   <div class="md-toolbar-tools">
-    <span>Associates</span>
+    <span>Associate Weekly Attendance</span>
   </div>
 </md-toolbar>
-
-
-
 
 <md-table-container>
 	<table md-table>
@@ -25,7 +22,7 @@
 				<th md-column>Friday</th>
 			</tr>
 			<tr md-row>
-				<th md-column>
+				<th>
 					<md-input-container>
                         <label><span><md-icon>search</md-icon></span>Search</label>
                         <input type="text" ng-model="searchBox">
@@ -40,7 +37,7 @@
 	
 		<tbody md-body>
 			<tr md-row ng-repeat = "as in adAttCtrl.users | filter:searchBox track by as.username">
-				<td>{{ as.firstName }} {{ as.lastName }}</td>
+				<td md-cell>{{ as.firstName }} {{ as.lastName }}</td>
 				<td md-cell>
 					<span ng-if="as.thisWeek[0].verified == false || as.thisWeek[0].verified == null" >
 						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 0)">check_circle</md-icon>
