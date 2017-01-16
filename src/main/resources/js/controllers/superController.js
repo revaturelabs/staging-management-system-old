@@ -1,7 +1,7 @@
 
     var sms = angular.module( "sms" );
 
-    sms.controller( "superCtrl", function( $scope, $state, $mdSidenav, $mdDialog, loginService, userService ){
+    sms.controller( "superCtrl", function( $scope, $state, $mdSidenav, $mdDialog, loginService, userService, batchAddFactory ){
         var suc = this;
 
           // functions
@@ -28,9 +28,24 @@
         };
 
         suc.newAssociate = function() {
+            
+              // opens a dialog to allows addition of a new batch of associates
+                // opens another dialog upon success to show added associates' info
             $mdDialog.show({
                 templateUrl: "html/templates/batchAdd.html",
                 controller: "batchAddCtrl as bACtrl"
+            }).then( function() {
+                $mdDialog.show({
+                    templateUrl: "html/templates/batchAddSuccess.html",
+                    controller: "batchAddSuccessCtrl as bASCtrl",
+                    locals: { "newAssociates": batchAddFactory.getNewAssociates() },
+                    bindToController: true
+                }).then( function(){
+                    batchAddFactory.resetAssociates();
+                });
+                
+            }, function() {
+                suc.toast("Batch addition cancelled.");
             });
         };
 
@@ -41,7 +56,6 @@
             suc.users = response;
         }, function(error){
             suc.toast("Error retrieving all users.");
-            // console.log(error);
         });
 
     });
