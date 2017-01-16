@@ -22,13 +22,5 @@ public class SpringInstanceTestClassRunner extends SpringJUnit4ClassRunner {
         return test;
     }
     
-    /*
-    @Override
-    public void run(RunNotifier notifier) {
-        super.run(notifier);
-        if (InstanceSetupListener != null)
-            InstanceSetupListener.afterClassSetup();
-    }
-	*/
 }	
 

@@ -11,6 +11,7 @@ import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
@@ -45,19 +46,17 @@ public class TestSetup {
 	}
 	
 	public static WebDriver getChrome() {
-		File file = new File("C:/selenium-2.47.1/chromedriver.exe");
-		//File file = new File("C://seleniumDrivers/chromedriver_win32/chromedriver.exe/");
+		//File file = new File("C:/selenium-2.47.1/chromedriver.exe");
+		File file = new File("C:/Users/User/Desktop/SMS_Project/staging-management-system/src/test/resources/chromedriver.exe");
 		System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
 		return new ChromeDriver();
 	}
 	
-	public static WebDriver getFirefox() {
-		File file = new File("C://seleniumDrivers/geckodriver-v0.11.1-win32/geckodriver.exe/");
-		System.setProperty("webdriver.gecko.driver", file.getAbsolutePath());
-		return new FirefoxDriver();
+	public static WebDriver getIE() {
+		File file = new File("C:/Users/User/Desktop/SMS_Project/staging-management-system/src/test/resources/IEDriverServer.exe");
+		System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
+		return new InternetExplorerDriver();
 	}
-	
-	
 	
 	
 	

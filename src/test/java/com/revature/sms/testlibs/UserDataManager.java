@@ -63,7 +63,9 @@ public class UserDataManager {
 	 */
 	
 	public User createTestUser(User user){
+		//System.out.println("Before adding user");
 		ur.save(user);
+		//System.out.println("After adding user");
 		createdUsers.add(user);
 		return user;
 	}
@@ -97,12 +99,7 @@ public class UserDataManager {
 	
 	
 	//Corey's Methods
-	
-	public List<User> getUserList() {
-		return createdUsers;
-	}
 
-	
 	public void editTestUser(int userIndex, String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole) {
 		User createdUser = createdUsers.get(userIndex);
