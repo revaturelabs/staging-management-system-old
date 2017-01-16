@@ -1,4 +1,4 @@
-var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "ngResource", "ngCookies", "ui.router"]);
+var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "md.data.table", "ngResource", "ngCookies", "ui.router"]);
 
       // URL routing
     sms.config( function( $stateProvider, $urlRouterProvider, $locationProvider ) {
@@ -58,6 +58,17 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                     }
                 }
 			})
+				 // admin view all attendance
+	                .state( "adminAttendance", {
+	                    url: "/attendance",
+	                    parent: "admin",
+	                    views: {
+	                        "mainAdminView": {
+	                            templateUrl: "html/views/admin/associate-attendance-table.html",
+	                            controller: "adminAttendanceCtrl as adAttCtrl"
+	                        }
+	                    }
+	                })
 			
 
 			
