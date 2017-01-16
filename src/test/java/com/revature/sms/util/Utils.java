@@ -1,7 +1,13 @@
 package com.revature.sms.util;
 
+import java.lang.reflect.Array;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -24,7 +30,37 @@ public class Utils {
 				return null;
 			}
 			
-			
 		}
+		
+		public static Timestamp convertDate(String dateString) {
+			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+			Date date = null;
+			try {
+				date = sdf.parse(dateString);
+			} catch (ParseException e) {
+				System.out.println("burglyshmurg");
+				Logger.getRootLogger().debug("You got a ParseException", e);
+			}
+			System.out.println("The date string is: "+dateString);
+			
+			long millis = date.getTime();
+			Timestamp ts = new Timestamp(millis);
+			return ts;
+		}
+		
+		
+		/*
+		public static void enterDateListIntoListOfDateLists(ArrayList<ArrayList<String>> listOfDateLists, ArrayList<String> dateList) {
+			boolean noEmptyDates = true;
+			for (String date:dateList) {
+				if (date.equals("")) {
+					noEmptyDates = false;
+				}
+			}
+			if (noEmptyDates) {
+				listOfDateLists.add(dateList);
+			}
+		}
+		*/
 
 }

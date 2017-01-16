@@ -1,6 +1,5 @@
 package com.revature.sms.util;
 
-import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.InitializationError;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 

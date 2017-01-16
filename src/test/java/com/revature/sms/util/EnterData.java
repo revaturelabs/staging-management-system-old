@@ -1,5 +1,6 @@
 package com.revature.sms.util;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Service;
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.BatchTypeRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
+import com.revature.sms.testlibs.AssociateAttendanceDataManager;
 import com.revature.sms.testlibs.UserDataManager;
 
 @Service
@@ -30,8 +33,8 @@ public class EnterData {
 		super();
 	}
 	
-	public UserDataManager initializeUsers(int userNumber) {
-		ExcelHelper eh = new ExcelHelper(userNumber);
+	public UserDataManager initializeUsers(int columnNumber) {
+		ExcelHelper eh = new ExcelHelper(columnNumber);
 		
 		ArrayList<String> usernames = eh.getValues("username");
 		ArrayList<String> firstNames = eh.getValues("firstName");
@@ -43,11 +46,12 @@ public class EnterData {
 		ArrayList<String> userRoles = eh.getValues("userRole");
 		
 		int i = 0;
-		while (i < userNumber) {
-			System.out.println(i);
-			System.out.println(usernames.get(i));
+		while (i < columnNumber) {
+			//System.out.println(i);
+			//System.out.println(usernames.get(i));
 			BatchType batchType = btr.findByType(batchTypes.get(i));
 			UserRole userRole = urr.findByName(userRoles.get(i));
+			
 			System.out.println(batchType.getType());
 			udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole);
 			i++;
@@ -61,23 +65,34 @@ public class EnterData {
 		return udm;
 	}
 	
-	/*
-	public static void initializeAttendance(Properties input) {
-		AssociateAttendanceDataManager aadm = new AssociateAttendanceDataManager();
+	
+	public UserDataManager initializeAttendance(int columnNumber) {
+		ExcelHelper eh = new ExcelHelper(columnNumber);
 		
-		String dateString = ExcelHelper.getValues("date");
-		String myDate = dateString;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = null;
-		try {
-			date = sdf.parse(myDate);
-		} catch (ParseException e) {
-			Logger.getRootLogger().debug("You got a ParseException", e);
+		ArrayList<String> dates = eh.getValues("attendanceDate");
+		ArrayList<String> checkIns = eh.getValues("checkedIn");
+		ArrayList<String> verifications = eh.getValues("verified");
+		ArrayList<String> notes = eh.getValues("attendanceNote");
+	
+		int i = 0;
+		while (i < columnNumber) {
+			
+			String date = dates.get(i);
+			Timestamp ts = Utils.convertDate(date);
+			String checkedIn = checkIns.get(i);
+			boolean ci = Boolean.parseBoolean(checkedIn);
+			String verified = verifications.get(i);
+			boolean v = Boolean.parseBoolean(verified);
+			String note = notes.get(i);
+			
+			AssociateAttendance aa = new AssociateAttendance(ts, ci, v, note);
+			ArrayList<AssociateAttendance> listOfOne = new ArrayList<AssociateAttendance>();
+			listOfOne.add(aa);
+			
+			udm.editTestUser(i, "", "", "", "", new BatchType(), listOfOne, new ArrayList<AssociateTask>(), new UserRole());
+			i++;
+			
 		}
-		long millis = date.getTime();
-		Timestamp ts = new Timestamp(millis);
+		return udm;
 	}
-	*/
-	
-	
 }

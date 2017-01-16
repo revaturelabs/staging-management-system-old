@@ -3,9 +3,7 @@ package com.revature.sms.testlibs;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.TransientPropertyValueException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import com.revature.sms.domain.AssociateAttendance;
@@ -13,7 +11,6 @@ import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
-import com.revature.sms.domain.dao.BatchTypeRepo;
 import com.revature.sms.domain.dao.UserRepo;
 
 import static com.revature.sms.util.Utils.hashPassword;
@@ -42,10 +39,6 @@ public class UserDataManager {
 	@Autowired
 	private UserRepo ur;
 	
-	@Autowired
-	private BatchTypeRepo btr;
-	
-	
 	
 	
 	/**
@@ -71,7 +64,6 @@ public class UserDataManager {
 	
 	public User createTestUser(User user){
 		ur.save(user);
-		System.out.println("Added User");
 		createdUsers.add(user);
 		return user;
 	}
@@ -101,6 +93,47 @@ public class UserDataManager {
 			ur.delete(i);
 		}
 		createdUsers.clear();
+	}
+	
+	
+	//Corey's Methods
+	
+	public List<User> getUserList() {
+		return createdUsers;
+	}
+
+	
+	public void editTestUser(int userIndex, String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
+			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole) {
+		User createdUser = createdUsers.get(userIndex);
+		if (username != "") {
+			createdUser.setUsername(username);
+		}
+		if (firstName != "") {
+			createdUser.setFirstName(firstName);
+		}
+		if (lastName != "") {
+			createdUser.setLastName(lastName);
+		}
+		if (unhashedPassword != "") {
+			createdUser.setLastName(hashPassword(unhashedPassword));
+		}
+		if (batchType.getType() != null) {
+			createdUser.setBatchType(batchType);
+		}
+		if (!attendance.isEmpty()) {
+			createdUser.setAttendance(attendance);
+		}
+		if (!tasks.isEmpty()) {
+			createdUser.setTasks(tasks);
+		}
+		if (userRole.getName() != null) {
+			createdUser.setUserRole(userRole);
+		}
+		
+		ur.save(createdUser);
+		createdUsers.remove(userIndex);
+		createdUsers.add(userIndex, createdUser);
 	}
 	
 	
