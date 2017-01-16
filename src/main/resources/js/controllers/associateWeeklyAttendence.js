@@ -12,11 +12,6 @@
     	//need this to hold which day of the week is witch 0 for sunday 6 for saturday etc
     	ascatt.daynumbercount = [0,1,2,3,4,5,6];
     	
-    	/*//test
-    	ascatt.firstname = "John";	
-    	//test
-    	ascatt.$parent.mastCtrl.toast("Here");*/
-        
         // get the logged in  user
         ascatt.user = loginService.getUser();
         
@@ -28,12 +23,16 @@
             {name: 'done'  , color: "#00A", description: "if you checked in but were NOT yet verified" },
             {name: 'close', color: "#A00" , description: "if you were NOT checked in and NOT verified"},
             {name: 'done_all' , color: "rgb(89, 226, 168)" , description: "if you were verified" },
-
             {name: '    ' , color: "#777", description: "not available" }
-
          ];        
         
-        
+        // a list of all usable icons Global scope
+        var iconData = [
+            {name: 'done'  , color: "#00A" },
+            {name: 'close', color: "#A00" },
+            {name: 'done_all' , color: "rgb(89, 226, 168)" },
+            {name: '     ' , color: "#777" }
+         ];
         
         
         
@@ -43,13 +42,12 @@
         // pass in any date for a particular week 
         ascatt.changeweek = function(theDayForFunction){
         
-        	//999999999999999999999999999999999999999999999999999999999999
         	// Global Scope Want to reset each time
             // used to save each day of the week was marked as
             ascatt.daypositionstring = [];
             
         	//set current day
-        	var today = theDayForFunction;///////new Date();
+        	var today = theDayForFunction;
         	
             //day is the day of the week
         	var day = today.getDate();
@@ -58,9 +56,9 @@
         	var w = today.getDay();
             
             //set monday (m) based on what day of the week it is
-            var m = new Date();
+        	var m = ((new Date(today.getFullYear(), today.getMonth(), today.getDate(),9,0,0,0)));
             
-            // find the last monday based on what day today is 
+        	// find the last monday based on what day today is 
             if(w==0){
             	m.setDate(day+1);
             }
@@ -100,8 +98,7 @@
             ascatt.thursday = (thursday.getMonth()+1)+"/"+thursday.getDate();
             ascatt.friday = (friday.getMonth()+1)+"/"+friday.getDate();
             ascatt.saturday = (saturday.getMonth()+1)+"/"+saturday.getDate();
-            //99999999999999999999999999999999999999999999999999999999999
-        
+            
             //Local Scope
             //holds the position of the 5 days -1 if it does not exist
             var daypositions = [-1,-1,-1,-1,-1,-1,-1];
@@ -153,32 +150,18 @@
             	}
             }
 
-        //MM
-            //Local Scope
-            // a list of all usable icons
-            var iconData = [
-                {name: 'done'  , color: "#00A" },
-                {name: 'close', color: "#A00" },
-                {name: 'done_all' , color: "rgb(89, 226, 168)" },
-                {name: '     ' , color: "#777" }
-             ];
-            
-        //MM
+        
          // for each of the chosen days
             for(var j  = 0; j < daypositions.length; j++){
             	
             	// if we didnt have an entry for that day in our database table
             	if(daypositions[j] == -1){
             		
-            		
-            		
             		// set this days icon data
             		ascatt.daypositionstring.push(iconData[3]);
             	}
             	// if you checked in and were verified or you were NOT checked in but were verified
             	else if((as[daypositions[j]].checkedIn && as[daypositions[j]].verified)||((!(as[daypositions[j]].checkedIn)) && as[daypositions[j]].verified)){
-            		//TODO return a proper string
-     
             		
             		// set this days icon data
             		ascatt.daypositionstring.push(iconData[2]);
@@ -186,14 +169,11 @@
             	// if you checked in but were NOT yet verified
             	else if(as[daypositions[j]].checkedIn && (!(as[daypositions[j]].verified))){
             		
-            	
-            		
             		// set this days icon data
             		ascatt.daypositionstring.push(iconData[0]);
             	}
             	// if you were NOT checked in and NOT verified
             	else if((!(as[daypositions[j]].checkedIn)) && (!(as[daypositions[j]].verified))){
-            		
             		
             		// set this days icon data
             		ascatt.daypositionstring.push(iconData[1]);
@@ -205,17 +185,25 @@
         ascatt.changeweek(new Date());
         
         
-        //TODO set the  week chart for the week after this week by getting the first day of the next week (sunday) 
+        //set the week chart for the week after this week by getting the first day of the next week (sunday) 
         ascatt.getNextWeek = function() {
-        	alert("in next");
-        	ascatt.changeweek((new Date(saturday.getFullYear(), saturday.getMonth(), (saturday.getDate()+1),9,0,0,0)));
+        	
+        	// set a day from next week
+        	var tomorrow = ((new Date(saturday.getFullYear(), saturday.getMonth(), (saturday.getDate()+1),9,0,0,0)));
+        	
+        	// call the function to set a new display week
+        	ascatt.changeweek(tomorrow);
         };
         
         
-        //TODO set the  week chart for the week before this week by getting the last day of the last week (saturday)
+        //set the  week chart for the week before this week by getting the last day of the last week (saturday)
         ascatt.getPreviousWeek = function() {
-        	alert("in previous");
-        	ascatt.changeweek((new Date(sunday.getFullYear(), sunday.getMonth(), (sunday.getDate()-1),9,0,0,0)));
+        	
+        	//set a day from last week
+        	var tomorrow = ((new Date(sunday.getFullYear(), sunday.getMonth(), (sunday.getDate()-1),9,0,0,0)));
+        	
+        	// call the function to set a new display week
+        	ascatt.changeweek(tomorrow);
         };
-        //***************************************************************
+        
     });
