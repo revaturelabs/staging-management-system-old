@@ -1,10 +1,11 @@
-var sms = angular.module("sms");
+  
+    var sms = angular.module("sms");
 
-sms.controller( "batchAddCtrl", function( $scope, $mdDialog, userService, batchTypeService, batchAddFactory ) {
+    sms.controller( "batchAddCtrl", function( $scope, $mdDialog, userService, batchTypeService, batchAddFactory ) {
 	var bac = this;
 
-	// functions
-	// adds new associate to list
+	  // functions
+	    // adds new associate to list
 
 	bac.addNew = function(isValid) {
 		if (isValid) {
@@ -20,7 +21,7 @@ sms.controller( "batchAddCtrl", function( $scope, $mdDialog, userService, batchT
 		}
 	};
 
-	// data
+	  // data
 	bac.associates = [];
 	bac.batchTypes = batchTypeService.getAll(function(response) {
 		bac.batchTypes = response;
@@ -28,13 +29,13 @@ sms.controller( "batchAddCtrl", function( $scope, $mdDialog, userService, batchT
 		$mdDialog.cancel();
 	});
 
-	// Hard coded value for userRole object of associate
+	    // hard coded value for userRole object of associate
 	var userRole = {};
 	userRole.name = "associate";
 	userRole.id = 1;
 
     bac.save = function(isValid) {
-        if (isValid) {
+        if ( isValid && bac.associates.length != 0 ) {
             var list = bac.associates;
             bac.saveHelper(list);
         }
@@ -51,7 +52,7 @@ sms.controller( "batchAddCtrl", function( $scope, $mdDialog, userService, batchT
             }    
             addUser.hashedPassword = CryptoJS.SHA1(addUser.username).toString();
             
-            // call rest controller to save user via userService
+              // call REST controller to save user via userService
             userService.create(addUser, function(response) {
                 batchAddFactory.addOneAssociate(response);
                 bac.saveHelper(list);
