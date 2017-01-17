@@ -1,7 +1,7 @@
 # Staging Management System
 An application to track attendance, job status, and requirements of associates!
 
-### Commit early and often!!
+### Commit early and often!!!!
 
 Aim for 3 commits a day (not including any dummy commits), with the last one being as you leave for the day.
 
