@@ -2,6 +2,7 @@
 package com.revature.sms;
 
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,14 +28,9 @@ import com.revature.sms.util.EventListener;
 @RunWith(SpringInstanceTestClassRunner.class)
 @SpringBootTest
 public class ViewAssociatesTest implements InstanceTestClassListener{
-	
-	 
 	private final String browser = "Chrome"; 
-	//List of paths to browser drivers
-	private final String chromeDriverPath = "src/test/resources/chromedriver.exe";
-	private final String ieDriverPath = "src/test/resources/IEDriverServer.exe";
-	private final String inputsPath = "src/test/resources/inputs.properties";
-	private final String locationsPath = "src/test/resources/locations.properties";
+	private final String inputsPath = "src/test/resources/PropertiesFiles/inputs.properties";
+	private final String locationsPath = "src/test/resources/PropertiesFiles/locations.properties";
 	
 	//Basically anything that interacts with a data transfer objects must be autowired, which alerts 
 	//Spring of it's existence
@@ -55,16 +51,17 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	@Override
 	public void beforeClassSetup() {
 		if (browser.equals("Chrome")) {
-			webDriver = TestSetup.getChrome(chromeDriverPath);
+			webDriver = TestSetup.getChrome();
 		}
 		if (browser.equals("Internet Explorer")) {
-			webDriver = TestSetup.getIE(ieDriverPath);
+			webDriver = TestSetup.getIE();
 		}	
 		
 		//Allows the driver to take advantage of an event listener
 		driver = new EventFiringWebDriver(webDriver);
 		eventListener = new EventListener();
 		driver.register(eventListener);
+		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 		
 		//Initialize properties files
 		inputs = TestSetup.getProperties(inputsPath);

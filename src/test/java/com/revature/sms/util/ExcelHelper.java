@@ -12,7 +12,7 @@ import com.codoid.products.fillo.Recordset;
 //This class can be used by tests to access excel spreadsheets that hold test data to insert into a database
 public class ExcelHelper {
     
-	private final String file = "C:/Users/User/Desktop/SMS_Project/staging-management-system/src/test/resources/database_input.xlsx";
+	private final String file = "src/test/resources/ExcelSheets/database_input.xlsx";
 	private final String sheet = "Sheet1";
 	private int columns;
 	
@@ -39,9 +39,13 @@ public class ExcelHelper {
 					i++;
 				}
 			}
+			System.out.println("here2");
 			
 			return values;
         } catch (FilloException e) {
+        	//System.out.println("You got a FilloException");
+        	//System.out.println(e.getMessage());
+        	//System.out.println("");
         	Logger.getRootLogger().debug("You got a FilloException", e);
         }
 		return null;

@@ -46,11 +46,8 @@ public class LoginTest_IGNORE_FOR_NOW {
 		 
 		
 		 if(System.getProperty("os.name").equalsIgnoreCase("Windows 10")){//If you are a tester with a different windows os, add it to this if statement.
-			 
 			 System.setProperty("webdriver.chrome.driver", "testBrowserDrivers/chromedriver.exe");
-			 
-		 }
-		 else{
+		 } else {
 			 System.setProperty("webdriver.chrome.driver", "testBrowserDrivers/chromedriver");
 		 }
 		 

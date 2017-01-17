@@ -20,7 +20,6 @@ public abstract class SMSPage {
 	public boolean verify() {
 		Class<? extends SMSPage> thisClass = null;
 		thisClass = this.getClass();
-		System.out.println("Class: "+thisClass.getName());
 		Field[] fields = thisClass.getDeclaredFields();
 		int i=0;
 		while (i<fields.length) {
@@ -33,9 +32,6 @@ public abstract class SMSPage {
 				e.printStackTrace();
 			}
 			try {
-				System.out.println("Field Name: "+fields[i].getName());
-				System.out.println("Tag Name: "+fieldValue.getTagName());
-				System.out.println();
 				fieldValue.isDisplayed();
 			} catch (NoSuchElementException e) {
 				System.out.println(e.getMessage());

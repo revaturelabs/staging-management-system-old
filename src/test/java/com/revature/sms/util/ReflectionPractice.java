@@ -6,7 +6,7 @@ import com.revature.sms.pagefactory.LoginPage;
 public class ReflectionPractice {
 
 	public static void main(String[] args) {
-		WebDriver driver = TestSetup.getChrome("src/test/resources/chromedriver.exe");
+		WebDriver driver = TestSetup.getChrome();
 		driver.get("http://localhost:81/");
 		LoginPage lp = new LoginPage(driver);
 		boolean verified = lp.verify();

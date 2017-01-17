@@ -52,6 +52,7 @@ public class DBInitializationController {
 		int i = 0;
 		while (i < columnNumber) {
 			//Finds already existing batch types and user role types, which are added to the new user
+			
 			BatchType batchType = btr.findByType(batchTypes.get(i));
 			UserRole userRole = urr.findByName(userRoles.get(i));
 			String graduationDate = graduationDates.get(i);

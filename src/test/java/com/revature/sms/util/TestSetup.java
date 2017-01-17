@@ -22,14 +22,20 @@ import com.revature.sms.testlibs.UserDataManager;
 //This class contains convenience methods for creating connections to properties files and web driver files.
 public class TestSetup {
 	
-	public static Properties getProperties(String pathName) {
+	//List of paths to browser drivers
+	private final static String windowsChromeDriverPath = "src/test/resources/testBrowserDrivers/chromedriver.exe";
+	private final static String linuxChromeDriverPath = "src/test/resources/testBrowserDrivers/chromedriver";
+	private final static String ieDriverPath = "src/test/resources/testBrowserDrivers/IEDriverServer.exe";
+	
+	
+	public static Properties getProperties(String pathname) {
 		Properties prop = null;
 		File file = null;
 		FileInputStream fis = null;
 		
 		try {
 			prop = new Properties();
-			file = new File(pathName);
+			file = new File(pathname);
 			fis = new FileInputStream(file);
 			prop.load(fis);
 		} catch (FileNotFoundException e) {
@@ -46,15 +52,18 @@ public class TestSetup {
 		return prop;
 	}
 	
-	public static WebDriver getChrome(String pathname) {
-		File file = new File(pathname);
-		System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+	public static WebDriver getChrome() {
+		
+		 if(System.getProperty("os.name").equalsIgnoreCase("Windows 10")) {  //If you are a tester with a different windows os, add it to this if statement.
+			 System.setProperty("webdriver.chrome.driver", windowsChromeDriverPath);
+		 } else {
+			 System.setProperty("webdriver.chrome.driver", linuxChromeDriverPath);
+		 }
 		return new ChromeDriver();
 	}
 	
-	public static WebDriver getIE(String pathname) {
-		File file = new File(pathname);
-		System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
+	public static WebDriver getIE() {
+		System.setProperty("webdriver.ie.driver", ieDriverPath);
 		return new InternetExplorerDriver();
 	}
 	
