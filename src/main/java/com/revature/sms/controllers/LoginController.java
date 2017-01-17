@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,6 @@ import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dto.LoginAttemptDTO;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
 import com.revature.sms.domain.dto.UserDTO;
-import com.revature.sms.domain.dto.UserTokenDTO;
 
 /**
  * Server-side controller to handle logging into the application.
@@ -106,14 +106,19 @@ public class LoginController {
 	 * @return ResponseEntity object containing a Boolean object with value of true if a password change is required, false if it is not.
 	 */
 	@RequestMapping(value="/checkpass" ,method = RequestMethod.GET)
-	public @ResponseBody Object needUpdatePassword(@RequestHeader(value = "Authorization") String token,
-			@RequestBody String username) {
+	public @ResponseBody Object needUpdatePassword(@RequestHeader(value = "Authorization") String token, @RequestParam String username) {
+		//check authorization token
 		User user = ur.findByUsername(username);
 		if (user != null) {
+			if(isValid(token, username)){
 			// hash username
 			String usernameHash = User.hashPassword(username);
 			// compare hashed username to hashed password
 			return new ResponseEntity<Boolean>(usernameHash.equals(user.getHashedPassword()), HttpStatus.OK);
+			}
+			else{
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User not authorized."), HttpStatus.FORBIDDEN);
+			}
 		}
 		
 		return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User not found."), HttpStatus.NOT_FOUND);
@@ -219,4 +224,5 @@ public class LoginController {
 		}
 		return valid;
 	}
+	
 }
