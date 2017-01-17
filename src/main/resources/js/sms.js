@@ -1,4 +1,5 @@
-var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "md.data.table", "ngResource", "ngCookies", "ui.router"]);
+
+    var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "md.data.table", "ngResource", "ngCookies", "ui.router"]);
 
       // URL routing
     sms.config( function( $stateProvider, $urlRouterProvider, $locationProvider ) {
@@ -44,7 +45,6 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                     }
                 })
 
-                
               // admin page
 			.state( "admin", {
 				url: "/admin",
@@ -69,8 +69,6 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
 	                        }
 	                    }
 	                })
-			
-
 			
               // associate page
 			.state( "assoc", {
