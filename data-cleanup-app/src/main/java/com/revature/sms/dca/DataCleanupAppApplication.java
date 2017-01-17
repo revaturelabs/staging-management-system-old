@@ -17,7 +17,7 @@ import com.revature.sms.dca.domain.dao.TokenRepo;
 @SpringBootApplication
 public class DataCleanupAppApplication {
 
-	//how the fuck does this work? I don't know. I copied it from here: https://spring.io/guides/gs/accessing-data-jpa/
+	//how the fuck does this work? I don't know. I copied it from here: https://spring.io/guides/gs/accessing-data-jpa/ 
 	
 	public static void main(String[] args) {
 		SpringApplication.run(DataCleanupAppApplication.class, args);
