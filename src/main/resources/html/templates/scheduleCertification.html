@@ -1,0 +1,89 @@
+
+    <div role="dialog">
+        
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                Schedule Certification
+            </div>
+        </md-toolbar>
+
+     <!--    <div class="md-padding batchAddChips">
+            <md-chips ng-model="bACtrl.associates" readonly="true" md-removable="true">
+                <md-chip-template>
+                    {{ $chip.firstName }} {{ $chip.lastName }}
+                </md-chip-template>
+            </md-chips>
+        </div> -->
+        
+        <form name="projectForm">
+        	
+        	<div class="md-padding" layout="columns">
+        	<md-input-container class="md-block"> <label>Date</label>
+		        <md-datepicker  md-hide-icons="calendar",
+	               ng-model="assCertCtrl.myDate" 
+	               md-placeholder= "assCertCtrl.myDate"
+	               md-min-date="assCertCtrl.minDate" 
+	               md-max-date="assCertCtrl.maxDate">
+               </md-datepicker>
+               </md-input-container>
+			</div>
+				
+			<div class="md-padding" layout="columns">
+				<md-input-container class="md-block"> <label>Note</label>
+					<input md-maxlength="100" required name="comments"
+						ng-model="project.comments">
+					<div ng-messages="projectForm.comments.$error">
+						<div ng-message="required">This is required.</div>
+					</div>
+				</md-input-container>
+			</div>
+				
+			<div class="md-padding" layout="columns">
+				<md-button type="submit" class="md-primary md-raised" aria-label="Submit All"> SUBMIT </md-button>
+		        <md-button type="button" class="md-primary md-raised" aria-label="Cancel"> CANCEL </md-button>
+			</div>
+		
+		</form>
+
+		<!-- <div class="newAssociateGroup" layout="column">
+            
+            <form name="newAssociate" ng-submit="bACtrl.addNew(newAssociate.$valid)" novalidate>
+                
+                <div class="newAssociate md-padding" layout="columns">
+                    
+                    <md-input-container flex>
+                        <label> First name </label>
+                        <input id="firstName" type="text" ng-model="bACtrl.firstName" required>
+                    </md-input-container>
+                    
+                    <md-input-container flex>
+                        <label> Last name </label>
+                        <input type="text" ng-model="bACtrl.lastName" required>
+                    </md-input-container>
+                    
+                    <md-button type="submit" class="md-fab md-mini" aria-label="Add to list"> 
+                        <md-icon md-svg-icon="img/icons/ic_add_white_24px.svg"> </md-icon>
+                    </md-button>
+                
+                </div>
+ 			</form>
+
+            <div class="md-padding" layout="columns">
+                
+                <form name="batchAdd" ng-submit="bACtrl.save(batchAdd.$valid)" novalidate>
+                    <md-input-container flex>
+                        <label> Curriculum </label>
+                        <md-select ng-model="bACtrl.selectedBatchType" required>
+                                <md-option ng-value="batchType" ng-repeat="batchType in bACtrl.batchTypes"> {{ batchType.type }} </md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-button type="submit" class="md-primary md-raised" aria-label="Submit All"> SUBMIT </md-button>
+                    <md-button type="button" class="md-primary md-raised" ng-click="bACtrl.cancel()" aria-label="Cancel"> CANCEL </md-button>
+                </form>        
+
+            </div>
+
+        </div>
+ -->
+    </div>
