@@ -32,7 +32,7 @@ public class DataCleanupAppApplication {
 			
 			for (AssociateAttendance a : allAttendance) {
 				LocalDateTime dateTime = LocalDateTime.parse(a.getDate().toString().replace(" ", "T")); //Convert the SQL Timestamp to LocalDateTime for easier manipulation
-				boolean isAfterExpiration = dateTime.isAfter(LocalDateTime.now().plusMonths(1)); //this is our condition for if an object is to be deleted
+				boolean isAfterExpiration = dateTime.isBefore(LocalDateTime.now().minusMonths(1)); //this is our condition for if an object is to be deleted
 				if(isAfterExpiration){
 					idsToDelete.add(a.getID());
 				}
@@ -47,7 +47,7 @@ public class DataCleanupAppApplication {
 			
 			for(Token t : allTokens){
 				LocalDateTime dateTime = LocalDateTime.parse(t.getMostRecentAccess().toString().replace(" ", "T")); //Convert the SQL Timestamp to LocalDateTime for easier manipulation
-				boolean isAfterExpiration = dateTime.isAfter(LocalDateTime.now().plusHours(1)); //this is our condition for if an object is to be deleted
+				boolean isAfterExpiration = dateTime.isBefore(LocalDateTime.now().minusHours(1)); //this is our condition for if an object is to be deleted
 				if(isAfterExpiration){
 					tokensToDelete.add(t.getAuthToken());
 				}
