@@ -93,9 +93,9 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 		Assert.assertEquals(locations.getProperty("loginPg"), driver.getTitle());
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
 		
-		//Assert.assertTrue(ap.verify());
+		Assert.assertTrue(ap.verify());
 		ap.logout();
-		Assert.assertTrue(lp.verify());
+		//Assert.assertTrue(lp.verify());
 		
 	}
 	
@@ -113,6 +113,7 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	@Override
 	public void afterClassSetup() {
 		dbic.clearData();
+		driver.close();
 	}
 	
 	

@@ -45,6 +45,7 @@ public class DBInitializationController {
 		List<AssociateAttendance> attendance = new ArrayList<AssociateAttendance>();
 		List<AssociateTask> tasks = new ArrayList<AssociateTask>();
 		ArrayList<String> userRoles = eh.getValues("userRole");
+		ArrayList<String> graduationDates = eh.getValues("graduationDate");
 		
 		//Each iteration of the loop corresponds to a new user that is added
 		int i = 0;
@@ -52,8 +53,11 @@ public class DBInitializationController {
 			//Finds already existing batch types and user role types, which are added to the new user
 			BatchType batchType = btr.findByType(batchTypes.get(i));
 			UserRole userRole = urr.findByName(userRoles.get(i));
+			String graduationDate = graduationDates.get(i);
+			Timestamp gts = Utils.convertDate(graduationDate);
 			
-			udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole);
+			
+			udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole, gts);
 			i++;
 		}
 		return udm;
@@ -83,7 +87,7 @@ public class DBInitializationController {
 			ArrayList<AssociateAttendance> listOfOne = new ArrayList<AssociateAttendance>();
 			listOfOne.add(aa);
 			
-			udm.editTestUser(i, "", "", "", "", new BatchType(), listOfOne, new ArrayList<AssociateTask>(), new UserRole());
+			udm.editTestUser(i, "", "", "", "", new BatchType(), listOfOne, new ArrayList<AssociateTask>(), new UserRole(), new Timestamp(0));
 			i++;
 			
 		}

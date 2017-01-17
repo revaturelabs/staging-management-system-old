@@ -1,6 +1,11 @@
 package com.revature.sms.testlibs;
 
+<<<<<<< HEAD
+=======
+import static com.revature.sms.StagingManagementSystemApplicationTests.hashPassword;
+
 import java.sql.Timestamp;
+>>>>>>> 1bd3d89390d2c9094f393ca962c34658f3a6b93b
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +19,11 @@ import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
+<<<<<<< HEAD
+=======
 import com.revature.sms.domain.dao.AssociateTasksRepo;
 import com.revature.sms.domain.dao.TokenRepo;
+>>>>>>> 1bd3d89390d2c9094f393ca962c34658f3a6b93b
 import com.revature.sms.domain.dao.UserRepo;
 
 import static com.revature.sms.util.Utils.hashPassword;
@@ -43,6 +51,9 @@ public class UserDataManager {
 	
 	@Autowired
 	private UserRepo ur;
+	
+	@Autowired
+	private AssociateAttendanceRepo aar;
 	
 	@Autowired
 	private AssociateAttendanceRepo aar;
@@ -89,8 +100,14 @@ public class UserDataManager {
 	 */
 	
 	public User createTestUser(String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
+<<<<<<< HEAD
+			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole){
+		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole);
+=======
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate){
 		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole, graduationDate);
+		
+>>>>>>> 1bd3d89390d2c9094f393ca962c34658f3a6b93b
 		return createTestUser(newUser);
 	}
 	
@@ -99,7 +116,7 @@ public class UserDataManager {
 		//Changes one or more of the fields of a user. These changes are reflected in both the database and this
 	    //this UserDataManager object.
 		public void editTestUser(int userIndex, String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
-				List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate) {
+				List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole) {
 			User createdUser = createdUsers.get(userIndex);
 			if (username != "") {
 				createdUser.setUsername(username);
@@ -124,9 +141,6 @@ public class UserDataManager {
 			}
 			if (userRole.getName() != null) {
 				createdUser.setUserRole(userRole);
-			}
-			if (graduationDate.getTime() != 0) {
-				
 			}
 			
 			ur.save(createdUser);
@@ -177,23 +191,52 @@ public class UserDataManager {
 	 */
 	
 	public void removeAllTestUsers(){
+<<<<<<< HEAD
 		for (User u:createdUsers){
-			User currentUser = ur.findByUsername(u.getUsername());
-			/*
+			//System.out.println("Deleting User: "+u.getUsername());
+			List<AssociateAttendance> attendanceList = u.getAttendance();
+			for(AssociateAttendance a:attendanceList) {
+				//System.out.println("Deleting attendance record with id of: "+a.getID());
+				aar.delete(a);
+			}
+			
+			ur.delete(u);
+=======
+		for(User i:createdUsers){
+			
+			
+			
+			User currentUser = ur.findByUsername(i.getUsername());
+			
+			currentUser.getAttendance().size();
+			currentUser.getTasks().size();
+			
+			
 			for (AssociateAttendance a : currentUser.getAttendance()) {
 				aar.delete(a);
 			}
-			for (AssociateTask task : currentUser.getTasks()) {
-				atr.delete(task);
+			
+			
+			
+			for (AssociateTask a : currentUser.getTasks()) {
+				atr.delete(a);
 			}
-			List<Token> tList = tr.getByUser(currentUser);
-			for(Token token : tList){
-				tr.delete(token);
+			
+			List<Token> tList = tr.getByUser(i);
+			tList.size();
+			for(Token a : tList){
+				tr.delete(a);
 			}
-			*/
-			ur.delete(currentUser);
+			
+			ur.delete(i);
+>>>>>>> 1bd3d89390d2c9094f393ca962c34658f3a6b93b
 		}
 		createdUsers.clear();
 	}
-
+	
+	
+	
+	
+	
+	
 }
