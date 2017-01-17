@@ -28,34 +28,20 @@
 				<tr md-row id="weekrow">
 
 					<!-- repeat all the days of the week -->
-					<th md-column ng-repeat="day in assWeekAttCtrl.days">{{day}}</th>
+					<th md-column ng-repeat="day in assWeekAttCtrl.days" style="text-align: center;">{{day}}</th>
 
 				</tr>
 			</thead>
 			<!-- enter in the body data -->
 			<tbody md-body>
-				<tr align="center">
-					<td>
-						<p>{{assWeekAttCtrl.sunday}}</p>
-					</td>
-					<td>
-						<p>{{assWeekAttCtrl.monday}}</p>
-					</td>
-					<td>
-						<p>{{assWeekAttCtrl.tuesday}}</p>
-					</td>
-					<td>
-						<p>{{assWeekAttCtrl.wednesday}}</p>
-					</td>
-					<td>
-						<p>{{assWeekAttCtrl.thursday}}</p>
-					</td>
-					<td>
-						<p>{{assWeekAttCtrl.friday}}</p>
-					</td>
-					<td>
-						<p>{{assWeekAttCtrl.saturday}}</p>
-					</td>
+				<tr >
+					<td style="text-align: center;">{{assWeekAttCtrl.sunday}}</td>
+					<td>{{assWeekAttCtrl.monday}}</td>
+					<td>{{assWeekAttCtrl.tuesday}}</td>
+					<td>{{assWeekAttCtrl.wednesday}}</td>
+					<td>{{assWeekAttCtrl.thursday}}</td>
+					<td>{{assWeekAttCtrl.friday}}</td>
+					<td>{{assWeekAttCtrl.saturday}}</td>
 				</tr>
 				<!-- ??? -->
 				<tr md-row>
@@ -98,13 +84,17 @@
 	</div>
 
 
-<!-- 	<input type="submit" ng-click="assWeekAttCtrl.getNextWeek()"
+	<!-- 	<input type="submit" ng-click="assWeekAttCtrl.getNextWeek()"
 		value="Next Week" /> <input type="submit"
 		ng-click="assWeekAttCtrl.getPreviousWeek()" value="previous Week" />
  -->
 </div>
 
 <div layout="row" layout-align="center center">
-		<md-button type="button" class="md-raised md-warn" style="width:37%; align: center" ng-click="assWeekAttCtrl.getPreviousWeek()">Previous Week</md-button>
-		<md-button type="button" class="md-raised md-primary" style="width:37%; align: center" ng-click="assWeekAttCtrl.getNextWeek()">Next Week</md-button>
-	</div>
+	<md-button type="button" class="md-raised md-warn"
+		style="width:37%; align: center"
+		ng-click="assWeekAttCtrl.getPreviousWeek()">Previous Week</md-button>
+	<md-button type="button" class="md-raised md-primary"
+		style="width:37%; align: center"
+		ng-click="assWeekAttCtrl.getNextWeek()">Next Week</md-button>
+</div>
