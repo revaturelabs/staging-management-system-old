@@ -74,7 +74,6 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 		int columnNumber = 2;
 		dbic.initializeUsers(columnNumber);
 		dbic.initializeAttendance(columnNumber);
-		 
 	}
 	
 	//More browser preparation
@@ -89,6 +88,8 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	//Login and logout as admin
 	@Test
 	public void viewAsAdmin() {
+		
+		System.out.println("Viewing as admin");
 		Assert.assertTrue(lp.verify());
 		Assert.assertEquals(locations.getProperty("loginPg"), driver.getTitle());
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
@@ -102,18 +103,19 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	//Login and logout as superadmin
 	@Test
 	public void viewAsSuperAdmin() {
+		
+		System.out.println("Viewing as superadmin");
 		Assert.assertTrue(lp.verify());
 		Assert.assertEquals(locations.getProperty("loginPg"), driver.getTitle());
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
-		
 		//Assert.assertTrue(sap.verify());
 	}
 
 	//Clear database
 	@Override
 	public void afterClassSetup() {
-		dbic.clearData();
-		driver.close();
+		//dbic.clearData();
+		//driver.close();
 	}
 	
 	

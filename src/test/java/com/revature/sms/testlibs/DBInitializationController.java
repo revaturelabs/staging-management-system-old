@@ -12,6 +12,7 @@ import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
+import com.revature.sms.domain.dao.AssociateAttendanceRepo;
 import com.revature.sms.domain.dao.BatchTypeRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
 import com.revature.sms.util.ExcelHelper;
@@ -55,7 +56,6 @@ public class DBInitializationController {
 			UserRole userRole = urr.findByName(userRoles.get(i));
 			String graduationDate = graduationDates.get(i);
 			Timestamp gts = Utils.convertDate(graduationDate);
-			
 			
 			udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole, gts);
 			i++;

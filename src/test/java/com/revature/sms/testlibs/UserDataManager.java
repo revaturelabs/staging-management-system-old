@@ -62,7 +62,6 @@ public class UserDataManager {
 	
 	public User createTestAdmin(String username, String firstName, String lastName, String unhashedPassword, UserRole userRole){
 		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), userRole);
-		
 		return createTestUser(newUser);
 	}
 	
@@ -75,6 +74,17 @@ public class UserDataManager {
 	 */
 	
 	public User createTestUser(User user){
+		
+		/*
+		System.out.println("OBJECT BEFORE:");
+		System.out.println("Username: "+user.getUsername());
+		System.out.println("ID: "+user.getID());
+		List<AssociateAttendance> blah = user.getAttendance();
+		System.out.println("List of attendance objects: "+blah);
+		System.out.println("Graduation Date in milliseconds: "+user.getGraduationDate().getTime());
+		System.out.println();
+		*/
+		
 		ur.save(user); 
 		createdUsers.add(user);
 		return user;
@@ -117,6 +127,7 @@ public class UserDataManager {
 				createdUser.setBatchType(batchType);
 			}
 			if (!attendance.isEmpty()) {
+				aar.save(attendance);
 				createdUser.setAttendance(attendance);
 			}
 			if (!tasks.isEmpty()) {
@@ -126,10 +137,22 @@ public class UserDataManager {
 				createdUser.setUserRole(userRole);
 			}
 			if (graduationDate.getTime() != 0) {
-				
+				createdUser.setGraduationDate(graduationDate);
 			}
 			
+			/*
+			System.out.println("OBJECT AFTER:");
+			System.out.println("Username: "+createdUser.getUsername());
+			System.out.println("ID: "+createdUser.getID());
+			List<AssociateAttendance> blah = createdUser.getAttendance();
+			System.out.println("List of attendance objects: "+blah);
+			System.out.println("Single attendance object: "+blah.get(0));
+			System.out.println("Graduation Date in milliseconds: "+createdUser.getGraduationDate().getTime());
+			System.out.println();
+			*/
+			
 			ur.save(createdUser);
+			System.out.println("HHHEEERRREEE");
 			createdUsers.remove(userIndex);
 			createdUsers.add(userIndex, createdUser);
 			
