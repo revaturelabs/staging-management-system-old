@@ -80,20 +80,20 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	
 	@Test
 	public void viewAsAdmin() {
-		//Assert.assertTrue(lp.verify());
-		Assert.assertEquals(lp.getTitle(), locations.getProperty("LoginPG"));
+		Assert.assertTrue(lp.verify());
+		Assert.assertEquals(locations.getProperty("loginPg"), driver.getTitle());
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
 		
 		//Assert.assertTrue(ap.verify());
 		ap.logout();
-		//Assert.assertTrue(lp.verify());
+		Assert.assertTrue(lp.verify());
 		
 	}
 	
 	@Test
 	public void viewAsSuperAdmin() {
-		//Assert.assertTrue(lp.verify());
-		Assert.assertEquals(lp.getTitle(), locations.getProperty("LoginPG"));
+		Assert.assertTrue(lp.verify());
+		Assert.assertEquals(locations.getProperty("loginPg"), driver.getTitle());
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
 		
 		//Assert.assertTrue(sap.verify());

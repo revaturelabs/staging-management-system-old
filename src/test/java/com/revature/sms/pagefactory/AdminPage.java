@@ -1,8 +1,8 @@
 package com.revature.sms.pagefactory;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 public class AdminPage extends SMSPage {
 
@@ -25,11 +25,13 @@ public class AdminPage extends SMSPage {
 	WebElement nextWeek;
 	
 	
-	public AdminPage(EventFiringWebDriver driver) {
+	public AdminPage(WebDriver driver) {
 		super(driver);
 	}
 
 	public void logout() {
+		System.out.println("HERE!!!!!!!!!!!!");
+		System.out.println(logoutIcon.getAttribute("class"));
 		logoutIcon.click();
 	}
 	

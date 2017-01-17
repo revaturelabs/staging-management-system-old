@@ -1,20 +1,16 @@
 package com.revature.sms.pagefactory;
 
-import java.lang.reflect.Field;
-
-import org.apache.log4j.Logger;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 
 public class LoginPage extends SMSPage {
 	
-	@FindBy(tagName="title")
+	@FindBy(xpath="/html/head/title")
 	WebElement title;
 	
-	@FindBy(id="input_0")
+	@FindBy(id="input_0")  //This id unfortunately seems to be different after logging out
 	WebElement unField;
 	
 	@FindBy(id="input_1")
@@ -25,7 +21,8 @@ public class LoginPage extends SMSPage {
 	
 	
 	
-	public LoginPage(EventFiringWebDriver driver) {
+	
+	public LoginPage(WebDriver driver) {
 		super(driver);
 	}
 	
@@ -36,30 +33,10 @@ public class LoginPage extends SMSPage {
 	}
 	
 	public String getTitle() {
+		//System.out.println("In getTitle");
+		//System.out.println("Tag name: "+title.getTagName());
+		//System.out.println("Text: "+title.getText());
 		return title.getText();
 	}
 	
-	/*
-	public boolean verify() {
-		Class thisClass = null;
-		try {
-			thisClass = (Class<String>) Class.forName("LoginPage");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			Logger.getRootLogger().debug("You got a ClassNotFoundException", e);
-		}
-		Field[] fields = thisClass.getDeclaredFields();
-		int i = 0;
-		
-		
-		while (i < fields.length) {
-			if (fields[i].getAnnotation(thisClass) != null) {
-				try {
-					 
-				}
-			}
-		}
-		return true;
-	}
-	*/
 }
