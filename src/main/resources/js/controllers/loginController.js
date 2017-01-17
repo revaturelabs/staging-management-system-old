@@ -16,20 +16,19 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
 			creds.inputPass = CryptoJS.SHA1(lc.inputPass).toString();
 			loginService.login(creds, function(response) {
 				loginService.addUser(response.user);
-				loginService.addToken(response.authToken);
+				loginService.addToken(response.token);
 				switch (response.user.userRole.name) {
 				case "superAdmin":
-					$state.go("superAttendance");
 					lc.toast("Logged in.");
+					$state.go("superAttendance");
 					break;
 				case "admin":
-					$state.go("adminAttendance");
 					lc.toast("Logged in.");
+					$state.go("adminAttendance");
 					break;
 				case "associate":
 					lc.toast("Logged in and attendance logged.");
 					$state.go("assocAttendance");
-
 					break;
 				default:
 					break;
@@ -41,9 +40,16 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
 	};
 
     lc.cookieCheck = function() {
-        var cookie = $cookies.get("RevatureSMSCookie");
-        if (cookie) {
-
+        var usernameCookie = $cookies.get("revature.pro/username");
+        var tokenCookie = $cookies.get("revature.pro/authToken");
+        console.log(usernameCookie, tokenCookie);
+        if ( usernameCookie && tokenCookie ) {
+            loginService.addToken(tokenCookie);
+            loginService.cookieLogin( usernameCookie, function(){
+                lc.toast("cookieLogin works!");
+            }, function(){
+                lc.toast("cookieLogin doesn't work!");
+            });
         }
     };
 

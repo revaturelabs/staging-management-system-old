@@ -33,12 +33,17 @@ import com.revature.sms.domain.dto.UserDTO;
 @RestController
 @RequestMapping("/api/v1/login")
 public class LoginController {
+
 	/**
 	 * Autowired UserRepo object. Spring handles setting this up for actual use.
 	 */
 	@Autowired
 	UserRepo ur;
 
+	/**
+	 * Autowired TokenRepo object. Spring handles setting this up for actual
+	 * use.
+	 */
 	@Autowired
 	TokenRepo tr;
 
@@ -48,13 +53,6 @@ public class LoginController {
 	 */
 	@Autowired
 	AssociateAttendanceRepo aar;
-
-	/**
-	 * Autowired TokenRepo object. Spring handles setting this up for actual
-	 * use.
-	 */
-	@Autowired
-	TokenRepo tokenRepo;
 
 	/**
 	 * Method that's called via Http Post method. Used for submitting a login
@@ -111,18 +109,36 @@ public class LoginController {
 		User user = ur.findByUsername(username);
 		if (user != null) {
 			if(isValid(token, username)){
-			// hash username
-			String usernameHash = User.hashPassword(username);
-			// compare hashed username to hashed password
-			return new ResponseEntity<Boolean>(usernameHash.equals(user.getHashedPassword()), HttpStatus.OK);
+				// hash username
+				String usernameHash = User.hashPassword(username);
+				// compare hashed username to hashed password
+				return new ResponseEntity<Boolean>(usernameHash.equals(user.getHashedPassword()), HttpStatus.OK);
 			}
 			else{
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User not authorized."), HttpStatus.FORBIDDEN);
 			}
 		}
-		
+
 		return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User not found."), HttpStatus.NOT_FOUND);
 
+	}
+
+	/**
+	 * Method to login using stored cookies
+	 * @param token String value of authorization token.
+	 * @param username String value of logged in user's username.
+	 * @return ResponseEntity object containing a Boolean object with value of true if a password change is required, false if it is not.
+	 */
+	@RequestMapping(value="/cookieLogin" ,method = RequestMethod.GET)
+	public @ResponseBody Object cookieLogin(@RequestHeader(value = "Authorization") String token, @RequestParam String username) {
+
+		Token masterToken = tr.findByauthToken(token);
+		if (masterToken.getUser().getUsername().equals(username)) {
+			return new ResponseEntity<User>(masterToken.getUser(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<ResponseErrorEntity>( new ResponseErrorEntity("Cookie username/token do not match."), HttpStatus.NOT_FOUND);
+		}
+		
 	}
 
 	/**
@@ -217,7 +233,7 @@ public class LoginController {
 	 */
 	public boolean isValid(String tokenString, String usernameString) {
 		boolean valid = false;
-		Token token = tokenRepo.findByauthToken(tokenString);
+		Token token = tr.findByauthToken(tokenString);
 		if (token != null) {
 			if (usernameString.equals(token.getUser().getUsername()))
 				valid = true;

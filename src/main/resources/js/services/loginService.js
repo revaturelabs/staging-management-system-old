@@ -2,12 +2,22 @@
     var sms = angular.module( "sms" );
 
     sms.service( "loginService", function( $resource ){
-        var loginResource = $resource("api/v1/login");
         var ls = this;
+        var loginResource = $resource("api/v1/login/:username", 
+            { username: "@username" }, 
+            { 
+                save: { url: "api/v1/login" }, 
+                cookie: { headers: { "Content-Type": "application/json", "Authorization": ls.token }, method: "GET" } 
+            }
+        );
 
-        ls.login = function(loginCred, success, error) {
-            loginResource.save(loginCred, success, error);
+        ls.login = function( loginCred, success, error ) {
+            loginResource.save( loginCred, success, error );
         };
+        
+        ls.cookieLogin = function( username, success, error ) {
+            loginResource.cookie( username, success, error );
+        }
 
           // COOKIES BAD, MKAY
         ls.logout = function() {

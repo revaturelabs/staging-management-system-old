@@ -4,7 +4,7 @@
     sms.service( "userService", function( $resource, $http, loginService ){
         var us = this;
         
-        us.auth = function(){
+        us.auth = function() {
             return loginService.getToken();
         }
         
@@ -20,13 +20,7 @@
         );
 
         us.create = function(user, success, error) {
-
-            // var config = { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "PUT", url: "api/v1/user" };
-            // var userResource = $resource( "api/v1/user", { save: config } );
-            //user.$save(success, error);
-        	//console.log("In create! " + user);
         	us.userResource.save(user, success, error);
-
         };
 
         us.getAll = function(success, error) {
