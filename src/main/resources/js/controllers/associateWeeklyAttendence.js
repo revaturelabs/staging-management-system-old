@@ -7,7 +7,7 @@
     	var ascatt = this;
     		
     	// create a list of all the days in the week
-    	ascatt.days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    	ascatt.days = ["*","Monday","Tuesday","Wednesday","Thursday","Friday","*"];
     	
     	//need this to hold which day of the week is witch 0 for sunday 6 for saturday etc
     	ascatt.daynumbercount = [0,1,2,3,4,5,6];
