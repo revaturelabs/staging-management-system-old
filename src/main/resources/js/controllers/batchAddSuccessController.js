@@ -10,4 +10,4 @@
         function okay() {
             $mdDialog.hide();
         }
-    };
+    }

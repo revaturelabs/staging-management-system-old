@@ -35,31 +35,20 @@
                 templateUrl: "html/templates/batchAdd.html",
                 controller: "batchAddCtrl as bACtrl"
             }).then( function() {
-                // console.log( batchAddFactory.getNewAssociates() );
-                // $mdDialog.show({
-                //     templateUrl: "html/templates/batchAddSuccess.html",
-                //     locals: { "newAssociates": batchAddFactory.getNewAssociates }
-                // });
-                suc.toast("New associates added.");
+                $mdDialog.show({
+                    templateUrl: "html/templates/batchAddSuccess.html",
+                    controller: "batchAddSuccessCtrl as bASCtrl",
+                    locals: { "newAssociates": batchAddFactory.getNewAssociates() },
+                    bindToController: true
+                }).then( function(){
+                    batchAddFactory.resetAssociates();
+                });
+                
             }, function() {
                 suc.toast("Batch addition cancelled.");
             });
         };
 
-            // returns array that represents the difference between the two input arrays
-        suc.diffArray = function( bigArray, smallArray ){
-
-            var diff;
-            // var bigCopy = bigArray;
-            // bigCopy.forEach( function(obj) {
-            //     if (smallArray.indexOf(obj) != -1) {
-            //         diff.push(obj);
-            //     }
-            // });
-            diff = $(bigArray).not(smallArray).get();
-            // console.log(diff);
-            return diff;
-        };
           // data
         suc.user = loginService.getUser();
 
