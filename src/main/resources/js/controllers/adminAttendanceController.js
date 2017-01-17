@@ -135,10 +135,14 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     	
 		//if the object wwasn't updated then the object will be created
 		if(!updated){
-			user.attendance.date = new Date();
-			user.attendance.verified = true;
-			user.attendance.checkedIn = true;
-			user.attendance.note = "Checked in and validated by admin";
+			newAttendace = {};
+			
+			newAttendace.date = thisDay;
+			newAttendace.verified = true;
+			newAttendace.checkedIn = true;
+			newAttendace.note = "Checked in and validated by admin";
+			
+			user.attendance.push(newAttendace);
 		}
 		
 		//call user service to send the update to the database

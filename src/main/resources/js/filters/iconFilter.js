@@ -7,7 +7,6 @@ sms.filter("iconFilter", function(){
             {name: 'done'  , color: "#00A" },
             {name: 'close', color: "#A00" },
             {name: 'done_all' , color: "rgb(89, 226, 168)" },
-
             {name: '     ' , color: "#777" }
 
          ];
