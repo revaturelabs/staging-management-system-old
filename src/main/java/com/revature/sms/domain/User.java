@@ -1,5 +1,7 @@
 package com.revature.sms.domain;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -14,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.apache.log4j.Logger;
 
 //
 /**
@@ -319,4 +323,27 @@ public class User {
 				+ ", tasks=" + tasks + ", userRole=" + userRole + "]";
 	}
 
+	/**
+	 * A password hashing algorithm used for testing.
+	 * @param inputPassword
+	 * @return The hashed password
+	 */
+
+	public static String hashPassword(String inputPassword) {
+		try {
+			MessageDigest md;
+			md = MessageDigest.getInstance("SHA");
+			md.update(inputPassword.getBytes());
+			byte[] byteData = md.digest();
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < byteData.length; i++) {
+				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			return sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			Logger.getRootLogger().error("No such Algorithm", e);
+			return null;
+		}
+	}
+	
 }
