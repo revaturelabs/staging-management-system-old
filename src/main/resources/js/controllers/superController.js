@@ -43,7 +43,6 @@
                 }).then( function(){
                     batchAddFactory.resetAssociates();
                 });
-                
             }, function() {
                 suc.toast("Batch addition cancelled.");
             });

@@ -129,16 +129,17 @@ public class LoginController {
 	 * @param username String value of logged in user's username.
 	 * @return ResponseEntity object containing a Boolean object with value of true if a password change is required, false if it is not.
 	 */
-	@RequestMapping(value="/cookieLogin" ,method = RequestMethod.GET)
-	public @ResponseBody Object cookieLogin(@RequestHeader(value = "Authorization") String token, @RequestParam String username) {
-
+	@RequestMapping(value="/cookieLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Object cookieLogin(@RequestHeader(value = "Authorization") String token, @RequestBody String username) {
 		Token masterToken = tr.findByauthToken(token);
+		masterToken.getUser().blankPassword();
+		masterToken.getUser().setID(0);
+
 		if (masterToken.getUser().getUsername().equals(username)) {
-			return new ResponseEntity<User>(masterToken.getUser(), HttpStatus.OK);
+			return new ResponseEntity<Token>(masterToken, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<ResponseErrorEntity>( new ResponseErrorEntity("Cookie username/token do not match."), HttpStatus.NOT_FOUND);
 		}
-		
 	}
 
 	/**
