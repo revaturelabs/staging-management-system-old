@@ -1,7 +1,7 @@
 
     var sms = angular.module( "sms" );
 
-    sms.controller( "associateCtrl", function( $scope, $state, $mdSidenav, loginService ){
+    sms.controller( "associateCtrl", function( $scope, $state, $mdSidenav, $mdDialog, loginService ){
         var asc = this;
 
           // functions
@@ -34,8 +34,24 @@
         };
         
         asc.assocCertifications = function(){
-        	$mdSidenav("left").close();
-        	$state.go("assocCertifications");
+        	$mdDialog.show({
+        		templateUrl: "html/templates/scheduleCertification.html",
+        		controller: "associateCertificationsCtrl as assCertCtrl"
+        	}).then( function() {
+        		alert("success");
+               /* $mdDialog.show({
+                    templateUrl: "html/templates/batchAddSuccess.html",
+                    controller: "batchAddSuccessCtrl as bASCtrl",
+                    locals: { "newAssociates": batchAddFactory.getNewAssociates() },
+                    bindToController: true
+                }).then( function(){
+                    batchAddFactory.resetAssociates();
+                });*/
+                
+            }, function() {
+            	asc.toast("Certification Schedule Cancelled");
+                /*suc.toast("Batch addition cancelled.");*/
+            });
         };
         
           // data
