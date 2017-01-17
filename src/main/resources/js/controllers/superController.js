@@ -26,6 +26,11 @@
         	$state.go("SUupdateInfo");
         	
         };
+        suc.viewAttendance = function(){
+        	$mdSidenav("left").close();
+        	$state.go("superAttendance");
+        	
+        };
 
         suc.newAssociate = function() {
             
