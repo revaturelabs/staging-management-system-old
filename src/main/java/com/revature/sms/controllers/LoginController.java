@@ -188,7 +188,7 @@ public class LoginController {
 	 */
 	public boolean isValid(String tokenString, String usernameString) {
 		boolean valid = false;
-		Token token = tokenRepo.findByauthToken(tokenString);
+		Token token = tokenRepo.findByAuthToken(tokenString);
 		if (token != null) {
 			if (usernameString.equals(token.getUser().getUsername()))
 				valid = true;

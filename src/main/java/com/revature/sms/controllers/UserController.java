@@ -179,7 +179,7 @@ public class UserController {
 	public @ResponseBody Object retrieveAll(@RequestHeader(value = "Authorization") String authToken) {
 		try {
 			// validate token and retrieve all associates info
-			Token userToken = tokenRepo.findByauthToken(authToken);
+			Token userToken = tokenRepo.findByAuthToken(authToken);
 			if (userToken == null) {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("AuthToken invalid."),
 						HttpStatus.NOT_FOUND);
@@ -251,7 +251,7 @@ public class UserController {
 	public boolean isValid(String tokenString) {
 		boolean valid = false;
 
-		Token token = tokenRepo.findByauthToken(tokenString);
+		Token token = tokenRepo.findByAuthToken(tokenString);
 		if (token != null) {
 			role = token.getUser().getUserRole().getName();
 			valid = true;
