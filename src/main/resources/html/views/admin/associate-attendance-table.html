@@ -1,9 +1,3 @@
-<md-toolbar class="md-table-toolbar md-default">
-  <div class="md-toolbar-tools">
-    <span>Associate Weekly Attendance</span>
-  </div>
-</md-toolbar>
-
 <md-table-container>
 	<table md-table>
 		<col>
@@ -14,12 +8,12 @@
 		<col ng-class="{highlightToday : (adAttCtrl.activeDay == 5)}">
 		<thead md-head>
 			<tr md-row>
-				<th md-column></th>
-				<th md-column>Monday</th>
-				<th md-column>Tuesday</th>
-				<th md-column>Wednesday</th>
-				<th md-column>Thursday</th>
-				<th md-column>Friday</th>
+				<th md-cell></th>
+				<th md-cell>Monday</th>
+				<th md-cell>Tuesday</th>
+				<th md-cell>Wednesday</th>
+				<th md-cell>Thursday</th>
+				<th md-cell>Friday</th>
 			</tr>
 			<tr md-row>
 				<th>
@@ -27,11 +21,11 @@
                         <label><span><md-icon>search</md-icon></span>Search</label>
                         <input type="text" ng-model="searchBox">
                     </md-input-container></th>
-				<th md-column>{{ adAttCtrl.monday }}</th>
-				<th md-column>{{ adAttCtrl.tuesday }}</th>
-				<th md-column>{{ adAttCtrl.wednesday }}</th>
-				<th md-column>{{ adAttCtrl.thursday }}</th>
-				<th md-column>{{ adAttCtrl.friday }}</th>
+				<th md-cell>{{ adAttCtrl.monday }}</th>
+				<th md-cell>{{ adAttCtrl.tuesday }}</th>
+				<th md-cell>{{ adAttCtrl.wednesday }}</th>
+				<th md-cell>{{ adAttCtrl.thursday }}</th>
+				<th md-cell>{{ adAttCtrl.friday }}</th>
 			</tr>
 		</thead>
 	

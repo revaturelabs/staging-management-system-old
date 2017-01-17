@@ -2,6 +2,8 @@ var sms = angular.module("sms");
 sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $filter) {
 	var aac = this;
 	
+	$scope.$parent.adCtrl.title = "Associate Weekly Attendance";
+	
 	aac.toast = function(message){
 		$scope.$parent.$parent.mastCtrl.toast(message);
 	};
