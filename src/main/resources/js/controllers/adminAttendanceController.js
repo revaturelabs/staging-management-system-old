@@ -121,15 +121,26 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     	
         //get the attendance object that matches the clicked on day
         //accomplish this by doing a for each loop that looks through each object
+        //set a variable that varifies the object has been updated
+        updated = false;
         user.attendance.forEach(function(attendance){
 			day = new Date(attendance.date);
 			if(day.getDate()==thisDay.getDate() && day.getMonth()==thisDay.getMonth()){
 				//set the status to true on the object
 				attendance.verified = true;
 				attendance.checkedIn = true;
+				updated = true;
 			}
 		})
     	
+		//if the object wwasn't updated then the object will be created
+		if(!updated){
+			user.attendance.date = new Date();
+			user.attendance.verified = true;
+			user.attendance.checkedIn = true;
+			user.attendance.note = "Checked in and validated by admin";
+		}
+		
 		//call user service to send the update to the database
     	userService.update(user, function(response){
     		aac.toast("Successful update");
