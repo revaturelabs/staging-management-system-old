@@ -1,13 +1,14 @@
 package com.revature.sms;
 
-import org.aspectj.lang.annotation.Before;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +21,8 @@ import com.revature.sms.testlibs.WebElementStaticProvider;
 
 /**
  * LoginTest is a test suite class that tests login functionality.
+ * Note that each of these tests should be idempotent, returning the WebDriver to the main page of the application, logged out.
+ * This ensures that the tests may be run in any order without issue.
  * @author Sage
  *
  */
@@ -39,8 +42,21 @@ public class LoginTest {
 	
 	@BeforeClass
 	public static void loadDriver(){
+		
+		 
+		
+		 if(System.getProperty("os.name").equalsIgnoreCase("Windows 10")){//If you are a tester with a different windows os, add it to this if statement.
+			 
+			 System.setProperty("webdriver.chrome.driver", "testBrowserDrivers/chromedriver.exe");
+			 
+		 }
+		 else{
+			 System.setProperty("webdriver.chrome.driver", "testBrowserDrivers/chromedriver");
+		 }
+		 
 		 driver = new ChromeDriver();
-		 driver.navigate().to("http://dev.revature.pro");
+		 driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+		 
 	}
 	
 	
@@ -50,11 +66,13 @@ public class LoginTest {
 	@Test
 	public void testAssociateLogin(){
 		
+	
+		
 		User testUser = users.getAssociate();
 		udm.createTestUser(testUser);
 		
 		
-		
+		driver.navigate().to("http://dev.revature.pro");
 		
 		
 		
@@ -62,8 +80,9 @@ public class LoginTest {
 		WebElementStaticProvider.getLoginPasswordInput(driver).sendKeys("E=MC^2");
 		WebElementStaticProvider.getLoginSubmit(driver).click();
 		
-		Assert.assertTrue(driver.getCurrentUrl().contains("assoc"));
-		//TODO: Write a test case that succeeds when a test logs in using valid Associate credentials
+		//Assert.assertTrue(CurrentPageContainsAssociate-SpecificContent());
+		
+		simpleLogout();
 	}
 	
 	@Ignore
@@ -114,6 +133,14 @@ public class LoginTest {
 	 * Note that as it is called after each @test method, users created by one @test will not exist for other tests.
 	 */
 	
+	private void simpleLogout(){
+		
+		WebElement logout = WebElementStaticProvider.getLogoutButton(driver);
+		if(logout!=null){
+			logout.click();
+		}
+		
+	}
 	
 	
 	@After

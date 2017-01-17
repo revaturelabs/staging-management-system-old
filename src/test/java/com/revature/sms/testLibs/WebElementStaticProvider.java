@@ -21,7 +21,7 @@ public class WebElementStaticProvider {
 	 * @return the input box WebElement
 	 */
 	public static WebElement getLoginUsernameInput(WebDriver driver){
-		return driver.findElement(By.xpath("//input[contains(@ng-model, 'logCtrl.username')]"));
+		return driver.findElement(By.xpath("//input[contains(@ng-model, 'username')]"));
 	}
 	
 	/**
@@ -40,8 +40,26 @@ public class WebElementStaticProvider {
 	 */
 	
 	public static WebElement getLoginSubmit(WebDriver driver){
-		return driver.findElement(By.xpath("//span[contains(@name,'Login')]//parent::button"));
+		return driver.findElement(By.xpath("//span[contains(text(),'Login')]//parent::button"));
 	}
+	
+	/**
+	 * 
+	 * Finds the button to log out
+	 * @param driver
+	 * @return the logout button, or null if the logout button doesn't exist.
+	 * 
+	 */
+	
+	public static WebElement getLogoutButton(WebDriver driver){
+		if(driver.findElements(By.xpath("//button[contains(@ng-click, 'logout')]")).size()>0){
+			return driver.findElement(By.xpath("//button[contains(@ng-click, 'logout')]"));
+		}
+		else{
+			return null;
+		}
+	}
+	
 	
 	
 	

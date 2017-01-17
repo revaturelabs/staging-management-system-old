@@ -5,15 +5,20 @@ import static com.revature.sms.StagingManagementSystemApplicationTests.hashPassw
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.data.jpa.provider.HibernateUtils;
 import org.springframework.stereotype.Service;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
+import com.revature.sms.domain.dao.AssociateAttendanceRepo;
+import com.revature.sms.domain.dao.AssociateTasksRepo;
+import com.revature.sms.domain.dao.TokenRepo;
 import com.revature.sms.domain.dao.UserRepo;
 
 /**
@@ -41,7 +46,14 @@ public class UserDataManager {
 	private UserRepo ur;
 	
 	
+	@Autowired
+	private AssociateAttendanceRepo aar;
 	
+	@Autowired
+	private AssociateTasksRepo atr;
+	
+	@Autowired
+	private TokenRepo tr;
 	
 	/**
 	 * createTestAdmin is a setup method that is called to create a user of Admin or Super Admin type for testing.
@@ -93,6 +105,31 @@ public class UserDataManager {
 	
 	public void removeAllTestUsers(){
 		for(User i:createdUsers){
+			
+			
+			
+			User currentUser = ur.findByUsername(i.getUsername());
+			
+			currentUser.getAttendance().size();
+			currentUser.getTasks().size();
+			
+			
+			for (AssociateAttendance a : currentUser.getAttendance()) {
+				aar.delete(a);
+			}
+			
+			
+			
+			for (AssociateTask a : currentUser.getTasks()) {
+				atr.delete(a);
+			}
+			
+			List<Token> tList = tr.getByUser(i);
+			tList.size();
+			for(Token a : tList){
+				tr.delete(a);
+			}
+			
 			ur.delete(i);
 		}
 		createdUsers.clear();

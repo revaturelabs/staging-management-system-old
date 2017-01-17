@@ -3,6 +3,7 @@ package com.revature.sms;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -12,6 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.revature.sms.domain.AssociateAttendance;
+import com.revature.sms.domain.AssociateTask;
+import com.revature.sms.domain.AssociateTaskType;
+import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.JobEventType;
+import com.revature.sms.domain.User;
+import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
 import com.revature.sms.domain.dao.AssociateTaskTypeRepo;
 import com.revature.sms.domain.dao.BatchTypeRepo;
@@ -61,12 +69,6 @@ public class StagingManagementSystemApplicationTests {
 		
 	}
 
-	
-	
-	
-
-	
-	
 	/**
 	 * A password hashing algorithm used for testing.
 	 * @param inputPassword
