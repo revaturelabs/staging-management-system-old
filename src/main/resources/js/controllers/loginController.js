@@ -1,10 +1,10 @@
 var sms = angular.module("sms");
 
-sms.controller("loginCtrl", function($scope, $state, loginService) {
+sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
 	var lc = this;
 
-	// functions
-	// calls master controller's toast function
+	  // functions
+	    // calls master controller's toast function
 	lc.toast = function(message) {
 		$scope.$parent.mastCtrl.toast(message);
 	};
@@ -40,6 +40,16 @@ sms.controller("loginCtrl", function($scope, $state, loginService) {
 		}
 	};
 
-	// data
+    lc.cookieCheck = function() {
+        var cookie = $cookies.get("RevatureSMSCookie");
+        if (cookie) {
 
+        }
+    };
+
+	  // data
+
+
+      // initialization
+    lc.cookieCheck();
 });
