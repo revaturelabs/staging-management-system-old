@@ -1,5 +1,6 @@
 package com.revature.sms.util;
 
+import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.InitializationError;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -20,6 +21,13 @@ public class SpringInstanceTestClassRunner extends SpringJUnit4ClassRunner {
             InstanceSetupListener.beforeClassSetup();
         }
         return test;
+    }
+    
+    @Override
+    public void run(RunNotifier notifier) {
+        super.run(notifier);
+        if (InstanceSetupListener != null)
+            InstanceSetupListener.afterClassSetup();
     }
     
 }	

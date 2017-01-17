@@ -90,6 +90,7 @@ public class UserDataManager {
 	
 	public void removeAllTestUsers(){
 		for(User i:createdUsers){
+			System.out.println("Deleting User: "+i.getUsername());
 			ur.delete(i);
 		}
 		createdUsers.clear();

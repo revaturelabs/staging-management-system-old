@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 
 import com.revature.sms.util.InstanceTestClassListener;
 import com.revature.sms.util.SpringInstanceTestClassRunner;
-import com.revature.sms.util.TestController;
 import com.revature.sms.util.TestSetup;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.LoginPage;
+import com.revature.sms.testlibs.TestController;
 import com.revature.sms.util.EventListener;
 
 @Service
@@ -78,12 +78,14 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 		AdminPage ap = new AdminPage(driver);
 		//Assert.assertTrue(ap.verify());
 		ap.logout();
+		System.out.println("Logged Out");
 		
 	}
 
 	
 	@Override
 	public void afterClassSetup() {
+		System.out.println("HHHHHHHHEEEEEEERRRRRRRREEEEEEEEE!!!!!!!!");
 		tc.clearData();
 	}
 	
