@@ -82,10 +82,12 @@ public class LoginController {
 				tr.save(token);
 				u.blankPassword();
 
-				UserTokenDTO userToken = new UserTokenDTO();
-				userToken.setUser(u);
-				userToken.setToken(token.getAuthToken());
-				return new ResponseEntity<UserTokenDTO>(userToken, HttpStatus.OK);
+				/*
+				 * UserTokenDTO userToken = new UserTokenDTO();
+				 * userToken.setUser(u);
+				 * userToken.setToken(token.getAuthToken());
+				 */
+				return new ResponseEntity<Token>(token, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Invalid password."),
 						HttpStatus.NOT_FOUND);
@@ -95,6 +97,27 @@ public class LoginController {
 			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Username does not exist."),
 					HttpStatus.NOT_FOUND);
 		}
+	}
+
+	/**
+	 * Method to determine if password update is required, based on if the hashed username is equal to the hashed password.
+	 * @param token String value of authorization token.
+	 * @param username String value of logged in user's username.
+	 * @return ResponseEntity object containing a Boolean object with value of true if a password change is required, false if it is not.
+	 */
+	@RequestMapping(value="/checkpass" ,method = RequestMethod.GET)
+	public @ResponseBody Object needUpdatePassword(@RequestHeader(value = "Authorization") String token,
+			@RequestBody String username) {
+		User user = ur.findByUsername(username);
+		if (user != null) {
+			// hash username
+			String usernameHash = User.hashPassword(username);
+			// compare hashed username to hashed password
+			return new ResponseEntity<Boolean>(usernameHash.equals(user.getHashedPassword()), HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User not found."), HttpStatus.NOT_FOUND);
+
 	}
 
 	/**
@@ -111,7 +134,8 @@ public class LoginController {
 		if (!associateAttendanceList.isEmpty()) {
 
 			for (AssociateAttendance aa : associateAttendanceList) {
-				if (d.getDate() == aa.getDate().getDate() && d.getDay() == aa.getDate().getDay() && d.getYear() == aa.getDate().getYear()) {
+				if (d.getDate() == aa.getDate().getDate() && d.getDay() == aa.getDate().getDay()
+						&& d.getYear() == aa.getDate().getYear()) {
 					// Associate has checked in before and current day exists
 					aa.setCheckedIn(true);
 					aar.save(aa);
@@ -155,10 +179,10 @@ public class LoginController {
 				User oldUser = ur.findByUsername(userDTO.getUsername());
 				if (oldUser.getHashedPassword().equals(userDTO.getOldPassword())) {
 					oldUser.setHashedPassword(userDTO.getNewPassword());
-					 User newUser=ur.save(oldUser);
-					 newUser.blankPassword();
-					 newUser.setID(0);
-					return new ResponseEntity<User>(newUser,HttpStatus.OK);
+					User newUser = ur.save(oldUser);
+					newUser.blankPassword();
+					newUser.setID(0);
+					return new ResponseEntity<User>(newUser, HttpStatus.OK);
 				} else {
 					return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Password mismatch"),
 							HttpStatus.NOT_FOUND);
