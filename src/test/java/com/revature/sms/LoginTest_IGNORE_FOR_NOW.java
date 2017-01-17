@@ -9,8 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.revature.sms.domain.User;
-import com.revature.sms.domain.dao.BatchTypeRepo;
-import com.revature.sms.domain.dao.UserRoleRepo;
 import com.revature.sms.testlibs.TestUserProvider;
 import com.revature.sms.testlibs.UserDataManager;
 
@@ -22,7 +20,7 @@ import com.revature.sms.testlibs.UserDataManager;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class LoginTest {
+public class LoginTest_IGNORE_FOR_NOW {
 	
 	
 	@Autowired
@@ -32,12 +30,6 @@ public class LoginTest {
 	private TestUserProvider users;
 	
 	
-	
-	/*@Before
-	public void setDataManager(){
-		 udm = new UserDataManager();
-		 users = new TestUserProvider();
-	}*/
 	
 	@Test
 	public void testAssociateLogin(){

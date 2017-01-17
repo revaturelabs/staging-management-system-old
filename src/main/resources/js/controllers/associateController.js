@@ -27,6 +27,12 @@
         	
         };
 
+        asc.associateAttendance= function(){
+        	$mdSidenav("left").close();
+        	$state.go("assocAttendance");
+        	
+        };
+        
           // data
         asc.user = loginService.getUser();
         asc.token = loginService.getToken();
