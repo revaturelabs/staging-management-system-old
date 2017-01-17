@@ -308,9 +308,9 @@ public class UserController {
 		if (userDTO.getBatchType() != null) {
 			user.setBatchType(userDTO.getBatchType());
 		}
-		/*if (userDTO.getHashedPassword() != null) {
-			user.setHashedPassword(userDTO.getHashedPassword());
-		}*/
+//		if (userDTO.getHashedPassword() != null) {
+//			user.setHashedPassword(userDTO.getHashedPassword());
+//		}
 		if (userDTO.getFirstName() != null) {
 			user.setFirstName(userDTO.getFirstName());
 		}
