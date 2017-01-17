@@ -2,12 +2,11 @@ package com.revature.sms.testlibs;
 
 import static com.revature.sms.StagingManagementSystemApplicationTests.hashPassword;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.provider.HibernateUtils;
 import org.springframework.stereotype.Service;
 
 import com.revature.sms.domain.AssociateAttendance;
@@ -91,8 +90,8 @@ public class UserDataManager {
 	 */
 	
 	public User createTestUser(String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
-			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole){
-		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole);
+			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate){
+		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole, graduationDate);
 		
 		return createTestUser(newUser);
 	}
