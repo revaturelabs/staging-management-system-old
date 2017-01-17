@@ -51,6 +51,7 @@
 					        <!-- changing the text changes the icon-->
 					        {{ as.thisWeek[0].icon.name }}
 					    </md-icon>
+					    <md-icon ng-show="(as.thisWeek[0].checkedIn == null && adAttCtrl.activeDay > 0) || (adAttCtrl.activeWeek == false && as.thisWeek[0].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
 					</div>
 				<td md-cell>
 					<span ng-show="as.thisWeek[1].verified == false || as.thisWeek[1].verified == null" >
@@ -60,6 +61,7 @@
 					    <md-icon ng-style="{color: '{{as.thisWeek[1].icon.color}}'}" aria-label='{{as.thisWeek[1].icon.name}}' class="material-icons step" ng-class="md-48">
 					        {{ as.thisWeek[1].icon.name }}
 					    </md-icon>
+					    <md-icon ng-show="(as.thisWeek[1].checkedIn == null && adAttCtrl.activeDay > 1) || (adAttCtrl.activeWeek == false && as.thisWeek[1].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
 					</div>
 				<td md-cell>
 					<span ng-show="as.thisWeek[2].verified == false || as.thisWeek[2].verified == null" >
@@ -69,6 +71,7 @@
 					    <md-icon ng-style="{color: '{{as.thisWeek[2].icon.color}}'}" aria-label='{{as.thisWeek[2].icon.name}}' class="material-icons step" ng-class="md-48">
 					        {{ as.thisWeek[2].icon.name }}
 					    </md-icon>
+					    <md-icon ng-show="(as.thisWeek[2].checkedIn == null && adAttCtrl.activeDay > 2) || (adAttCtrl.activeWeek == false && as.thisWeek[2].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
 					</div>
 				<td md-cell>
 					<span ng-show="as.thisWeek[3].verified == false || as.thisWeek[3].verified == null" >
@@ -78,6 +81,7 @@
 					    <md-icon ng-style="{color: '{{as.thisWeek[3].icon.color}}'}" aria-label='{{as.thisWeek[3].icon.name}}' class="material-icons step" ng-class="md-48">
 					        {{ as.thisWeek[3].icon.name }}
 					    </md-icon>
+					    <md-icon ng-show="(as.thisWeek[3].checkedIn == null && adAttCtrl.activeDay > 3) || (adAttCtrl.activeWeek == false && as.thisWeek[3].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
 					</div>
 				<td md-cell>
 					<span ng-show="as.thisWeek[4].verified == false || as.thisWeek[4].verified == null" >
@@ -87,6 +91,7 @@
 					    <md-icon ng-style="{color: '{{as.thisWeek[4].icon.color}}'}" aria-label='{{as.thisWeek[4].icon.name}}' class="material-icons step" ng-class="md-48">
 					        {{ as.thisWeek[4].icon.name }}
 					    </md-icon>
+					    <md-icon ng-show="(as.thisWeek[4].checkedIn == null && adAttCtrl.activeDay > 4) || (adAttCtrl.activeWeek == false && as.thisWeek[4].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
 					</div>
 				
 			</tr>
