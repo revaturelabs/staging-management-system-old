@@ -33,6 +33,11 @@
         	
         };
         
+        asc.assocCertifications = function(){
+        	$mdSidenav("left").close();
+        	$state.go("assocCertifications");
+        };
+        
           // data
         asc.user = loginService.getUser();
         asc.token = loginService.getToken();

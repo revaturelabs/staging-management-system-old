@@ -87,7 +87,7 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
 			})
 
 			//.....................................................................
-			// superadmin view all attendance
+			// associate view all attendance
                 .state( "assocAttendance", {
                     url: "^/weeklyattendence",
                     parent: "assoc",
@@ -95,6 +95,18 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                         "mainAssociateView": {
                             templateUrl: "html/views/associate/associateWeeklyAttendence.html",
                             controller: "associateWeeklyAttendenceCtrl as assWeekAttCtrl"
+                        }
+                        
+                    }
+                })
+            // associate view certifications
+                .state( "assocCertifications", {
+                    url: "^/certifications",
+                    parent: "assoc",
+                    views: {
+                        "mainAssociateView": {
+                            templateUrl: "html/views/associate/associateCertifications.html",
+                            controller: "associateCertificationsCtrl as assCertCtrl"
                         }
                         
                     }
