@@ -25,6 +25,7 @@ import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dto.LoginAttemptDTO;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
 import com.revature.sms.domain.dto.UserDTO;
+import com.revature.sms.domain.dto.bc;
 
 /**
  * Server-side controller to handle logging into the application.
@@ -112,7 +113,7 @@ public class LoginController {
 				// hash username
 				String usernameHash = User.hashPassword(username);
 				// compare hashed username to hashed password
-				return new ResponseEntity<Boolean>(usernameHash.equals(user.getHashedPassword()), HttpStatus.OK);
+				return new ResponseEntity<bc>(new bc(usernameHash.equals(user.getHashedPassword())), HttpStatus.OK);
 			}
 			else{
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User not authorized."), HttpStatus.FORBIDDEN);

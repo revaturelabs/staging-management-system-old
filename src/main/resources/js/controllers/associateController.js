@@ -1,7 +1,7 @@
 
     var sms = angular.module( "sms" );
 
-    sms.controller( "associateCtrl", function( $scope, $state, $mdSidenav, loginService, $mdDialog ){
+    sms.controller( "associateCtrl", function($http, $scope, $state, $mdSidenav, loginService, $mdDialog ){
         var asc = this;
 
           // functions
@@ -39,15 +39,16 @@
         //console.log(asc.user);
         
 
-       loginService.checkPass(asc.user.username,
-        		function(success){
-    	   			console.log(success);
+        loginService.checkPass(asc.user.username,
+        		function(response){
+    	   			console.log(response);
+ 
     			},function(error){
-    				console.log(error);
+    				asc.toast(error.data.errorMessage);
     			});
     
         // check if user needs to change their password
-        /*asc.checkPassword = function(){
+        asc.checkPassword = function(){
         	
         	$http({
         		method: "GET",
@@ -59,14 +60,13 @@
         			"username": asc.user.username
         		}
         	}).then(function successCallback(response){
-        		
+        		console.log("http: " + response.data);
         		
         	},function errorCallback(response) {
         	
         	});
 
-        	
-        }*/
-        
+        }
+        asc.checkPassword();
 
     });
