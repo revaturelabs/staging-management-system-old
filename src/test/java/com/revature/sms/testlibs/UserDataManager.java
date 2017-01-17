@@ -1,5 +1,6 @@
 package com.revature.sms.testlibs;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +10,12 @@ import org.springframework.stereotype.Service;
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
+import com.revature.sms.domain.dao.AssociateTasksRepo;
+import com.revature.sms.domain.dao.TokenRepo;
 import com.revature.sms.domain.dao.UserRepo;
 
 import static com.revature.sms.util.Utils.hashPassword;
@@ -43,7 +47,14 @@ public class UserDataManager {
 	@Autowired
 	private AssociateAttendanceRepo aar;
 	
+	@Autowired
+	private AssociateAttendanceRepo aar;
 	
+	@Autowired
+	private AssociateTasksRepo atr;
+	
+	@Autowired
+	private TokenRepo tr;
 	
 	/**
 	 * createTestAdmin is a setup method that is called to create a user of Admin or Super Admin type for testing.
@@ -81,8 +92,8 @@ public class UserDataManager {
 	 */
 	
 	public User createTestUser(String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
-			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole){
-		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole);
+			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate){
+		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole, graduationDate);
 		return createTestUser(newUser);
 	}
 	
@@ -175,6 +186,23 @@ public class UserDataManager {
 			}
 			
 			ur.delete(u);
+			
+			for (AssociateAttendance a : currentUser.getAttendance()) {
+				aar.delete(a);
+			}
+			
+			
+			
+			for (AssociateTask a : currentUser.getTasks()) {
+				atr.delete(a);
+			}
+			
+			List<Token> tList = tr.getByUser(i);
+			tList.size();
+			for(Token a : tList){
+				tr.delete(a);
+			}
+			
 		}
 		createdUsers.clear();
 	}

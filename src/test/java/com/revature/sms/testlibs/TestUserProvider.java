@@ -1,5 +1,6 @@
 package com.revature.sms.testlibs;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +50,13 @@ public class TestUserProvider {
 	 * password - E=MC^2
 	 * BatchType - Java
 	 * UserRole - Associate
+	 * GraduationDate - Jan 1, 2017
 	 */
 	
 	public User getAssociate(){
 
 		
-		return new User("TestAssociateOne", "Albert", "Einstein", hashPassword("E=MC^2"), btr.findByType("Java"), new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(), urr.findByName("associate"));
+		return new User("TestAssociateOne", "Albert", "Einstein", hashPassword("E=MC^2"), btr.findByType("Java"), new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(), urr.findByName("associate"), new Timestamp(2017, 1, 1, 0, 0, 0, 0));
 		
 	}
 	

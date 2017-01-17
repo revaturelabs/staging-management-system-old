@@ -1,8 +1,19 @@
 package com.revature.sms.domain;
 
+import java.sql.Timestamp;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 //
 /**
@@ -60,13 +71,13 @@ public class User {
 /**
  * List containing AssociateAttendence objects that keeps track of the user's attendance.
  */
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(orphanRemoval=true)
 	@JoinColumn(name="ASSOCIATE")
 	private List<AssociateAttendance> attendance;
 	/**
 	 * List containing AssociateTask objects that keeps track of the user's tasks.
 	 */
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(orphanRemoval=true)
 	@JoinColumn(name="ASSOCIATE")
 	private List<AssociateTask> tasks;
 	/**
@@ -75,6 +86,12 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name = "user_role")
 	private UserRole userRole;
+	
+	/**
+	 * Graduation date to track an associate's graduation date
+	 */
+	@Column(name = "GRADUATION_DATE")
+	private Timestamp graduationDate;
 	
 	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
@@ -95,9 +112,10 @@ public class User {
 	 * @param attendance List containing AssociateAttendence objects that keeps track of the user's attendance.
 	 * @param tasks List containing AssociateTask objects that keeps track of the user's tasks.
 	 * @param userRole UserRole object that keeps track of the user's specific role.
+	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
-			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole) {
+			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -107,6 +125,7 @@ public class User {
 		this.attendance = attendance;
 		this.tasks = tasks;
 		this.userRole = userRole;
+		this.graduationDate = graduationDate;
 	}
 
 	// constructor for non-associate
