@@ -87,7 +87,9 @@ public class UserDataManager {
 	}
 	
 	
-	//Corey's Method
+		//Corey's Method
+		//Changes one or more of the fields of a user. These changes are reflected in both the database and this
+	    //this UserDataManager object.
 		public void editTestUser(int userIndex, String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
 				List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole) {
 			User createdUser = createdUsers.get(userIndex);

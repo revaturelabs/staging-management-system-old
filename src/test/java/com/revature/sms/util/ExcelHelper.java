@@ -9,6 +9,7 @@ import com.codoid.products.fillo.Connection;
 import com.codoid.products.fillo.Fillo;
 import com.codoid.products.fillo.Recordset;
 
+//This class can be used by tests to access excel spreadsheets that hold test data to insert into a database
 public class ExcelHelper {
     
 	private final String file = "C:/Users/User/Desktop/SMS_Project/staging-management-system/src/test/resources/database_input.xlsx";
@@ -26,10 +27,11 @@ public class ExcelHelper {
 			Connection conn = fillo.getConnection(file);
 			ArrayList<String> values = new ArrayList<String>();
 			
+			//Finds the row
 			String query = "SELECT * FROM "+sheet+" WHERE "+"KeyColumn='"+key+"'";
-			//System.out.println(query);
 			Recordset rs = conn.executeQuery(query);
 			
+			//Finds the column
 			while (rs.next()) {
 				int i = 1;
 				while (i<=columns) {
@@ -37,6 +39,7 @@ public class ExcelHelper {
 					i++;
 				}
 			}
+			
 			return values;
         } catch (FilloException e) {
         	Logger.getRootLogger().debug("You got a FilloException", e);

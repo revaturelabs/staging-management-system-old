@@ -20,7 +20,7 @@ import com.revature.sms.util.TestSetup;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.LoginPage;
 import com.revature.sms.pagefactory.SuperAdminPage;
-import com.revature.sms.testlibs.TestController;
+import com.revature.sms.testlibs.DBInitializationController;
 import com.revature.sms.util.EventListener;
 
 @Service
@@ -28,21 +28,25 @@ import com.revature.sms.util.EventListener;
 @SpringBootTest
 public class ViewAssociatesTest implements InstanceTestClassListener{
 	
+	 
 	private final String browser = "Chrome"; 
+	//List of paths to browser drivers
 	private final String chromeDriverPath = "src/test/resources/chromedriver.exe";
 	private final String ieDriverPath = "src/test/resources/IEDriverServer.exe";
 	private final String inputsPath = "src/test/resources/inputs.properties";
 	private final String locationsPath = "src/test/resources/locations.properties";
 	
+	//Basically anything that interacts with a data transfer objects must be autowired, which alerts 
+	//Spring of it's existence
 	@Autowired
-	private TestController tc;
+	private DBInitializationController dbic;
 	
+	//Allow properties files, webdrivers, and page objects to be used in the tests
 	static Properties inputs;
 	static Properties locations;
 	static WebDriver webDriver;
 	static EventFiringWebDriver driver;
 	static EventListener eventListener; 
-	
 	private LoginPage lp;
 	private AdminPage ap;
 	private SuperAdminPage sap;
@@ -56,19 +60,24 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 		if (browser.equals("Internet Explorer")) {
 			webDriver = TestSetup.getIE(ieDriverPath);
 		}	
+		
+		//Allows the driver to take advantage of an event listener
 		driver = new EventFiringWebDriver(webDriver);
 		eventListener = new EventListener();
 		driver.register(eventListener);
 		
+		//Initialize properties files
 		inputs = TestSetup.getProperties(inputsPath);
 		locations = TestSetup.getProperties(locationsPath);
 		
+		//The columnNumber variable should match the number of users that are being added to the database
 		int columnNumber = 2;
-		tc.initializeUsers(columnNumber);
-		tc.initializeAttendance(columnNumber);
+		dbic.initializeUsers(columnNumber);
+		dbic.initializeAttendance(columnNumber);
 		 
 	}
 	
+	//More browser preparation
 	@Before
 	public void before() {
 		driver.get(inputs.getProperty("url"));
@@ -77,7 +86,7 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 		
 	}
 	
-	
+	//Login and logout as admin
 	@Test
 	public void viewAsAdmin() {
 		Assert.assertTrue(lp.verify());
@@ -90,6 +99,7 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 		
 	}
 	
+	//Login and logout as superadmin
 	@Test
 	public void viewAsSuperAdmin() {
 		Assert.assertTrue(lp.verify());
@@ -99,10 +109,10 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 		//Assert.assertTrue(sap.verify());
 	}
 
-	
+	//Clear database
 	@Override
 	public void afterClassSetup() {
-		tc.clearData();
+		dbic.clearData();
 	}
 	
 	

@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 public class Utils {
 
-	// Defunct hashPassword script. While used to create initial hashed passwords here, actual hashing will take place on the client-side javascript
+		//Allows passwords to be hashed for testing purposes
 		public static String hashPassword(String inputPassword) {
 			try {
 				MessageDigest md;
@@ -32,6 +32,7 @@ public class Utils {
 			
 		}
 		
+		//Because Timestamps are a pain to initialize
 		public static Timestamp convertDate(String dateString) {
 			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 			Date date = null;

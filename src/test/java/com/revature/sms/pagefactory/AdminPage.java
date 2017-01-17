@@ -30,7 +30,6 @@ public class AdminPage extends SMSPage {
 	}
 
 	public void logout() {
-		System.out.println("HERE!!!!!!!!!!!!");
 		System.out.println(logoutIcon.getAttribute("class"));
 		logoutIcon.click();
 	}

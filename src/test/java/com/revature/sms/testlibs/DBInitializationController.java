@@ -17,8 +17,9 @@ import com.revature.sms.domain.dao.UserRoleRepo;
 import com.revature.sms.util.ExcelHelper;
 import com.revature.sms.util.Utils;
 
+//This class can be used before tests to conveniently populate the database with test data   
 @Service
-public class TestController {
+public class DBInitializationController {
 
 	@Autowired
 	private UserDataManager udm;
@@ -29,7 +30,7 @@ public class TestController {
 	@Autowired
 	private UserRoleRepo urr;
 	
-	private TestController() {
+	private DBInitializationController() {
 		super();
 	}
 	
@@ -45,8 +46,10 @@ public class TestController {
 		List<AssociateTask> tasks = new ArrayList<AssociateTask>();
 		ArrayList<String> userRoles = eh.getValues("userRole");
 		
+		//Each iteration of the loop corresponds to a new user that is added
 		int i = 0;
 		while (i < columnNumber) {
+			//Finds already existing batch types and user role types, which are added to the new user
 			BatchType batchType = btr.findByType(batchTypes.get(i));
 			UserRole userRole = urr.findByName(userRoles.get(i));
 			
@@ -56,7 +59,7 @@ public class TestController {
 		return udm;
 	}
 	
-	
+	//
 	public UserDataManager initializeAttendance(int columnNumber) {
 		ExcelHelper eh = new ExcelHelper(columnNumber);
 		
@@ -65,9 +68,9 @@ public class TestController {
 		ArrayList<String> verifications = eh.getValues("verified");
 		ArrayList<String> notes = eh.getValues("attendanceNote");
 	
+		//This loop gives an attendance object to all recently created test users
 		int i = 0;
 		while (i < columnNumber) {
-			
 			String date = dates.get(i);
 			Timestamp ts = Utils.convertDate(date);
 			String checkedIn = checkIns.get(i);

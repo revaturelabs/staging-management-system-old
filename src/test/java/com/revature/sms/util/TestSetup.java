@@ -19,6 +19,7 @@ import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.testlibs.UserDataManager;
 
+//This class contains convenience methods for creating connections to properties files and web driver files.
 public class TestSetup {
 	
 	public static Properties getProperties(String pathName) {

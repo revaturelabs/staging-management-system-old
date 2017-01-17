@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+//Defines a constructor and methods that should be implemented by all page objects in the testing framework
 public abstract class SMSPage {
 
 	protected WebDriver driver;
@@ -15,6 +16,7 @@ public abstract class SMSPage {
 		PageFactory.initElements(driver, this);
 	}
 	
+	//Verifies that the web driver is currently on the page specified by this page object
 	public boolean verify() {
 		Class<? extends SMSPage> thisClass = null;
 		thisClass = this.getClass();

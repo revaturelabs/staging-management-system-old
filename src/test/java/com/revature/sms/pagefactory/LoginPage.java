@@ -32,11 +32,12 @@ public class LoginPage extends SMSPage {
 		submit.click();
 	}
 	
+	/*
 	public String getTitle() {
-		//System.out.println("In getTitle");
-		//System.out.println("Tag name: "+title.getTagName());
-		//System.out.println("Text: "+title.getText());
+		System.out.println("In getTitle");
+		System.out.println("Tag name: "+title.getTagName());
+		System.out.println("Text: "+title.getText());
 		return title.getText();
 	}
-	
+	*/
 }
