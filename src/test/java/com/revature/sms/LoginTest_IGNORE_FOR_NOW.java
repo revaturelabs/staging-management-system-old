@@ -64,6 +64,7 @@ public class LoginTest_IGNORE_FOR_NOW {
 	 * This is a unit test to ensure that an associate user is able to log in and observe any content appropriate to an associate.
 	 */
 	@Test
+	@Ignore
 	public void testAssociateLogin(){
 		
 	
