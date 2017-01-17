@@ -1,5 +1,5 @@
 # Staging Management System
-An application to track attendance, job status, and requirements of associates
+An application to track attendance, job status, and requirements of associates!
 
 ### Commit early and often!!!!
 
