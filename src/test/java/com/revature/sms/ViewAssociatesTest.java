@@ -19,6 +19,7 @@ import com.revature.sms.util.SpringInstanceTestClassRunner;
 import com.revature.sms.util.TestSetup;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.LoginPage;
+import com.revature.sms.pagefactory.SuperAdminPage;
 import com.revature.sms.testlibs.TestController;
 import com.revature.sms.util.EventListener;
 
@@ -44,6 +45,7 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	
 	private LoginPage lp;
 	private AdminPage ap;
+	private SuperAdminPage sap;
 	
 	
 	@Override
@@ -79,11 +81,22 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	@Test
 	public void viewAsAdmin() {
 		//Assert.assertTrue(lp.verify());
+		Assert.assertEquals(lp.getTitle(), locations.getProperty("LoginPG"));
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
+		
 		//Assert.assertTrue(ap.verify());
 		ap.logout();
-		System.out.println("Logged Out");
+		//Assert.assertTrue(lp.verify());
 		
+	}
+	
+	@Test
+	public void viewAsSuperAdmin() {
+		//Assert.assertTrue(lp.verify());
+		Assert.assertEquals(lp.getTitle(), locations.getProperty("LoginPG"));
+		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
+		
+		//Assert.assertTrue(sap.verify());
 	}
 
 	

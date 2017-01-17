@@ -15,6 +15,14 @@ public class AdminPage extends SMSPage {
 	@FindBy(css="[md-svg-icon=\"img/icons/ic_exit_to_app_white_24px.svg\"]")
 	WebElement logoutIcon;
 	
+	@FindBy(name="mainAdminView")
+	WebElement attendanceTable;
+	
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/section/button[1]/span/md-icon")
+	WebElement prevWeek;
+	
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/section/button[2]/span/md-icon")
+	WebElement nextWeek;
 	
 	
 	public AdminPage(EventFiringWebDriver driver) {
