@@ -1,20 +1,25 @@
 var sms = angular.module("sms");
 
-sms.controller("associateCertificationsCtrl", function($scope, $state,
+sms.controller("associateCertificationsCtrl", function($scope, $state, $mdDialog,
 		loginService) {
 
 	var acc = this;
 	acc.user = loginService.getUser();
-	acc.gradDate = acc.user.graduationDate;
-	alert(new Date(acc.user.graduationDate));
+	acc.gradDate = new Date(acc.user.graduationDate);
+	acc.formattedGradDate = ((acc.gradDate.getMonth()) + 1) + "/" + acc.gradDate.getDate() + "/" + acc.gradDate.getFullYear();
+	/*alert(new Date(acc.user.graduationDate));*/
 
 	acc.myDate = new Date();
 	acc.minDate = new Date();
-	acc.maxDate = new Date(acc.myDate.getFullYear(), acc.myDate
-			.getMonth() + 1, acc.myDate.getDate());
+	acc.maxDate = new Date(acc.gradDate.getFullYear(), acc.gradDate
+			.getMonth() + 1, acc.gradDate.getDate());
 	acc.onlyWeekendsPredicate = function(date) {
 		var day = date.getDay();
 		return day === 0 || day === 6;
+	}
+	
+	acc.cancel = function() {
+		$mdDialog.cancel();
 	}
 
 });

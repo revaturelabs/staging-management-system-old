@@ -18,6 +18,11 @@
         <form name="projectForm">
         	
         	<div class="md-padding" layout="columns">
+        		<p>Certifications must be scheduled <br>
+        		within 30 days of: {{assCertCtrl.formattedGradDate}} </p>
+        	</div>
+        	
+        	<div class="md-padding" layout="columns">
         	<md-input-container class="md-block"> <label>Date</label>
 		        <md-datepicker  md-hide-icons="calendar",
 	               ng-model="assCertCtrl.myDate" 
@@ -40,7 +45,7 @@
 				
 			<div class="md-padding" layout="columns">
 				<md-button type="submit" class="md-primary md-raised" aria-label="Submit All"> SUBMIT </md-button>
-		        <md-button type="button" class="md-primary md-raised" aria-label="Cancel"> CANCEL </md-button>
+		        <md-button type="button" class="md-primary md-raised " ng-click="assCertCtrl.cancel()" aria-label="Cancel"> CANCEL </md-button>
 			</div>
 		
 		</form>
