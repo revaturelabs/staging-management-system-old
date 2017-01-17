@@ -16,7 +16,7 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
 			creds.inputPass = CryptoJS.SHA1(lc.inputPass).toString();
 			loginService.login(creds, function(response) {
 				loginService.addUser(response.user);
-				loginService.addToken(response.token);
+				loginService.addToken(response.authToken);
 				switch (response.user.userRole.name) {
 				case "superAdmin":
 					lc.toast("Logged in.");
@@ -57,5 +57,5 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
 
 
       // initialization
-    lc.cookieCheck();
+    //lc.cookieCheck();
 });
