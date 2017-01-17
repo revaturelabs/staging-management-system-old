@@ -314,6 +314,23 @@ public class User {
 	}
 	
 	/**
+	 * Method that retrieves the batch graduation date of the user.
+	 * @return graduationDate Timestamp of the graduation date for the user
+	 */
+	
+	public Timestamp getGraduationDate() {
+		return graduationDate;
+	}
+
+	/**
+	 * Method that manually sets the graduation date of the User object.
+	 * @param graduationDate Reflects the graduation date
+	 */
+	public void setGraduationDate(Timestamp graduationDate) {
+		this.graduationDate = graduationDate;
+	}
+
+	/**
 	 * Method that returns a string representation of the current User object.
 	 */
 	@Override

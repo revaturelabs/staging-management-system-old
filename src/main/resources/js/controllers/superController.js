@@ -57,5 +57,8 @@
         }, function(error){
             suc.toast("Error retrieving all users.");
         });
+        
+      //set the title scope
+        suc.title = "";
 
     });
