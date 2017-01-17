@@ -46,7 +46,7 @@
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
 					
 					    <!-- set the icon data -->
-					    <md-icon ng-style="{color: '{{as.thisWeek[0].icon.color}}'}" aria-label='{{as.thisWeek[0].icon.name}}' class="material-icons step" ng-class="md-48">
+					    <md-icon style="color: {{as.thisWeek[0].icon.color}}" aria-label='{{as.thisWeek[0].icon.name}}' class="material-icons step" ng-class="md-48">
 					
 					        <!-- changing the text changes the icon-->
 					        {{ as.thisWeek[0].icon.name }}
@@ -58,7 +58,7 @@
 						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 1)">check_circle</md-icon>
 					</span>
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
-					    <md-icon ng-style="{color: '{{as.thisWeek[1].icon.color}}'}" aria-label='{{as.thisWeek[1].icon.name}}' class="material-icons step" ng-class="md-48">
+					    <md-icon style="color: {{as.thisWeek[0].icon.color}}" aria-label='{{as.thisWeek[1].icon.name}}' class="material-icons step" ng-class="md-48">
 					        {{ as.thisWeek[1].icon.name }}
 					    </md-icon>
 					    <md-icon ng-show="(as.thisWeek[1].checkedIn == null && adAttCtrl.activeDay > 1) || (adAttCtrl.activeWeek == false && as.thisWeek[1].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
@@ -68,7 +68,7 @@
 						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 2)">check_circle</md-icon>
 					</span>
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
-					    <md-icon ng-style="{color: '{{as.thisWeek[2].icon.color}}'}" aria-label='{{as.thisWeek[2].icon.name}}' class="material-icons step" ng-class="md-48">
+					    <md-icon style="color: {{as.thisWeek[0].icon.color}}" aria-label='{{as.thisWeek[2].icon.name}}' class="material-icons step" ng-class="md-48">
 					        {{ as.thisWeek[2].icon.name }}
 					    </md-icon>
 					    <md-icon ng-show="(as.thisWeek[2].checkedIn == null && adAttCtrl.activeDay > 2) || (adAttCtrl.activeWeek == false && as.thisWeek[2].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
@@ -78,7 +78,7 @@
 						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 3)">check_circle</md-icon>
 					</span>
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
-					    <md-icon ng-style="{color: '{{as.thisWeek[3].icon.color}}'}" aria-label='{{as.thisWeek[3].icon.name}}' class="material-icons step" ng-class="md-48">
+					    <md-icon style="color: {{as.thisWeek[0].icon.color}}" aria-label='{{as.thisWeek[3].icon.name}}' class="material-icons step" ng-class="md-48">
 					        {{ as.thisWeek[3].icon.name }}
 					    </md-icon>
 					    <md-icon ng-show="(as.thisWeek[3].checkedIn == null && adAttCtrl.activeDay > 3) || (adAttCtrl.activeWeek == false && as.thisWeek[3].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
@@ -88,7 +88,7 @@
 						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 4)">check_circle</md-icon>
 					</span>
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
-					    <md-icon ng-style="{color: '{{as.thisWeek[4].icon.color}}'}" aria-label='{{as.thisWeek[4].icon.name}}' class="material-icons step" ng-class="md-48">
+					    <md-icon style="color: {{as.thisWeek[0].icon.color}}" aria-label='{{as.thisWeek[4].icon.name}}' class="material-icons step" ng-class="md-48">
 					        {{ as.thisWeek[4].icon.name }}
 					    </md-icon>
 					    <md-icon ng-show="(as.thisWeek[4].checkedIn == null && adAttCtrl.activeDay > 4) || (adAttCtrl.activeWeek == false && as.thisWeek[4].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
