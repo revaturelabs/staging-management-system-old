@@ -1,9 +1,12 @@
 
 package com.revature.sms;
 
+import java.util.Properties;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -15,19 +18,26 @@ import com.revature.sms.util.InstanceTestClassListener;
 import com.revature.sms.util.SpringInstanceTestClassRunner;
 import com.revature.sms.util.TestController;
 import com.revature.sms.util.TestSetup;
+import com.revature.sms.pagefactory.AdminPage;
+import com.revature.sms.pagefactory.LoginPage;
 import com.revature.sms.util.EventListener;
 
 @Service
 @RunWith(SpringInstanceTestClassRunner.class)
 @SpringBootTest
 public class ViewAssociatesTest implements InstanceTestClassListener{
-
-	private final String homepage = "localhost:81";
-	//private final String homepage = "http://dev.revature.pro";
+	
+	private final String browser = "Chrome"; 
+	private final String chromeDriverPath = "src/test/resources/chromedriver.exe";
+	private final String ieDriverPath = "src/test/resources/IEDriverServer.exe";
+	private final String inputsPath = "src/test/resources/inputs.properties";
+	private final String locationsPath = "src/test/resources/locations.properties";
 	
 	@Autowired
 	private TestController tc;
 	
+	static Properties inputs;
+	static Properties locations;
 	static WebDriver webDriver;
 	static EventFiringWebDriver driver;
 	static EventListener eventListener; 
@@ -35,12 +45,20 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	
 	@Override
 	public void beforeClassSetup() {
-		int columnNumber = 2;
-		webDriver = TestSetup.getChrome();
+		if (browser.equals("Chrome")) {
+			webDriver = TestSetup.getChrome(chromeDriverPath);
+		}
+		if (browser.equals("Internet Explorer")) {
+			webDriver = TestSetup.getIE(ieDriverPath);
+		}	
 		driver = new EventFiringWebDriver(webDriver);
 		eventListener = new EventListener();
 		driver.register(eventListener);
 		
+		inputs = TestSetup.getProperties(inputsPath);
+		locations = TestSetup.getProperties(locationsPath);
+		
+		int columnNumber = 2;
 		tc.initializeUsers(columnNumber);
 		tc.initializeAttendance(columnNumber);
 		 
@@ -48,17 +66,19 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	
 	@Before
 	public void before() {
-		driver.get(homepage);
+		driver.get(inputs.getProperty("url"));
 	}
 	
 	
 	@Test
 	public void viewAsAdmin() {
-		//System.out.println("Page Title: "+driver.getTitle());
-		driver.findElement(By.id("input_0")).sendKeys("admin");
-		driver.findElement(By.id("input_1")).sendKeys("password");
-		driver.findElement(By.cssSelector("[type=\"submit\"]")).click();
-		//System.out.println("Viewing as Admin");
+		LoginPage lp = new LoginPage(driver);
+		//Assert.assertTrue(lp.verify());
+		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
+		AdminPage ap = new AdminPage(driver);
+		//Assert.assertTrue(ap.verify());
+		ap.logout();
+		
 	}
 
 	

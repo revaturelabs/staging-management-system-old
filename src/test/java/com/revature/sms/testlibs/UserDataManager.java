@@ -63,9 +63,7 @@ public class UserDataManager {
 	 */
 	
 	public User createTestUser(User user){
-		//System.out.println("Before adding user");
-		ur.save(user);
-		//System.out.println("After adding user");
+		ur.save(user); 
 		createdUsers.add(user);
 		return user;
 	}

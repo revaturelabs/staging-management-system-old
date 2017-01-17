@@ -21,14 +21,14 @@ import com.revature.sms.testlibs.UserDataManager;
 
 public class TestSetup {
 	
-	public static Properties getProperties(String fileName) {
+	public static Properties getProperties(String pathName) {
 		Properties prop = null;
 		File file = null;
 		FileInputStream fis = null;
 		
 		try {
 			prop = new Properties();
-			file = new File(fileName);
+			file = new File(pathName);
 			fis = new FileInputStream(file);
 			prop.load(fis);
 		} catch (FileNotFoundException e) {
@@ -45,15 +45,14 @@ public class TestSetup {
 		return prop;
 	}
 	
-	public static WebDriver getChrome() {
-		//File file = new File("C:/selenium-2.47.1/chromedriver.exe");
-		File file = new File("C:/Users/User/Desktop/SMS_Project/staging-management-system/src/test/resources/chromedriver.exe");
+	public static WebDriver getChrome(String pathname) {
+		File file = new File(pathname);
 		System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
 		return new ChromeDriver();
 	}
 	
-	public static WebDriver getIE() {
-		File file = new File("C:/Users/User/Desktop/SMS_Project/staging-management-system/src/test/resources/IEDriverServer.exe");
+	public static WebDriver getIE(String pathname) {
+		File file = new File(pathname);
 		System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
 		return new InternetExplorerDriver();
 	}
