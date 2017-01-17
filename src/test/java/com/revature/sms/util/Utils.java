@@ -38,10 +38,8 @@ public class Utils {
 			try {
 				date = sdf.parse(dateString);
 			} catch (ParseException e) {
-				System.out.println("burglyshmurg");
 				Logger.getRootLogger().debug("You got a ParseException", e);
 			}
-			System.out.println("The date string is: "+dateString);
 			
 			long millis = date.getTime();
 			Timestamp ts = new Timestamp(millis);

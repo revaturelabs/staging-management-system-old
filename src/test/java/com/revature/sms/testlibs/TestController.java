@@ -47,8 +47,6 @@ public class TestController {
 		
 		int i = 0;
 		while (i < columnNumber) {
-			//System.out.println(i);
-			//System.out.println(usernames.get(i));
 			BatchType batchType = btr.findByType(batchTypes.get(i));
 			UserRole userRole = urr.findByName(userRoles.get(i));
 			

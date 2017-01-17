@@ -42,6 +42,9 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	static EventFiringWebDriver driver;
 	static EventListener eventListener; 
 	
+	private LoginPage lp;
+	private AdminPage ap;
+	
 	
 	@Override
 	public void beforeClassSetup() {
@@ -67,15 +70,16 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	@Before
 	public void before() {
 		driver.get(inputs.getProperty("url"));
+		lp = new LoginPage(driver);
+		ap = new AdminPage(driver);
+		
 	}
 	
 	
 	@Test
 	public void viewAsAdmin() {
-		LoginPage lp = new LoginPage(driver);
 		//Assert.assertTrue(lp.verify());
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
-		AdminPage ap = new AdminPage(driver);
 		//Assert.assertTrue(ap.verify());
 		ap.logout();
 		System.out.println("Logged Out");
@@ -85,7 +89,6 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	
 	@Override
 	public void afterClassSetup() {
-		System.out.println("HHHHHHHHEEEEEEERRRRRRRREEEEEEEEE!!!!!!!!");
 		tc.clearData();
 	}
 	

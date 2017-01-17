@@ -11,6 +11,7 @@ import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
+import com.revature.sms.domain.dao.AssociateAttendanceRepo;
 import com.revature.sms.domain.dao.UserRepo;
 
 import static com.revature.sms.util.Utils.hashPassword;
@@ -38,6 +39,9 @@ public class UserDataManager {
 	
 	@Autowired
 	private UserRepo ur;
+	
+	@Autowired
+	private AssociateAttendanceRepo aar;
 	
 	
 	
@@ -83,54 +87,98 @@ public class UserDataManager {
 	}
 	
 	
+	//Corey's Method
+		public void editTestUser(int userIndex, String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
+				List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole) {
+			User createdUser = createdUsers.get(userIndex);
+			if (username != "") {
+				createdUser.setUsername(username);
+			}
+			if (firstName != "") {
+				createdUser.setFirstName(firstName);
+			}
+			if (lastName != "") {
+				createdUser.setLastName(lastName);
+			}
+			if (unhashedPassword != "") {
+				createdUser.setLastName(hashPassword(unhashedPassword));
+			}
+			if (batchType.getType() != null) {
+				createdUser.setBatchType(batchType);
+			}
+			if (!attendance.isEmpty()) {
+				createdUser.setAttendance(attendance);
+			}
+			if (!tasks.isEmpty()) {
+				createdUser.setTasks(tasks);
+			}
+			if (userRole.getName() != null) {
+				createdUser.setUserRole(userRole);
+			}
+			
+			ur.save(createdUser);
+			createdUsers.remove(userIndex);
+			createdUsers.add(userIndex, createdUser);
+			
+			
+			/*
+			User recreatedUser = ur.findByUsername(createdUser.getUsername());
+			List<AssociateAttendance> al = recreatedUser.getAttendance();
+			
+			//Why do I get a LazyInitializationException here. How do I prevent it? 
+			System.out.println(al.get(0).getID());
+			
+			
+			System.out.println("OOGLYBOOGLY: "+createdUsers.get(userIndex).getUsername());
+			System.out.println();
+			for (User user:createdUsers) {
+				System.out.println("BEFORE");
+				System.out.println("Username: "+user.getUsername());
+				if (!user.getAttendance().isEmpty()) {
+					System.out.println("Attendance ID: "+user.getAttendance().get(0).getID());
+				}
+				System.out.println();
+			}
+			
+			createdUsers.remove(userIndex);
+			createdUsers.add(userIndex, recreatedUser);
+			
+			
+			for (User user:createdUsers) {
+				System.out.println("AFTER");
+				System.out.println("Username: "+user.getUsername());
+				if (!user.getAttendance().isEmpty()) {
+					System.out.println("Attendance ID: "+user.getAttendance().get(0).getID());
+				}
+				System.out.println();
+			}
+			*/
+			
+			
+		}
+	
+	
 	
 	/**
 	 * A cleanup method that must be called when an instance of the class is done being used.
 	 */
 	
 	public void removeAllTestUsers(){
-		for(User i:createdUsers){
-			System.out.println("Deleting User: "+i.getUsername());
-			ur.delete(i);
+		for (User u:createdUsers){
+			//System.out.println("Deleting User: "+u.getUsername());
+			List<AssociateAttendance> attendanceList = u.getAttendance();
+			for(AssociateAttendance a:attendanceList) {
+				//System.out.println("Deleting attendance record with id of: "+a.getID());
+				aar.delete(a);
+			}
+			
+			ur.delete(u);
 		}
 		createdUsers.clear();
 	}
 	
 	
-	//Corey's Methods
-
-	public void editTestUser(int userIndex, String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
-			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole) {
-		User createdUser = createdUsers.get(userIndex);
-		if (username != "") {
-			createdUser.setUsername(username);
-		}
-		if (firstName != "") {
-			createdUser.setFirstName(firstName);
-		}
-		if (lastName != "") {
-			createdUser.setLastName(lastName);
-		}
-		if (unhashedPassword != "") {
-			createdUser.setLastName(hashPassword(unhashedPassword));
-		}
-		if (batchType.getType() != null) {
-			createdUser.setBatchType(batchType);
-		}
-		if (!attendance.isEmpty()) {
-			createdUser.setAttendance(attendance);
-		}
-		if (!tasks.isEmpty()) {
-			createdUser.setTasks(tasks);
-		}
-		if (userRole.getName() != null) {
-			createdUser.setUserRole(userRole);
-		}
-		
-		ur.save(createdUser);
-		createdUsers.remove(userIndex);
-		createdUsers.add(userIndex, createdUser);
-	}
+	
 	
 	
 	

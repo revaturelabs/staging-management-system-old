@@ -15,6 +15,8 @@ public class AdminPage extends SMSPage {
 	@FindBy(css="[md-svg-icon=\"img/icons/ic_exit_to_app_white_24px.svg\"]")
 	WebElement logoutIcon;
 	
+	
+	
 	public AdminPage(EventFiringWebDriver driver) {
 		super(driver);
 	}
