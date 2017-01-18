@@ -37,17 +37,16 @@
 			<tbody md-body>
 				<tr>
 					<td></td>
-					<td>Monday <br><br>  {{assWeekAttCtrl.monday}}
+					<td>Monday <br>
+					<br> {{assWeekAttCtrl.monday}}
 					</td>
 					<td>Tuesday <br> <br>{{assWeekAttCtrl.tuesday}}
 					</td>
 					<td>Wednesday <br> <br>{{assWeekAttCtrl.wednesday}}
 					</td>
-					<td>Thursday <br>
-					<br> {{assWeekAttCtrl.thursday}}
+					<td>Thursday <br> <br> {{assWeekAttCtrl.thursday}}
 					</td>
-					<td>Friday <br>
-					<br> {{assWeekAttCtrl.friday}}
+					<td>Friday <br> <br> {{assWeekAttCtrl.friday}}
 					</td>
 					<td></td>
 				</tr>
@@ -98,14 +97,15 @@
  -->
 </div>
 
-<div layout="row" layout-align="center center">
-    
-	<md-button type="button" class="md-raised md-warn"
-		style="align: center;  vertical-align:middle;"
-		ng-click="assWeekAttCtrl.getPreviousWeek()"><i style="align: center;  vertical-align:middle;" class="material-icons md-36">navigate_before</i></md-button>
-	<md-button type="button" class="md-raised md-primary"
-		style="align: center;  vertical-align:middle;"
-		ng-click="assWeekAttCtrl.getNextWeek()"><i style="align: center;  vertical-align:middle;" class="material-icons md-36">navigate_next</i></md-button>
+<div layout="row" style="text-align:right;">
+	<div flex="55"><md-icon style="cursor: pointer; " class="material-icons"
+			ng-click="assWeekAttCtrl.getPreviousWeek()">arrow_back</md-icon><p>Week of {{assWeekAttCtrl.monday}}</p>		<md-icon style="cursor: pointer; " class="material-icons"
+			ng-click="assWeekAttCtrl.getNextWeek()">arrow_forward</md-icon></div>
+
+
+
+
+
 </div>
 
 
