@@ -76,6 +76,8 @@ public class UserController {
 
 				User user = getUser(userDTO);
 				user = userRepo.save(user);
+				user.blankPassword();
+				user.setID(0);
 				return new ResponseEntity<User>(user, HttpStatus.CREATED);
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
@@ -116,6 +118,8 @@ public class UserController {
 			if (isValid(token)) {
 				User oldUser = (User) updateValidation(userDTO);
 				User newUser = userRepo.save(oldUser);
+				newUser.blankPassword();
+				newUser.setID(0);
 				return new ResponseEntity<User>(newUser, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
@@ -319,6 +323,9 @@ public class UserController {
 		}
 		if (userDTO.getAttendance() != null) {
 			user.setAttendance(userDTO.getAttendance());
+		}
+		if (userDTO.getAssociateTask() != null) {
+			user.setTasks(userDTO.getAssociateTask());
 		}
 		
 		return user;

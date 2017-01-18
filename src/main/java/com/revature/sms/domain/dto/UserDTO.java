@@ -19,7 +19,7 @@ public class UserDTO {
 	private String oldPassword;
 	private String newPassword;
 	private List<AssociateAttendance> attendance;
-	private List<AssociateTask>associateTask;
+	private List<AssociateTask> associateTask;
 	
 	
 	public UserDTO() {
@@ -126,7 +126,5 @@ public class UserDTO {
 	public void setAssociateTask(List<AssociateTask> associateTask) {
 		this.associateTask = associateTask;
 	}
-
-	
 
 }
