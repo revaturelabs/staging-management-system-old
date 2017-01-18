@@ -36,5 +36,8 @@
           // data
         adc.user = loginService.getUser();
         adc.token = loginService.getToken();
+        
+        //set the title scope
+        adc.title = "";
 
     });
