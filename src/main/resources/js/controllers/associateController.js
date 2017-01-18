@@ -48,18 +48,12 @@
         		templateUrl: "html/templates/scheduleCertification.html",
         		controller: "associateCertificationsCtrl as assCertCtrl"
         	}).then( function() {
-        		alert("success");
-               /* $mdDialog.show({
-                    templateUrl: "html/templates/batchAddSuccess.html",
-                    controller: "batchAddSuccessCtrl as bASCtrl",
-                    locals: { "newAssociates": batchAddFactory.getNewAssociates() },
-                    bindToController: true
-                }).then( function(){
-                    batchAddFactory.resetAssociates();
-                });*/
-                
+        		// doing submit steps
+        		asc.toast("Certification Scheduled");
+         
+      
             }, function() {
-            	asc.toast("Certification Schedule Cancelled");
+            	//asc.toast("Certification Schedule Cancelled");
             });
         };
         
