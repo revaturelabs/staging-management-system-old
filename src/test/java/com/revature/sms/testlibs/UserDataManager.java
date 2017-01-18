@@ -152,7 +152,6 @@ public class UserDataManager {
 			*/
 			
 			ur.save(createdUser);
-			System.out.println("HHHEEERRREEE");
 			createdUsers.remove(userIndex);
 			createdUsers.add(userIndex, createdUser);
 			
@@ -202,10 +201,10 @@ public class UserDataManager {
 	public void removeAllTestUsers(){
 		for (User u:createdUsers){
 			User currentUser = ur.findByUsername(u.getUsername());
-			/*
 			for (AssociateAttendance a : currentUser.getAttendance()) {
 				aar.delete(a);
 			}
+			/*
 			for (AssociateTask task : currentUser.getTasks()) {
 				atr.delete(task);
 			}

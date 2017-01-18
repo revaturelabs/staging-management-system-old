@@ -10,10 +10,10 @@ public class LoginPage extends SMSPage {
 	@FindBy(xpath="/html/head/title")
 	WebElement title;
 	
-	@FindBy(id="input_0")  //This id unfortunately seems to be different after logging out
+	@FindBy(css="[type=\"text\"]")
 	WebElement unField;
 	
-	@FindBy(id="input_1")
+	@FindBy(css="[type=\"password\"]")
 	WebElement pwField;
 	
 	@FindBy(css="[type=\"submit\"]")

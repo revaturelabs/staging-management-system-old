@@ -54,7 +54,7 @@ public class TestSetup {
 	
 	public static WebDriver getChrome() {
 		 if(System.getProperty("os.name").equalsIgnoreCase("Windows 10")) {  //If you are a tester with a different windows os, add it to this if statement.
-			 System.out.println("This line should be printed when the test is run on my local machine.");
+			 //System.out.println("This line should be printed when the test is run on my local machine.");
 			 System.setProperty("webdriver.chrome.driver", windowsChromeDriverPath);
 		 } else {
 			 System.out.println("This line should be printed when the test is run on Jenkins.");

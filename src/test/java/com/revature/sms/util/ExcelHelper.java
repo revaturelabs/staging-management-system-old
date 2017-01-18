@@ -38,9 +38,7 @@ public class ExcelHelper {
 					values.add(rs.getField(String.valueOf(i)));
 					i++;
 				}
-			}
-			System.out.println("here2");
-			
+			}			
 			return values;
         } catch (FilloException e) {
         	//System.out.println("You got a FilloException");

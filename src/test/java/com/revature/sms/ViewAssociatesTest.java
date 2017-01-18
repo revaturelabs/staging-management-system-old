@@ -79,33 +79,34 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 		driver.get(inputs.getProperty("url"));
 		lp = new LoginPage(driver);
 		ap = new AdminPage(driver);
+		sap = new SuperAdminPage(driver);
 		
 	}
 	
 	//Login and logout as admin
 	@Test
 	public void viewAsAdmin() {
-		
-		System.out.println("Viewing as admin");
 		Assert.assertTrue(lp.verify());
 		Assert.assertEquals(locations.getProperty("loginPg"), driver.getTitle());
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
 		
 		Assert.assertTrue(ap.verify());
 		ap.logout();
-		//Assert.assertTrue(lp.verify());
+		Assert.assertTrue(lp.verify());
 		
 	}
 	
 	//Login and logout as superadmin
 	@Test
 	public void viewAsSuperAdmin() {
-		
-		System.out.println("Viewing as superadmin");
 		Assert.assertTrue(lp.verify());
 		Assert.assertEquals(locations.getProperty("loginPg"), driver.getTitle());
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
-		//Assert.assertTrue(sap.verify());
+		
+		Assert.assertTrue(sap.verify());
+		sap.logout();
+		Assert.assertTrue(lp.verify());
+		
 	}
 
 	//Clear database
