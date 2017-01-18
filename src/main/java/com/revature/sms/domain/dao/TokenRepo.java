@@ -19,7 +19,7 @@ public interface TokenRepo extends JpaRepository<Token, Integer>{
 	 * @param token String containing token value.
 	 * @return Token object matching supplied String.
 	 */
-	Token findByauthToken(String token);
+	Token findByAuthToken(String token);
 
 	List<Token> getByUser(User i);
 }

@@ -26,9 +26,18 @@
         	$state.go("ADupdateInfo");
         	
         };
+        
+        adc.viewAttendance = function(){
+        	$mdSidenav("left").close();
+        	$state.go("adminAttendance");
+        	
+        };
 
           // data
         adc.user = loginService.getUser();
         adc.token = loginService.getToken();
+        
+        //set the title scope
+        adc.title = "";
 
     });
