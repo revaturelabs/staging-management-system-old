@@ -21,14 +21,22 @@
 		}
 	};
 
-	  // data
+	  // date settings
+	bac.selectedDate = new Date();
+	
+	bac.onlyFridays = function(date) {
+		var day = date.getDay();
+		return day === 5;
+	};
+	
+	// data
 	bac.associates = [];
 	bac.batchTypes = batchTypeService.getAll(function(response) {
 		bac.batchTypes = response;
 	}, function(error) {
 		$mdDialog.cancel();
 	});
-
+	
 	    // hard coded value for userRole object of associate
 	var userRole = {};
 	userRole.name = "associate";
@@ -47,6 +55,7 @@
             var addUser = list.shift();
             if (!addUser.username) {
                 addUser.batchType = bac.selectedBatchType;
+                addUser.graduationDate = bac.selectedDate;
                 addUser.username = addUser.firstName[0].toLowerCase() + addUser.lastName.toLowerCase();
                 addUser.userRole = userRole;
             }    
