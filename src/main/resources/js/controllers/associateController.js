@@ -25,16 +25,14 @@
         	$mdSidenav("left").close();
         	
         	$mdDialog.show({
-					templateUrl: "html/views/updateInformation.html",
+					templateUrl: "html/templates/updateInformation.html",
 	                controller: "updateInfoCrtl as uInfoctrl",
 	                locals: {needChangePass:false}
 				}).then( function(){
 					asc.toast("Password changed successfully.");
 				},function(){
 					asc.toast("Password change cancelled.");
-				});
-        	
-        	
+				})
         };
 
         asc.associateAttendance= function(){

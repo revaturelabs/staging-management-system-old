@@ -56,6 +56,7 @@
                     bindToController: true
                 }).then( function(){
                     batchAddFactory.resetAssociates();
+                    $scope.$broadcast('batchCreation', 'Send User Refresh');
                 });
             }, function() {
                 suc.toast("Batch addition cancelled.");
@@ -65,11 +66,13 @@
           // data
         suc.user = loginService.getUser();
 
-        userService.getAll(function(response){
-            suc.users = response;
-        }, function(error){
-            suc.toast("Error retrieving all users.");
-        });
+        (function getUsers() {
+        	userService.getAll(function(response){
+        		suc.users = response;
+	        }, function(error){
+	            suc.toast("Error retrieving all users.");
+	        });
+        })();
         
       //set the title scope
         suc.title = "";
