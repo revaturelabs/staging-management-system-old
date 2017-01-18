@@ -25,7 +25,7 @@
         	$mdSidenav("left").close();
         	
         	$mdDialog.show({
-					templateUrl: "html/views/updateInformation.html",
+					templateUrl: "html/templates/updateInformation.html",
 	                controller: "updateInfoCrtl as uInfoctrl",
 	                locals: {needChangePass:false}
 				}).then( function(){
