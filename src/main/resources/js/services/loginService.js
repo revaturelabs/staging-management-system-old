@@ -25,9 +25,20 @@
                 		"Content-Type": "application/json", 
                 		"Authorization": function(){ return ls.token; }
                 	}
+                },
+                changePass: {
+                	method:"PUT",
+                	url:"/api/v1/login",
+                	headers:{
+                		"Content-Type":"application/json",
+                		"Authorization": function(){ return ls.token; }
+                	}
                 }
             }
         );
+        ls.changePass = function(data,success,error){
+        	loginResource.changePass(data,success,error);
+        }
 
         ls.checkPass = function(username, success,error){
         	loginResource.checkPass(username, success,error);
@@ -80,7 +91,8 @@
             getUser     : ls.getUser,
             addToken    : ls.addToken,
             getToken    : ls.getToken,
-            checkPass : ls.checkPass
+            checkPass : ls.checkPass,
+            changePass : ls.changePass
         };
         
     });

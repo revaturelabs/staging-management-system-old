@@ -76,16 +76,18 @@
     	/*get all attendance for the week for all associates*/
         
         //run user service to get all users
-        userService.getAll(function(response){
-        	
-        	//in the response filter out users that aren't associates
-        	sac.users = $filter("associateFilter")(response);
-        	//filter the associates to get the date objects that are only for the current week
-        	sac.users = $filter("weekFilter")(sac.users, sac.thisMonday);
-        	
-        }, function(error){
-        	sac.toast("Error in retrieving all associates.");
-        });
+        sac.getUsers = function() {
+	        userService.getAll(function(response){
+	        	
+	        	//in the response filter out users that aren't associates
+	        	sac.users = $filter("associateFilter")(response);
+	        	//filter the associates to get the date objects that are only for the current week
+	        	sac.users = $filter("weekFilter")(sac.users, sac.thisMonday);
+	        	
+	        }, function(error){
+	        	sac.toast("Error in retrieving all associates.");
+	        });
+        };
         
         /*this is the end of getting the users*/
         
@@ -97,7 +99,6 @@
             {name: 'done'  , color: "#00A", description: "if the associate checked in but has NOT yet been verified" },
             {name: 'close', color: "#A00" , description: "if the associate is NOT checked in and NOT verified"},
             {name: 'done_all' , color: "rgb(89, 226, 168)" , description: "if the associate's attendance has been verified" },
-
             {name: '    ' , color: "#777", description: "no information available yet" }
 
          ]; 
@@ -164,6 +165,7 @@
         
         
     	/*change week functions*/
+        
         //make a scope variable that holds the week number, so they can only go forward and back 2 weeks
          var weekNumber = 4;
         
@@ -173,36 +175,7 @@
     		if(weekNumber > 0){
     			sac.activeWeek = false;
     			weekNumber -= 1;
-    			
-    			/*set the new week up*/
-    			m = new Date();
-    	        m.setFullYear(setMonday.getFullYear(), setMonday.getMonth(), (setMonday.getDate()-7));
-    	        
-    	        setMonday.setFullYear(m.getFullYear(), m.getMonth(), m.getDate());
-    	        sac.thisMonday = m;
-    	        sac.thisTuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
-    	        sac.thisWednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
-    	        sac.thisThursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
-    	        sac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
-    	        
-    	        /*set all scope days to print on top of table*/
-    	        sac.monday = (sac.thisMonday.getMonth()+1)+"/"+sac.thisMonday.getDate();
-    	        sac.tuesday = (sac.thisTuesday.getMonth()+1)+"/"+sac.thisTuesday.getDate();
-    	        sac.wednesday = (sac.thisWednesday.getMonth()+1)+"/"+sac.thisWednesday.getDate();
-    	        sac.thursday = (sac.thisThursday.getMonth()+1)+"/"+sac.thisThursday.getDate();
-    	        sac.friday = (sac.thisFriday.getMonth()+1)+"/"+sac.thisFriday.getDate();
-    	        
-    	        /*filter the week so only the current week is visible*/
-    	        sac.users = $filter("weekFilter")(sac.users, sac.thisMonday);
-    	        
-    	        /*setting active days*/
-    	        /*remove active day*/
-    	        sac.activeDay = null;
-    	        
-    	        /*see if this week is the active day week*/
-    	        if(sac.thisCurrentMonday.getDate()==sac.thisMonday.getDate() && sac.thisCurrentMonday.getMonth()==sac.thisMonday.getMonth()){
-    	        	sac.activeDay = w;
-    	        }
+    			sac.weekChange(-7);
     		}
     		else{
     			sac.toast("Can't go back more than 4 weeks");
@@ -218,39 +191,54 @@
     			if(weekNumber == 4){
     				sac.activeWeek = true;
     			}
-        	
-        		/*set the new week up*/
-    	        m = new Date();
-    	        m.setFullYear(setMonday.getFullYear(), setMonday.getMonth(), (setMonday.getDate()+7));
-    	        
-    	        setMonday.setFullYear(m.getFullYear(), m.getMonth(), m.getDate());
-    	        sac.thisMonday = m;
-    	        sac.thisTuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
-    	        sac.thisWednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
-    	        sac.thisThursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
-    	        sac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
-    	        
-    	        /*set all scope days to print on top of table*/
-    	        sac.monday = (sac.thisMonday.getMonth()+1)+"/"+sac.thisMonday.getDate();
-    	        sac.tuesday = (sac.thisTuesday.getMonth()+1)+"/"+sac.thisTuesday.getDate();
-    	        sac.wednesday = (sac.thisWednesday.getMonth()+1)+"/"+sac.thisWednesday.getDate();
-    	        sac.thursday = (sac.thisThursday.getMonth()+1)+"/"+sac.thisThursday.getDate();
-    	        sac.friday = (sac.thisFriday.getMonth()+1)+"/"+sac.thisFriday.getDate();
-    	        
-    	        /*filter the week so only the current week is visible*/
-    	        sac.users = $filter("weekFilter")(sac.users, sac.thisMonday);
-    	        
-    	        /*setting active days*/
-    	        /*remove active day*/
-    	        sac.activeDay = null;
-    	        
-    	        /*see if this week is the active day week*/
-    	        if(sac.thisCurrentMonday.getDate()==sac.thisMonday.getDate() && sac.thisCurrentMonday.getMonth()==sac.thisMonday.getMonth()){
-    	        	sac.activeDay = w;
-    	        }
+    			sac.weekChange(7);
     		}
             else{
     			sac.toast("Can't go to future weeks");
     		}
         };
+        
+        sac.weekChange = function(dayChange){
+        	/*set the new week up*/
+	        m = new Date();
+	        m.setFullYear(setMonday.getFullYear(), setMonday.getMonth(), (setMonday.getDate()+dayChange));
+	        
+	        setMonday.setFullYear(m.getFullYear(), m.getMonth(), m.getDate());
+	        sac.thisMonday = m;
+	        sac.thisTuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
+	        sac.thisWednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
+	        sac.thisThursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
+	        sac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
+	        
+	        /*set all scope days to print on top of table*/
+	        sac.monday = (sac.thisMonday.getMonth()+1)+"/"+sac.thisMonday.getDate();
+	        sac.tuesday = (sac.thisTuesday.getMonth()+1)+"/"+sac.thisTuesday.getDate();
+	        sac.wednesday = (sac.thisWednesday.getMonth()+1)+"/"+sac.thisWednesday.getDate();
+	        sac.thursday = (sac.thisThursday.getMonth()+1)+"/"+sac.thisThursday.getDate();
+	        sac.friday = (sac.thisFriday.getMonth()+1)+"/"+sac.thisFriday.getDate();
+	        
+	        /*filter the week so only the current week is visible*/
+	        sac.users = $filter("weekFilter")(sac.users, sac.thisMonday);
+	        
+	        /*setting active days*/
+	        /*remove active day*/
+	        sac.activeDay = null;
+	        
+	        /*see if this week is the active day week*/
+	        if(sac.thisCurrentMonday.getDate()==sac.thisMonday.getDate() && sac.thisCurrentMonday.getMonth()==sac.thisMonday.getMonth()){
+	        	sac.activeDay = w;
+	        }
+        };
+        
+        /*end change week functions*/
+        
+        // user refresh event
+        $scope.$on('batchCreation', function(event, data){
+        	//run user service to get all users
+	        sac.getUsers();
+        });
+        
+          // initialization
+        sac.getUsers();
+        
     });

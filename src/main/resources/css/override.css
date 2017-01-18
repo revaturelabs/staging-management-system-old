@@ -2,3 +2,10 @@
     md-dialog {
         max-width: 60%;
     }
+    .changePassword{
+    	width:500px;
+    }
+    
+    .InputContainer{
+    	padding-bottom:0px;
+    }

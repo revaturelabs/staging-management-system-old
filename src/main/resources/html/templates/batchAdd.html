@@ -50,7 +50,7 @@
                     <md-input-container flex>
 			          <label>Enter date</label>
 			          <md-datepicker ng-model="bACtrl.selectedDate" name="dateField" 
-			          md-date-filter="bACtrl.onlyFridays"></md-datepicker>
+			          md-date-filter="bACtrl.onlyFridays" required></md-datepicker>
 			
 			          <div ng-messages="batchAdd.dateField.$error">
 			            <div ng-message="valid">The entered value is not a date!</div>
