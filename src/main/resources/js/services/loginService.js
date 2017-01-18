@@ -26,10 +26,8 @@
         
         ls.cookieLogin = function( username, success, error ) {
             loginResource.cookie( username, success, error );
-            // username.$cookie( success, error );
         }
 
-          // COOKIES BAD, MKAY
         ls.logout = function() {
             ls.user = {};
             ls.token = "";

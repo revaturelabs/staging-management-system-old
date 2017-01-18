@@ -2,3 +2,13 @@
     md-dialog {
         max-width: 60%;
     }
+
+    .md-top {
+        position: fixed;
+        top: 66px;
+    }
+
+    .md-right {
+        position: fixed;
+        right: 16px;
+    }

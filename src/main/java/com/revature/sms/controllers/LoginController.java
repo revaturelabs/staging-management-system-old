@@ -132,13 +132,17 @@ public class LoginController {
 	@RequestMapping(value="/cookieLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Object cookieLogin(@RequestHeader(value = "Authorization") String token, @RequestBody String username) {
 		Token masterToken = tr.findByauthToken(token);
-		masterToken.getUser().blankPassword();
-		masterToken.getUser().setID(0);
+		try {
+			masterToken.getUser().blankPassword();
+			masterToken.getUser().setID(0);
 
-		if (masterToken.getUser().getUsername().equals(username)) {
-			return new ResponseEntity<Token>(masterToken, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<ResponseErrorEntity>( new ResponseErrorEntity("Cookie username/token do not match."), HttpStatus.NOT_FOUND);
+			if (masterToken.getUser().getUsername().equals(username)) {
+				return new ResponseEntity<Token>(masterToken, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Cookie username/token do not match."), HttpStatus.NOT_FOUND);
+			}
+		} catch (NullPointerException e) {
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Stored token is unactive."), HttpStatus.UNAUTHORIZED);
 		}
 	}
 
