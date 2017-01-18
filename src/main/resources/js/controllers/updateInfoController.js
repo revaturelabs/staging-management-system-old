@@ -1,10 +1,10 @@
  var sms = angular.module( "sms" );
-sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginService, $http,$mdDialog,needChangePass){
+sms.controller( "updateInfoCrtl", function( $mdToast,$scope, $state, $mdSidenav, loginService, $http,$mdDialog,needChangePass){
 	var uic = this;
 	$scope.needChangePass = needChangePass;
 	//for notifications
     uic.toast = function(message){
-        $scope.$parent.mastCtrl.toast(message);
+        $mdToast.show( $mdToast.simple().textContent( message ).action("OKAY").position("top right").highlightAction(true) );
     };
     
     //When user decides to cancel password update
@@ -29,8 +29,11 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
     		uic.toast("Confirm your new password.");
     		return;
     	}
-    	//TODO: user change their password to their username
-    	
+
+    	if(loginService.getUser().username === newPass.value){
+    		uic.toast("Your password cannot be your username.");
+    		return;
+    	}
     	//hash passwords
     	var oldPassH = CryptoJS.SHA1(oldPass.value).toString();
     	var newPassH = CryptoJS.SHA1(newPass.value).toString();
