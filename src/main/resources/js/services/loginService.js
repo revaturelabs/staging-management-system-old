@@ -1,35 +1,46 @@
 
     var sms = angular.module( "sms" );
 
-    sms.service( "loginService", function( $resource ){
+    sms.service( "loginService", function( $resource, $cookies ) {
         var ls = this;
-        
-        ls.loginResource = $resource("api/v1/login/:username", 
-                { username: "@username" }, 
-                { 
-                    save: { url: "api/v1/login", method:"POST"}, 
-                    cookie: { headers: { "Content-Type": "application/json", "Authorization": ls.token }, method: "GET" }, 
-                    checkPass: { headers:{"Content-Type": "application/json", "Authorization": function(){ return ls.token; } }, method:"GET",  url:"/api/v1/login/checkpass?username=:username" }
-                }
-            );
-        
+
+        var loginResource = $resource("api/v1/login/:username", 
+            { username: "username" },
+            { 
+                save  : { 
+                    method: "POST",
+                    url: "api/v1/login" }, 
+                cookie: { 
+                    method: "POST",
+                    url: "api/v1/login/cookieLogin",
+                    headers: { 
+                        "Content-Type": "application/json", 
+                        "Authorization": function() { return ls.token; }
+                    } 
+                },
+                checkPass: { headers:{"Content-Type": "application/json", "Authorization": function(){ return ls.token; } }, method:"GET",  url:"/api/v1/login/checkpass/:username" }
+            }
+        );
+
         ls.checkPass = function(username, success,error){
-        	ls.loginResource.checkPass({username: username}, success,error);
-        	};
-        
-        ls.login = function( loginCred, success, error ) {
-            ls.loginResource.save( loginCred, success, error );
+        	loginResource.checkPass(username, success,error);
         };
         
+        ls.login = function( loginCred, success, error ) {
+            loginResource.save( loginCred, success, error );
+        };
         
         ls.cookieLogin = function( username, success, error ) {
-            ls.loginResource.cookie( username, success, error );
+            loginResource.cookie( username, success, error );
+            // username.$cookie( success, error );
         }
 
           // COOKIES BAD, MKAY
         ls.logout = function() {
             ls.user = {};
             ls.token = "";
+            $cookies.remove("RevatureSMSUseraname");
+            $cookies.remove("RevatureSMSToken");
         };
 
         ls.user = {};
@@ -54,12 +65,14 @@
        
 
         return {
-            login: ls.login,
-            logout: ls.logout,
-            addUser: ls.addUser,
-            getUser: ls.getUser,
-            addToken: ls.addToken,
-            getToken: ls.getToken,
+
+            login       : ls.login,
+            cookieLogin : ls.cookieLogin,
+            logout      : ls.logout,
+            addUser     : ls.addUser,
+            getUser     : ls.getUser,
+            addToken    : ls.addToken,
+            getToken    : ls.getToken,
             checkPass : ls.checkPass
         };
         

@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -104,8 +104,8 @@ public class LoginController {
 	 * @param username String value of logged in user's username.
 	 * @return ResponseEntity object containing a Boolean object with value of true if a password change is required, false if it is not.
 	 */
-	@RequestMapping(value="/checkpass" ,method = RequestMethod.GET)
-	public @ResponseBody Object needUpdatePassword(@RequestHeader(value = "Authorization") String token, @RequestParam String username) {
+	@RequestMapping(value="/checkpass/{username}" ,method = RequestMethod.GET)
+	public @ResponseBody Object needUpdatePassword(@RequestHeader(value = "Authorization") String token, @PathVariable String username) {
 		//check authorization token
 		User user = ur.findByUsername(username);
 		if (user != null) {
@@ -130,16 +130,17 @@ public class LoginController {
 	 * @param username String value of logged in user's username.
 	 * @return ResponseEntity object containing a Boolean object with value of true if a password change is required, false if it is not.
 	 */
-	@RequestMapping(value="/cookieLogin" ,method = RequestMethod.GET)
-	public @ResponseBody Object cookieLogin(@RequestHeader(value = "Authorization") String token, @RequestParam String username) {
+	@RequestMapping(value="/cookieLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Object cookieLogin(@RequestHeader(value = "Authorization") String token, @RequestBody String username) {
+		Token masterToken = tr.findByAuthToken(token);
+		masterToken.getUser().blankPassword();
+		masterToken.getUser().setID(0);
 
-		Token masterToken = tr.findByauthToken(token);
 		if (masterToken.getUser().getUsername().equals(username)) {
-			return new ResponseEntity<User>(masterToken.getUser(), HttpStatus.OK);
+			return new ResponseEntity<Token>(masterToken, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<ResponseErrorEntity>( new ResponseErrorEntity("Cookie username/token do not match."), HttpStatus.NOT_FOUND);
 		}
-		
 	}
 
 	/**
@@ -234,7 +235,7 @@ public class LoginController {
 	 */
 	public boolean isValid(String tokenString, String usernameString) {
 		boolean valid = false;
-		Token token = tr.findByauthToken(tokenString);
+		Token token = tr.findByAuthToken(tokenString);
 		if (token != null) {
 			if (usernameString.equals(token.getUser().getUsername()))
 				valid = true;

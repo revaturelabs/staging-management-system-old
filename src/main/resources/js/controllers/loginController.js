@@ -14,47 +14,52 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
 			var creds = {};
 			creds.username = lc.username;
 			creds.inputPass = CryptoJS.SHA1(lc.inputPass).toString();
-			loginService.login(creds, function(response) {
-				loginService.addUser(response.user);
-				loginService.addToken(response.authToken);
-				switch (response.user.userRole.name) {
-				case "superAdmin":
-					lc.toast("Logged in.");
-					$state.go("superAttendance");
-					break;
-				case "admin":
-					lc.toast("Logged in.");
-					$state.go("adminAttendance");
-					break;
-				case "associate":
-					lc.toast("Logged in and attendance logged.");
-					$state.go("assocAttendance");
-					break;
-				default:
-					break;
-				}
-			}, function(error) {
+			loginService.login(creds, lc.loginSuccess, function(error) {
 				lc.toast(error.data.errorMessage);
 			});
 		}
 	};
 
     lc.cookieCheck = function() {
-        var usernameCookie = $cookies.get("revature.pro/username");
-        var tokenCookie = $cookies.get("revature.pro/authToken");
-        console.log(usernameCookie, tokenCookie);
+        lc.cookieLoad = true;
+        var usernameCookie = $cookies.get("RevatureSMSUsername");
+        var tokenCookie = $cookies.get("RevatureSMSToken");
         if ( usernameCookie && tokenCookie ) {
             loginService.addToken(tokenCookie);
-            loginService.cookieLogin( usernameCookie, function(){
-                lc.toast("cookieLogin works!");
-            }, function(){
-                lc.toast("cookieLogin doesn't work!");
+            loginService.cookieLogin( usernameCookie, function( response ){
+                lc.loginSuccess(response);
+            }, function( error ){
+                lc.cookieLoad = false;
             });
+        } else {
+            lc.cookieLoad = false;
+        }
+    };
+
+    lc.loginSuccess = function(response) {
+        loginService.addUser(response.user);
+        loginService.addToken(response.authToken);
+        $cookies.put( "RevatureSMSUsername", loginService.getUser().username );
+        $cookies.put( "RevatureSMSToken", loginService.getToken() );
+        switch (loginService.getUser().userRole.name) {
+        case "superAdmin":
+            lc.toast("Logged in.");
+            $state.go("superAttendance");
+            break;
+        case "admin":
+            lc.toast("Logged in.");
+            $state.go("adminAttendance");
+            break;
+        case "associate":
+            lc.toast("Logged in and attendance logged.");
+            $state.go("assocAttendance");
+            break;
+        default:
+            break;
         }
     };
 
 	  // data
-
 
       // initialization
     //lc.cookieCheck();
