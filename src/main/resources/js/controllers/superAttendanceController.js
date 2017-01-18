@@ -76,7 +76,7 @@
     	/*get all attendance for the week for all associates*/
         
         //run user service to get all users
-        (function getUsers() {
+        sac.getUsers = function() {
 	        userService.getAll(function(response){
 	        	
 	        	//in the response filter out users that aren't associates
@@ -87,7 +87,7 @@
 	        }, function(error){
 	        	sac.toast("Error in retrieving all associates.");
 	        });
-        })();
+        };
         
         /*this is the end of getting the users*/
         
@@ -258,7 +258,11 @@
         // user refresh event
         $scope.$on('batchCreation', function(event, data){
         	//run user service to get all users
-	        getUsers();
+        	alert("made it to batch creation event child");
+	        sac.getUsers();
         });
+        
+          // initialization
+        sac.getUsers();
         
     });
