@@ -4,6 +4,7 @@ package com.revature.sms.domain.dto;
 import java.util.List;
 
 import com.revature.sms.domain.AssociateAttendance;
+import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.UserRole;
 
@@ -18,6 +19,8 @@ public class UserDTO {
 	private String oldPassword;
 	private String newPassword;
 	private List<AssociateAttendance> attendance;
+	private List<AssociateTask>associateTask;
+	
 	
 	public UserDTO() {
 		super();
@@ -116,6 +119,14 @@ public class UserDTO {
 		this.attendance = attendance;
 	}
 	
+	public List<AssociateTask> getAssociateTask() {
+		return associateTask;
+	}
+
+	public void setAssociateTask(List<AssociateTask> associateTask) {
+		this.associateTask = associateTask;
+	}
+
 	
 
 }
