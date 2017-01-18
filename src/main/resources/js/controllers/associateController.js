@@ -50,7 +50,6 @@
                 
             }, function() {
             	asc.toast("Certification Schedule Cancelled");
-                /*suc.toast("Batch addition cancelled.");*/
             });
         };
         
