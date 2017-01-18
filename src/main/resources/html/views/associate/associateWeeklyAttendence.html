@@ -28,22 +28,17 @@
 				<tr md-row id="weekrow">
 
 					<!-- repeat all the days of the week -->
-<<<<<<< HEAD
-					<th md-column ng-repeat="day in assWeekAttXCtrl.days"
+<th md-column ng-repeat="day in assWeekAttXCtrl.days"
 						style="text-align: center;">{{day}}</th>
-=======
-					<th md-column ng-repeat="day in assWeekAttCtrl.days">{{day}}</th>
->>>>>>> 83ee32e659eb0bfb6859b78302a775e5b1a3095c
-
-				</tr>
+<th md-column ng-repeat="day in assWeekAttCtrl.days">{{day}}</th>
+</tr>
 			</thead>
 			<!-- enter in the body data -->
 			<tbody md-body>
-<<<<<<< HEAD
-				<tr>
+
+<tr>
 					<td></td>
-					<td>Monday <br>
-					<br> {{assWeekAttCtrl.monday}}
+					<td>Monday <br> <br> {{assWeekAttCtrl.monday}}
 					</td>
 					<td>Tuesday <br> <br>{{assWeekAttCtrl.tuesday}}
 					</td>
@@ -54,32 +49,8 @@
 					<td>Friday <br> <br> {{assWeekAttCtrl.friday}}
 					</td>
 					<td></td>
-=======
-				<tr align="center">
-					<td>
-						<p>{{assWeekAttCtrl.sunday}}</p>
-					</td>
-					<td>
-						<p>{{assWeekAttCtrl.monday}}</p>
-					</td>
-					<td>
-						<p>{{assWeekAttCtrl.tuesday}}</p>
-					</td>
-					<td>
-						<p>{{assWeekAttCtrl.wednesday}}</p>
-					</td>
-					<td>
-						<p>{{assWeekAttCtrl.thursday}}</p>
-					</td>
-					<td>
-						<p>{{assWeekAttCtrl.friday}}</p>
-					</td>
-					<td>
-						<p>{{assWeekAttCtrl.saturday}}</p>
-					</td>
->>>>>>> 83ee32e659eb0bfb6859b78302a775e5b1a3095c
-				</tr>
-				<!-- ??? -->
+
+					<!-- ??? -->
 				<tr md-row>
 
 					<!-- place each icon in each column cell -->
@@ -113,7 +84,7 @@
 				ng-style="{color: '{{legitem.color}}'}"
 				aria-label='{{legitem.name}}' class="material-icons step"
 				ng-class="md-48"> <!-- changing the text changes the icon-->
-<<<<<<< HEAD
+
 
 			{{legitem.name}} </md-icon> {{legitem.description}}
 
@@ -127,37 +98,12 @@
  -->
 </div>
 
-<div layout="row" style="text-align:right;">
-	<div flex="55"><md-icon style="cursor: pointer; " class="material-icons"
-			ng-click="assWeekAttCtrl.getPreviousWeek()">arrow_back</md-icon><p>Week of {{assWeekAttCtrl.monday}}</p>		<md-icon style="cursor: pointer; " class="material-icons"
-			ng-click="assWeekAttCtrl.getNextWeek()">arrow_forward</md-icon></div>
-
-
-
-
-
-</div>
-
-
-
-
-
-=======
-
-			{{legitem.name}} </md-icon> {{legitem.description}}
-
-		</li>
-	</div>
-
-
-<!-- 	<input type="submit" ng-click="assWeekAttCtrl.getNextWeek()"
-		value="Next Week" /> <input type="submit"
-		ng-click="assWeekAttCtrl.getPreviousWeek()" value="previous Week" />
- -->
-</div>
-
 <div layout="row" layout-align="center center">
-		<md-button type="button" class="md-raised md-warn" style="width:37%; align: center" ng-click="assWeekAttCtrl.getPreviousWeek()">Previous Week</md-button>
-		<md-button type="button" class="md-raised md-primary" style="width:37%; align: center" ng-click="assWeekAttCtrl.getNextWeek()">Next Week</md-button>
-	</div>
->>>>>>> 83ee32e659eb0bfb6859b78302a775e5b1a3095c
+	<div><md-icon style=" cursor: pointer; " class="material-icons"
+		ng-click="assWeekAttCtrl.getPreviousWeek()">arrow_back</md-icon></div>
+	<div><p>Week of {{assWeekAttCtrl.monday}}</p></div>
+	<div><md-icon style="cursor: pointer;" class="material-icons"
+		ng-click="assWeekAttCtrl.getNextWeek()">arrow_forward</md-icon></div>
+</div>
+</div>
+
