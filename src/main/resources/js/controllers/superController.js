@@ -56,10 +56,7 @@
                     bindToController: true
                 }).then( function(){
                     batchAddFactory.resetAssociates();
-                    $scope.UserRefresh = function () {
-                    	$scope.$broadcast('batchCreation', 'Send User Refresh');
-                    }();
-                    
+                    $scope.$broadcast('batchCreation', 'Send User Refresh');
                 });
             }, function() {
                 suc.toast("Batch addition cancelled.");
