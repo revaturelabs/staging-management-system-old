@@ -56,11 +56,7 @@ sms.controller( "updateInfoCrtl", function( $mdToast,$scope, $state, $mdSidenav,
             				$mdDialog.hide();
             			},function(response){
             				// password change went wrong
-    	            		switch(response.status){
-    	            		case 404:uic.toast("Incorrect password.");break;
-    	            		case 401:uic.toast("Unauthorized user.");break;
-    	            		default: uic.toast("An error has occured."); break;
-    	            		}
+            				uic.toast(response.data.errorMessage);
             			});
 	            
 	            uic.user = "";
