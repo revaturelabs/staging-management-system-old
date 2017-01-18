@@ -62,5 +62,5 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
 	  // data
 
       // initialization
-    //lc.cookieCheck();
+    lc.cookieCheck();
 });

@@ -1,7 +1,7 @@
 
     var sms = angular.module( "sms" );
 
-    sms.controller( "superCtrl", function( $scope, $state, $mdSidenav, $mdDialog, loginService, userService, batchAddFactory ){
+    sms.controller( "superCtrl", function( $scope, $state, $mdSidenav, $mdDialog, loginService, userService, batchAddFactory, $mdDialog ){
         var suc = this;
 
           // functions
@@ -23,7 +23,16 @@
         
         suc.updateInformation = function(){
         	$mdSidenav("left").close();
-        	$state.go("SUupdateInfo");
+        	
+        	$mdDialog.show({
+				templateUrl: "html/templates/updateInformation.html",
+                controller: "updateInfoCrtl as uInfoctrl",
+                locals: {needChangePass:false}
+			}).then( function(){
+				suc.toast("Password changed successfully.");
+			},function(){
+				suc.toast("Password change cancelled.");
+			});
         	
         };
         suc.viewAttendance = function(){

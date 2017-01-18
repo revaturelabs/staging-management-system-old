@@ -4,8 +4,8 @@
     sms.service( "loginService", function( $resource, $cookies ) {
         var ls = this;
 
-        var loginResource = $resource("api/v1/login/:username", 
-            { username: "username" },
+        var loginResource = $resource("api/v1/login", 
+            {},
             { 
                 save  : { 
                     method: "POST",
@@ -18,7 +18,14 @@
                         "Authorization": function() { return ls.token; }
                     } 
                 },
-                checkPass: { headers:{"Content-Type": "application/json", "Authorization": function(){ return ls.token; } }, method:"GET",  url:"/api/v1/login/checkpass/:username" }
+                checkPass: { 
+                  	method: "POST",  
+                	url: "/api/v1/login/checkpass",
+                	headers: {
+                		"Content-Type": "application/json", 
+                		"Authorization": function(){ return ls.token; }
+                	}
+                }
             }
         );
 

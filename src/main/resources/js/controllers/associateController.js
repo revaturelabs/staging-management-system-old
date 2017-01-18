@@ -23,7 +23,17 @@
         
         asc.updateInformation = function(){
         	$mdSidenav("left").close();
-        	$state.go("ASupdateInfo");
+        	
+        	$mdDialog.show({
+					templateUrl: "html/views/updateInformation.html",
+	                controller: "updateInfoCrtl as uInfoctrl",
+	                locals: {needChangePass:false}
+				}).then( function(){
+					asc.toast("Password changed successfully.");
+				},function(){
+					asc.toast("Password change cancelled.");
+				});
+        	
         	
         };
 
@@ -36,37 +46,23 @@
           // data
         asc.user = loginService.getUser();
         asc.token = loginService.getToken();
-        //console.log(asc.user);
-        
 
         loginService.checkPass(asc.user.username,
         		function(response){
-    	   			console.log(response);
- 
+        	console.log(response);
+    	   			if(response.update == true){
+    	   				$mdDialog.show({
+    	   					templateUrl: "html/templates/updateInformation.html",
+    	   	                controller: "updateInfoCrtl as uInfoctrl",
+    	   	                escapeToClose:false,
+    	   	                locals: {needChangePass:true}
+    	   				}).then( function(){
+    	   					asc.toast("Password changed successfully.");
+    	   				});
+    	   			}
+    	   			
     			},function(error){
     				asc.toast(error.data.errorMessage);
     			});
-    
-        // check if user needs to change their password
-        asc.checkPassword = function(){
-        	
-        	$http({
-        		method: "GET",
-        		url : "/api/v1/login/checkpass",
-        		headers:{
-        			"Authorization" : asc.token
-        		},
-        		params:{
-        			"username": asc.user.username
-        		}
-        	}).then(function successCallback(response){
-        		console.log("http: " + response.data);
-        		
-        	},function errorCallback(response) {
-        	
-        	});
-
-        }
-        asc.checkPassword();
 
     });

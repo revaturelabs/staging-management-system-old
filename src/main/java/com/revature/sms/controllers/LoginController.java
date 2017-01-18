@@ -104,8 +104,8 @@ public class LoginController {
 	 * @param username String value of logged in user's username.
 	 * @return ResponseEntity object containing a Boolean object with value of true if a password change is required, false if it is not.
 	 */
-	@RequestMapping(value="/checkpass/{username}" ,method = RequestMethod.GET)
-	public @ResponseBody Object needUpdatePassword(@RequestHeader(value = "Authorization") String token, @PathVariable String username) {
+	@RequestMapping(value="/checkpass" ,method = RequestMethod.POST)
+	public @ResponseBody Object needUpdatePassword(@RequestHeader(value = "Authorization") String token, @RequestBody String username) {
 		//check authorization token
 		User user = ur.findByUsername(username);
 		if (user != null) {

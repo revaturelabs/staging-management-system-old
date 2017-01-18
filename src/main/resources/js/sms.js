@@ -99,44 +99,6 @@
                 })
 			//........................................................................
 
-			
-            /*
-             * User can change their password
-             */
-            // superAdmin update information
-                .state( "SUupdateInfo", {
-                    url: "^/updateInformation-sa",
-                    parent: "super",
-                    views: {
-                        "mainSuperView": {
-                            templateUrl: "html/views/updateInformation.html",
-                            controller: "updateInfoCrtl as uInfoctrl"
-                        }
-                    }
-                })
-            // Admin update information
-                .state( "ADupdateInfo", {
-                    url: "^/updateInformation-a",
-                    parent: "admin",
-                    views: {
-                        "mainAdminView": {
-                            templateUrl: "html/views/updateInformation.html",
-                            controller: "updateInfoCrtl as uInfoctrl"
-                        }
-                    }
-                })
-			// Associate update information
-                .state( "ASupdateInfo", {
-                    url: "^/updateInformation-as",
-                    parent: "assoc",
-                    views: {
-                        "mainAssociateView": {
-                            templateUrl: "html/views/updateInformation.html",
-                            controller: "updateInfoCrtl as uInfoctrl"
-                        }
-                    }
-                })
-
 	});
 
       // theme config
