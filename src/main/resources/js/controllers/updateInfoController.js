@@ -1,7 +1,7 @@
  var sms = angular.module( "sms" );
-sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginService, $http){
+sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginService, $http,$mdDialog,needChangePass){
 	var uic = this;
-	
+	$scope.needChangePass = needChangePass;
 	//for notifications
     uic.toast = function(message){
         $scope.$parent.mastCtrl.toast(message);
@@ -9,12 +9,7 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
     
     //When user decides to cancel password update
     uic.cancel = function(){
-    	//route to the appropriate homepage
-		switch(loginService.getUser().userRole.name){
-		case "associate":$state.go("assocAttendance"); break;
-		case "admin" : $state.go("admin"); break;
-		case "superAdmin" : $state.go("super"); break;
-		}
+    	$mdDialog.cancel();
     }
     
     //when user submits updated password
@@ -34,6 +29,7 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
     		uic.toast("Confirm your new password.");
     		return;
     	}
+    	//TODO: user change their password to their username
     	
     	//hash passwords
     	var oldPassH = CryptoJS.SHA1(oldPass.value).toString();
@@ -58,14 +54,7 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
 	            		    "newPassword":newPassH}
 	            	}).then(function successCallback(response) {
 	            		//password changed successfully
-	            		uic.toast("Password changed successfully.");
-	            		
-	            		//route to the appropriate homepage
-	            		switch(response.data.userRole.name){
-	            		case "associate":$state.go("assocAttendance"); break;
-	            		case "admin" : $state.go("admin"); break;
-	            		case "superAdmin" : $state.go("super"); break;
-	            		}
+	            		$mdDialog.hide();
 	            		
 	            	}, function errorCallback(response) {
 	            		// password change went wrong

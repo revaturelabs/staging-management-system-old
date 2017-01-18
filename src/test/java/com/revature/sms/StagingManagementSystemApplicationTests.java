@@ -60,13 +60,6 @@ public class StagingManagementSystemApplicationTests {
 		Assert.assertTrue("Test executed", true);
 		
 	}
-
-	
-	
-	
-
-	
-	
 	/**
 	 * A password hashing algorithm used for testing.
 	 * @param inputPassword

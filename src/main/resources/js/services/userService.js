@@ -1,32 +1,21 @@
 
     var sms = angular.module( "sms" );
 
-    sms.service( "userService", function( $resource, $http, loginService ){
+    sms.service( "userService", function( $resource, loginService ){
         var us = this;
-        
-        us.auth = function(){
-            return loginService.getToken();
-        }
-        
         us.userResource = $resource("api/v1/user/:username", 
             { id: "@username" }, 
             { 
-                save  : { headers: { "Content-Type": "application/json", "Authorization": us.auth() }, method: "PUT", url: "api/v1/user" }, 
-                query : { headers: { "Content-Type": "application/json", "Authorization": us.auth() }, isArray: true }, 
-                get   : { headers: { "Content-Type": "application/json", "Authorization": us.auth() } }, 
-                update: { headers: { "Content-Type": "application/json", "Authorization": us.auth() }, method: "POST", url: "api/v1/user" },
-                remove: { headers: { "Content-Type": "application/json", "Authorization": us.auth() } } 
+                save  : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "PUT", url: "api/v1/user" }, 
+                query : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, isArray: true }, 
+                get   : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } }, 
+                update: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "POST", url: "api/v1/user" },
+                remove: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } } 
             } 
         );
 
         us.create = function(user, success, error) {
-
-            // var config = { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "PUT", url: "api/v1/user" };
-            // var userResource = $resource( "api/v1/user", { save: config } );
-            //user.$save(success, error);
-        	//console.log("In create! " + user);
         	us.userResource.save(user, success, error);
-
         };
 
         us.getAll = function(success, error) {

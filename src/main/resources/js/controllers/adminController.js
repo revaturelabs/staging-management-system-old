@@ -1,7 +1,7 @@
 
     var sms = angular.module( "sms" );
 
-    sms.controller( "adminCtrl", function( $scope, $state, $mdSidenav, loginService ){
+    sms.controller( "adminCtrl", function( $scope, $state, $mdSidenav, loginService, $mdDialog ){
         var adc = this;
     
           // functions
@@ -23,12 +23,30 @@
         
         adc.updateInformation = function(){
         	$mdSidenav("left").close();
-        	$state.go("ADupdateInfo");
+        	
+        	$mdDialog.show({
+				templateUrl: "html/templates/updateInformation.html",
+                controller: "updateInfoCrtl as uInfoctrl",
+                locals: {needChangePass:false}
+			}).then( function(){
+				adc.toast("Password changed successfully.");
+			},function(){
+				adc.toast("Password change cancelled.");
+			});
+        	
+        };
+        
+        adc.viewAttendance = function(){
+        	$mdSidenav("left").close();
+        	$state.go("adminAttendance");
         	
         };
 
           // data
         adc.user = loginService.getUser();
         adc.token = loginService.getToken();
+        
+        //set the title scope
+        adc.title = "";
 
     });
