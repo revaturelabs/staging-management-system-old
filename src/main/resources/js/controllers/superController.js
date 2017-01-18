@@ -1,7 +1,7 @@
 
     var sms = angular.module( "sms" );
 
-    sms.controller( "superCtrl", function( $scope, $state, $mdSidenav, $mdDialog, loginService, userService, batchAddFactory, $mdDialog ){
+    sms.controller( "superCtrl", function( $scope, $state, $mdSidenav, $mdDialog, loginService, userService, batchAddFactory ){
         var suc = this;
 
           // functions

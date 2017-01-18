@@ -9,15 +9,7 @@ sms.controller( "updateInfoCrtl", function( $scope, $state, $mdSidenav, loginSer
     
     //When user decides to cancel password update
     uic.cancel = function(){
-    	console.log(needChangePass);
     	$mdDialog.cancel();
-    	
-    	//route to the appropriate homepage
-/*		switch(loginService.getUser().userRole.name){
-		case "associate":$state.go("assocAttendance"); break;
-		case "admin" : $state.go("admin"); break;
-		case "superAdmin" : $state.go("attendance"); break;
-		}*/
     }
     
     //when user submits updated password

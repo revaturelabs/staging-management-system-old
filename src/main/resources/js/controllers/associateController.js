@@ -49,7 +49,6 @@
 
         loginService.checkPass(asc.user.username,
         		function(response){
-        	console.log(response);
     	   			if(response.update == true){
     	   				$mdDialog.show({
     	   					templateUrl: "html/templates/updateInformation.html",
