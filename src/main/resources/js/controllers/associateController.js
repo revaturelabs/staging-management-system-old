@@ -1,7 +1,7 @@
 
     var sms = angular.module( "sms" );
 
-    sms.controller( "associateCtrl", function( $scope, $state, $mdSidenav, $mdDialog, loginService ){
+    sms.controller( "associateCtrl", function($http, $scope, $state, $mdSidenav, loginService, $mdDialog ){
         var asc = this;
 
           // functions
@@ -23,7 +23,17 @@
         
         asc.updateInformation = function(){
         	$mdSidenav("left").close();
-        	$state.go("ASupdateInfo");
+        	
+        	$mdDialog.show({
+					templateUrl: "html/views/updateInformation.html",
+	                controller: "updateInfoCrtl as uInfoctrl",
+	                locals: {needChangePass:false}
+				}).then( function(){
+					asc.toast("Password changed successfully.");
+				},function(){
+					asc.toast("Password change cancelled.");
+				});
+        	
         	
         };
 
@@ -38,24 +48,34 @@
         		templateUrl: "html/templates/scheduleCertification.html",
         		controller: "associateCertificationsCtrl as assCertCtrl"
         	}).then( function() {
-        		alert("success");
-               /* $mdDialog.show({
-                    templateUrl: "html/templates/batchAddSuccess.html",
-                    controller: "batchAddSuccessCtrl as bASCtrl",
-                    locals: { "newAssociates": batchAddFactory.getNewAssociates() },
-                    bindToController: true
-                }).then( function(){
-                    batchAddFactory.resetAssociates();
-                });*/
-                
+        		// doing submit steps
+        		asc.toast("Certification Scheduled");
+         
+      
             }, function() {
-            	asc.toast("Certification Schedule Cancelled");
-                /*suc.toast("Batch addition cancelled.");*/
+            	//asc.toast("Certification Schedule Cancelled");
             });
         };
         
           // data
         asc.user = loginService.getUser();
         asc.token = loginService.getToken();
+
+        loginService.checkPass(asc.user.username,
+        		function(response){
+    	   			if(response.update == true){
+    	   				$mdDialog.show({
+    	   					templateUrl: "html/templates/updateInformation.html",
+    	   	                controller: "updateInfoCrtl as uInfoctrl",
+    	   	                escapeToClose:false,
+    	   	                locals: {needChangePass:true}
+    	   				}).then( function(){
+    	   					asc.toast("Password changed successfully.");
+    	   				});
+    	   			}
+    	   			
+    			},function(error){
+    				asc.toast(error.data.errorMessage);
+    			});
 
     });
