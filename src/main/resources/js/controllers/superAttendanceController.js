@@ -76,16 +76,18 @@
     	/*get all attendance for the week for all associates*/
         
         //run user service to get all users
-        userService.getAll(function(response){
-        	
-        	//in the response filter out users that aren't associates
-        	sac.users = $filter("associateFilter")(response);
-        	//filter the associates to get the date objects that are only for the current week
-        	sac.users = $filter("weekFilter")(sac.users, sac.thisMonday);
-        	
-        }, function(error){
-        	sac.toast("Error in retrieving all associates.");
-        });
+        (function getUsers() {
+	        userService.getAll(function(response){
+	        	
+	        	//in the response filter out users that aren't associates
+	        	sac.users = $filter("associateFilter")(response);
+	        	//filter the associates to get the date objects that are only for the current week
+	        	sac.users = $filter("weekFilter")(sac.users, sac.thisMonday);
+	        	
+	        }, function(error){
+	        	sac.toast("Error in retrieving all associates.");
+	        });
+        })();
         
         /*this is the end of getting the users*/
         
@@ -256,16 +258,7 @@
         // user refresh event
         $scope.$on('batchCreation', function(event, data){
         	//run user service to get all users
-	        userService.getAll(function(response){
-	        	
-	        	//in the response filter out users that aren't associates
-	        	sac.users = $filter("associateFilter")(response);
-	        	//filter the associates to get the date objects that are only for the current week
-	        	sac.users = $filter("weekFilter")(sac.users, sac.thisMonday);
-	        	
-	        }, function(error){
-	        	sac.toast("Error in retrieving all associates.");
-	        });
+	        getUsers();
         });
         
     });
