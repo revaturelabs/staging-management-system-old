@@ -1,5 +1,5 @@
  var sms = angular.module( "sms" );
-sms.controller( "updateInfoCrtl", function( $mdToast,$scope, $state, $mdSidenav, loginService, $http,$mdDialog,needChangePass){
+sms.controller( "updateInfoCrtl", function( $mdToast,$scope, $state, $mdSidenav, loginService, $mdDialog,needChangePass){
 	var uic = this;
 	$scope.needChangePass = needChangePass;
 	//for notifications
@@ -46,27 +46,23 @@ sms.controller( "updateInfoCrtl", function( $mdToast,$scope, $state, $mdSidenav,
     			
 	            uic.user = loginService.getUser();
 	            uic.token = loginService.getToken();
-	            $http({
-	            	  method: 'PUT',
-	            	  url: '/api/v1/login',
-	            	  headers:{'Authorization' : uic.token,
-	            		  "Content-Type":"application/json"
-	            	  },
-	            	  data:{"username": uic.user.username, 
-	            		    "oldPassword": oldPassH, 
-	            		    "newPassword":newPassH}
-	            	}).then(function successCallback(response) {
-	            		//password changed successfully
-	            		$mdDialog.hide();
-	            		
-	            	}, function errorCallback(response) {
-	            		// password change went wrong
-	            		switch(response.status){
-	            		case 404:uic.toast("Incorrect password.");break;
-	            		case 401:uic.toast("Unauthorized user.");break;
-	            		default: uic.toast("An error has occured."); break;
-	            		}
-	            	  });
+	            var data={"username": uic.user.username, 
+        		    "oldPassword": oldPassH, 
+        		    "newPassword":newPassH};
+	            
+	            loginService.changePass(data,
+	            		function(){
+	            			//password changed successfully
+            				$mdDialog.hide();
+            			},function(response){
+            				// password change went wrong
+    	            		switch(response.status){
+    	            		case 404:uic.toast("Incorrect password.");break;
+    	            		case 401:uic.toast("Unauthorized user.");break;
+    	            		default: uic.toast("An error has occured."); break;
+    	            		}
+            			});
+	            
 	            uic.user = "";
 	            uic.token = "";
 	            
