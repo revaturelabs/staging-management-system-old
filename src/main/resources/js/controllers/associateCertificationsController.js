@@ -21,5 +21,9 @@ sms.controller("associateCertificationsCtrl", function($scope, $state, $mdDialog
 	acc.cancel = function() {
 		$mdDialog.cancel();
 	}
+	
+	acc.sumbitCert = function() {
+		alert("Certification added, but not really");
+	}
 
 });
