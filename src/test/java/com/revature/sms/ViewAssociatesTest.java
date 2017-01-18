@@ -112,8 +112,8 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	//Clear database
 	@Override
 	public void afterClassSetup() {
-		//dbic.clearData();
-		//driver.close();
+		dbic.clearData();
+		driver.close();
 	}
 	
 	
