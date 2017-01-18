@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +25,7 @@ import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dto.LoginAttemptDTO;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
 import com.revature.sms.domain.dto.UserDTO;
+import com.revature.sms.domain.dto.bc;
 
 /**
  * Server-side controller to handle logging into the application.
@@ -103,8 +104,8 @@ public class LoginController {
 	 * @param username String value of logged in user's username.
 	 * @return ResponseEntity object containing a Boolean object with value of true if a password change is required, false if it is not.
 	 */
-	@RequestMapping(value="/checkpass" ,method = RequestMethod.GET)
-	public @ResponseBody Object needUpdatePassword(@RequestHeader(value = "Authorization") String token, @RequestParam String username) {
+	@RequestMapping(value="/checkpass" ,method = RequestMethod.POST)
+	public @ResponseBody Object needUpdatePassword(@RequestHeader(value = "Authorization") String token, @RequestBody String username) {
 		//check authorization token
 		User user = ur.findByUsername(username);
 		if (user != null) {
@@ -112,7 +113,7 @@ public class LoginController {
 				// hash username
 				String usernameHash = User.hashPassword(username);
 				// compare hashed username to hashed password
-				return new ResponseEntity<Boolean>(usernameHash.equals(user.getHashedPassword()), HttpStatus.OK);
+				return new ResponseEntity<bc>(new bc(usernameHash.equals(user.getHashedPassword())), HttpStatus.OK);
 			}
 			else{
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User not authorized."), HttpStatus.FORBIDDEN);
