@@ -64,17 +64,17 @@
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server</artifactId>
-            <version>2.34.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.detro.ghostdriver</groupId>
-            <artifactId>phantomjsdriver</artifactId>
-            <version>1.0.4</version>
-            <scope>test</scope>
-        </dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<version>2.34.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.detro.ghostdriver</groupId>
+			<artifactId>phantomjsdriver</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
