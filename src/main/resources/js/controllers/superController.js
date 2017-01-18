@@ -26,6 +26,11 @@
         	$state.go("SUupdateInfo");
         	
         };
+        suc.viewAttendance = function(){
+        	$mdSidenav("left").close();
+        	$state.go("superAttendance");
+        	
+        };
 
         suc.newAssociate = function() {
             
@@ -43,7 +48,6 @@
                 }).then( function(){
                     batchAddFactory.resetAssociates();
                 });
-                
             }, function() {
                 suc.toast("Batch addition cancelled.");
             });
@@ -57,5 +61,8 @@
         }, function(error){
             suc.toast("Error retrieving all users.");
         });
+        
+      //set the title scope
+        suc.title = "";
 
     });
