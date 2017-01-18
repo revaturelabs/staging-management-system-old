@@ -7,7 +7,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Selenium2Example  {
+public class Selenium2Test  {
 	@Test
 	public void TestIt(){
 		
