@@ -32,9 +32,7 @@
 					asc.toast("Password changed successfully.");
 				},function(){
 					asc.toast("Password change cancelled.");
-				});
-        	
-        	
+				})
         };
 
         asc.associateAttendance= function(){
