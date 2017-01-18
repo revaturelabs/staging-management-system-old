@@ -131,7 +131,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value="/cookieLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Object cookieLogin(@RequestHeader(value = "Authorization") String token, @RequestBody String username) {
-		Token masterToken = tr.findByauthToken(token);
+		Token masterToken = tr.findByAuthToken(token);
 		masterToken.getUser().blankPassword();
 		masterToken.getUser().setID(0);
 
@@ -234,7 +234,7 @@ public class LoginController {
 	 */
 	public boolean isValid(String tokenString, String usernameString) {
 		boolean valid = false;
-		Token token = tr.findByauthToken(tokenString);
+		Token token = tr.findByAuthToken(tokenString);
 		if (token != null) {
 			if (usernameString.equals(token.getUser().getUsername()))
 				valid = true;
