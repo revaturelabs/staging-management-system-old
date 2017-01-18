@@ -1,7 +1,5 @@
 package com.revature.sms.testlibs;
 
-import static com.revature.sms.StagingManagementSystemApplicationTests.hashPassword;
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -13,6 +11,8 @@ import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.dao.BatchTypeRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
+
+import static com.revature.sms.util.Utils.hashPassword;
 
 /**
  * TestUserProvider is a class that provides factory methods that provide well-defined users to be used in test cases.

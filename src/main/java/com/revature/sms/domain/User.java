@@ -75,13 +75,13 @@ public class User {
 /**
  * List containing AssociateAttendence objects that keeps track of the user's attendance.
  */
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(orphanRemoval=true)
 	@JoinColumn(name="ASSOCIATE")
 	private List<AssociateAttendance> attendance;
 	/**
 	 * List containing AssociateTask objects that keeps track of the user's tasks.
 	 */
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(orphanRemoval=true)
 	@JoinColumn(name="ASSOCIATE")
 	private List<AssociateTask> tasks;
 	/**

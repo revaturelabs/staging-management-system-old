@@ -1,7 +1,5 @@
 package com.revature.sms.testlibs;
 
-import static com.revature.sms.StagingManagementSystemApplicationTests.hashPassword;
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +10,15 @@ import org.springframework.stereotype.Service;
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
+import com.revature.sms.domain.dao.AssociateAttendanceRepo;
+import com.revature.sms.domain.dao.AssociateTasksRepo;
+import com.revature.sms.domain.dao.TokenRepo;
 import com.revature.sms.domain.dao.UserRepo;
+
+import static com.revature.sms.util.Utils.hashPassword;
 
 /**
  * 
@@ -40,8 +44,14 @@ public class UserDataManager {
 	@Autowired
 	private UserRepo ur;
 	
+	@Autowired
+	private AssociateAttendanceRepo aar;
 	
+	@Autowired
+	private AssociateTasksRepo atr;
 	
+	@Autowired
+	private TokenRepo tr;
 	
 	/**
 	 * createTestAdmin is a setup method that is called to create a user of Admin or Super Admin type for testing.
@@ -52,7 +62,6 @@ public class UserDataManager {
 	
 	public User createTestAdmin(String username, String firstName, String lastName, String unhashedPassword, UserRole userRole){
 		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), userRole);
-		
 		return createTestUser(newUser);
 	}
 	
@@ -65,7 +74,18 @@ public class UserDataManager {
 	 */
 	
 	public User createTestUser(User user){
-		ur.save(user);
+		
+		/*
+		System.out.println("OBJECT BEFORE:");
+		System.out.println("Username: "+user.getUsername());
+		System.out.println("ID: "+user.getID());
+		List<AssociateAttendance> blah = user.getAttendance();
+		System.out.println("List of attendance objects: "+blah);
+		System.out.println("Graduation Date in milliseconds: "+user.getGraduationDate().getTime());
+		System.out.println();
+		*/
+		
+		ur.save(user); 
 		createdUsers.add(user);
 		return user;
 	}
@@ -81,9 +101,96 @@ public class UserDataManager {
 	public User createTestUser(String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate){
 		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole, graduationDate);
-		
 		return createTestUser(newUser);
 	}
+	
+	
+		//Corey's Method
+		//Changes one or more of the fields of a user. These changes are reflected in both the database and this
+	    //this UserDataManager object.
+		public void editTestUser(int userIndex, String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
+				List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate) {
+			User createdUser = createdUsers.get(userIndex);
+			if (username != "") {
+				createdUser.setUsername(username);
+			}
+			if (firstName != "") {
+				createdUser.setFirstName(firstName);
+			}
+			if (lastName != "") {
+				createdUser.setLastName(lastName);
+			}
+			if (unhashedPassword != "") {
+				createdUser.setLastName(hashPassword(unhashedPassword));
+			}
+			if (batchType.getType() != null) {
+				createdUser.setBatchType(batchType);
+			}
+			if (!attendance.isEmpty()) {
+				aar.save(attendance);
+				createdUser.setAttendance(attendance);
+			}
+			if (!tasks.isEmpty()) {
+				createdUser.setTasks(tasks);
+			}
+			if (userRole.getName() != null) {
+				createdUser.setUserRole(userRole);
+			}
+			if (graduationDate.getTime() != 0) {
+				createdUser.setGraduationDate(graduationDate);
+			}
+			
+			/*
+			System.out.println("OBJECT AFTER:");
+			System.out.println("Username: "+createdUser.getUsername());
+			System.out.println("ID: "+createdUser.getID());
+			List<AssociateAttendance> blah = createdUser.getAttendance();
+			System.out.println("List of attendance objects: "+blah);
+			System.out.println("Single attendance object: "+blah.get(0));
+			System.out.println("Graduation Date in milliseconds: "+createdUser.getGraduationDate().getTime());
+			System.out.println();
+			*/
+			
+			ur.save(createdUser);
+			createdUsers.remove(userIndex);
+			createdUsers.add(userIndex, createdUser);
+			
+			
+			/*
+			User recreatedUser = ur.findByUsername(createdUser.getUsername());
+			List<AssociateAttendance> al = recreatedUser.getAttendance();
+			
+			//Why do I get a LazyInitializationException here. How do I prevent it? 
+			System.out.println(al.get(0).getID());
+			
+			
+			System.out.println("OOGLYBOOGLY: "+createdUsers.get(userIndex).getUsername());
+			System.out.println();
+			for (User user:createdUsers) {
+				System.out.println("BEFORE");
+				System.out.println("Username: "+user.getUsername());
+				if (!user.getAttendance().isEmpty()) {
+					System.out.println("Attendance ID: "+user.getAttendance().get(0).getID());
+				}
+				System.out.println();
+			}
+			
+			createdUsers.remove(userIndex);
+			createdUsers.add(userIndex, recreatedUser);
+			
+			
+			for (User user:createdUsers) {
+				System.out.println("AFTER");
+				System.out.println("Username: "+user.getUsername());
+				if (!user.getAttendance().isEmpty()) {
+					System.out.println("Attendance ID: "+user.getAttendance().get(0).getID());
+				}
+				System.out.println();
+			}
+			*/
+			
+			
+		}
 	
 	
 	
@@ -92,12 +199,23 @@ public class UserDataManager {
 	 */
 	
 	public void removeAllTestUsers(){
-		for(User i:createdUsers){
-			ur.delete(i);
+		for (User u:createdUsers){
+			User currentUser = ur.findByUsername(u.getUsername());
+			for (AssociateAttendance a : currentUser.getAttendance()) {
+				aar.delete(a);
+			}
+			/*
+			for (AssociateTask task : currentUser.getTasks()) {
+				atr.delete(task);
+			}
+			List<Token> tList = tr.getByUser(currentUser);
+			for(Token token : tList){
+				tr.delete(token);
+			}
+			*/
+			ur.delete(currentUser);
 		}
 		createdUsers.clear();
 	}
-	
-	
-	
+
 }
