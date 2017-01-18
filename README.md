@@ -1,7 +1,7 @@
 # Staging Management System
-An application to track attendance, job status, and requirements of associates
+An application to track attendance, job status, and requirements of associates!
 
-### Commit early and often!
+### Commit early and often!!!!
 
 Aim for 3 commits a day (not including any dummy commits), with the last one being as you leave for the day.
 
@@ -25,6 +25,7 @@ Aim for 3 commits a day (not including any dummy commits), with the last one bei
   * Use `git checkout -b SMS-24` to create a local branch for your user-story
   * Make a small change to your feature branch and commit it (One option for doing this is to touch a dummy file, to do that, follow these steps:
     1. Run `touch dummy.txt`
+    1. Run `git add dummy.txt`
     1. Run `git commit -am "added dummy"` )
   * Type `git push --set-upstream origin SMS-24` to create the branch remotely (For subsequent pushes, you can simply use `git push`)
   * If you created a dummy file, revert it with the following steps:
@@ -33,8 +34,6 @@ Aim for 3 commits a day (not including any dummy commits), with the last one bei
     1. `git push`
   * On GitHub, you should see a box near the top saying that you recently pushed to it, and you'll see a button labeled *Compare & pull request* .
   * Click that, give your pull request the same name as your branch, and continue working. Each commit will run a feature test
- 
- ## BEFORE EVERY COMMIT, RUN `git pull origin development` TO MAKE SURE YOU'RE ON THE MOST UP TO DATE VERSION OF THE CODE
   * When you're ready for your branch to be merged to the development branch, comment `RFI` on the pull request, and that will notify one of the reviewers that your code is ready to be reviewed
 13. To access the database, use [SQL Developer](http://www.oracle.com/technetwork/developer-tools/sql-developer/downloads/index.html).  
   * Create a new connection with the username and password you found in the Slack information (check the *Save Password* box for your convienance)

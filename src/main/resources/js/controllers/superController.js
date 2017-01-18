@@ -23,7 +23,21 @@
         
         suc.updateInformation = function(){
         	$mdSidenav("left").close();
-        	$state.go("SUupdateInfo");
+        	
+        	$mdDialog.show({
+				templateUrl: "html/templates/updateInformation.html",
+                controller: "updateInfoCrtl as uInfoctrl",
+                locals: {needChangePass:false}
+			}).then( function(){
+				suc.toast("Password changed successfully.");
+			},function(){
+				suc.toast("Password change cancelled.");
+			});
+        	
+        };
+        suc.viewAttendance = function(){
+        	$mdSidenav("left").close();
+        	$state.go("superAttendance");
         	
         };
 
@@ -42,8 +56,8 @@
                     bindToController: true
                 }).then( function(){
                     batchAddFactory.resetAssociates();
+                    $scope.$broadcast('batchCreation', 'Send User Refresh');
                 });
-                
             }, function() {
                 suc.toast("Batch addition cancelled.");
             });
@@ -52,10 +66,15 @@
           // data
         suc.user = loginService.getUser();
 
-        userService.getAll(function(response){
-            suc.users = response;
-        }, function(error){
-            suc.toast("Error retrieving all users.");
-        });
+        (function getUsers() {
+        	userService.getAll(function(response){
+        		suc.users = response;
+	        }, function(error){
+	            suc.toast("Error retrieving all users.");
+	        });
+        })();
+        
+      //set the title scope
+        suc.title = "";
 
     });

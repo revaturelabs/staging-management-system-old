@@ -47,7 +47,19 @@
                                 <md-option ng-value="batchType" ng-repeat="batchType in bACtrl.batchTypes"> {{ batchType.type }} </md-option>
                         </md-select>
                     </md-input-container>
-
+                    <md-input-container flex>
+			          <label>Enter date</label>
+			          <md-datepicker ng-model="bACtrl.selectedDate" name="dateField" 
+			          md-date-filter="bACtrl.onlyFridays" required></md-datepicker>
+			
+			          <div ng-messages="batchAdd.dateField.$error">
+			            <div ng-message="valid">The entered value is not a date!</div>
+			            <div ng-message="required">This date is required!</div>
+			            <div ng-message="filtered">Only Fridays are allowed!</div>
+			          </div>
+			        </md-input-container>
+					
+					<br>
                     <md-button type="submit" class="md-primary md-raised" aria-label="Submit All"> SUBMIT </md-button>
                     <md-button type="button" class="md-primary md-raised" ng-click="bACtrl.cancel()" aria-label="Cancel"> CANCEL </md-button>
                 </form>        

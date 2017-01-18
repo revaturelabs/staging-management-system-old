@@ -1,8 +1,23 @@
 package com.revature.sms.domain;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.apache.log4j.Logger;
 
 //
 /**
@@ -77,6 +92,12 @@ public class User {
 	private UserRole userRole;
 	
 	/**
+	 * Graduation date to track an associate's graduation date
+	 */
+	@Column(name = "GRADUATION_DATE")
+	private Timestamp graduationDate;
+	
+	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
 	 */
 	public User() {
@@ -95,9 +116,10 @@ public class User {
 	 * @param attendance List containing AssociateAttendence objects that keeps track of the user's attendance.
 	 * @param tasks List containing AssociateTask objects that keeps track of the user's tasks.
 	 * @param userRole UserRole object that keeps track of the user's specific role.
+	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
-			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole) {
+			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -107,6 +129,7 @@ public class User {
 		this.attendance = attendance;
 		this.tasks = tasks;
 		this.userRole = userRole;
+		this.graduationDate = graduationDate;
 	}
 
 	// constructor for non-associate
@@ -291,6 +314,23 @@ public class User {
 	}
 	
 	/**
+	 * Method that retrieves the batch graduation date of the user.
+	 * @return graduationDate Timestamp of the graduation date for the user
+	 */
+	
+	public Timestamp getGraduationDate() {
+		return graduationDate;
+	}
+
+	/**
+	 * Method that manually sets the graduation date of the User object.
+	 * @param graduationDate Reflects the graduation date
+	 */
+	public void setGraduationDate(Timestamp graduationDate) {
+		this.graduationDate = graduationDate;
+	}
+
+	/**
 	 * Method that returns a string representation of the current User object.
 	 */
 	@Override
@@ -300,4 +340,27 @@ public class User {
 				+ ", tasks=" + tasks + ", userRole=" + userRole + "]";
 	}
 
+	/**
+	 * A password hashing algorithm used for testing.
+	 * @param inputPassword
+	 * @return The hashed password
+	 */
+
+	public static String hashPassword(String inputPassword) {
+		try {
+			MessageDigest md;
+			md = MessageDigest.getInstance("SHA");
+			md.update(inputPassword.getBytes());
+			byte[] byteData = md.digest();
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < byteData.length; i++) {
+				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			return sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			Logger.getRootLogger().error("No such Algorithm", e);
+			return null;
+		}
+	}
+	
 }

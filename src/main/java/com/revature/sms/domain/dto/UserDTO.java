@@ -1,6 +1,7 @@
 package com.revature.sms.domain.dto;
 
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.revature.sms.domain.AssociateAttendance;
@@ -20,7 +21,8 @@ public class UserDTO {
 	private String newPassword;
 	private List<AssociateAttendance> attendance;
 	private List<AssociateTask> associateTask;
-	
+	private Timestamp graduationDate;
+
 	
 	public UserDTO() {
 		super();
@@ -36,7 +38,7 @@ public class UserDTO {
 	}
 
 	public UserDTO(String username, String firstName, String lastName,String password, UserRole userRole,
-			BatchType batchType) {
+			BatchType batchType, Timestamp graduationDate) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -44,6 +46,7 @@ public class UserDTO {
 		this.hashedPassword=password;
 		this.userRole = userRole;
 		this.batchType = batchType;
+		this.graduationDate = graduationDate;
 	}
 
 	
@@ -125,6 +128,14 @@ public class UserDTO {
 
 	public void setAssociateTask(List<AssociateTask> associateTask) {
 		this.associateTask = associateTask;
+	}
+	
+	public Timestamp getGraduationDate() {
+		return graduationDate;
+	}
+
+	public void setGraduationDate(Timestamp graduationDate) {
+		this.graduationDate = graduationDate;
 	}
 
 }
