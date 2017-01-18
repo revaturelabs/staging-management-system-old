@@ -97,7 +97,6 @@
             {name: 'done'  , color: "#00A", description: "if the associate checked in but has NOT yet been verified" },
             {name: 'close', color: "#A00" , description: "if the associate is NOT checked in and NOT verified"},
             {name: 'done_all' , color: "rgb(89, 226, 168)" , description: "if the associate's attendance has been verified" },
-
             {name: '    ' , color: "#777", description: "no information available yet" }
 
          ]; 
@@ -253,4 +252,20 @@
     			sac.toast("Can't go to future weeks");
     		}
         };
+        
+        // user refresh event
+        $scope.$on('batchCreation', function(event, data){
+        	//run user service to get all users
+	        userService.getAll(function(response){
+	        	
+	        	//in the response filter out users that aren't associates
+	        	sac.users = $filter("associateFilter")(response);
+	        	//filter the associates to get the date objects that are only for the current week
+	        	sac.users = $filter("weekFilter")(sac.users, sac.thisMonday);
+	        	
+	        }, function(error){
+	        	sac.toast("Error in retrieving all associates.");
+	        });
+        });
+        
     });
