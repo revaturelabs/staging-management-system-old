@@ -25,6 +25,7 @@ Aim for 3 commits a day (not including any dummy commits), with the last one bei
   * Use `git checkout -b SMS-24` to create a local branch for your user-story
   * Make a small change to your feature branch and commit it (One option for doing this is to touch a dummy file, to do that, follow these steps:
     1. Run `touch dummy.txt`
+    1. Run `git add dummy.txt`
     1. Run `git commit -am "added dummy"` )
   * Type `git push --set-upstream origin SMS-24` to create the branch remotely (For subsequent pushes, you can simply use `git push`)
   * If you created a dummy file, revert it with the following steps:
