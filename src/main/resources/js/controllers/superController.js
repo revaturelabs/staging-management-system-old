@@ -56,9 +56,7 @@
                     bindToController: true
                 }).then( function(){
                     batchAddFactory.resetAssociates();
-                    alert("made it to batch creation event parent before function");
                     $scope.UserRefresh = function () {
-                    	alert("made it to batch creation event parent");
                     	$scope.$broadcast('batchCreation', 'Send User Refresh');
                     }();
                     
