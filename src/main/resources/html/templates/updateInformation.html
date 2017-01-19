@@ -1,33 +1,36 @@
-<md-card-title> 
-	<md-card-title-text style="text-align: center"><h1>Update Password</h1></md-card-title-text> 
-</md-card-title>
+<md-dialog class="changePassword">
 
-<form name="updateInfoForm" ng-submit="uInfoctrl.submit()" novalidate>
-
-	<div layout="column" layout-align="center center">
-		<md-input-container style="width:75%;"> 
-			<label style="text-align: center">Old Password</label> 
-			<input id="oldPass" ng-bind="uic.oldPass" style="text-align: center" type="password">
-		</md-input-container>
+	<md-toolbar>
+	      <div class="md-toolbar-tools">
+	        <h2>Change password</h2>
+	      </div>
+	</md-toolbar>
+	<div class="md-padding">
+		<form name="updateInfoForm" ng-submit="uInfoctrl.submit()" novalidate>
+		
+			<div layout="column" layout-align="center space-around">
+				<md-input-container class="InputContainer"> 
+					<label>Current password</label> 
+					<input id="oldPass" ng-bind="uic.oldPass"  type="password">
+				</md-input-container>
+			
+				<md-input-container class="InputContainer"> 
+					<label >New password</label> 
+					<input id="newPass" ng-bind="uic.newPass"  type="password">
+				</md-input-container>
+				
+				<md-input-container class="InputContainer"> 
+					<label >Confirm new password</label> 
+					<input id="confirmPass" ng-bind="uic.confirmPass" type="password"> 
+				</md-input-container>
+			</div>
+			
+			<div layout="row" layout-align="end end">
+				<md-button type="submit" class=" md-primary">Submit</md-button>
+				<md-button type="button" id="updateCancel" ng-if="needChangePass === false" class="md-accent" ng-click="uInfoctrl.cancel()">Cancel</md-button>
+				
+			</div>
+		
+		</form>
 	</div>
-	
-	<div layout="column" layout-align="center center">
-		<md-input-container style="width:75%;"> 
-			<label style="text-align: center">New Password</label> 
-			<input id="newPass" ng-bind="uic.newPass" style="text-align: center" type="password">
-		</md-input-container>
-	</div>
-	
-	<div layout="column" layout-align="center center">
-		<md-input-container style="width:75%;"> 
-			<label style="text-align: center">Confirm Password</label> 
-			<input id="confirmPass" ng-bind="uic.confirmPass" style="text-align: center" type="password"> 
-		</md-input-container>
-	</div>
-
-	<div layout="row" layout-align="center center">
-		<md-button type="button" id="updateCancel" ng-if="needChangePass === false" class="md-raised md-warn" style="width:37%; align: center" ng-click="uInfoctrl.cancel()">Cancel</md-button>
-		<md-button type="submit" class="md-raised md-primary" style="width:37%; align: center">Submit</md-button>
-	</div>
-
-</form>
+</md-dialog>
