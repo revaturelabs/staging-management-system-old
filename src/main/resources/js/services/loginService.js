@@ -1,7 +1,7 @@
 
     var sms = angular.module( "sms" );
 
-    sms.service( "loginService", function( $resource, $cookies ) {
+    sms.service( "loginService", function( $resource, $cookies, $state ) {
         var ls = this;
 
         var loginResource = $resource("api/v1/login", 
@@ -67,9 +67,15 @@
         ls.addUser = function(user) {
             ls.user = user;
         };
-        
-        ls.getUser = function(user) {
-            return ls.user;
+     
+        ls.getUser = function() {
+        	if (ls.user.username == undefined) {
+        		// THIS IS BAD, BUT IT WORKS. FOR NOW.
+				$state.go("login");
+			}
+        	else{
+        		return ls.user;
+        	}
         };
 
         ls.addToken = function(token) {
@@ -77,7 +83,16 @@
         };
 
         ls.getToken = function() {
-            return ls.token;
+        	if(ls.token){
+        		return ls.token;
+        	}
+        	else{
+        		var cookieToken = $cookies.get("RevatureSMSToken");
+        		if (cookieToken) {
+        			return cookieToken;
+        		}
+        	}
+            
         };
         
        
