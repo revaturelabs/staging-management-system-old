@@ -9,3 +9,21 @@
     .InputContainer{
     	padding-bottom:0px;
     }
+    
+    /* attendance table css */
+    .attendanceTable tbody tr:hover {
+		background-color: #E8EAF6;
+	}
+	
+	.highlightToday {
+		background: #E8EAF6;
+	}
+	
+	
+	/* search bar css */
+	#search input[type="text"] {
+		background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
+		padding: 6px 15px 6px 35px;
+	}
+	
+	
