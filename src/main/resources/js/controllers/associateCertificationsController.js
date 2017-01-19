@@ -26,7 +26,7 @@ sms.controller("associateCertificationsCtrl", function($scope, $state, $mdDialog
 	}
 	
 	acc.cancel = function() {
-		acc.toast("Cancelled");
+		//acc.toast("Cancelled");
 		$mdDialog.cancel();
 	}
 	

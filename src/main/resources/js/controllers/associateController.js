@@ -51,7 +51,7 @@
          
       
             }, function() {
-            	//asc.toast("Certification Schedule Cancelled");
+            	asc.toast("Certification Schedule Cancelled");
             });
         };
         
