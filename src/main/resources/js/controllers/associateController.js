@@ -1,4 +1,4 @@
-
+// This file should be unnecessary, will keep for the time being
     angular
         .module( "sms" )
         .controller( "associateCtrl", associateCtrl );
