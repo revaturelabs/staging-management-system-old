@@ -201,10 +201,14 @@ public class UserDataManager {
 	public void removeAllTestUsers(){
 		for (User u:createdUsers){
 			User currentUser = ur.findByUsername(u.getUsername());
+			
+			//The following code causes a LazyInitializationException. It may not be needed
+			//anymore though since null values for associate don't seem to be allowed
+			//in the associate_attendence table now.
+			/*
 			for (AssociateAttendance a : currentUser.getAttendance()) {
 				aar.delete(a);
 			}
-			/*
 			for (AssociateTask task : currentUser.getTasks()) {
 				atr.delete(task);
 			}
