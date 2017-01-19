@@ -1,0 +1,22 @@
+
+    <md-card md-whiteframe="8">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+
+                <!--<md-button class="md-icon-button" aria-label="Menu" ng-click="adCtrl.openMenu()">
+                    <md-tooltip> Menu </md-tooltip>
+                    <md-icon md-svg-icon="img/icons/ic_menu_white_24px.svg"> </md-icon>
+                </md-button>-->
+                <div flex> {{ tempCtrl.title }} </div>
+                <!--<md-button class="md-icon-button" aria-label="Menu" ng-click="rootCtrl.logout()">
+                    <md-tooltip> Logout </md-tooltip>
+                    <md-icon md-svg-icon="img/icons/ic_exit_to_app_white_24px.svg"> </md-icon>
+                </md-button>-->
+
+            </div>
+        </md-toolbar>
+
+        <ui-view name="mainView"> </ui-view>
+
+    </md-card>
