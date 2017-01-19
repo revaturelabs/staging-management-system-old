@@ -72,7 +72,7 @@
                       // associate attendance
                     .state( "associateAttendance", {
                         parent: "attendance",
-                        url: "^/check-in",
+                        url: "",
                         views: {
                             "mainView": {
                                 templateUrl: "html/views/associate/associateAttendance.html",
