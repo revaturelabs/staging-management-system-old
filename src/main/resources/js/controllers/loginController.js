@@ -23,8 +23,10 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
 
     lc.cookieCheck = function() {
         lc.cookieLoad = true;
-        var usernameCookie = $cookies.get("RevatureSMSUsername");
-        var tokenCookie = $cookies.get("RevatureSMSToken");
+        /*var usernameCookie = $cookies.get("RevatureSMSUsername");
+        var tokenCookie = $cookies.get("RevatureSMSToken");*/
+        var usernameCookie = undefined;
+        var tokenCookie = undefined;
         if ( usernameCookie && tokenCookie ) {
             loginService.addToken(tokenCookie);
             loginService.cookieLogin( usernameCookie, function( response ){

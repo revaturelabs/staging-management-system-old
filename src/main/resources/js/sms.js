@@ -67,8 +67,8 @@
                         views: {
                             "mainView" : {
                                 templateUrl: "html/views/superadmin/superAttendance.html",
-                                controller: "superAttendanceCtrl",
-                                controllerAs: "supAttCtrl"
+                                controller: "managerAttendanceCtrl",
+                                controllerAs: "manAttCtrl"
                             }
                         }
                     })
