@@ -6,6 +6,48 @@
     	// refer to this controller
     	var ascatt = this;
     	
+    	//From associateController.js
+    	
+        ascatt.user = loginService.getUser();
+
+            // functions
+        ascatt.openMenu = function() {
+            $mdSidenav("left").open();
+        };
+
+        ascatt.toast = function(message){
+            $scope.$parent.mastCtrl.toast(message);
+        };
+        
+        ascatt.logout = function() {
+            ascatt.user = {};
+            ascatt.token = "";
+            loginService.logout();
+            ascatt.toast("Logged out.");
+            $state.go("login");
+        };
+        
+        ascatt.updateInformation = function(){
+            $mdSidenav("left").close();
+            $state.go("ASupdateInfo");
+            
+        };
+
+        ascatt.associateAttendance= function(){
+            $mdSidenav("left").close();
+            $state.go("assocAttendance");
+            
+        };
+        
+            // data
+        ascatt.user = loginService.getUser();
+        
+    	// End from associateController.js
+    	
+    	
+    	//add title to scope
+    	$scope.tempCtrl.title = "Weekly Attendance";
+    	
     	//used to get todays date
     	//var d = new Date();
     		

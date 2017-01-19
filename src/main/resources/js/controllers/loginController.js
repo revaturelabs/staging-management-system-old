@@ -23,6 +23,7 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
 
     lc.cookieCheck = function() {
         lc.cookieLoad = true;
+
         // var usernameCookie = $cookies.get("RevatureSMSUsername");
         // var tokenCookie = $cookies.get("RevatureSMSToken");
         var usernameCookie = undefined;
@@ -46,19 +47,21 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
         loginService.addToken(response.authToken);
         $cookies.put( "RevatureSMSUsername", loginService.getUser().username );
         $cookies.put( "RevatureSMSToken", loginService.getToken() );
-        switch (loginService.getUser().userRole.name) {
-            case "superAdmin":
-            case "admin":
-                lc.toast("Logged in.");
-                $state.go("managerAttendance");
-                break;
-            case "associate":
-                lc.toast("Logged in and attendance logged.");
-                $state.go("associateAttendance");
-                break;
-            default:
-                break;
-        }
+        // switch (loginService.getUser().userRole.name) {
+        //     case "superAdmin":
+        //     case "admin":
+        //         lc.toast("Logged in.");
+        //         $state.go("managerAttendance");
+        //         break;
+        //     case "associate":
+        //         lc.toast("Logged in and attendance logged.");
+        //         $state.go("associateAttendance");
+        //         break;
+        //     default:
+        //         break;
+        // }
+
+        $state.go("attendance");
     };
 
 	  // data

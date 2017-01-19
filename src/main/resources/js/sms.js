@@ -43,7 +43,7 @@
                 .state( "attendance", {
                     parent: "root",
                     url: "/attendance",
-                    abstract: true,
+                   // abstract: true,
                     // template: "<ui-view/>",
                     views: {
                         "contentView@": {
@@ -62,9 +62,9 @@
                         // template: "<ui-view/>"
                         views: {
                             "mainView" : {
-                                templateUrl: "html/views/superadmin/superAttendance.html",
-                                controller: "superAttendanceCtrl",
-                                controllerAs: "supAttCtrl"
+                                templateUrl: "html/views/manager/managerAttendance.html",
+                                controller: "managerAttendanceCtrl",
+                                controllerAs: "manAttCtrl"
                             }
                         }
                     })
