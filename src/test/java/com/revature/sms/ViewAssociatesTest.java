@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -57,9 +56,6 @@ public class ViewAssociatesTest implements InstanceTestClassListener {
 	    	}
 	    	if (browser.equals("Internet Explorer")) {
 	    		webDriver = TestSetup.getIE();
-	    	}
-	    	if (browser.equals("PhantomJS")) {
-	    		webDriver = TestSetup.getPhantomJS();
 	    	}
 	    } else {
 	    	System.out.println("This line should be printed in Jenkins.");

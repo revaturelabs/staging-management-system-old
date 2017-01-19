@@ -12,7 +12,7 @@ import com.revature.sms.util.TestSetup;
 public class SeleniumPhantomJSTest  {
 	@Test
 	public void TestIt(){
-        WebDriver driver = TestSetup.getPhantomJS();
+        WebDriver driver = new PhantomJSDriver();
         // And now use this to visit Google
         driver.get("http://www.google.com");
         // Alternatively the same thing can be done like this
