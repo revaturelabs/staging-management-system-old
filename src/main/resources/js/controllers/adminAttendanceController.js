@@ -123,44 +123,48 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
         	thisDay = aac.thisFriday;
         }
     	
-        //get the attendance object that matches the clicked on day
-        //accomplish this by doing a for each loop that looks through each object
-        //set a variable that varifies the object has been updated
-        updated = false;
-        user.attendance.forEach(function(attendance){
-			day = new Date(attendance.date);
-			if(day.getDate()==thisDay.getDate() && day.getMonth()==thisDay.getMonth()){
-				//set the status to true on the object
-				attendance.verified = !(currentStatus);
-				if(attendance.verified == false){
-					attendance.note = "";
-				}else{
-					attendance.note = "Validated by "+aac.loggedInUser.firstName+" "+aac.loggedInUser.lastName+" on "+rightNow;
+        //make sure it isn't a future date that was clicked on
+        //if the clicked on day is less than or equal to the current day of the week
+        //or it is not the active week
+        if((selectedDay < w) || !aac.activeWeek){
+	        //get the attendance object that matches the clicked on day
+	        //accomplish this by doing a for each loop that looks through each object
+	        //set a variable that varifies the object has been updated
+	        updated = false;
+	        user.attendance.forEach(function(attendance){
+				day = new Date(attendance.date);
+				if(day.getDate()==thisDay.getDate() && day.getMonth()==thisDay.getMonth()){
+					//set the status to true on the object
+					attendance.verified = !(currentStatus);
+					if(attendance.verified == false){
+						attendance.note = "";
+					}else{
+						attendance.note = "Validated by "+aac.loggedInUser.firstName+" "+aac.loggedInUser.lastName+" on "+rightNow;
+					}
+					updated = true;
 				}
-				updated = true;
+			})
+	    	
+			//if the object wwasn't updated then the object will be created
+			if(!updated){
+				newAttendace = {};
+				
+				newAttendace.date = thisDay;
+				newAttendace.verified = true;
+				newAttendace.checkedIn = false;
+				newAttendace.note = "Validated by "+aac.loggedInUser.firstName+" "+aac.loggedInUser.lastName+" on "+rightNow;
+				
+				user.attendance.push(newAttendace);
 			}
-		})
-    	
-		//if the object wwasn't updated then the object will be created
-		if(!updated){
-			newAttendace = {};
 			
-			newAttendace.date = thisDay;
-			newAttendace.verified = true;
-			newAttendace.checkedIn = false;
-			newAttendace.note = "Validated by "+aac.loggedInUser.firstName+" "+aac.loggedInUser.lastName+" on "+rightNow;
-			
-			user.attendance.push(newAttendace);
-		}
-		
-		//call user service to send the update to the database
-    	userService.update(user, function(response){
-    		aac.toast("Successful update");
-    		aac.users = $filter("weekFilter")(aac.users, aac.thisMonday);
-    	}, function(error){
-    		aac.toast("Error updating user attendance");
-    	})
-    	
+			//call user service to send the update to the database
+	    	userService.update(user, function(response){
+	    		aac.toast("Successful update");
+	    		aac.users = $filter("weekFilter")(aac.users, aac.thisMonday);
+	    	}, function(error){
+	    		aac.toast("Error updating user attendance");
+	    	})
+        }
     }
     
     
@@ -177,36 +181,7 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
 		if(weekNumber > 0){
 			aac.activeWeek = false;
 			weekNumber -= 1;
-			
-			/*set the new week up*/
-			m = new Date();
-	        m.setFullYear(setMonday.getFullYear(), setMonday.getMonth(), (setMonday.getDate()-7));
-	        
-	        setMonday.setFullYear(m.getFullYear(), m.getMonth(), m.getDate());
-	        aac.thisMonday = m;
-	        aac.thisTuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
-	        aac.thisWednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
-	        aac.thisThursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
-	        aac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
-	        
-	        /*set all scope days to print on top of table*/
-	        aac.monday = (aac.thisMonday.getMonth()+1)+"/"+aac.thisMonday.getDate();
-	        aac.tuesday = (aac.thisTuesday.getMonth()+1)+"/"+aac.thisTuesday.getDate();
-	        aac.wednesday = (aac.thisWednesday.getMonth()+1)+"/"+aac.thisWednesday.getDate();
-	        aac.thursday = (aac.thisThursday.getMonth()+1)+"/"+aac.thisThursday.getDate();
-	        aac.friday = (aac.thisFriday.getMonth()+1)+"/"+aac.thisFriday.getDate();
-	        
-	        /*filter the week so only the current week is visible*/
-	        aac.users = $filter("weekFilter")(aac.users, aac.thisMonday);
-	        
-	        /*setting active days*/
-	        /*remove active day*/
-	        aac.activeDay = null;
-	        
-	        /*see if this week is the active day week*/
-	        if(aac.thisCurrentMonday.getDate()==aac.thisMonday.getDate() && aac.thisCurrentMonday.getMonth()==aac.thisMonday.getMonth()){
-	        	aac.activeDay = w;
-	        }
+			aac.weekChange(-7);
 		}
 		else{
 			aac.toast("Can't go back more than 4 weeks");
@@ -222,39 +197,42 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
 			if(weekNumber == 4){
 				aac.activeWeek = true;
 			}
-    	
-    		/*set the new week up*/
-	        m = new Date();
-	        m.setFullYear(setMonday.getFullYear(), setMonday.getMonth(), (setMonday.getDate()+7));
-	        
-	        setMonday.setFullYear(m.getFullYear(), m.getMonth(), m.getDate());
-	        aac.thisMonday = m;
-	        aac.thisTuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
-	        aac.thisWednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
-	        aac.thisThursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
-	        aac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
-	        
-	        /*set all scope days to print on top of table*/
-	        aac.monday = (aac.thisMonday.getMonth()+1)+"/"+aac.thisMonday.getDate();
-	        aac.tuesday = (aac.thisTuesday.getMonth()+1)+"/"+aac.thisTuesday.getDate();
-	        aac.wednesday = (aac.thisWednesday.getMonth()+1)+"/"+aac.thisWednesday.getDate();
-	        aac.thursday = (aac.thisThursday.getMonth()+1)+"/"+aac.thisThursday.getDate();
-	        aac.friday = (aac.thisFriday.getMonth()+1)+"/"+aac.thisFriday.getDate();
-	        
-	        /*filter the week so only the current week is visible*/
-	        aac.users = $filter("weekFilter")(aac.users, aac.thisMonday);
-	        
-	        /*setting active days*/
-	        /*remove active day*/
-	        aac.activeDay = null;
-	        
-	        /*see if this week is the active day week*/
-	        if(aac.thisCurrentMonday.getDate()==aac.thisMonday.getDate() && aac.thisCurrentMonday.getMonth()==aac.thisMonday.getMonth()){
-	        	aac.activeDay = w;
-	        }
+			aac.weekChange(7);
 		}
         else{
 			aac.toast("Can't go to future weeks");
 		}
     };
+    
+    aac.weekChange = function(dayChange){
+		/*set the new week up*/
+        m = new Date();
+        m.setFullYear(setMonday.getFullYear(), setMonday.getMonth(), (setMonday.getDate()+dayChange));
+        
+        setMonday.setFullYear(m.getFullYear(), m.getMonth(), m.getDate());
+        aac.thisMonday = m;
+        aac.thisTuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
+        aac.thisWednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
+        aac.thisThursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
+        aac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
+        
+        /*set all scope days to print on top of table*/
+        aac.monday = (aac.thisMonday.getMonth()+1)+"/"+aac.thisMonday.getDate();
+        aac.tuesday = (aac.thisTuesday.getMonth()+1)+"/"+aac.thisTuesday.getDate();
+        aac.wednesday = (aac.thisWednesday.getMonth()+1)+"/"+aac.thisWednesday.getDate();
+        aac.thursday = (aac.thisThursday.getMonth()+1)+"/"+aac.thisThursday.getDate();
+        aac.friday = (aac.thisFriday.getMonth()+1)+"/"+aac.thisFriday.getDate();
+        
+        /*filter the week so only the current week is visible*/
+        aac.users = $filter("weekFilter")(aac.users, aac.thisMonday);
+        
+        /*setting active days*/
+        /*remove active day*/
+        aac.activeDay = null;
+        
+        /*see if this week is the active day week*/
+        if(aac.thisCurrentMonday.getDate()==aac.thisMonday.getDate() && aac.thisCurrentMonday.getMonth()==aac.thisMonday.getMonth()){
+        	aac.activeDay = w;
+        }
+	}
 });
