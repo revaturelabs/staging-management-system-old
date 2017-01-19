@@ -12,12 +12,11 @@ import com.codoid.products.fillo.Recordset;
 //This class can be used by tests to access excel spreadsheets that hold test data to insert into a database
 public class ExcelHelper {
     
-	private final String file = "src/test/resources/ExcelSheets/database_input.xlsx";
-	private final String sheet = "Sheet1";
-	private int columns;
+	private final String file = "src/test/resources/ExcelSheets/database_input_deluxe.xlsx";
+	private String sheet;
 	
-	public ExcelHelper(int columns) {
-		this.columns = columns;
+	public ExcelHelper(String sheet) {
+		this.sheet = sheet;
 	}
 	
     public ArrayList<String> getValues(String key) {
@@ -29,14 +28,21 @@ public class ExcelHelper {
 			
 			//Finds the row
 			String query = "SELECT * FROM "+sheet+" WHERE "+"KeyColumn='"+key+"'";
+			//System.out.println("Query: "+query);
 			Recordset rs = conn.executeQuery(query);
 			
 			//Finds the column
 			while (rs.next()) {
-				int i = 1;
-				while (i<=columns) {
-					values.add(rs.getField(String.valueOf(i)));
-					i++;
+				boolean flag = true;
+				int i  = 1;
+				while (flag) {
+					if (rs.getField(String.valueOf(i)) != "") {
+						values.add(rs.getField(String.valueOf(i)));
+						//System.out.println("Values so far: "+values);
+						i++;
+					} else {
+						flag = false;
+					}
 				}
 			}			
 			return values;

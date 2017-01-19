@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
-import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
@@ -39,7 +38,7 @@ public class UserDataManager {
 	 * Each element of createdUsers is removed from the database when removeAllTestUsers is called.
 	 */
 	
-	private List<User> createdUsers = new ArrayList<>();
+	public List<User> createdUsers = new ArrayList<>();
 	
 	@Autowired
 	private UserRepo ur;
@@ -140,55 +139,9 @@ public class UserDataManager {
 				createdUser.setGraduationDate(graduationDate);
 			}
 			
-			/*
-			System.out.println("OBJECT AFTER:");
-			System.out.println("Username: "+createdUser.getUsername());
-			System.out.println("ID: "+createdUser.getID());
-			List<AssociateAttendance> blah = createdUser.getAttendance();
-			System.out.println("List of attendance objects: "+blah);
-			System.out.println("Single attendance object: "+blah.get(0));
-			System.out.println("Graduation Date in milliseconds: "+createdUser.getGraduationDate().getTime());
-			System.out.println();
-			*/
-			
 			ur.save(createdUser);
 			createdUsers.remove(userIndex);
 			createdUsers.add(userIndex, createdUser);
-			
-			
-			/*
-			User recreatedUser = ur.findByUsername(createdUser.getUsername());
-			List<AssociateAttendance> al = recreatedUser.getAttendance();
-			
-			//Why do I get a LazyInitializationException here. How do I prevent it? 
-			System.out.println(al.get(0).getID());
-			
-			
-			System.out.println("OOGLYBOOGLY: "+createdUsers.get(userIndex).getUsername());
-			System.out.println();
-			for (User user:createdUsers) {
-				System.out.println("BEFORE");
-				System.out.println("Username: "+user.getUsername());
-				if (!user.getAttendance().isEmpty()) {
-					System.out.println("Attendance ID: "+user.getAttendance().get(0).getID());
-				}
-				System.out.println();
-			}
-			
-			createdUsers.remove(userIndex);
-			createdUsers.add(userIndex, recreatedUser);
-			
-			
-			for (User user:createdUsers) {
-				System.out.println("AFTER");
-				System.out.println("Username: "+user.getUsername());
-				if (!user.getAttendance().isEmpty()) {
-					System.out.println("Attendance ID: "+user.getAttendance().get(0).getID());
-				}
-				System.out.println();
-			}
-			*/
-			
 			
 		}
 	

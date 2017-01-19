@@ -18,10 +18,10 @@ public class AdminPage extends SMSPage {
 	@FindBy(name="mainAdminView")
 	WebElement attendanceTable;
 	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/md-table-container/table/thead/tr[1]/th[4]/span/md-icon")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/md-table-container/table[1]/tbody/tr/th[3]/span/md-icon")
 	WebElement prevWeek;
 	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/md-table-container/table/thead/tr[1]/th[6]/span/md-icon")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/md-table-container/table[1]/tbody/tr/th[5]/span/md-icon")
 	WebElement nextWeek;
 	
 	

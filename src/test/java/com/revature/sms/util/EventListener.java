@@ -10,7 +10,7 @@ public class EventListener extends AbstractWebDriverEventListener {
 	@Override
 	public void afterNavigateTo(String url, WebDriver driver) {
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -20,7 +20,7 @@ public class EventListener extends AbstractWebDriverEventListener {
 	@Override
 	public void afterNavigateBack(WebDriver driver) {
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -29,7 +29,7 @@ public class EventListener extends AbstractWebDriverEventListener {
 	@Override
 	public void afterClickOn(WebElement element, WebDriver driver) {
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

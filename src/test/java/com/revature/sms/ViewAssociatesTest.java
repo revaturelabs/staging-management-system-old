@@ -75,9 +75,8 @@ public class ViewAssociatesTest implements InstanceTestClassListener {
 		locations = TestSetup.getProperties(locationsPath);
 		
 		//The columnNumber variable should match the number of users that are being added to the database
-		int columnNumber = 2;
-		dbic.initializeUsers(columnNumber);
-		dbic.initializeAttendance(columnNumber);
+		dbic.initializeUsers();
+		dbic.initializeAttendance();
 	}
 	
 	//More browser preparation

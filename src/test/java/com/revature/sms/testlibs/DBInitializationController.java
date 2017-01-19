@@ -12,7 +12,6 @@ import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
-import com.revature.sms.domain.dao.AssociateAttendanceRepo;
 import com.revature.sms.domain.dao.BatchTypeRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
 import com.revature.sms.util.ExcelHelper;
@@ -35,8 +34,8 @@ public class DBInitializationController {
 		super();
 	}
 	
-	public UserDataManager initializeUsers(int columnNumber) {
-		ExcelHelper eh = new ExcelHelper(columnNumber);
+	public UserDataManager initializeUsers() {
+		ExcelHelper eh = new ExcelHelper("NewUsers");
 		
 		ArrayList<String> usernames = eh.getValues("username");
 		ArrayList<String> firstNames = eh.getValues("firstName");
@@ -50,7 +49,7 @@ public class DBInitializationController {
 		
 		//Each iteration of the loop corresponds to a new user that is added
 		int i = 0;
-		while (i < columnNumber) {
+		while (i < usernames.size()) {
 			//Finds already existing batch types and user role types, which are added to the new user
 			
 			BatchType batchType = btr.findByType(batchTypes.get(i));
@@ -65,36 +64,42 @@ public class DBInitializationController {
 	}
 	
 	//
-	public UserDataManager initializeAttendance(int columnNumber) {
-		ExcelHelper eh = new ExcelHelper(columnNumber);
-		
-		ArrayList<String> dates = eh.getValues("attendanceDate");
-		ArrayList<String> checkIns = eh.getValues("checkedIn");
-		ArrayList<String> verifications = eh.getValues("verified");
-		ArrayList<String> notes = eh.getValues("attendanceNote");
-	
-		//This loop gives an attendance object to all recently created test users
-		int i = 0;
-		while (i < columnNumber) {
-			String date = dates.get(i);
-			Timestamp ts = Utils.convertDate(date);
-			String checkedIn = checkIns.get(i);
-			boolean ci = Boolean.parseBoolean(checkedIn);
-			String verified = verifications.get(i);
-			boolean v = Boolean.parseBoolean(verified);
-			String note = notes.get(i);
-			
-			AssociateAttendance aa = new AssociateAttendance(ts, ci, v, note);
-			ArrayList<AssociateAttendance> listOfOne = new ArrayList<AssociateAttendance>();
-			listOfOne.add(aa);
-			
-			udm.editTestUser(i, "", "", "", "", new BatchType(), listOfOne, new ArrayList<AssociateTask>(), new UserRole(), new Timestamp(0));
-			i++;
-			
+	public UserDataManager initializeAttendance() {
+		ArrayList<User> arrayCopy = new ArrayList<User>();
+		for (User user: udm.createdUsers) {
+			arrayCopy.add(user);
 		}
+		int i = 0;
+		for (User u: arrayCopy) {
+			String username = u.getUsername();
+			ExcelHelper eh = new ExcelHelper(username);
+			
+			ArrayList<String> dates = eh.getValues("attendanceDate");
+			ArrayList<String> checkIns = eh.getValues("checkedIn");
+			ArrayList<String> verifications = eh.getValues("verified");
+			ArrayList<String> notes = eh.getValues("attendanceNote");
+		
+			int j = 0;
+			ArrayList<AssociateAttendance> attendanceList = new ArrayList<AssociateAttendance>();
+			while (j < dates.size()) {
+				String date = dates.get(j);
+				Timestamp ts = Utils.convertDate(date);
+				String checkedIn = checkIns.get(j);
+				boolean ci = Boolean.parseBoolean(checkedIn);
+				String verified = verifications.get(j);
+				boolean v = Boolean.parseBoolean(verified);
+				String note = notes.get(j);
+				
+				AssociateAttendance aa = new AssociateAttendance(ts, ci, v, note);
+				attendanceList.add(aa);				
+				j++;
+			}
+			udm.editTestUser(i, "", "", "", "", new BatchType(), attendanceList, new ArrayList<AssociateTask>(), new UserRole(), new Timestamp(0));
+			i++;
+		}
+		
 		return udm;
 	}
-	
 	
 	public void clearData() {
 		udm.removeAllTestUsers();
