@@ -6,7 +6,8 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
 	  // functions
 	    // calls master controller's toast function
 	lc.toast = function(message) {
-		$scope.$parent.mastCtrl.toast(message);
+		// $scope.$parent.mastCtrl.toast(message);
+        $scope.$emit( "toastMessage", message );
 	};
 
 	lc.login = function(isValid) {
@@ -42,20 +43,22 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
         $cookies.put( "RevatureSMSUsername", loginService.getUser().username );
         $cookies.put( "RevatureSMSToken", loginService.getToken() );
         switch (loginService.getUser().userRole.name) {
-        case "superAdmin":
-            lc.toast("Logged in.");
-            $state.go("superAttendance");
-            break;
-        case "admin":
-            lc.toast("Logged in.");
-            $state.go("adminAttendance");
-            break;
-        case "associate":
-            lc.toast("Logged in and attendance logged.");
-            $state.go("assocAttendance");
-            break;
-        default:
-            break;
+            case "superAdmin":
+                lc.toast("Logged in.");
+                $state.go("managerAttendance");
+                // $state.go("superAttendance");
+                break;
+            case "admin":
+                lc.toast("Logged in.");
+                $state.go("managerAttendance");
+                // $state.go("adminAttendance");
+                break;
+            case "associate":
+                lc.toast("Logged in and attendance logged.");
+                $state.go("associateAttendance");
+                break;
+            default:
+                break;
         }
     };
 

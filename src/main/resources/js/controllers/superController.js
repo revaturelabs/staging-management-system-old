@@ -57,7 +57,7 @@
             suc.toast("Error retrieving all users.");
         });
         
-      //set the title scope
-        suc.title = "";
+        // set the title scope
+        // suc.title = "";
 
     });

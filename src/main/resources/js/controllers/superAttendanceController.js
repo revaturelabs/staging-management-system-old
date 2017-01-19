@@ -3,10 +3,14 @@
     sms.controller( "superAttendanceCtrl", function($scope, $state, userService, $filter){
     	var sac = this;
     	
-    	$scope.$parent.suCtrl.title = "Associate Weekly Attendance";
+    	// $scope.$parent.suCtrl.title = "Associate Weekly Attendance";
+
+        $scope.$emit( "changeFunction", { title: "Test", actions: {} });
+
     	
     	sac.toast = function(message){
-    		$scope.$parent.$parent.mastCtrl.toast(message);
+    		// $scope.$parent.$parent.mastCtrl.toast(message);
+            $scope.$on( "toastMessage", message );
     	};
     	
     	/*This block sets the DATE HEADERS IN TABLE*/

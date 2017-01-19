@@ -23,13 +23,14 @@
 
     </head>
 
-    <body ng-app="sms" ng-controller="masterCtrl as mastCtrl" layout-fill>
+    <body ng-app="sms" ng-controller="rootCtrl as rootCtrl" layout-fill>
+    <!--<body ng-app="sms" layout-fill>-->
 
         <div class="toastContainer">
 
             <div>
                 <ui-view name="topBarView"> </ui-view>
-                <ui-view name="mainView"> </ui-view>
+                <ui-view name="contentView"> </ui-view>
             </div>
         
         </div>
@@ -41,7 +42,7 @@
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"> </script>
 
             <!-- Angular modules -->
-        <script type="text/javascript" src="//unpkg.com/angular-ui-router/release/angular-ui-router.min.js"> </script>
+        <script type="text/javascript" src="//unpkg.com/angular-ui-router/release/angular-ui-router.js"> </script>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"> </script>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"> </script>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.js"> </script>
@@ -53,8 +54,9 @@
         <script type="text/javascript" src="js/sms.js"></script>
 
             <!-- Controllers -->
+        <script type="text/javascript" src="js/controllers/rootController.js"></script>
         <script type="text/javascript" src="js/controllers/loginController.js"></script>
-        <script type="text/javascript" src="js/controllers/masterController.js"></script>
+        <script type="text/javascript" src="js/controllers/templateController.js"></script>
         <script type="text/javascript" src="js/controllers/superController.js"></script>
         <script type="text/javascript" src="js/controllers/adminController.js"></script>
         <script type="text/javascript" src="js/controllers/adminAttendanceController.js"></script>

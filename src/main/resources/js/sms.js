@@ -6,14 +6,20 @@
 
         $locationProvider.html5Mode(true);
 		$urlRouterProvider.otherwise("/login");
+        // $urlRouterProvider.otherwise(function($injector) {
+        //     var $state = $injector.get('$state');
+        //     $state.go("root.login");
+        // });
 
 		$stateProvider
               
               // root
             .state( "root", {
-                url: "",
+                // url: "",
                 abstract: true,
-                template: "<ui-view/>",
+                // template: "<ui-view/>",
+                controller: "rootCtrl",
+                controllerAs: "rootCtrl",
                 views: {
                     "topBarView": {
                         templateUrl: "html/views/topBar.html"
@@ -22,59 +28,80 @@
             })
 
                   // login
-                .state( "root.login", {
+                .state( "login", {
+                    parent: "root",
                     url: "/login",
                     views: {
-                        "mainView": {
+                        "contentView@": {
                             templateUrl: "html/views/login.html",
-                            controller: "loginCtrl as logCtrl"
+                            controller: "loginCtrl",
+                            controllerAs: "logCtrl"
                         },
-                        "topBarView": {
+                        "topBarView@": {
                             template: ""
                         }
                     }
                 })
 
                   // attendance
-                .state( "root.attendance", {
+                .state( "attendance", {
+                    parent: "root",
                     url: "/attendance",
                     abstract: true,
-                    template: "<ui-view/>"
+                    // template: "<ui-view/>",
+                    views: {
+                        "contentView@": {
+                            templateUrl: "html/templates/mainTemplate.html",
+                            controller: "templateCtrl",
+                            controllerAs: "tempCtrl"
+                        }
+                    }
                 })
 
                       // manager attendance
-                    .state( "root.attendance.managerAttendance", {
+                    .state( "managerAttendance", {
+                        parent: "attendance",
                         url: "",
-                        abstract: true,
-                        template: "<ui-view/>"
+                        // abstract: true
+                        // template: "<ui-view/>"
+                        views: {
+                            "mainView" : {
+                                templateUrl: "html/views/superadmin/superAttendance.html",
+                                controller: "superAttendanceCtrl",
+                                controllerAs: "supAttCtrl"
+                            }
+                        }
                     })
 
-                          // superadmin attendance
-                        .state( "root.attendance.managerAttendance.superadminAttendance", {
-                            url: "",
-                            views: {
-                                "mainView": {
-                                    templateUrl: "html/views/superadmin/superAttendance.html",
-                                    controller: "superAttendanceCtrl",
-                                    controllerAs: "supAttCtrl"
-                                }
-                            }
-                        })
+                        //   // superadmin attendance
+                        // .state( "superadminAttendance", {
+                        //     parent: "managerAttendance",
+                        //     url: "",
+                        //     // views: {
+                        //         // "mainView": {
+                        //             templateUrl: "html/views/superadmin/superAttendance.html",
+                        //             controller: "superAttendanceCtrl",
+                        //             controllerAs: "supAttCtrl"
+                        //         // }
+                        //     // }
+                        // })
 
-                          // admin attendance
-                        .state( "root.attendance.managerAttendance.adminAttendance", {
-                            url: "",
-                            views: {
-                                "mainView": { 
-                                    templateUrl: "html/views/admin/adminAttendance.html",
-                                    controller: "adminAttendanceCtrl",
-                                    controllerAs: "adAttCtrl"
-                                }
-                            }
-                        })
+                        //   // admin attendance
+                        // .state( "adminAttendance", {
+                        //     parent: "managerAttendance",
+                        //     // url: "",
+                        //     views: {
+                        //         "mainView": {
+                        //             templateUrl: "html/views/superadmin/superAttendance.html",
+                        //             controller: "superAttendanceCtrl",
+                        //             controllerAs: "supAttCtrl"
+                        //         }
+                        //     }
+                        // })
                     
                       // associate attendance
-                    .state( "root.attendance.associateAttendance", {
+                    .state( "associateAttendance", {
+                        parent: "attendance",
                         url: "",
                         views: {
                             "mainView": {
