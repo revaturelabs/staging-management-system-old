@@ -6,10 +6,6 @@
 
         $locationProvider.html5Mode(true);
 		$urlRouterProvider.otherwise("/login");
-        // $urlRouterProvider.otherwise(function($injector) {
-        //     var $state = $injector.get('$state');
-        //     $state.go("root.login");
-        // });
 
 		$stateProvider
               
@@ -72,32 +68,6 @@
                             }
                         }
                     })
-
-                        //   // superadmin attendance
-                        // .state( "superadminAttendance", {
-                        //     parent: "managerAttendance",
-                        //     url: "",
-                        //     // views: {
-                        //         // "mainView": {
-                        //             templateUrl: "html/views/superadmin/superAttendance.html",
-                        //             controller: "superAttendanceCtrl",
-                        //             controllerAs: "supAttCtrl"
-                        //         // }
-                        //     // }
-                        // })
-
-                        //   // admin attendance
-                        // .state( "adminAttendance", {
-                        //     parent: "managerAttendance",
-                        //     // url: "",
-                        //     views: {
-                        //         "mainView": {
-                        //             templateUrl: "html/views/superadmin/superAttendance.html",
-                        //             controller: "superAttendanceCtrl",
-                        //             controllerAs: "supAttCtrl"
-                        //         }
-                        //     }
-                        // })
                     
                       // associate attendance
                     .state( "associateAttendance", {

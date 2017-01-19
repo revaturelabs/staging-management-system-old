@@ -1,10 +1,16 @@
 
-    var sms = angular.module( "sms" );
-
-    sms.controller( "associateCtrl", function( $scope, $state, $mdSidenav, loginService ){
+    angular
+        .module( "sms" )
+        .controller( "associateCtrl", associateCtrl );
+        
+    function associateCtrl( $scope, $state, $mdSidenav, loginService ) {
         var asc = this;
 
-          // functions
+        asc.toast = toast;
+        asc.logout = logout;
+        asc.user = loginService.getUser();
+
+            // functions
         asc.openMenu = function() {
             $mdSidenav("left").open();
         };
@@ -22,19 +28,18 @@
         };
         
         asc.updateInformation = function(){
-        	$mdSidenav("left").close();
-        	$state.go("ASupdateInfo");
-        	
+            $mdSidenav("left").close();
+            $state.go("ASupdateInfo");
+            
         };
 
         asc.associateAttendance= function(){
-        	$mdSidenav("left").close();
-        	$state.go("assocAttendance");
-        	
+            $mdSidenav("left").close();
+            $state.go("assocAttendance");
+            
         };
         
-          // data
+            // data
         asc.user = loginService.getUser();
-        asc.token = loginService.getToken();
 
-    });
+    };
