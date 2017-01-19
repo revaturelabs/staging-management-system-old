@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
@@ -24,9 +25,8 @@ public class TestSetup {
 	
 	//List of paths to browser drivers
 	private final static String windowsChromeDriverPath = "src/test/resources/testBrowserDrivers/chromedriver.exe";
-	private final static String linuxChromeDriverPath = "src/test/resources/testBrowserDrivers/chromedriver";
 	private final static String ieDriverPath = "src/test/resources/testBrowserDrivers/IEDriverServer.exe";
-	
+	private final static String phantomJSDriverPath = "src/test/resources/testBrowserDrivers/phantomjs";
 	
 	public static Properties getProperties(String pathname) {
 		Properties prop = null;
@@ -53,13 +53,7 @@ public class TestSetup {
 	}
 	
 	public static WebDriver getChrome() {
-		 if(System.getProperty("os.name").equalsIgnoreCase("Windows 10")) {  //If you are a tester with a different windows os, add it to this if statement.
-			 //System.out.println("This line should be printed when the test is run on my local machine.");
-			 System.setProperty("webdriver.chrome.driver", windowsChromeDriverPath);
-		 } else {
-			 System.out.println("This line should be printed when the test is run on Jenkins.");
-			 System.setProperty("webdriver.chrome.driver", linuxChromeDriverPath);
-		 }
+		System.setProperty("webdriver.chrome.driver", windowsChromeDriverPath);
 		return new ChromeDriver();
 		//Inconsequential change
 	}
@@ -67,6 +61,11 @@ public class TestSetup {
 	public static WebDriver getIE() {
 		System.setProperty("webdriver.ie.driver", ieDriverPath);
 		return new InternetExplorerDriver();
+	}
+	
+	public static WebDriver getPhantomJS() {
+		System.setProperty("phantomjs.binary.path", phantomJSDriverPath);
+		return new PhantomJSDriver();
 	}
 	
 	

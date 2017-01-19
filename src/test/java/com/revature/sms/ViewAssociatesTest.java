@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +28,7 @@ import com.revature.sms.util.EventListener;
 @Service
 @RunWith(SpringInstanceTestClassRunner.class)
 @SpringBootTest
-public class ViewAssociatesTest implements InstanceTestClassListener{
+public class ViewAssociatesTest implements InstanceTestClassListener {
 	private final String browser = "Chrome"; 
 	private final String inputsPath = "src/test/resources/PropertiesFiles/inputs.properties";
 	private final String locationsPath = "src/test/resources/PropertiesFiles/locations.properties";
@@ -50,12 +51,22 @@ public class ViewAssociatesTest implements InstanceTestClassListener{
 	
 	@Override
 	public void beforeClassSetup() {
-		if (browser.equals("Chrome")) {
-			webDriver = TestSetup.getChrome();
-		}
-		if (browser.equals("Internet Explorer")) {
-			webDriver = TestSetup.getIE();
-		}	
+	    if (System.getProperty("os.name").equalsIgnoreCase("Windows 10")) {  //If you are a tester with a different windows os, add it to this if statement.
+	    	if (browser.equals("Chrome")) {
+	    		webDriver = TestSetup.getChrome();
+	    	}
+	    	if (browser.equals("Internet Explorer")) {
+	    		webDriver = TestSetup.getIE();
+	    	}
+	    	if (browser.equals("PhantomJS")) {
+	    		webDriver = TestSetup.getPhantomJS();
+	    	}
+	    } else {
+	    	System.out.println("This line should be printed in Jenkins.");
+	    	webDriver = new PhantomJSDriver();
+	    }
+	    	
+	    	
 		
 		//Allows the driver to take advantage of an event listener
 		driver = new EventFiringWebDriver(webDriver);

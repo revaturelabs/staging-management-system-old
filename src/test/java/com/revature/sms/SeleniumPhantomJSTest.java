@@ -7,10 +7,12 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.revature.sms.util.TestSetup;
+
 public class SeleniumPhantomJSTest  {
 	@Test
 	public void TestIt(){
-        WebDriver driver = new PhantomJSDriver();
+        WebDriver driver = TestSetup.getPhantomJS();
         // And now use this to visit Google
         driver.get("http://www.google.com");
         // Alternatively the same thing can be done like this
