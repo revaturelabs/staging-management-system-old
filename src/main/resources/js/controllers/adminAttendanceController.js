@@ -2,6 +2,7 @@ var sms = angular.module("sms");
 sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $filter) {
 	var aac = this;
 	
+	aac.loggedInUser = $scope.$parent.adCtrl.user;
 	$scope.$parent.adCtrl.title = "Associate Weekly Attendance";
 	
 	aac.toast = function(message){
@@ -92,11 +93,9 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     
     //used as a legend to display what the icon data is
     aac.legend = [
-    	{name: 'check_circle'  , color: "orange", description: "click to verify attendance" },
         {name: 'done'  , color: "#00A", description: "if the associate checked in but has NOT yet been verified" },
         {name: 'close', color: "#A00" , description: "if the associate is NOT checked in and NOT verified"},
         {name: 'done_all' , color: "rgb(89, 226, 168)" , description: "if the associate's attendance has been verified" },
-
         {name: '    ' , color: "#777", description: "no information available yet" }
 
      ]; 
@@ -106,7 +105,9 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
     
     /*create a verify attendance function*/
     
-    $scope.verifyAttendance = function(user, selectedDay){
+    $scope.verifyAttendance = function(user, selectedDay, currentStatus){
+    	rightNow = new Date();
+    	
     	//figure out which day was clicked
     	thisDay = aac.thisMonday;
     	if(selectedDay==1){
@@ -130,8 +131,12 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
 			day = new Date(attendance.date);
 			if(day.getDate()==thisDay.getDate() && day.getMonth()==thisDay.getMonth()){
 				//set the status to true on the object
-				attendance.verified = true;
-				attendance.checkedIn = true;
+				attendance.verified = !(currentStatus);
+				if(attendance.verified == false){
+					attendance.note = "";
+				}else{
+					attendance.note = "Validated by "+aac.loggedInUser.firstName+" "+aac.loggedInUser.lastName+" on "+rightNow;
+				}
 				updated = true;
 			}
 		})
@@ -142,8 +147,8 @@ sms.controller("adminAttendanceCtrl", function($scope, $state, userService, $fil
 			
 			newAttendace.date = thisDay;
 			newAttendace.verified = true;
-			newAttendace.checkedIn = true;
-			newAttendace.note = "Checked in and validated by admin";
+			newAttendace.checkedIn = false;
+			newAttendace.note = "Validated by "+aac.loggedInUser.firstName+" "+aac.loggedInUser.lastName+" on "+rightNow;
 			
 			user.attendance.push(newAttendace);
 		}

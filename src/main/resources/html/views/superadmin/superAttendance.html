@@ -32,61 +32,51 @@
 		<tbody md-body>
 			<tr md-row ng-repeat = "as in supAttCtrl.users | filter:searchBox track by as.username">
 				<td md-cell>{{ as.firstName }} {{ as.lastName }}</td>
-				<td md-cell>
-					<span ng-show="(as.thisWeek[0].verified == false || as.thisWeek[0].verified == null) && (supAttCtrl.activeDay > 0 || supAttCtrl.activeWeek == false)" >
-						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 0)">check_circle</md-icon>
-					</span>
+				<td md-cell ng-click="verifyAttendance(as, 0, as.thisWeek[0].verified)" ng-class="">
 					<!-- container for icon -->
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
 					
 					    <!-- set the icon data -->
-					    <md-icon ng-style="{color: as.thisWeek[0].icon.color}" aria-label='{{as.thisWeek[0].icon.name}}' class="material-icons step" ng-class="md-48">
+					    <md-icon ng-if="as.thisWeek[0].icon.name" ng-style="{color: as.thisWeek[0].icon.color}" aria-label='{{as.thisWeek[0].icon.name}}' class="material-icons step" ng-class="md-48">
 					
 					        <!-- changing the text changes the icon-->
 					        {{ as.thisWeek[0].icon.name }}
 					    </md-icon>
-					    <md-icon ng-show="(as.thisWeek[0].checkedIn == null && supAttCtrl.activeDay > 0) || (supAttCtrl.activeWeek == false && as.thisWeek[0].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
+					    <md-icon ng-if="(as.thisWeek[0].checkedIn == null && supAttCtrl.activeDay > 1) || (supAttCtrl.activeWeek == false && as.thisWeek[1].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
 					</div>
-				<td md-cell>
-					<span ng-show="(as.thisWeek[1].verified == false || as.thisWeek[1].verified == null)  && (supAttCtrl.activeDay > 1 || supAttCtrl.activeWeek == false)" >
-						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 1)">check_circle</md-icon>
-					</span>
+				</td>
+				<td md-cell ng-click="verifyAttendance(as, 1, as.thisWeek[1].verified)">
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
-					    <md-icon ng-style="{color: as.thisWeek[1].icon.color}" aria-label='{{as.thisWeek[1].icon.name}}' class="material-icons step" ng-class="md-48">
+					    <md-icon ng-if="as.thisWeek[1].icon.name" ng-style="{color: as.thisWeek[1].icon.color}" aria-label='{{as.thisWeek[1].icon.name}}' class="material-icons step" ng-class="md-48">
 					        {{ as.thisWeek[1].icon.name }}
 					    </md-icon>
-					    <md-icon ng-show="(as.thisWeek[1].checkedIn == null && supAttCtrl.activeDay > 1) || (supAttCtrl.activeWeek == false && as.thisWeek[1].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
+					    <md-icon ng-if="(as.thisWeek[1].checkedIn == null && supAttCtrl.activeDay > 1) || (supAttCtrl.activeWeek == false && as.thisWeek[1].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
 					</div>
-				<td md-cell>
-					<span ng-show="(as.thisWeek[2].verified == false || as.thisWeek[2].verified == null) && (supAttCtrl.activeDay > 2 || supAttCtrl.activeWeek == false)" >
-						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 2)">check_circle</md-icon>
-					</span>
+				</td>
+				<td md-cell ng-click="verifyAttendance(as, 2, as.thisWeek[2].verified)">
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
-					    <md-icon ng-style="{color: as.thisWeek[2].icon.color}" aria-label='{{as.thisWeek[2].icon.name}}' class="material-icons step" ng-class="md-48">
+					    <md-icon ng-if="as.thisWeek[2].icon.name" ng-style="{color: as.thisWeek[2].icon.color}" aria-label='{{as.thisWeek[2].icon.name}}' class="material-icons step" ng-class="md-48">
 					        {{ as.thisWeek[2].icon.name }}
 					    </md-icon>
-					    <md-icon ng-show="(as.thisWeek[2].checkedIn == null && supAttCtrl.activeDay > 2) || (supAttCtrl.activeWeek == false && as.thisWeek[2].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
+					    <md-icon ng-if="(as.thisWeek[2].checkedIn == null && supAttCtrl.activeDay > 2) || (supAttCtrl.activeWeek == false && as.thisWeek[2].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
 					</div>
-				<td md-cell>
-					<span ng-show="(as.thisWeek[3].verified == false || as.thisWeek[3].verified == null) && (supAttCtrl.activeDay > 3 || supAttCtrl.activeWeek == false)" >
-						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 3)">check_circle</md-icon>
-					</span>
+				</td>
+				<td md-cell ng-click="verifyAttendance(as, 3, as.thisWeek[3].verified)">
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
-					    <md-icon ng-style="{color: as.thisWeek[3].icon.color}" aria-label='{{as.thisWeek[3].icon.name}}' class="material-icons step" ng-class="md-48">
+					    <md-icon ng-if="as.thisWeek[3].icon.name" ng-style="{color: as.thisWeek[3].icon.color}" aria-label='{{as.thisWeek[3].icon.name}}' class="material-icons step" ng-class="md-48">
 					        {{ as.thisWeek[3].icon.name }}
 					    </md-icon>
-					    <md-icon ng-show="(as.thisWeek[3].checkedIn == null && supAttCtrl.activeDay > 3) || (supAttCtrl.activeWeek == false && as.thisWeek[3].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
+					    <md-icon ng-if="(as.thisWeek[3].checkedIn == null && supAttCtrl.activeDay > 3) || (supAttCtrl.activeWeek == false && as.thisWeek[3].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
 					</div>
-				<td md-cell>
-					<span ng-show="(as.thisWeek[4].verified == false || as.thisWeek[4].verified == null) && (supAttCtrl.activeDay > 4 || supAttCtrl.activeWeek == false)" >
-						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 4)">check_circle</md-icon>
-					</span>
+				</td>
+				<td md-cell ng-click="verifyAttendance(as, 4, as.thisWeek[4].verified)">
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
-					    <md-icon ng-style="{color: as.thisWeek[4].icon.color}" aria-label='{{as.thisWeek[4].icon.name}}' class="material-icons step" ng-class="md-48">
+					    <md-icon ng-if="as.thisWeek[4].icon.name" ng-style="{color: as.thisWeek[4].icon.color}" aria-label='{{as.thisWeek[4].icon.name}}' class="material-icons step" ng-class="md-48">
 					        {{ as.thisWeek[4].icon.name }}
 					    </md-icon>
-					    <md-icon ng-show="(as.thisWeek[4].checkedIn == null && supAttCtrl.activeDay > 4) || (supAttCtrl.activeWeek == false && as.thisWeek[4].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
+					    <md-icon ng-if="(as.thisWeek[4].checkedIn == null && supAttCtrl.activeDay > 4) || (supAttCtrl.activeWeek == false && as.thisWeek[4].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
 					</div>
+				</td>
 				
 			</tr>
 		</tbody>

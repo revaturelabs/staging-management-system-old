@@ -60,7 +60,7 @@
 			})
 				 // admin view all attendance
 	                .state( "adminAttendance", {
-	                    url: "/attendance",
+	                    url: "^/associate-attendance",
 	                    parent: "admin",
 	                    views: {
 	                        "mainAdminView": {
