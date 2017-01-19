@@ -44,6 +44,19 @@
                         
                     }
                 })
+                
+                 // superadmin view all tasks
+                .state( "superTask", {
+                    url: "^/task",
+                    parent: "super",
+                    views: {
+                        "mainSuperView": {
+                            templateUrl: "html/views/superadmin/superTask.html",
+                            controller: "superTaskCtrl as supTaskCtrl"
+                        }
+                        
+                    }
+                })
 
               // admin page
 			.state( "admin", {

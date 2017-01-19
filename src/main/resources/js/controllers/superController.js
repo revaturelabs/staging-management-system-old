@@ -40,6 +40,11 @@
         	$state.go("superAttendance");
         	
         };
+        suc.viewTask = function(){
+        	$mdSidenav("left").close();
+        	$state.go("superTask");
+        	
+        };
 
         suc.newAssociate = function() {
             
@@ -62,7 +67,7 @@
                 suc.toast("Batch addition cancelled.");
             });
         };
-
+        
           // data
         suc.user = loginService.getUser();
 

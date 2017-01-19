@@ -330,7 +330,7 @@ public class UserController {
 			user.setGraduationDate(userDTO.getGraduationDate());
 
 		}
-
+		
 		return user;
 
 	}

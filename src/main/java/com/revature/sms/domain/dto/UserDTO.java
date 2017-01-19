@@ -22,7 +22,7 @@ public class UserDTO {
 	private List<AssociateAttendance> attendance;
 	private List<AssociateTask> associateTask;
 	private Timestamp graduationDate;
-
+	
 	
 	public UserDTO() {
 		super();
@@ -47,6 +47,7 @@ public class UserDTO {
 		this.userRole = userRole;
 		this.batchType = batchType;
 		this.graduationDate = graduationDate;
+		//this.jobEvent=jobEvent;
 	}
 
 	
@@ -137,5 +138,5 @@ public class UserDTO {
 	public void setGraduationDate(Timestamp graduationDate) {
 		this.graduationDate = graduationDate;
 	}
-
+	
 }
