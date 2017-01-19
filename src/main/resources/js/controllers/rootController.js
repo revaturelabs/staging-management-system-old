@@ -10,11 +10,6 @@
             $mdToast.show( $mdToast.simple().textContent( message ).action("OKAY").position("top right").highlightAction(true) );
         } );
 
-            // listener to change card title
-        $scope.$on( "changeTitle", function( events, title ) {
-            rc.title = title;
-        });
-
           // data
 
           // initialization

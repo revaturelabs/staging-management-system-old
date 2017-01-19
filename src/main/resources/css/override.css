@@ -12,3 +12,8 @@
         position: fixed;
         right: 16px;
     }
+
+    .menu-icon {
+        color: white;
+        size: 24px;
+    }

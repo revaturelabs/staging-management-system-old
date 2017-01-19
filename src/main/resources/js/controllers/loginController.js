@@ -41,6 +41,7 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
     };
 
     lc.loginSuccess = function(response) {
+        console.log(response);
         loginService.addUser(response.user);
         loginService.addToken(response.authToken);
         $cookies.put( "RevatureSMSUsername", loginService.getUser().username );
