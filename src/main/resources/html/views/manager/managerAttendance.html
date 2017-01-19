@@ -21,16 +21,16 @@
                         <label><span><md-icon>search</md-icon></span>Search</label>
                         <input type="text" ng-model="searchBox">
                     </md-input-container></th>
-				<th md-cell>{{ manAttCtrlmonday }}</th>
-				<th md-cell>{{ manAttCtrltuesday }}</th>
-				<th md-cell>{{ manAttCtrlwednesday }}</th>
-				<th md-cell>{{ manAttCtrlthursday }}</th>
-				<th md-cell>{{ manAttCtrlfriday }}</th>
+				<th md-cell>{{ manAttCtrl.monday }}</th>
+				<th md-cell>{{ manAttCtrl.tuesday }}</th>
+				<th md-cell>{{ manAttCtrl.wednesday }}</th>
+				<th md-cell>{{ manAttCtrl.thursday }}</th>
+				<th md-cell>{{ manAttCtrl.friday }}</th>
 			</tr>
 		</thead>
 	
 		<tbody md-body>
-			<tr md-row ng-repeat = "as in manAttCtrlusers | filter:searchBox track by as.username">
+			<tr md-row ng-repeat = "as in manAttCtrl.users | filter:searchBox track by as.username">
 				<td md-cell>{{ as.firstName }} {{ as.lastName }}</td>
 				<td md-cell>
 					<span ng-show="as.thisWeek[0].verified == false || as.thisWeek[0].verified == null" >

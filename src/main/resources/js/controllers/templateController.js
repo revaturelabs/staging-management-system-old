@@ -3,7 +3,7 @@
         .module( "sms" )
         .controller( "templateCtrl", templateCtrl );
 
-        function templateCtrl( $scope ) {
+        function templateCtrl( $scope, loginService, $state ) {
             var tc = this;
 
               // listeners
@@ -12,4 +12,13 @@
                 tc.title = data.title;
                 tc.actions = data.actions;
             });
+
+            tc.userRole = loginService.getUser().userRole.name;
+            
+            if (tc.userRole == "associate"){
+                $state.go("associateAttendance");
+            }
+            else {
+                $state.go("managerAttendance");
+            }
         }

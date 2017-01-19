@@ -5,11 +5,14 @@
     	
     	// $scope.$parent.suCtrl.title = "Associate Weekly Attendance";
 
-		var userRole = loginService.getUser().userRole.name;
-		if (userRole == "superAdmin"){
+		  // data
+        mac.user = loginService.getUser();  
+
+
+		if (mac.user.userRole.name == "superAdmin"){
 			//insert logic for superAdmin only here
 		}
-		if (userRole == "admin"){
+		else if (mac.user.userRole.name == "admin"){
 			//logic for things admin can do here.
 		}
 		
@@ -18,7 +21,7 @@
     	
     	mac.toast = function(message){
     		// $scope.$parent.$parent.mastCtrl.toast(message);
-            $scope.$on( "toastMessage", message );
+            $scope.$emit( "toastMessage", message );
     	};
     	
 		mac.logout = function() {
@@ -275,4 +278,27 @@
     			mac.toast("Can't go to future weeks");
     		}
         };
+
+		  mac.newAssociate = function() {
+            
+              // opens a dialog to allows addition of a new batch of associates
+                // opens another dialog upon success to show added associates' info
+            $mdDialog.show({
+                templateUrl: "html/templates/batchAdd.html",
+                controller: "batchAddCtrl as bACtrl"
+            }).then( function() {
+                $mdDialog.show({
+                    templateUrl: "html/templates/batchAddSuccess.html",
+                    controller: "batchAddSuccessCtrl as bASCtrl",
+                    locals: { "newAssociates": batchAddFactory.getNewAssociates() },
+                    bindToController: true
+                }).then( function(){
+                    batchAddFactory.resetAssociates();
+                });
+            }, function() {
+                suc.toast("Batch addition cancelled.");
+            });
+        };
+
+        
     });
