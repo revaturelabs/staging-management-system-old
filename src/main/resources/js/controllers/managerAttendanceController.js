@@ -1,11 +1,19 @@
 
     var sms = angular.module( "sms" );
-    sms.controller( "managerAttendanceCtrl", function($scope, $state, userService, $filter){
+    sms.controller( "managerAttendanceCtrl", function($scope, $state, userService, loginService, $filter){
     	var mac = this;
     	
     	// $scope.$parent.suCtrl.title = "Associate Weekly Attendance";
 
-        $scope.$emit( "changeFunction", { title: "Test", actions: {} });
+		var userRole = loginService.getUser().userRole.name;
+		if (userRole == "superAdmin"){
+			//insert logic for superAdmin only here
+		}
+		if (userRole == "admin"){
+			//logic for things admin can do here.
+		}
+		
+        $scope.$emit( "changeFunction", { title: "Attendance", actions: {} });
 
     	
     	mac.toast = function(message){
@@ -13,6 +21,16 @@
             $scope.$on( "toastMessage", message );
     	};
     	
+		mac.logout = function() {
+            suc.user = {};
+            suc.token = "";
+            loginService.logout();
+            suc.toast("Logged out.");
+            $state.go("login");
+        };
+
+
+
     	/*This block sets the DATE HEADERS IN TABLE*/
     	//set current day
     	var today = new Date();

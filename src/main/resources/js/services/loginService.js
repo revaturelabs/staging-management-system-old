@@ -42,7 +42,7 @@
             ls.user = user;
         };
         
-        ls.getUser = function(user) {
+        ls.getUser = function() {
             return ls.user;
         };
 
