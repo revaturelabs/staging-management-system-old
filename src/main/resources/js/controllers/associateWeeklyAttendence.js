@@ -1,7 +1,7 @@
 
     var sms = angular.module( "sms" );
 
-    sms.controller( "associateWeeklyAttendenceCtrl", function( $scope, $state, loginService){
+    sms.controller( "associateWeeklyAttendenceCtrl", function( $scope, $state, loginService ){
         
     	// refer to this controller
     	var ascatt = this;
@@ -10,22 +10,42 @@
     	
         ascatt.user = loginService.getUser();
 
+        ascatt.toast = function(message){
+            $scope.$emit( "toastMessage", message );
+        };
+
+        ascatt.logout = function() {
+            ascatt.user = {};
+            loginService.logout();
+            ascatt.toast("Logged out.");
+            $state.go("login");
+        };
+
+        function menu() {
+            $scope.$emit( "changeFunction", { 
+                title: "Weekly Attendance", 
+                actions: [ {
+                    "function": ascatt.openMenu(),
+                    "icon"    : "alarm",
+                    "tooltip" : "Testing"
+                }]
+            });
+        }
+
             // functions
         ascatt.openMenu = function() {
             $mdSidenav("left").open();
         };
 
-        ascatt.toast = function(message){
-            $scope.$parent.mastCtrl.toast(message);
-        };
-        
-        ascatt.logout = function() {
-            ascatt.user = {};
-            ascatt.token = "";
-            loginService.logout();
-            ascatt.toast("Logged out.");
-            $state.go("login");
-        };
+        menu();
+
+        // ascatt.logout = function() {
+        //     ascatt.user = {};
+        //     ascatt.token = "";
+        //     loginService.logout();
+        //     ascatt.toast("Logged out.");
+        //     $state.go("login");
+        // };
         
         ascatt.updateInformation = function(){
             $mdSidenav("left").close();

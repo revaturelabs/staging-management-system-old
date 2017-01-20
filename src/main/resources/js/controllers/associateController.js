@@ -6,19 +6,9 @@
     function associateCtrl( $scope, $state, $mdSidenav, loginService ) {
         var asc = this;
 
-        console.log("This is running.");
         asc.toast = toast;
         asc.logout = logout;
         asc.user = loginService.getUser();
-
-        $scope.$emit( "changeFunction", { 
-            title: "Weekly Attendance", 
-            actions: [ { 
-                "function": asc.logout,
-                "icon": "exit to app",
-                "tooltip": "Logout"
-            }]
-        });
 
             // functions
         asc.openMenu = function() {

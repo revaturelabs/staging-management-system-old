@@ -3,8 +3,37 @@
         .module( "sms" )
         .controller( "templateCtrl", templateCtrl );
 
-        function templateCtrl( $scope, loginService, $state ) {
+        function templateCtrl( $scope, $state, loginService ) {
             var tc = this;
+
+              // bindables
+            tc.direct = direct;
+            tc.toast = toast;
+            tc.logout = logout;
+
+              // initialization
+            tc.direct();
+            
+              // functions
+            function direct() {
+                var userRole = loginService.getUser().userRole.name;    
+            
+                if (userRole == "associate"){
+                    $state.go("associateAttendance");
+                } else {
+                    $state.go("managerAttendance");
+                }
+            };
+
+            function toast( message ) {
+                $scope.$emit( "toastMessage", message );
+            };
+
+            function logout() {
+                loginService.logout();
+                tc.toast("Logged out.");
+                $state.go("login");
+            };
 
               // listeners
                 // changes title and actions based on recieved data
@@ -13,12 +42,4 @@
                 tc.actions = data.actions;
             });
 
-            tc.userRole = loginService.getUser().userRole.name;
-            
-            if (tc.userRole == "associate"){
-                $state.go("associateAttendance");
-            }
-            else {
-                $state.go("managerAttendance");
-            }
-        }
+        };
