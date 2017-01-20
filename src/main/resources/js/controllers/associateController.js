@@ -41,6 +41,17 @@
         	
         };
         
+        asc.assocCertifications = function(){
+        	$mdDialog.show({
+        		templateUrl: "html/templates/scheduleCertification.html",
+        		controller: "associateCertificationsCtrl as assCertCtrl"
+        	}).then( function() {
+        		asc.toast("Certification Scheduled");
+            }, function() {
+            	asc.toast("Certification Schedule Cancelled");
+            });
+        };
+        
           // data
         asc.user = loginService.getUser();
         asc.token = loginService.getToken();
