@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.revature.sms.domain.AssociateAttendance;
+import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.UserRole;
 
@@ -20,6 +21,7 @@ public class UserDTO {
 	private String newPassword;
 	private List<AssociateAttendance> attendance;
 	private Timestamp graduationDate;
+	private List<AssociateTask> tasks;
 	
 	public UserDTO() {
 		super();
@@ -35,7 +37,7 @@ public class UserDTO {
 	}
 
 	public UserDTO(String username, String firstName, String lastName,String password, UserRole userRole,
-			BatchType batchType, Timestamp graduationDate) {
+			BatchType batchType, Timestamp graduationDate, List<AssociateTask> tasks) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -44,6 +46,7 @@ public class UserDTO {
 		this.userRole = userRole;
 		this.batchType = batchType;
 		this.graduationDate = graduationDate;
+		this.tasks = tasks;
 	}
 
 	
@@ -126,5 +129,12 @@ public class UserDTO {
 		this.graduationDate = graduationDate;
 	}
 	
+	public List<AssociateTask> getTasks() {
+		return tasks;
+	}
+	
+	public void setTasks(List<AssociateTask> tasks) {
+		this.tasks = tasks;
+	}
 
 }

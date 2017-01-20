@@ -65,6 +65,7 @@
         ls.token = "";
 
         ls.addUser = function(user) {
+        	console.log(user);
             ls.user = user;
         };
         

@@ -27,7 +27,7 @@
         };
 
         us.update = function(user, success, error) {
-            user.$update(success, error);
+            us.userResource.update(user, success, error);
         };
 
         us.remove = function(user, success, error) {

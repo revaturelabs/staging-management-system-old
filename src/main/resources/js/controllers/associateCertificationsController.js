@@ -1,7 +1,7 @@
 var sms = angular.module("sms");
 
 sms.controller("associateCertificationsCtrl", function($scope, $state, $mdDialog,
-		loginService) {
+		loginService, userService, taskTypeService) {
 
 	var acc = this;
 	
@@ -26,81 +26,64 @@ sms.controller("associateCertificationsCtrl", function($scope, $state, $mdDialog
 	}
 	
 	acc.cancel = function() {
-		//acc.toast("Cancelled");
 		$mdDialog.cancel();
 	}
 	
 	acc.submit = function() {
-		acc.toast("Sumbited");
-		// update task
 		
+		acc.taskTypes = taskTypeService.getAll(function(response) {
+			acc.taskTypes = response;
+			var cert = acc.taskTypes[0];
+			
+			var newTask = {};
+			newTask.taskType = cert;
+			newTask.date = acc.myDate;
+			newTask.note = acc.note;
+			console.log(newTask);
+			acc.user.tasks.push(newTask);
+			
+			console.log(acc.user);
+			userService.update(acc.user,
+					function(response){
+						//success
+						console.log("Response:", response);
+						$mdDialog.hide();
+					},function(error){
+						//failure
+						console.log("Error:", error);
+						$mdDialog.cancel();
+					});
+		}, function(error) {
+			$mdDialog.cancel();
+		});
 		
-		//??????????????
-		//check for empty passwords
-    	/*if(oldPass.value === ""){
-    		uic.toast("Enter your password.");
-    		return;
-    	}
-    	
-    	if(newPass.value === ""){
-    		uic.toast("Enter a new password.");
-    		return;
-    	}
-    	
-    	if(confirmPass.value === ""){
-    		uic.toast("Confirm your new password.");
-    		return;
-    	}
-    	//TODO: user change their password to their username
-    	
-    	//hash passwords
-    	var oldPassH = CryptoJS.SHA1(oldPass.value).toString();
-    	var newPassH = CryptoJS.SHA1(newPass.value).toString();
-    	var confirmPassH = CryptoJS.SHA1(confirmPass.value).toString();
-    	
-    	if(newPassH == confirmPassH){
-    		//new passwords match
-    		if(oldPassH != newPassH){
-	    		//old and new passwords are different
-    			
-	            uic.user = loginService.getUser();
-	            uic.token = loginService.getToken();
-	            $http({
-	            	  method: 'PUT',
-	            	  url: '/api/v1/login',
-	            	  headers:{'Authorization' : uic.token,
-	            		  "Content-Type":"application/json"
-	            	  },
-	            	  data:{"username": uic.user.username, 
-	            		    "oldPassword": oldPassH, 
-	            		    "newPassword":newPassH}
-	            	}).then(function successCallback(response) {
-	            		//password changed successfully
-	            		$mdDialog.hide();
-	            		
-	            	}, function errorCallback(response) {
-	            		// password change went wrong
-	            		switch(response.status){
-	            		case 404:uic.toast("Incorrect password.");break;
-	            		case 401:uic.toast("Unauthorized user.");break;
-	            		default: uic.toast("An error has occured."); break;
-	            		}
-	            	  });
-	            uic.user = "";
-	            uic.token = "";
-	            
-    		}else{
-    			//old password and new password are the same
-    			uic.toast("Old password and new password are the same.");
-    		}
-    	}
-    	else{
-    		// passwords don't match
-    		uic.toast("Password confirmation does not match.");
-    	}*/
-		//????????????
+
 		
+		/*var newTaskType = {};
+		newTaskType.ID = 1;
+		newTaskType.type = "Certification";*/
+	
+/*		var newTask = {};
+		newTask.taskType = newTaskType;
+		newTask.date = acc.myDate;
+		newTask.note = acc.note;
+		console.log(newTask);
+		acc.user.tasks.push(newTask);
 		
+		//alert((acc.user.tasks[acc.user.tasks.length - 1]).date);
+		console.log(acc.user);
+		userService.update(acc.user,
+				function(response){
+					//success
+					console.log("Response:", response);
+					$mdDialog.hide();
+				},function(error){
+					//failure
+					console.log("Error:", error);
+					$mdDialog.cancel();
+				});*/
+		
+		//$mdDialog.hide();
 	};
 
 });

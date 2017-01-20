@@ -46,10 +46,7 @@
         		templateUrl: "html/templates/scheduleCertification.html",
         		controller: "associateCertificationsCtrl as assCertCtrl"
         	}).then( function() {
-        		// doing submit steps
         		asc.toast("Certification Scheduled");
-         
-      
             }, function() {
             	asc.toast("Certification Schedule Cancelled");
             });
