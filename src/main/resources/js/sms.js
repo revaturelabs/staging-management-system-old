@@ -1,6 +1,9 @@
 
     var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "md.data.table", "ngResource", "ngCookies", "ui.router"]);
 
+      // global constants
+    sms.constant( "weekdays", [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ] );
+
       // URL routing
     sms.config( function( $stateProvider, $urlRouterProvider, $locationProvider ) {
 
@@ -76,8 +79,8 @@
                         views: {
                             "mainView": {
                                 templateUrl: "html/views/associate/associateAttendance.html",
-                                controller: "associateWeeklyAttendenceCtrl",
-                                controllerAs: "assWeekAttCtrl"
+                                controller: "associateAttendenceCtrl",
+                                controllerAs: "assocAttCtrl"
                             } 
                         }
                     })

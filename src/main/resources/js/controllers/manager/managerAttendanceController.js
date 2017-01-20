@@ -6,7 +6,7 @@
     	// $scope.$parent.suCtrl.title = "Associate Weekly Attendance";
 
 		  // data
-        mac.user = loginService.getUser();  
+        mac.user = loginService.getUser();
 
 
 		if (mac.user.userRole.name == "superAdmin"){

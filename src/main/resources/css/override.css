@@ -17,3 +17,26 @@
         color: white;
         size: 24px;
     }
+
+    .page-icon {
+        color: dimgrey;
+        size: 24px;
+    }
+
+    .associateAttendanceTable h3, .associateAttendanceTable p {
+        margin: 0px 0px 0px 0px;
+        text-align: center;
+    }
+
+    .associateAttendanceTable p {
+        font-weight: normal;
+    }
+
+    .tableData {
+        text-align: center;
+    }
+
+    table[md-data-table] > tbody > tr > td:nth-child(2) {
+        max-width: 20%;
+        word-wrap: break-word;
+    }
