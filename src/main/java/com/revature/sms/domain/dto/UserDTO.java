@@ -20,7 +20,6 @@ public class UserDTO {
 	private String oldPassword;
 	private String newPassword;
 	private List<AssociateAttendance> attendance;
-	private List<AssociateTask> associateTask;
 	private Timestamp graduationDate;
 	private List<AssociateTask> tasks;
 	
@@ -121,14 +120,6 @@ public class UserDTO {
 
 	public void setAttendance(List<AssociateAttendance> attendance) {
 		this.attendance = attendance;
-	}
-	
-	public List<AssociateTask> getAssociateTask() {
-		return associateTask;
-	}
-
-	public void setAssociateTask(List<AssociateTask> associateTask) {
-		this.associateTask = associateTask;
 	}
 	
 	public Timestamp getGraduationDate() {

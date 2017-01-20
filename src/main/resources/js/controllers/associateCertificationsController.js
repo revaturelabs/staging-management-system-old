@@ -32,51 +32,20 @@ sms.controller("associateCertificationsCtrl", function($scope, $state, $mdDialog
 			newTask.taskType = cert;
 			newTask.date = acc.myDate;
 			newTask.note = acc.note;
-			//console.log(newTask);
 			acc.user.tasks.push(newTask);
 			
-			//console.log(acc.user);
 			userService.update(acc.user,
 					function(response){
 						//success
-						/*console.log("Response:", response);*/
 						$mdDialog.hide();
 					},function(error){
 						//failure
-						//console.log("Error:", error);
 						$mdDialog.cancel();
 					});
 		}, function(error) {
 			$mdDialog.cancel();
 		});
 		
-
-		
-		/*var newTaskType = {};
-		newTaskType.ID = 1;
-		newTaskType.type = "Certification";*/
-	
-/*		var newTask = {};
-		newTask.taskType = newTaskType;
-		newTask.date = acc.myDate;
-		newTask.note = acc.note;
-		console.log(newTask);
-		acc.user.tasks.push(newTask);
-		
-		//alert((acc.user.tasks[acc.user.tasks.length - 1]).date);
-		console.log(acc.user);
-		userService.update(acc.user,
-				function(response){
-					//success
-					console.log("Response:", response);
-					$mdDialog.hide();
-				},function(error){
-					//failure
-					console.log("Error:", error);
-					$mdDialog.cancel();
-				});*/
-		
-		//$mdDialog.hide();
 	};
 
 });
