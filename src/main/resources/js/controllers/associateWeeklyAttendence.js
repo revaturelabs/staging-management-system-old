@@ -4,7 +4,7 @@ sms
 		.controller(
 				"associateWeeklyAttendenceCtrl",
 				function($scope, $state, loginService) {
-
+                    $scope.$parent.assoCtrl.title = "Weekly Attendance";
 					// refer to this controller
 					var ascatt = this;
 					
@@ -263,7 +263,7 @@ sms
 						if (weekSwitch >= 0) {
 							
 							// let the user know why they can not continue
-							ascatt.toast("you can not see past the current week");
+							ascatt.toast("Can't go to future weeks");
 
 						}
 						// for any other case we allow the user to go forward
@@ -290,7 +290,7 @@ sms
 						if (weekSwitch <= -4) {
 							
 							// let the user know why they can not continue
-							ascatt.toast("you can not go back more than 3 weeks");
+							ascatt.toast("Can't go back more than 3 weeks");
 						}
 						// for any other case we allow the user to go back
 						else {

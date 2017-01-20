@@ -3,6 +3,7 @@
     sms.controller( "superAttendanceCtrl", function($scope, $state, userService, $filter){
     	var sac = this;
     	
+    	sac.loggedInUser = $scope.$parent.suCtrl.user;
     	$scope.$parent.suCtrl.title = "Associate Weekly Attendance";
     	
     	sac.toast = function(message){
@@ -95,7 +96,6 @@
         
         //used as a legend to display what the icon data is
         sac.legend = [
-        	{name: 'check_circle'  , color: "orange", description: "click to verify attendance" },
             {name: 'done'  , color: "#00A", description: "if the associate checked in but has NOT yet been verified" },
             {name: 'close', color: "#A00" , description: "if the associate is NOT checked in and NOT verified"},
             {name: 'done_all' , color: "rgb(89, 226, 168)" , description: "if the associate's attendance has been verified" },
@@ -106,9 +106,11 @@
         /*end of legend creation*/
         
         
-        /*create a verify attendance function*/
-        
-        $scope.verifyAttendance = function(user, selectedDay){
+        /*create a verify attendance functions*/
+
+        $scope.verifyAttendance = function(user, selectedDay, currentStatus){
+        	rightNow = new Date();
+        	
         	//figure out which day was clicked
         	thisDay = sac.thisMonday;
         	if(selectedDay==1){
@@ -124,39 +126,48 @@
             	thisDay = sac.thisFriday;
             }
         	
-            //get the attendance object that matches the clicked on day
-            //accomplish this by doing a for each loop that looks through each object
-            //set a variable that varifies the object has been updated
-            updated = false;
-            user.attendance.forEach(function(attendance){
-    			day = new Date(attendance.date);
-    			if(day.getDate()==thisDay.getDate() && day.getMonth()==thisDay.getMonth()){
-    				//set the status to true on the object
-    				attendance.verified = true;
-    				attendance.checkedIn = true;
-    				updated = true;
-    			}
-    		})
-        	
-    		//if the object wwasn't updated then the object will be created
-    		if(!updated){
-    			newAttendace = {};
-    			
-    			newAttendace.date = thisDay;
-    			newAttendace.verified = true;
-    			newAttendace.checkedIn = true;
-    			newAttendace.note = "Checked in and validated by admin";
-    			
-    			user.attendance.push(newAttendace);
-    		}
-    		
-    		//call user service to send the update to the database
-        	userService.update(user, function(response){
-        		sac.toast("Successful update");
-        		sac.users = $filter("weekFilter")(sac.users, sac.thisMonday);
-        	}, function(error){
-        		sac.toast("Error updating user attendance");
-        	})
+            //make sure it isn't a future date that was clicked on
+            //if the clicked on day is less than or equal to the current day of the week
+            //or it is not the active week
+            if((selectedDay < w) || !sac.activeWeek){
+	            //get the attendance object that matches the clicked on day
+	            //accomplish this by doing a for each loop that looks through each object
+	            //set a variable that varifies the object has been updated
+	            updated = false;
+	            user.attendance.forEach(function(attendance){
+	    			day = new Date(attendance.date);
+	    			if(day.getDate()==thisDay.getDate() && day.getMonth()==thisDay.getMonth()){
+	    				//set the status to true on the object
+	    				attendance.verified = !(currentStatus);
+	    				if(attendance.verified == false){
+	    					attendance.note = "";
+	    				}else{
+	    					attendance.note = "Validated by "+sac.loggedInUser.firstName+" "+sac.loggedInUser.lastName+" on "+rightNow;
+	    				}
+	    				updated = true;
+	    			}
+	    		})
+	        	
+	    		//if the object wasn't updated then the object will be created
+	    		if(!updated){
+	    			newAttendace = {};
+	    			
+	    			newAttendace.date = thisDay;
+	    			newAttendace.verified = true;
+	    			newAttendace.checkedIn = false;
+	    			newAttendace.note = "Validated by "+sac.loggedInUser.firstName+" "+sac.loggedInUser.lastName+" on "+rightNow;
+	    			
+	    			user.attendance.push(newAttendace);
+	    		}
+	    		
+	    		//call user service to send the update to the database
+	        	userService.update(user, function(response){
+	        		sac.toast("Successful update");
+	        		sac.users = $filter("weekFilter")(sac.users, sac.thisMonday);
+	        	}, function(error){
+	        		sac.toast("Error updating user attendance");
+	        	})
+            }
         	
         }
         
