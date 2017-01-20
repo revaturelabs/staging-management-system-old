@@ -9,18 +9,20 @@
                     <md-icon md-svg-icon="img/icons/ic_menu_white_24px.svg"> </md-icon>
                 </md-button>
 
+
+                <div flex>{{assoCtrl.title}} </div>
+                
                 <div flex> </div>
                 <md-button class="md-icon-button" aria-label="Schedule Certification" ng-click="assoCtrl.assocCertifications()">
                     <md-tooltip> Schedule Certifications </md-tooltip>
                     <md-icon ng-style="rgb(89, 226, 168)"
-                     aria-label="date_range"
-                     class="material-icons step"
-                     ng-class="md-48">
-                     date_range
-                  </md-icon>
+	                    aria-label="date_range"
+	                    class="material-icons step"
+	                    ng-class="md-48">
+	                    date_range
+                  	 </md-icon>
                 </md-button>
-
-                <div flex>{{assoCtrl.title}} </div>
+                
                 <md-button class="md-icon-button" aria-label="Menu" ng-click="assoCtrl.logout()">
                     <md-tooltip> Logout </md-tooltip>
                     <md-icon md-svg-icon="img/icons/ic_exit_to_app_white_24px.svg"> </md-icon>

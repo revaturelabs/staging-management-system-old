@@ -32,18 +32,18 @@ sms.controller("associateCertificationsCtrl", function($scope, $state, $mdDialog
 			newTask.taskType = cert;
 			newTask.date = acc.myDate;
 			newTask.note = acc.note;
-			console.log(newTask);
+			//console.log(newTask);
 			acc.user.tasks.push(newTask);
 			
-			console.log(acc.user);
+			//console.log(acc.user);
 			userService.update(acc.user,
 					function(response){
 						//success
-						console.log("Response:", response);
+						/*console.log("Response:", response);*/
 						$mdDialog.hide();
 					},function(error){
 						//failure
-						console.log("Error:", error);
+						//console.log("Error:", error);
 						$mdDialog.cancel();
 					});
 		}, function(error) {
