@@ -12,11 +12,11 @@
 		mac.logout = logout;
 		mac.newAssociates = newAssociates;
 		mac.verifyAttendance = verifyAttendance;
-		mac.setMonday = undefined;
 		mac.setDateTable = setDateTable;
 		mac.goBackOneWeek = goBackOneWeek;
 		mac.goForwardOneWeek = goForwardOneWeek;
-
+		//make a scope variable that holds the week number, so they can only go forward and back 2 weeks
+        mac.weekNumber = 4;
 		mac.addOptions = addOptions;
 
 
@@ -55,10 +55,10 @@
     	};
     	
 		function logout() {
-            suc.user = {};
-            suc.token = "";
+            mac.user = {};
+            mac.token = "";
             loginService.logout();
-            suc.toast("Logged out.");
+            mac.toast("Logged out.");
             $state.go("login");
         };
 
@@ -221,8 +221,7 @@
         
         
     	/*change week functions*/
-        //make a scope variable that holds the week number, so they can only go forward and back 2 weeks
-         mac.weekNumber = 4;
+        
         
     	function goBackOneWeek() {
     		

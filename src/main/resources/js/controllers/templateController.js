@@ -23,6 +23,8 @@
                 } else {
                     $state.go("managerAttendance");
                 }
+
+                tc.toast("Login Successful.");
             };
 
             function toast( message ) {

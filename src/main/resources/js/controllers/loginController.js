@@ -3,14 +3,22 @@ var sms = angular.module("sms");
 sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
 	var lc = this;
 
+    //binding
+
+    lc.login = login;
+   
+    lc.loginSuccess = loginSuccess;
+    lc.toast = toast;
+    lc.cookieCheck = cookieCheck;
+
 	  // functions
 	    // calls master controller's toast function
-	lc.toast = function(message) {
+	function toast(message) {
 		// $scope.$parent.mastCtrl.toast(message);
         $scope.$emit( "toastMessage", message );
 	};
 
-	lc.login = function(isValid) {
+	function login(isValid) {
 		if (isValid) {
 			var creds = {};
 			creds.username = lc.username;
@@ -21,7 +29,7 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
 		}
 	};
 
-    lc.cookieCheck = function() {
+    function cookieCheck() {
         lc.cookieLoad = true;
 
         // var usernameCookie = $cookies.get("RevatureSMSUsername");
@@ -41,27 +49,15 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
         }
     };
 
-    lc.loginSuccess = function(response) {
-        console.log(response);
+    function loginSuccess(response) {
         loginService.addUser(response.user);
         loginService.addToken(response.authToken);
         $cookies.put( "RevatureSMSUsername", loginService.getUser().username );
         $cookies.put( "RevatureSMSToken", loginService.getToken() );
-        // switch (loginService.getUser().userRole.name) {
-        //     case "superAdmin":
-        //     case "admin":
-        //         lc.toast("Logged in.");
-        //         $state.go("managerAttendance");
-        //         break;
-        //     case "associate":
-        //         lc.toast("Logged in and attendance logged.");
-        //         $state.go("associateAttendance");
-        //         break;
-        //     default:
-        //         break;
-        // }
+       
 
         $state.go("attendance");
+        
     };
 
 	  // data
