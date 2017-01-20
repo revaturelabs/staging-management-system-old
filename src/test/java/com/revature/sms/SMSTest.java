@@ -19,6 +19,7 @@ import com.revature.sms.util.InstanceTestClassListener;
 import com.revature.sms.util.SpringInstanceTestClassRunner;
 import com.revature.sms.util.TestSetup;
 import com.revature.sms.pagefactory.AdminPage;
+import com.revature.sms.pagefactory.AssociatePage;
 import com.revature.sms.pagefactory.LoginPage;
 import com.revature.sms.pagefactory.SuperAdminPage;
 import com.revature.sms.testlibs.DBInitializationController;
@@ -27,7 +28,7 @@ import com.revature.sms.util.EventListener;
 @Service
 @RunWith(SpringInstanceTestClassRunner.class)
 @SpringBootTest
-public class ViewAssociatesTest implements InstanceTestClassListener {
+public class SMSTest implements InstanceTestClassListener {
 	private final String browser = "Chrome"; 
 	private final String inputsPath = "src/test/resources/PropertiesFiles/inputs.properties";
 	private final String locationsPath = "src/test/resources/PropertiesFiles/locations.properties";
@@ -44,7 +45,8 @@ public class ViewAssociatesTest implements InstanceTestClassListener {
 	static EventFiringWebDriver driver;
 	static EventListener eventListener; 
 	private LoginPage lp;
-	private AdminPage ap;
+	private AssociatePage asp;
+	private AdminPage adp;
 	private SuperAdminPage sap;
 	
 	
@@ -84,37 +86,35 @@ public class ViewAssociatesTest implements InstanceTestClassListener {
 	public void before() {
 		driver.get(inputs.getProperty("url"));
 		lp = new LoginPage(driver);
-		ap = new AdminPage(driver);
+		asp = new AssociatePage(driver);
+		adp = new AdminPage(driver);
 		sap = new SuperAdminPage(driver);
-		
+		Assert.assertTrue(lp.verify());
+		Assert.assertEquals(locations.getProperty("siteName"), driver.getTitle());
 	}
 	
-	//Login and logout as admin
 	@Test
-	public void viewAsAdmin() {
-		Assert.assertTrue(lp.verify());
-		Assert.assertEquals(locations.getProperty("loginPg"), driver.getTitle());
+	public void testAssociatePage() {
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
+		Assert.assertTrue(asp.verify());
+		asp.logoutIcon.click();
+	}
+	
+	@Test
+	public void testAdminPage() {
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
-		
-		Assert.assertTrue(ap.verify());
-		ap.logout();
-		Assert.assertTrue(lp.verify());
-		
+		Assert.assertTrue(adp.verify());
+		adp.logoutIcon.click();
 	}
 	
-	//Login and logout as superadmin
 	@Test
-	public void viewAsSuperAdmin() {
-		Assert.assertTrue(lp.verify());
-		Assert.assertEquals(locations.getProperty("loginPg"), driver.getTitle());
+	public void testSuperAdminPage() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
-		
 		Assert.assertTrue(sap.verify());
-		sap.logout();
-		Assert.assertTrue(lp.verify());
-		
+		sap.logoutIcon.click();
 	}
 
+	
 	//Clear database
 	@Override
 	public void afterClassSetup() {

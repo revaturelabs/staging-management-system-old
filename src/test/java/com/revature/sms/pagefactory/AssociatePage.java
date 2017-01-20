@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class SuperAdminPage extends SMSPage {
+public class AssociatePage extends SMSPage {
 
 	@FindBy(tagName="title")
 	public WebElement title;
@@ -18,27 +18,23 @@ public class SuperAdminPage extends SMSPage {
 	@FindBy(css="[md-svg-icon=\"img/icons/ic_exit_to_app_white_24px.svg\"]")
 	public WebElement logoutIcon;
 	
-	@FindBy(css="[ng-model=\"searchBox\"]")
-	public WebElement searchBox;
+	@FindBy(tagName="tbody")
+	public WebElement weekDisplay;
 	
-	@FindBy(css="[ng-click=\"goBackOneWeek()\"]")
+	@FindBy(css="[ng-click=\"assWeekAttCtrl.getPreviousWeek()\"]")
 	public WebElement prevWeek;
 	
-	@FindBy(css="[ng-click=\"goForwardOneWeek()\"]")
+	@FindBy(css="[ng-click=\"assWeekAttCtrl.getNextWeek()\"]")
 	public WebElement nextWeek;
 	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/md-table-container/table[1]/tbody/tr/th[4]")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/div[3]/div[2]/p")
 	public WebElement weekOf;
 	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/md-table-container/table[2]")
-	public WebElement attendanceTable;
-	
-	@FindBy(css="[md-svg-icon=\"img/icons/ic_add_white_24px.svg\"]")
-	public WebElement addAssociate;
-	
 
-	public SuperAdminPage(WebDriver driver) {
+	public AssociatePage(WebDriver driver) {
 		super(driver);
 	}
 	
+	
+
 }

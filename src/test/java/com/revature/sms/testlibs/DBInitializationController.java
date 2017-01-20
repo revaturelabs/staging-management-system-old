@@ -65,10 +65,13 @@ public class DBInitializationController {
 	
 	//
 	public UserDataManager initializeAttendance() {
+		//This createdUsers array must be copied to avoid a ConcurrentModificationException
 		ArrayList<User> arrayCopy = new ArrayList<User>();
 		for (User user: udm.createdUsers) {
 			arrayCopy.add(user);
 		}
+		
+		//The outer loop looks through every new user.
 		int i = 0;
 		for (User u: arrayCopy) {
 			String username = u.getUsername();
@@ -79,6 +82,7 @@ public class DBInitializationController {
 			ArrayList<String> verifications = eh.getValues("verified");
 			ArrayList<String> notes = eh.getValues("attendanceNote");
 		
+			//The inner loop creates each user's attendance records and saves them to the database.
 			int j = 0;
 			ArrayList<AssociateAttendance> attendanceList = new ArrayList<AssociateAttendance>();
 			while (j < dates.size()) {

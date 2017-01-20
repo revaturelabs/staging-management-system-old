@@ -8,16 +8,19 @@ import org.openqa.selenium.support.FindBy;
 public class LoginPage extends SMSPage {
 	
 	@FindBy(xpath="/html/head/title")
-	WebElement title;
+	public WebElement title;
+	
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/div/md-card/md-toolbar/div/span")
+	public WebElement header;
 	
 	@FindBy(css="[type=\"text\"]")
-	WebElement unField;
+	public WebElement unField;
 	
 	@FindBy(css="[type=\"password\"]")
-	WebElement pwField;
+	public WebElement pwField;
 	
 	@FindBy(css="[type=\"submit\"]")
-	WebElement submit;
+	public WebElement submit;
 	
 	
 	

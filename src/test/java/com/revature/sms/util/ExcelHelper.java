@@ -28,17 +28,17 @@ public class ExcelHelper {
 			
 			//Finds the row
 			String query = "SELECT * FROM "+sheet+" WHERE "+"KeyColumn='"+key+"'";
-			//System.out.println("Query: "+query);
 			Recordset rs = conn.executeQuery(query);
 			
-			//Finds the column
+			//Looks through columns in the row in order until an empty cell is found. Row 1 in the excel
+			//sheet must include column numbers for this to work.
+			
 			while (rs.next()) {
 				boolean flag = true;
 				int i  = 1;
 				while (flag) {
 					if (rs.getField(String.valueOf(i)) != "") {
 						values.add(rs.getField(String.valueOf(i)));
-						//System.out.println("Values so far: "+values);
 						i++;
 					} else {
 						flag = false;
