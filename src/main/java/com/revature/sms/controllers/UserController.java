@@ -321,11 +321,6 @@ public class UserController {
 		if (userDTO.getAttendance() != null) {
 			user.setAttendance(userDTO.getAttendance());
 		}
-
-		if (userDTO.getAssociateTask() != null) {
-			user.setTasks(userDTO.getAssociateTask());
-		}
-
 		if (userDTO.getGraduationDate() != null) {
 			user.setGraduationDate(userDTO.getGraduationDate());
 
