@@ -5,26 +5,36 @@
     	
     	// $scope.$parent.suCtrl.title = "Associate Weekly Attendance";
 
-		  // data
+		// bindables
         mac.user = loginService.getUser();  
+		mac.addOptions = addOptions;
+		mac.toast = toast;
+		mac.logout = logout;
+		mac.newAssociates = newAssociates;
 
 
-		if (mac.user.userRole.name == "superAdmin"){
-			//insert logic for superAdmin only here
-		}
-		else if (mac.user.userRole.name == "admin"){
-			//logic for things admin can do here.
+
+
+		function addOptions() {
+			if (mac.user.userRole.name == "superAdmin"){
+				//insert logic for superAdmin only here
+			}
+			else if (mac.user.userRole.name == "admin"){
+				//logic for things admin can do here.
+			}
+			$scope.$emit( "changeFunction", { title: "Attendance", actions: {} });
 		}
 		
-        $scope.$emit( "changeFunction", { title: "Attendance", actions: {} });
+		
+        
 
     	
-    	mac.toast = function(message){
+    	function toast(message){
     		// $scope.$parent.$parent.mastCtrl.toast(message);
             $scope.$emit( "toastMessage", message );
     	};
     	
-		mac.logout = function() {
+		function logout() {
             suc.user = {};
             suc.token = "";
             loginService.logout();
@@ -279,7 +289,7 @@
     		}
         };
 
-		  mac.newAssociate = function() {
+		function newAssociates() {
             
               // opens a dialog to allows addition of a new batch of associates
                 // opens another dialog upon success to show added associates' info
