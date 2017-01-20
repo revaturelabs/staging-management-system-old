@@ -3,7 +3,7 @@
 
     sms.controller( "associateCtrl", function($http, $scope, $state, $mdSidenav, loginService, $mdDialog ){
         var asc = this;
-
+        asc.title = " ";
           // functions
         asc.openMenu = function() {
             $mdSidenav("left").open();

@@ -1,104 +1,145 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
+<head>
 
-        <title> Staging Management System </title>
+<title>Staging Management System</title>
 
-        <base href="/">
+<base href="/">
 
-        <meta charset="UTF-8">
-        <meta name="theme-color" content="#f26925">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<meta charset="UTF-8">
+<meta name="theme-color" content="#f26925">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-        <!-- stylesheets -->
-        <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
-        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-        <link rel="stylesheet" href="css/md-data-table.css">
-        <link rel="stylesheet" href="css/override.css">
-        <link type="image/x-icon" rel="icon" href="img/favicon.ico">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- stylesheets -->
+<link rel="stylesheet"
+	href="//fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+<link rel="stylesheet"
+	href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+<link rel="stylesheet" href="css/md-data-table.css">
+<link rel="stylesheet" href="css/override.css">
+<link type="image/x-icon" rel="icon" href="img/favicon.ico">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 
-    </head>
+</head>
 
-    <body ng-app="sms" ng-controller="masterCtrl as mastCtrl" layout-fill>
+<body ng-app="sms" ng-controller="masterCtrl as mastCtrl" layout-fill>
 
-        <div class="toastContainer">
+	<div class="toastContainer">
 
-            <div>
-                <ui-view name="topBarView"> </ui-view>
-                <ui-view name="mainView"> </ui-view>
-            </div>
-        
-        </div>
-        
-            <!-- jQuery -->
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<div>
+			<ui-view name="topBarView"> </ui-view>
+			<ui-view name="mainView"> </ui-view>
+		</div>
 
-            <!-- AngularJS -->
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"> </script>
+	</div>
 
-            <!-- Angular modules -->
-        <script type="text/javascript" src="//unpkg.com/angular-ui-router/release/angular-ui-router.min.js"> </script>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"> </script>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"> </script>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.js"> </script>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.js"> </script>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.js"> </script>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.js"> </script>
+	<!-- jQuery -->
+	<script type="text/javascript"
+		src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
-            <!-- Angular scripts -->
-        <script type="text/javascript" src="js/sms.js"></script>
+	<!-- AngularJS -->
+	<script type="text/javascript"
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js">
+		
+	</script>
 
-            <!-- Controllers -->
-        <script type="text/javascript" src="js/controllers/loginController.js"></script>
-        <script type="text/javascript" src="js/controllers/masterController.js"></script>
-        <script type="text/javascript" src="js/controllers/superController.js"></script>
-         <script type="text/javascript" src="js/controllers/superTaskController.js"></script>
-         <script type="text/javascript" src="js/controllers/associateInfoCtrl.js"></script>
-        <script type="text/javascript" src="js/controllers/adminController.js"></script>
-        <script type="text/javascript" src="js/controllers/adminAttendanceController.js"></script>
-        <script type="text/javascript" src="js/controllers/associateController.js"></script>
-        <script type="text/javascript" src="js/controllers/superAttendanceController.js"></script>
-        <script type="text/javascript" src="js/controllers/associateWeeklyAttendence.js"></script>
-        <script type="text/javascript" src="js/controllers/updateInfoController.js"></script> 
-        <script type="text/javascript" src="js/controllers/batchAddController.js"></script>
-        <script type="text/javascript" src="js/controllers/batchAddSuccessController.js"></script>
-        
-            <!-- Services -->
-        <script type="text/javascript" src="js/services/loginService.js"></script>
-        <script type="text/javascript" src="js/services/userService.js"></script>
-        <script type="text/javascript" src="js/services/batchTypeService.js"></script>
-            
-            <!-- Factories -->
-        <script type="text/javascript" src="js/factories/batchAddFactory.js"></script>
-            
-            <!-- Filters -->
-		<script type="text/javascript" src="js/filters/associateFilter.js"></script>
-		<script type="text/javascript" src="js/filters/weekFilter.js"></script>
-		<script type="text/javascript" src="js/filters/iconFilter.js"></script>
-	
-            <!-- Directives -->
-        <script type="text/javascript" src="js/directives/md-data-table.js"> </script>
-        <script type="text/javascript" src="js/directives/sha1.js"> </script>
-        
-            <!-- Misc -->
-        <script>
-            try {
-                Typekit.load({
-                    async : true
-                });
-            } catch (e) {
-            }
-        </script>
+	<!-- Angular modules -->
+	<script type="text/javascript"
+		src="//unpkg.com/angular-ui-router/release/angular-ui-router.min.js">
+		
+	</script>
+	<script type="text/javascript"
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js">
+		
+	</script>
+	<script type="text/javascript"
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js">
+		
+	</script>
+	<script type="text/javascript"
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.js">
+		
+	</script>
+	<script type="text/javascript"
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.js">
+		
+	</script>
+	<script type="text/javascript"
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.js">
+		
+	</script>
+	<script type="text/javascript"
+		src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.js">
+		
+	</script>
 
-        <style type="text/css">
-            .wf-loading {
-                visibility: hidden;
-            }
-        </style>
+	<!-- Angular scripts -->
+	<script type="text/javascript" src="js/sms.js"></script>
 
-    </body>
+	<!-- Controllers -->
+	<script type="text/javascript" src="js/controllers/loginController.js"></script>
+	<script type="text/javascript" src="js/controllers/masterController.js"></script>
+	<script type="text/javascript" src="js/controllers/superController.js"></script>
+	<script type="text/javascript"
+		src="js/controllers/associateInfoCtrl.js"></script>
+	<script type="text/javascript" src="js/controllers/adminController.js"></script>
+	<script type="text/javascript"
+		src="js/controllers/adminAttendanceController.js"></script>
+	<script type="text/javascript"
+		src="js/controllers/associateController.js"></script>
+	<script type="text/javascript"
+		src="js/controllers/superAttendanceController.js"></script>
+	<script type="text/javascript"
+		src="js/controllers/associateWeeklyAttendence.js"></script>
+	<script type="text/javascript"
+		src="js/controllers/updateInfoController.js"></script>
+	<script type="text/javascript"
+		src="js/controllers/batchAddController.js"></script>
+	<script type="text/javascript"
+		src="js/controllers/batchAddSuccessController.js"></script>
+
+	<!-- Services -->
+	<script type="text/javascript" src="js/services/loginService.js"></script>
+	<script type="text/javascript" src="js/services/userService.js"></script>
+	<script type="text/javascript" src="js/services/batchTypeService.js"></script>
+
+	<!-- Factories -->
+	<script type="text/javascript" src="js/factories/batchAddFactory.js"></script>
+
+	<!-- Filters -->
+	<script type="text/javascript" src="js/filters/associateFilter.js"></script>
+	<script type="text/javascript" src="js/filters/weekFilter.js"></script>
+	<script type="text/javascript" src="js/filters/iconFilter.js"></script>
+
+	<!-- Directives -->
+	<script type="text/javascript" src="js/directives/md-data-table.js">
+		
+	</script>
+	<script type="text/javascript" src="js/directives/sha1.js">
+		
+	</script>
+
+	<!-- Misc -->
+	<script>
+		try {
+			Typekit.load({
+				async : true
+			});
+		} catch (e) {
+		}
+	</script>
+
+	<style type="text/css">
+.wf-loading {
+	visibility: hidden;
+}
+</style>
+
+</body>
 </html>
