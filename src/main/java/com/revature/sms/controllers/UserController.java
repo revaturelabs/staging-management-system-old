@@ -1,6 +1,5 @@
 package com.revature.sms.controllers;
 
-
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -69,13 +68,15 @@ public class UserController {
 	public @ResponseBody Object createUser(@RequestHeader(value = "Authorization") String token,
 			@RequestBody UserDTO userDTO) {
 
-//		System.out.println("UserDTO username: " + userDTO.getUsername());
+		// System.out.println("UserDTO username: " + userDTO.getUsername());
 		try {
 			// validate token and create user
 			if (isValid(token) && isSuperAdmin(role)) {
 
 				User user = getUser(userDTO);
 				user = userRepo.save(user);
+				user.blankPassword();
+				user.setID(0);
 				return new ResponseEntity<User>(user, HttpStatus.CREATED);
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
@@ -84,8 +85,8 @@ public class UserController {
 			}
 		} catch (DataIntegrityViolationException dive) {
 			Logger.getRootLogger().debug("Username already exists.", dive);
-			return new ResponseEntity<ResponseErrorEntity>(
-					new ResponseErrorEntity("Username already exists."), HttpStatus.CONFLICT);
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Username already exists."),
+					HttpStatus.CONFLICT);
 		} catch (Exception e) {
 			Logger.getRootLogger().debug("Exception while creating user", e);
 			return new ResponseEntity<ResponseErrorEntity>(
@@ -116,6 +117,8 @@ public class UserController {
 			if (isValid(token)) {
 				User oldUser = (User) updateValidation(userDTO);
 				User newUser = userRepo.save(oldUser);
+				newUser.blankPassword();
+				newUser.setID(0);
 				return new ResponseEntity<User>(newUser, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
@@ -308,9 +311,7 @@ public class UserController {
 		if (userDTO.getBatchType() != null) {
 			user.setBatchType(userDTO.getBatchType());
 		}
-//		if (userDTO.getHashedPassword() != null) {
-//			user.setHashedPassword(userDTO.getHashedPassword());
-//		}
+	
 		if (userDTO.getFirstName() != null) {
 			user.setFirstName(userDTO.getFirstName());
 		}
@@ -320,16 +321,21 @@ public class UserController {
 		if (userDTO.getAttendance() != null) {
 			user.setAttendance(userDTO.getAttendance());
 		}
-		if (userDTO.getGraduationDate() != null){
+
+		if (userDTO.getAssociateTask() != null) {
+			user.setTasks(userDTO.getAssociateTask());
+		}
+
+		if (userDTO.getGraduationDate() != null) {
 			user.setGraduationDate(userDTO.getGraduationDate());
+
 		}
 		if (userDTO.getTasks() != null){
 			user.setTasks(userDTO.getTasks());
 		}
-		
+
 		return user;
 
 	}
 
-	
 }

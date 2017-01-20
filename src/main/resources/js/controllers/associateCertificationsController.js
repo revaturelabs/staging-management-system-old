@@ -4,17 +4,10 @@ sms.controller("associateCertificationsCtrl", function($scope, $state, $mdDialog
 		loginService, userService, taskTypeService) {
 
 	var acc = this;
-	
-	//fix this
-	 acc.toast = function(message){
-	        $scope.$parent.$parent.mastCtrl.toast(message);
-	    };
-	
-	
+		
 	acc.user = loginService.getUser();
 	acc.gradDate = new Date(acc.user.graduationDate);
 	acc.formattedGradDate = ((acc.gradDate.getMonth()) + 1) + "/" + acc.gradDate.getDate() + "/" + acc.gradDate.getFullYear();
-	/*alert(new Date(acc.user.graduationDate));*/
 
 	acc.myDate = new Date();
 	acc.minDate = new Date();

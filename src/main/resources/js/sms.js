@@ -60,7 +60,7 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
 			})
 				 // admin view all attendance
 	                .state( "adminAttendance", {
-	                    url: "/attendance",
+	                    url: "^/associate-attendance",
 	                    parent: "admin",
 	                    views: {
 	                        "mainAdminView": {

@@ -1,18 +1,5 @@
-<div layout="row">
-	<div flex="40"></div>
-	<div flex="60">
-		<md-toolbar class="md-table-toolbar md-default">
 
-		<div class="md-toolbar-tools">
-
-			<span>This Week's Attendance</span>
-
-		</div>
-
-		</md-toolbar>
-	</div>
-</div>
-<div layout="row" style="padding-bottom: 2%;">
+<div layout="row" style="padding-top: 2%;">
 	<div flex="33"></div>
 	<div flex="67">
 		<!-- holds table -->
@@ -22,21 +9,21 @@
 			md-progress="promise" class="md-whiteframe-24dp">
 
 			<!-- ??? -->
-			<thead md-head>
+			<!-- 			<thead md-head>
 
-				<!-- put all the nested elements in a row -->
+				put all the nested elements in a row
 				<tr md-row id="weekrow">
 
-					<!-- repeat all the days of the week -->
+					repeat all the days of the week
 <th md-column ng-repeat="day in assWeekAttXCtrl.days"
 						style="text-align: center;">{{day}}</th>
 <th md-column ng-repeat="day in assWeekAttCtrl.days">{{day}}</th>
-</tr>
-			</thead>
+</tr> 
+			</thead>-->
 			<!-- enter in the body data -->
 			<tbody md-body>
 
-<tr>
+				<tr>
 					<td></td>
 					<td>Monday <br> <br> {{assWeekAttCtrl.monday}}
 					</td>
@@ -99,11 +86,19 @@
 </div>
 
 <div layout="row" layout-align="center center">
-	<div><md-icon style=" cursor: pointer; " class="material-icons"
-		ng-click="assWeekAttCtrl.getPreviousWeek()">arrow_back</md-icon></div>
-	<div><p>Week of {{assWeekAttCtrl.monday}}</p></div>
-	<div><md-icon style="cursor: pointer;" class="material-icons"
-		ng-click="assWeekAttCtrl.getNextWeek()">arrow_forward</md-icon></div>
+	<div>
+		<md-icon style=" cursor: pointer; " class="material-icons"
+			ng-click="assWeekAttCtrl.getPreviousWeek()">arrow_back <md-tooltip>Last
+		week</md-tooltip></md-icon>
+	</div>
+	<div>
+		<p>Week of {{assWeekAttCtrl.monday}}</p>
+	</div>
+	<div>
+		<md-icon style="cursor: pointer;" class="material-icons"
+			ng-click="assWeekAttCtrl.getNextWeek()">arrow_forward <md-tooltip>Next
+		week</md-tooltip></md-icon>
+	</div>
 </div>
 </div>
 
