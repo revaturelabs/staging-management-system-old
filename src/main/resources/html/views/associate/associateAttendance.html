@@ -1,97 +1,51 @@
-<div layout="row">
-    <div flex="40"> </div>
-    <div flex="60">
-        <md-toolbar class="md-table-toolbar md-default">
 
-
-            
-        </md-toolbar>
-    </div>
-</div>
-<div layout="row" style=" padding-bottom: 2%;">
-    <div flex="33"></div>
-    <div flex="67">
-        <!-- holds table -->
-        <md-table-container>
-
-            <table md-table md-row-select multiple ng-model="selected" md-progress="promise" class="md-whiteframe-24dp">
-
-                <!-- ??? -->
+    <div class="md-padding" layout="column">
+    
+        <md-table-container class="associateAttendanceTable">
+            <table md-table>
+                
                 <thead md-head>
-
-                    <!-- put all the nested elements in a row -->
-                    <tr md-row id="weekrow">
-
-                        <!-- repeat all the days of the week -->
-                        <th md-column ng-repeat="day in assWeekAttCtrl.days">{{day}}</th>
-
+                    <tr md-row layout-align="space-around center">
+                        <th md-column ng-repeat="day in assocAttCtrl.week">
+                            <h3> {{ day.name }} </h3>
+                            <p> {{ day.date | date:'M/dd' }} </p>
+                        </th>
                     </tr>
                 </thead>
-                <!-- enter in the body data -->
-                <tbody md-body>
-                    <tr align="center">
-                        <td>
-                            <p>{{assWeekAttCtrl.sunday}}</p>
-                        </td>
-                        <td>
-                            <p>{{assWeekAttCtrl.monday}}</p>
-                        </td>
-                        <td>
-                            <p>{{assWeekAttCtrl.tuesday}}</p>
-                        </td>
-                        <td>
-                            <p>{{assWeekAttCtrl.wednesday}}</p>
-                        </td>
-                        <td>
-                            <p>{{assWeekAttCtrl.thursday}}</p>
-                        </td>
-                        <td>
-                            <p>{{assWeekAttCtrl.friday}}</p>
-                        </td>
-                        <td>
-                            <p>{{assWeekAttCtrl.saturday}}</p>
-                        </td>
-                    </tr>
-                    <!-- ??? -->
+
+                <tbody>
                     <tr md-row>
-
-                        <!-- place each icon in each column cell -->
-                        <td md-cell ng-repeat="dnc in assWeekAttCtrl.daynumbercount">
-
-                            <!-- container for icon -->
-                            <div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
-
-                                <!-- set the icon data -->
-                                <md-icon ng-style="{color: '{{(assWeekAttCtrl.daypositionstring[dnc]).color}}'}" aria-label='{{(assWeekAttCtrl.daypositionstring[dnc]).name}}' class="material-icons step" ng-class="md-48">
-
-                                    <!-- changing the text changes the icon-->
-                                    {{(assWeekAttCtrl.daypositionstring[dnc]).name}}
-                                </md-icon>
+                        <td md-cell flex="20" ng-repeat="day in assocAttCtrl.weekAttendance track by $index">
+                            <div class="tableData" layout-align="center center"> 
+                                <md-icon class="md-material-icon" ng-style="{ color: day.icon.color }"> {{ day.icon.name }} </md-icon>
                             </div>
-
                         </td>
                     </tr>
                 </tbody>
+        
             </table>
         </md-table-container>
+
+        <div layout="row">
+            <div flex> </div>
+
+            <div flex="25" layout="row" layout-align="center center">
+
+                <md-button class="md-icon-button" aria-label="Logout" ng-click="assocAttCtrl.prevWeek()">
+                    <md-tooltip> Previous week </md-tooltip>
+                    <md-icon class="md-material-icon page-icon"> arrow_back </md-icon>
+                </md-button>
+                
+                <div flex style="text-align: center"> {{ assocAttCtrl.weekLabel }} </div>
+
+                <md-button class="md-icon-button" aria-label="Logout" ng-click="assocAttCtrl.nextWeek()">
+                    <md-tooltip> Next week </md-tooltip>
+                    <md-icon class="md-material-icon page-icon"> arrow_forward </md-icon>
+                </md-button>
+
+            </div>
+
+            <div flex> </div>
+        </div>
+    
     </div>
-</div>
-
-<div layout="row">
-    <div flex="35"></div>
-    <div flex="60">
-        <li ng-repeat="legitem in assWeekAttCtrl.legend">
-
-            <!-- set the icon data -->
-            <md-icon ng-style="{color: '{{legitem.color}}'}" aria-label='{{legitem.name}}' class="material-icons step" ng-class="md-48">
-
-                <!-- changing the text changes the icon-->
-
-                {{legitem.name}}
-            </md-icon>
-
-            {{legitem.description}}
-
-        </li>
-    </div>
-</div>

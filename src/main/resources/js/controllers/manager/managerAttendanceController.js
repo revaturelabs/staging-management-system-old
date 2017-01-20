@@ -5,9 +5,13 @@
     	
     	// $scope.$parent.suCtrl.title = "Associate Weekly Attendance";
 
+
 		// bindables
+		//data bindables
         mac.user = loginService.getUser();  
+		mac.weekNumber = 4; //make a scope variable that holds the week number, so they can only go forward and back 2 weeks
 		
+		//function bindables
 		mac.toast = toast;
 		mac.logout = logout;
 		mac.newAssociates = newAssociates;
@@ -15,8 +19,8 @@
 		mac.setDateTable = setDateTable;
 		mac.goBackOneWeek = goBackOneWeek;
 		mac.goForwardOneWeek = goForwardOneWeek;
-		//make a scope variable that holds the week number, so they can only go forward and back 2 weeks
-        mac.weekNumber = 4;
+		
+        
 		mac.addOptions = addOptions;
 
 

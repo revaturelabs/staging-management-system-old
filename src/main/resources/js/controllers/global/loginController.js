@@ -13,6 +13,7 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
 
 	  // functions
 	    // calls master controller's toast function
+
 	function toast(message) {
 		// $scope.$parent.mastCtrl.toast(message);
         $scope.$emit( "toastMessage", message );
@@ -49,12 +50,13 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
         }
     };
 
+
     function loginSuccess(response) {
+
         loginService.addUser(response.user);
         loginService.addToken(response.authToken);
         $cookies.put( "RevatureSMSUsername", loginService.getUser().username );
         $cookies.put( "RevatureSMSToken", loginService.getToken() );
-       
 
         $state.go("attendance");
         
