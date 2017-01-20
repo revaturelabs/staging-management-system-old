@@ -1,29 +1,54 @@
 
     var sms = angular.module( "sms" );
-    sms.controller( "managerAttendanceCtrl", function($scope, $state, userService, loginService, $filter){
+    sms.controller( "managerAttendanceCtrl", function($scope, $state, userService, loginService, $filter, $mdDialog, batchAddFactory){
     	var mac = this;
     	
     	// $scope.$parent.suCtrl.title = "Associate Weekly Attendance";
 
 		// bindables
         mac.user = loginService.getUser();  
-		mac.addOptions = addOptions;
+		
 		mac.toast = toast;
 		mac.logout = logout;
 		mac.newAssociates = newAssociates;
+		mac.verifyAttendance = verifyAttendance;
+		mac.changePassword = changePassword;
+		mac.addOptions = addOptions;
 
 
 
+		
 
 		function addOptions() {
+			var addActions = [];
+
+			
 			if (mac.user.userRole.name == "superAdmin"){
 				//insert logic for superAdmin only here
+				//actions.push();
+			// console.log(actions);
+			
+			// addActions.push([
+			// 	{
+			// 	"functions": newAssociates,
+			// 	"icon": "add",
+			// 	"tooltip": "Add Batch"
+			// }
+			// ]);
+			$scope.$emit( "changeFunction", { title: "Weekly Attendance", actions: [
+				{
+				"function": mac.newAssociates,
+				"icon": "add",
+				"tooltip": "Add Batch"
+			}
+			]  });
 			}
 			else if (mac.user.userRole.name == "admin"){
 				//logic for things admin can do here.
 			}
-			$scope.$emit( "changeFunction", { title: "Attendance", actions: {} });
 		}
+
+		addOptions();
 		
 		
         
@@ -142,7 +167,23 @@
         
         /*create a verify attendance function*/
         
-        $scope.verifyAttendance = function(user, selectedDay){
+        // $scope.verifyAttendance = function(user, selectedDay){
+        // 	//figure out which day was clicked
+        // 	thisDay = mac.thisMonday;
+        // 	if(selectedDay==1){
+        //     	thisDay = mac.thisTuesday;
+        //     }
+        //     if(selectedDay==2){
+        //     	thisDay = mac.thisWednesday;
+        //     }
+        //     if(selectedDay==3){
+        //     	thisDay = mac.thisThursday;
+        //     }
+        //     if(selectedDay==4){
+        //     	thisDay = mac.thisFriday;
+        //     }
+
+		  function verifyAttendance(user, selectedDay){
         	//figure out which day was clicked
         	thisDay = mac.thisMonday;
         	if(selectedDay==1){
@@ -306,7 +347,7 @@
                     batchAddFactory.resetAssociates();
                 });
             }, function() {
-                suc.toast("Batch addition cancelled.");
+                mac.toast("Batch addition cancelled.");
             });
         };
 

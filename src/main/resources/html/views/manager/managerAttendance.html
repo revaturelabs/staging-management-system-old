@@ -34,7 +34,7 @@
 				<td md-cell>{{ as.firstName }} {{ as.lastName }}</td>
 				<td md-cell>
 					<span ng-show="as.thisWeek[0].verified == false || as.thisWeek[0].verified == null" >
-						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 0)">check_circle</md-icon>
+						<md-icon style="color:orange;" ng-click="manAttCtrl.verifyAttendance(as, 0)">check_circle</md-icon>
 					</span>
 					<!-- container for icon -->
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
@@ -49,7 +49,7 @@
 					</div>
 				<td md-cell>
 					<span ng-show="as.thisWeek[1].verified == false || as.thisWeek[1].verified == null" >
-						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 1)">check_circle</md-icon>
+						<md-icon style="color:orange;" ng-click="manAttCtrl.verifyAttendance(as, 1)">check_circle</md-icon>
 					</span>
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
 					    <md-icon ng-style="{color: as.thisWeek[1].icon.color}" aria-label='{{as.thisWeek[1].icon.name}}' class="material-icons step" ng-class="md-48">
@@ -59,7 +59,7 @@
 					</div>
 				<td md-cell>
 					<span ng-show="as.thisWeek[2].verified == false || as.thisWeek[2].verified == null" >
-						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 2)">check_circle</md-icon>
+						<md-icon style="color:orange;" ng-click="manAttCtrl.verifyAttendance(as, 2)">check_circle</md-icon>
 					</span>
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
 					    <md-icon ng-style="{color: as.thisWeek[2].icon.color}" aria-label='{{as.thisWeek[2].icon.name}}' class="material-icons step" ng-class="md-48">
@@ -69,7 +69,7 @@
 					</div>
 				<td md-cell>
 					<span ng-show="as.thisWeek[3].verified == false || as.thisWeek[3].verified == null" >
-						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 3)">check_circle</md-icon>
+						<md-icon style="color:orange;" ng-click="manAttCtrl.verifyAttendance(as, 3)">check_circle</md-icon>
 					</span>
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
 					    <md-icon ng-style="{color: as.thisWeek[3].icon.color}" aria-label='{{as.thisWeek[3].icon.name}}' class="material-icons step" ng-class="md-48">
@@ -79,7 +79,7 @@
 					</div>
 				<td md-cell>
 					<span ng-show="as.thisWeek[4].verified == false || as.thisWeek[4].verified == null" >
-						<md-icon style="color:orange;" ng-click="verifyAttendance(as, 4)">check_circle</md-icon>
+						<md-icon style="color:orange;" ng-click="manAttCtrl.verifyAttendance(as, 4)">check_circle</md-icon>
 					</span>
 					<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
 					    <md-icon ng-style="{color: as.thisWeek[4].icon.color}" aria-label='{{as.thisWeek[4].icon.name}}' class="material-icons step" ng-class="md-48">
