@@ -84,18 +84,20 @@ public class DBInitializationController {
 			//The inner loop creates each user's attendance records and saves them to the database.
 			int j = 0;
 			ArrayList<AssociateAttendance> attendanceList = new ArrayList<AssociateAttendance>();
-			while (j < dates.size()) {
-				String date = dates.get(j);
-				Timestamp ts = Utils.convertDate(date);
-				String checkedIn = checkIns.get(j);
-				boolean ci = Boolean.parseBoolean(checkedIn);
-				String verified = verifications.get(j);
-				boolean v = Boolean.parseBoolean(verified);
-				String note = notes.get(j);
-				
-				AssociateAttendance aa = new AssociateAttendance(ts, ci, v, note);
-				attendanceList.add(aa);				
-				j++;
+			if (dates != null) {
+				while (j < dates.size()) {
+					String date = dates.get(j);
+					Timestamp ts = Utils.convertDate(date);
+					String checkedIn = checkIns.get(j);
+					boolean ci = Boolean.parseBoolean(checkedIn);
+					String verified = verifications.get(j);
+					boolean v = Boolean.parseBoolean(verified);
+					String note = notes.get(j);
+					
+					AssociateAttendance aa = new AssociateAttendance(ts, ci, v, note);
+					attendanceList.add(aa);				
+					j++;
+				}
 			}
 			udm.editTestUser(i, "", "", "", "", new BatchType(), attendanceList, new ArrayList<AssociateTask>(), new UserRole(), new Timestamp(0));
 			i++;

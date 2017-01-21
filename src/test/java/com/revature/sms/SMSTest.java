@@ -112,7 +112,7 @@ public class SMSTest implements InstanceTestClassListener {
 		ExcelHelper dateGetter = new ExcelHelper(ericUN);
 		ArrayList<String> expectedWeekdays = dateGetter.getValues("attendanceDate");
 		
-		/*
+		
 		System.out.println("ACTUAL WEEKDAYS:");
 		for (String s:actualWeekdays) {
 			System.out.println(s);
@@ -122,7 +122,6 @@ public class SMSTest implements InstanceTestClassListener {
 		for (String s:expectedWeekdays) {
 			System.out.println(s);
 		}
-		*/
 		
 		asp.logoutIcon.click();
 	}
