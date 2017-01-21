@@ -1,5 +1,8 @@
 package com.revature.sms.pagefactory;
 
+import java.util.ArrayList;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,7 +22,7 @@ public class AssociatePage extends SMSPage {
 	public WebElement logoutIcon;
 	
 	@FindBy(tagName="tbody")
-	public WebElement weekDisplay;
+	public WebElement weekTable;
 	
 	@FindBy(css="[ng-click=\"assWeekAttCtrl.getPreviousWeek()\"]")
 	public WebElement prevWeek;
@@ -35,6 +38,30 @@ public class AssociatePage extends SMSPage {
 		super(driver);
 	}
 	
+	public ArrayList<String> goThroughWeek() {
+		ArrayList<String> weekdayStrings = new ArrayList<String>();
+		for (int i=2; i<=6; i++) {
+			WebElement weekday = driver.findElement(By.xpath("//tbody/tr[1]/td["+i+"]"));
+			weekdayStrings.add(weekday.getText());
+		}
+		return weekdayStrings;
+		
+	}
 	
+	/*
+	public void searchThroughTable() throws InterruptedException {
+		page.getElement("homeLogin", "name").click();
+		page.enterText("usernameField", "adminUsername");
+		page.enterText("passwordField", "adminPassword");
+		page.getElement("login", "name").click();
+		page.getElement("adminDB", "name").click();
+		
+		List<WebElement> rows = page.getElements("table", "xpath");
+		for (int i=1; i<=rows.size(); i++) {
+			WebElement row = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[1]"));
+			System.out.println(row.getText());
+		}
+	}
+	*/
 
 }

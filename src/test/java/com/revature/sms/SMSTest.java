@@ -1,10 +1,12 @@
 
 package com.revature.sms;
 
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Assert;
@@ -24,6 +26,7 @@ import com.revature.sms.pagefactory.LoginPage;
 import com.revature.sms.pagefactory.SuperAdminPage;
 import com.revature.sms.testlibs.DBInitializationController;
 import com.revature.sms.util.EventListener;
+import com.revature.sms.util.ExcelHelper;
 
 @Service
 @RunWith(SpringInstanceTestClassRunner.class)
@@ -95,11 +98,36 @@ public class SMSTest implements InstanceTestClassListener {
 	
 	@Test
 	public void testAssociatePage() {
-		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
+		ExcelHelper userGetter = new ExcelHelper("NewUsers");
+		ArrayList<String> usernames = userGetter.getValues("username");
+		ArrayList<String> passwords = userGetter.getValues("unhashedPassword");
+		
+		String ericUN = usernames.get(1);
+		String ericPW = passwords.get(1);
+		
+		
+		lp.login(ericUN, ericPW);  //I think logging in as Eric might be messing up the database cleanup
 		Assert.assertTrue(asp.verify());
+		ArrayList<String> actualWeekdays = asp.goThroughWeek();
+		ExcelHelper dateGetter = new ExcelHelper(ericUN);
+		ArrayList<String> expectedWeekdays = dateGetter.getValues("attendanceDate");
+		
+		/*
+		System.out.println("ACTUAL WEEKDAYS:");
+		for (String s:actualWeekdays) {
+			System.out.println(s);
+		}
+		System.out.println();
+		System.out.println("EXPECTED WEEKDAYS");
+		for (String s:expectedWeekdays) {
+			System.out.println(s);
+		}
+		*/
+		
 		asp.logoutIcon.click();
 	}
 	
+	@Ignore
 	@Test
 	public void testAdminPage() {
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
@@ -107,6 +135,7 @@ public class SMSTest implements InstanceTestClassListener {
 		adp.logoutIcon.click();
 	}
 	
+	@Ignore
 	@Test
 	public void testSuperAdminPage() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
@@ -118,8 +147,8 @@ public class SMSTest implements InstanceTestClassListener {
 	//Clear database
 	@Override
 	public void afterClassSetup() {
-		dbic.clearData();
 		driver.close();
+		dbic.clearData();
 	}
 	
 	

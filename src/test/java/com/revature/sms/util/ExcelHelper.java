@@ -12,7 +12,7 @@ import com.codoid.products.fillo.Recordset;
 //This class can be used by tests to access excel spreadsheets that hold test data to insert into a database
 public class ExcelHelper {
     
-	private final String file = "src/test/resources/ExcelSheets/database_input_deluxe.xlsx";
+	private final String file = "src/test/resources/ExcelSheets/database_input.xlsx";
 	private String sheet;
 	
 	public ExcelHelper(String sheet) {

@@ -36,7 +36,6 @@ public class DBInitializationController {
 	
 	public UserDataManager initializeUsers() {
 		ExcelHelper eh = new ExcelHelper("NewUsers");
-		
 		ArrayList<String> usernames = eh.getValues("username");
 		ArrayList<String> firstNames = eh.getValues("firstName");
 		ArrayList<String> lastNames = eh.getValues("lastName");

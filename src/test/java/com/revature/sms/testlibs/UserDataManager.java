@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
@@ -153,6 +154,7 @@ public class UserDataManager {
 	
 	public void removeAllTestUsers(){
 		for (User u:createdUsers){
+			//System.out.println(u);
 			User currentUser = ur.findByUsername(u.getUsername());
 			
 			//The following code causes a LazyInitializationException. It may not be needed
@@ -170,6 +172,11 @@ public class UserDataManager {
 				tr.delete(token);
 			}
 			*/
+			ArrayList<Token> tokens = (ArrayList<Token>) tr.getByUser(currentUser);
+			for (Token token:tokens) {
+				tr.delete(token);
+			}
+			
 			ur.delete(currentUser);
 		}
 		createdUsers.clear();

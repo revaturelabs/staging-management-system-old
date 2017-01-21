@@ -39,20 +39,4 @@ public class AdminPage extends SMSPage {
 		super(driver);
 	}
 	
-	/*
-	public void searchThroughTable() throws InterruptedException {
-		page.getElement("homeLogin", "name").click();
-		page.enterText("usernameField", "adminUsername");
-		page.enterText("passwordField", "adminPassword");
-		page.getElement("login", "name").click();
-		page.getElement("adminDB", "name").click();
-		
-		List<WebElement> rows = page.getElements("table", "xpath");
-		for (int i=1; i<=rows.size(); i++) {
-			WebElement row = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[1]"));
-			System.out.println(row.getText());
-		}
-	}
-	*/
-	
 }
