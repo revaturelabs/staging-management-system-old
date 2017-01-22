@@ -38,6 +38,7 @@ public class SMSTest implements InstanceTestClassListener {
 	private final String browser = "Chrome"; 
 	private final String inputsPath = "src/test/resources/PropertiesFiles/inputs.properties";
 	private final String locationsPath = "src/test/resources/PropertiesFiles/locations.properties";
+	private final String expectedPath = "src/test/resources/PropertiesFiles/expected.properties";
 	
 	//Basically anything that interacts with a data transfer objects must be autowired, which alerts 
 	//Spring of it's existence
@@ -47,6 +48,7 @@ public class SMSTest implements InstanceTestClassListener {
 	//Allow properties files, webdrivers, and page objects to be used in the tests
 	static Properties inputs;
 	static Properties locations;
+	static Properties expected;
 	static WebDriver webDriver;
 	static EventFiringWebDriver driver;
 	static EventListener eventListener; 
@@ -81,6 +83,7 @@ public class SMSTest implements InstanceTestClassListener {
 		//Initialize properties files
 		inputs = TestSetup.getProperties(inputsPath);
 		locations = TestSetup.getProperties(locationsPath);
+		expected = TestSetup.getProperties(expectedPath);
 		
 		//The columnNumber variable should match the number of users that are being added to the database
 		dbic.initializeUsers();
@@ -95,12 +98,41 @@ public class SMSTest implements InstanceTestClassListener {
 		asp = new AssociatePage(driver);
 		adp = new AdminPage(driver);
 		sap = new SuperAdminPage(driver);
+		
+		//Make sure the login page is loaded correctly 
 		Assert.assertTrue(lp.verify());
 		Assert.assertEquals(locations.getProperty("siteName"), driver.getTitle());
 	}
 	
 	@Test
-	public void testAssociatePage() {
+	public void verifyDefaultWeek() {
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
+		Assert.assertTrue(asp.verify());
+		
+		ArrayList<String> expectedWeekdays = new ArrayList<String>();
+		expectedWeekdays.add(expected.getProperty("Mon"));
+		expectedWeekdays.add(expected.getProperty("Tue"));
+		expectedWeekdays.add(expected.getProperty("Wed"));
+		expectedWeekdays.add(expected.getProperty("Thu"));
+		expectedWeekdays.add(expected.getProperty("Fri"));
+		
+		ArrayList<String> rawWeekData = asp.goThroughWeek();
+		ArrayList<String> actualWeekdays = new ArrayList<String>();
+		for (String s:rawWeekData) {
+			String dateAndWeekday = s.replace("\n", "");
+			String pattern = "\\d/\\d\\d";
+			Pattern r = Pattern.compile(pattern);
+			Matcher m = r.matcher(dateAndWeekday);
+			if (m.find()) {
+				actualWeekdays.add(m.group());
+			}
+		}
+		Assert.assertEquals(expectedWeekdays, actualWeekdays);
+	}
+	
+	@Ignore
+	@Test
+	public void verifyAssociateAttendanceView() {
 		try {
 			ExcelHelper userGetter = new ExcelHelper("NewUsers");
 			ArrayList<String> usernames = userGetter.getValues("username");
@@ -110,12 +142,11 @@ public class SMSTest implements InstanceTestClassListener {
 			String ericPW = passwords.get(1);
 			
 			
-			lp.login(ericUN, ericPW);  //I think logging in as Eric might be messing up the database cleanup
+			lp.login(ericUN, ericPW);
 			Assert.assertTrue(asp.verify());
 			ArrayList<String> actualWeekdays = asp.goThroughWeek();
 			ExcelHelper dateGetter = new ExcelHelper(ericUN);
 			ArrayList<String> expectedWeekdays = dateGetter.getValues("attendanceDate");
-			
 			
 			System.out.println("ACTUAL WEEKDAYS:");
 			for (String s:actualWeekdays) {
@@ -135,7 +166,7 @@ public class SMSTest implements InstanceTestClassListener {
 				System.out.println(s);
 			}
 			
-			asp.logoutIcon.click();
+			
 		} catch (FilloException e) {}
 	}
 	
