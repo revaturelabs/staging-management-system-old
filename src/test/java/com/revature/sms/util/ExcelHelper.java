@@ -14,16 +14,26 @@ public class ExcelHelper {
     
 	private final String file = "src/test/resources/ExcelSheets/database_input.xlsx";
 	private String sheet;
+	private Fillo fillo;
+	private Connection conn;
 	
-	public ExcelHelper(String sheet) {
+	public ExcelHelper(String sheet) throws FilloException {
+		try {
+			fillo = new Fillo();
+			conn = fillo.getConnection(file);
+			String query = "SELECT * FROM "+sheet;
+			conn.executeQuery(query);
+		} finally {
+			conn.close();
+		}
 		this.sheet = sheet;
 	}
 	
     public ArrayList<String> getValues(String key) {
     	
 		try {
-			Fillo fillo = new Fillo();
-			Connection conn = fillo.getConnection(file);
+			fillo = new Fillo();
+			conn = fillo.getConnection(file);
 			ArrayList<String> values = new ArrayList<String>();
 			
 			//Finds the row
@@ -38,8 +48,6 @@ public class ExcelHelper {
 				int i  = 1;
 				while (flag) {
 					String value = rs.getField(String.valueOf(i));
-					System.out.println("Value: "+value);
-					
 					if (!value.equals("STOP")) {
 						values.add(value);
 						i++;
@@ -54,6 +62,8 @@ public class ExcelHelper {
         	System.out.println(e.getMessage());
         	System.out.println("");
         	Logger.getRootLogger().debug("You got a FilloException", e);
+        } finally {
+        	conn.close();
         }
 		return null;
     }

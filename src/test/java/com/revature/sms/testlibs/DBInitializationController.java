@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.codoid.products.exception.FilloException;
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
@@ -35,30 +36,32 @@ public class DBInitializationController {
 	}
 	
 	public UserDataManager initializeUsers() {
-		ExcelHelper eh = new ExcelHelper("NewUsers");
-		ArrayList<String> usernames = eh.getValues("username");
-		ArrayList<String> firstNames = eh.getValues("firstName");
-		ArrayList<String> lastNames = eh.getValues("lastName");
-		ArrayList<String> unhashedPasswords = eh.getValues("unhashedPassword");
-		ArrayList<String> batchTypes = eh.getValues("batchType");
-		List<AssociateAttendance> attendance = new ArrayList<AssociateAttendance>();
-		List<AssociateTask> tasks = new ArrayList<AssociateTask>();
-		ArrayList<String> userRoles = eh.getValues("userRole");
-		ArrayList<String> graduationDates = eh.getValues("graduationDate");
-		
-		//Each iteration of the loop corresponds to a new user that is added
-		int i = 0;
-		while (i < usernames.size()) {
-			//Finds already existing batch types and user role types, which are added to the new user
+		try {
+			ExcelHelper eh = new ExcelHelper("NewUsers");
+			ArrayList<String> usernames = eh.getValues("username");
+			ArrayList<String> firstNames = eh.getValues("firstName");
+			ArrayList<String> lastNames = eh.getValues("lastName");
+			ArrayList<String> unhashedPasswords = eh.getValues("unhashedPassword");
+			ArrayList<String> batchTypes = eh.getValues("batchType");
+			List<AssociateAttendance> attendance = new ArrayList<AssociateAttendance>();
+			List<AssociateTask> tasks = new ArrayList<AssociateTask>();
+			ArrayList<String> userRoles = eh.getValues("userRole");
+			ArrayList<String> graduationDates = eh.getValues("graduationDate");
 			
-			BatchType batchType = btr.findByType(batchTypes.get(i));
-			UserRole userRole = urr.findByName(userRoles.get(i));
-			String graduationDate = graduationDates.get(i);
-			Timestamp gts = Utils.convertDate(graduationDate);
-			
-			udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole, gts);
-			i++;
-		}
+			//Each iteration of the loop corresponds to a new user that is added
+			int i = 0;
+			while (i < usernames.size()) {
+				//Finds already existing batch types and user role types, which are added to the new user
+				
+				BatchType batchType = btr.findByType(batchTypes.get(i));
+				UserRole userRole = urr.findByName(userRoles.get(i));
+				String graduationDate = graduationDates.get(i);
+				Timestamp gts = Utils.convertDate(graduationDate);
+				
+				udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole, gts);
+				i++;
+			}
+		} catch (FilloException e) {}
 		return udm;
 	}
 	
@@ -74,12 +77,18 @@ public class DBInitializationController {
 		int i = 0;
 		for (User u: arrayCopy) {
 			String username = u.getUsername();
-			ExcelHelper eh = new ExcelHelper(username);
-			
-			ArrayList<String> dates = eh.getValues("attendanceDate");
-			ArrayList<String> checkIns = eh.getValues("checkedIn");
-			ArrayList<String> verifications = eh.getValues("verified");
-			ArrayList<String> notes = eh.getValues("attendanceNote");
+			ExcelHelper eh;
+			ArrayList<String> dates = null; 
+			ArrayList<String>checkIns = null; 
+			ArrayList<String> verifications = null;
+			ArrayList<String> notes = null;
+			try {
+				eh = new ExcelHelper(username);
+				dates = eh.getValues("attendanceDate");
+				checkIns = eh.getValues("checkedIn");
+				verifications = eh.getValues("verified");
+				notes = eh.getValues("attendanceNote");
+			} catch (FilloException e) {}
 		
 			//The inner loop creates each user's attendance records and saves them to the database.
 			int j = 0;

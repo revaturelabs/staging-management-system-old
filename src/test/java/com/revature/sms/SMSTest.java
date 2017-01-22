@@ -4,6 +4,8 @@ package com.revature.sms;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 import com.revature.sms.util.InstanceTestClassListener;
 import com.revature.sms.util.SpringInstanceTestClassRunner;
 import com.revature.sms.util.TestSetup;
+import com.codoid.products.exception.FilloException;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;
 import com.revature.sms.pagefactory.LoginPage;
@@ -98,32 +101,42 @@ public class SMSTest implements InstanceTestClassListener {
 	
 	@Test
 	public void testAssociatePage() {
-		ExcelHelper userGetter = new ExcelHelper("NewUsers");
-		ArrayList<String> usernames = userGetter.getValues("username");
-		ArrayList<String> passwords = userGetter.getValues("unhashedPassword");
-		
-		String ericUN = usernames.get(1);
-		String ericPW = passwords.get(1);
-		
-		
-		lp.login(ericUN, ericPW);  //I think logging in as Eric might be messing up the database cleanup
-		Assert.assertTrue(asp.verify());
-		ArrayList<String> actualWeekdays = asp.goThroughWeek();
-		ExcelHelper dateGetter = new ExcelHelper(ericUN);
-		ArrayList<String> expectedWeekdays = dateGetter.getValues("attendanceDate");
-		
-		
-		System.out.println("ACTUAL WEEKDAYS:");
-		for (String s:actualWeekdays) {
-			System.out.println(s);
-		}
-		System.out.println();
-		System.out.println("EXPECTED WEEKDAYS");
-		for (String s:expectedWeekdays) {
-			System.out.println(s);
-		}
-		
-		asp.logoutIcon.click();
+		try {
+			ExcelHelper userGetter = new ExcelHelper("NewUsers");
+			ArrayList<String> usernames = userGetter.getValues("username");
+			ArrayList<String> passwords = userGetter.getValues("unhashedPassword");
+			
+			String ericUN = usernames.get(1);
+			String ericPW = passwords.get(1);
+			
+			
+			lp.login(ericUN, ericPW);  //I think logging in as Eric might be messing up the database cleanup
+			Assert.assertTrue(asp.verify());
+			ArrayList<String> actualWeekdays = asp.goThroughWeek();
+			ExcelHelper dateGetter = new ExcelHelper(ericUN);
+			ArrayList<String> expectedWeekdays = dateGetter.getValues("attendanceDate");
+			
+			
+			System.out.println("ACTUAL WEEKDAYS:");
+			for (String s:actualWeekdays) {
+				String dateAndWeekday = s.replace("\n", "");
+				String pattern = "\\d/\\d\\d";
+				Pattern r = Pattern.compile(pattern);
+				Matcher m = r.matcher(dateAndWeekday);
+				if (m.find()) {
+					System.out.println(m.group());
+				}
+				
+				
+			}
+			System.out.println();
+			System.out.println("EXPECTED WEEKDAYS");
+			for (String s:expectedWeekdays) {
+				System.out.println(s);
+			}
+			
+			asp.logoutIcon.click();
+		} catch (FilloException e) {}
 	}
 	
 	@Ignore
