@@ -3,6 +3,7 @@ package com.revature.sms.controllers;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.revature.sms.domain.dto.bc;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -103,8 +104,8 @@ public class LoginController {
 	 * @param username String value of logged in user's username.
 	 * @return ResponseEntity object containing a Boolean object with value of true if a password change is required, false if it is not.
 	 */
-	@RequestMapping(value="/checkpass" ,method = RequestMethod.GET)
-	public @ResponseBody Object needUpdatePassword(@RequestHeader(value = "Authorization") String token, @RequestParam String username) {
+	@RequestMapping(value="/checkpass" ,method = RequestMethod.POST)
+	public @ResponseBody Object needUpdatePassword(@RequestHeader(value = "Authorization") String token, @RequestBody String username) {
 		//check authorization token
 		User user = ur.findByUsername(username);
 		if (user != null) {
@@ -112,7 +113,7 @@ public class LoginController {
 				// hash username
 				String usernameHash = User.hashPassword(username);
 				// compare hashed username to hashed password
-				return new ResponseEntity<Boolean>(usernameHash.equals(user.getHashedPassword()), HttpStatus.OK);
+				return new ResponseEntity<bc>(new bc(usernameHash.equals(user.getHashedPassword())), HttpStatus.OK);
 			}
 			else{
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User not authorized."), HttpStatus.FORBIDDEN);

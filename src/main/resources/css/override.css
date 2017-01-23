@@ -40,3 +40,11 @@
         max-width: 20%;
         word-wrap: break-word;
     }
+
+    .associateAttendanceTable th {
+        width: 20%;
+    }
+
+    .attendanceCell {
+        padding: 0px !important;
+    }
