@@ -10,7 +10,6 @@ public class LoginPage extends SMSPage {
 	@FindBy(xpath="/html/head/title")
 	public WebElement title;
 	
-	///html/body/div/div/ui-view[2]/div/md-card/md-toolbar/div/span
 	@FindBy(xpath="/html/body/div/div/ui-view[2]/div/md-card/md-toolbar/div/span")
 	public WebElement header;
 	

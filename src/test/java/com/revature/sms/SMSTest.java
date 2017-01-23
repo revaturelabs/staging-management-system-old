@@ -83,7 +83,6 @@ public class SMSTest implements InstanceTestClassListener {
 		locations = TestSetup.getProperties(locationsPath);
 		expected = TestSetup.getProperties(expectedPath);
 		
-		//The columnNumber variable should match the number of users that are being added to the database
 		dbic.initializeUsers();
 		dbic.initializeAttendance();
 	}
@@ -103,7 +102,7 @@ public class SMSTest implements InstanceTestClassListener {
 		Assert.assertEquals(locations.getProperty("loginPg"), lp.header.getText());
 	}
 	
-	
+	//Makes sure the current week is shown on the associate page when you log in.
 	@Test
 	public void testDefaultWeek() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
@@ -130,6 +129,7 @@ public class SMSTest implements InstanceTestClassListener {
 	@Test
 	public void testAssociateAttendanceView() {
 		try {
+			//Login as a test associate.
 			ExcelHelper userGetter = new ExcelHelper("NewUsers");
 			ArrayList<String> usernames = userGetter.getValues("username");
 			ArrayList<String> passwords = userGetter.getValues("unhashedPassword");
@@ -138,12 +138,16 @@ public class SMSTest implements InstanceTestClassListener {
 			lp.login(ericUN, ericPW);
 			Assert.assertTrue(asp.verify());
 			
+			//Determine what that associate's attendance is supposed to be using the Excel sheet
+			//as a reference.
 			ExcelHelper attendanceGetter = new ExcelHelper(ericUN);
 			ArrayList<String> expectedDates = attendanceGetter.getValues("attendanceDate");
 			ArrayList<String> checkIns = attendanceGetter.getValues("checkedIn");
 			ArrayList<String> verifications = attendanceGetter.getValues("verified");
 			//ArrayList<String> notes = attendanceGetter.getValues("attendanceNote");
 			
+			//Convert the associate's dates of attendance to the same format that is used
+			//by the web application.
 			ArrayList<String> expectedMonthDays = new ArrayList<String>();
 			for (String s:expectedDates) {
 				String monthDay;
@@ -156,23 +160,27 @@ public class SMSTest implements InstanceTestClassListener {
 			}
 			
 			//ERROR??? The website says you can't go back more than 3 weeks after trying to go back more than
-			//four weeks
+			//four weeks.
 			String week;
 			String weekBefore;
+			//This do-while loop iterates through each available week on the associate page by 
+			//clicking the arrow icons
 			do {
 				week = asp.weekOf.getText();
 				ArrayList<String> actualMonthDays = asp.goThroughWeek();
 				ArrayList<String> icons = asp.goThroughWeekIcons();
-				
-				int aCount = 0;
+				int aCount = 0;  
+				//The outer loop goes through each day of the week.
 				for (String a:actualMonthDays) {
 					int eCount = 0;
+					//The inner loop compares the date on the website with the attendance date from the excel file.
 					for (String e:expectedMonthDays) {
+						//If the two dates are equal, then we check whether the website displays the attendance information correctly.
 						if (a.equals(e)) {
 							Boolean ci = Boolean.parseBoolean(checkIns.get(eCount));
 							Boolean v = Boolean.parseBoolean(verifications.get(eCount));
 							String icon = icons.get(aCount);
-							if (ci && v) {
+							if (ci && v) { //If the associate is checked in and verified, the double check icon should be displayed, which is represented by the string done_all in the html.
 								Assert.assertEquals("done_all", icon);
 							} else if (ci && !v) {
 								Assert.assertEquals("done", icon);
@@ -185,6 +193,7 @@ public class SMSTest implements InstanceTestClassListener {
 						eCount++;
 					}
 					aCount++;
+					//These count variables ensure that this test compares the data from the excel sheet with the appropriate data from the web page.
 				}
 				asp.prevWeek.click();
 				weekBefore = asp.weekOf.getText();
@@ -195,11 +204,12 @@ public class SMSTest implements InstanceTestClassListener {
 		}
 	}
 	
+	//Tests that when different types of users login and logout, they are navigated to the correct pages
 	@Test
 	public void testLoginHeaderLogout() {
 		lp.login(inputs.getProperty("sdetUN"), inputs.getProperty("sdetPW"));
 		Assert.assertTrue(asp.verify());
-		Assert.assertEquals(locations.getProperty("associatePg"), asp.header.getText());
+		Assert.assertEquals(locations.getProperty("associatePg"), asp.header.getText());  //Asserts that the title given in the blue bar towards the top of the page is the same as expected.
 		asp.logoutIcon.click();
 		Assert.assertTrue(lp.verify());
 		
