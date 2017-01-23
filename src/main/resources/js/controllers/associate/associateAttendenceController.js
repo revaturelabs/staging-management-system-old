@@ -73,7 +73,7 @@
             	else {
             		aac.toast("You can only schedule one certification at a time.");
             	}
-            };
+            }
            
          //checks to see if a certification is already scheduled for a given user   
          function certCurrentlyScheduled() {
@@ -84,7 +84,7 @@
             			return false;
             	}
             	return true;
-          };
+          }
             
             // checks if previous week is before minimum date and resets week dates if not
         function prevWeek() {
