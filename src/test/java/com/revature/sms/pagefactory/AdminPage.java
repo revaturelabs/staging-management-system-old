@@ -39,4 +39,5 @@ public class AdminPage extends SMSPage {
 		super(driver);
 	}
 	
+	//Someone should add a method to find web elements in the attendance table 
 }

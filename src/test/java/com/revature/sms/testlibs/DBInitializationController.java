@@ -18,7 +18,7 @@ import com.revature.sms.domain.dao.UserRoleRepo;
 import com.revature.sms.util.ExcelHelper;
 import com.revature.sms.util.Utils;
 
-//This class can be used before tests to conveniently populate the database with test data   
+//This class can be used before tests to conveniently populate the database with test data from Excel.  
 @Service
 public class DBInitializationController {
 
@@ -35,7 +35,7 @@ public class DBInitializationController {
 		super();
 	}
 	
-	public UserDataManager initializeUsers() {
+	public void initializeUsers() {
 		try {
 			ExcelHelper eh = new ExcelHelper("NewUsers");
 			ArrayList<String> usernames = eh.getValues("username");
@@ -62,11 +62,12 @@ public class DBInitializationController {
 				i++;
 			}
 		} catch (FilloException e) {}
-		return udm;
 	}
 	
-	//
-	public UserDataManager initializeAttendance() {
+
+	//Calling this method with an object that has not called the initializeUsers method yet may cause
+	//problems
+	public void initializeAttendance() {
 		//This createdUsers array must be copied to avoid a ConcurrentModificationException
 		ArrayList<User> arrayCopy = new ArrayList<User>();
 		for (User user: udm.createdUsers) {
@@ -112,12 +113,22 @@ public class DBInitializationController {
 			udm.editTestUser(i, "", "", "", "", new BatchType(), attendanceList, new ArrayList<AssociateTask>(), new UserRole(), new Timestamp(0));
 			i++;
 		}
-		
-		return udm;
-	}
+	}	
+	
 	
 	public void clearData() {
 		udm.removeAllTestUsers();
 	}
+	
+	
+	//Ideas for more database initialization methods
+	public void initializeJobEvents() {
+		
+	}
+	
+	public void initializeTasks() {
+		
+	}
+	
 	
 }

@@ -4,8 +4,6 @@ package com.revature.sms;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -100,13 +98,14 @@ public class SMSTest implements InstanceTestClassListener {
 		sap = new SuperAdminPage(driver);
 		
 		//Make sure the login page is loaded correctly 
-		Assert.assertTrue(lp.verify());
 		Assert.assertEquals(locations.getProperty("siteName"), driver.getTitle());
+		Assert.assertTrue(lp.verify());
+		Assert.assertEquals(locations.getProperty("loginPg"), lp.header.getText());
 	}
 	
-	@Ignore
+	
 	@Test
-	public void verifyDefaultWeek() {
+	public void testDefaultWeek() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
 		Assert.assertTrue(asp.verify());
 		
@@ -119,6 +118,7 @@ public class SMSTest implements InstanceTestClassListener {
 		
 		ArrayList<String> actualMonthDays = asp.goThroughWeek();
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
+		asp.logoutIcon.click();
 	}
 	
 	
@@ -128,7 +128,7 @@ public class SMSTest implements InstanceTestClassListener {
 	//Also, an extra junk attendance associated with the user is added to the database, and is also 
 	//incorrectly displayed on the website.
 	@Test
-	public void verifyAssociateAttendanceView() {
+	public void testAssociateAttendanceView() {
 		try {
 			ExcelHelper userGetter = new ExcelHelper("NewUsers");
 			ArrayList<String> usernames = userGetter.getValues("username");
@@ -181,40 +181,97 @@ public class SMSTest implements InstanceTestClassListener {
 							} else {
 								System.out.println("You did not fill out the associate attendance spreadsheet correctly.");
 							}						
-						}
+						} 
 						eCount++;
 					}
 					aCount++;
 				}
-				
 				asp.prevWeek.click();
 				weekBefore = asp.weekOf.getText();
 			} while (!week.equals(weekBefore));
 		} catch (FilloException e) {}
+		finally {
+			asp.logoutIcon.click();
+		}
 	}
 	
-	@Ignore
 	@Test
-	public void testAdminPage() {
+	public void testLoginHeaderLogout() {
+		lp.login(inputs.getProperty("sdetUN"), inputs.getProperty("sdetPW"));
+		Assert.assertTrue(asp.verify());
+		Assert.assertEquals(locations.getProperty("associatePg"), asp.header.getText());
+		asp.logoutIcon.click();
+		Assert.assertTrue(lp.verify());
+		
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
 		Assert.assertTrue(adp.verify());
+		Assert.assertEquals(locations.getProperty("adminPg"), adp.header.getText());
 		adp.logoutIcon.click();
-	}
-	
-	@Ignore
-	@Test
-	public void testSuperAdminPage() {
+		Assert.assertTrue(lp.verify());
+		
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
 		Assert.assertTrue(sap.verify());
+		Assert.assertEquals(locations.getProperty("superAdminPg"), sap.header.getText());
 		sap.logoutIcon.click();
+		Assert.assertTrue(lp.verify());
+	}
+	
+	//Corey's Test ideas
+	public void testCertificationScheduling() {
+		
 	}
 
+	public void testBatchCreation() {
+		
+	}
 	
-	//Clear database
+	public void testAdminAttendanceView() {
+		
+	}
+	
+	public void testSearchBar() {
+		
+	}
+	
+	public void negativeTestAssociateAttendanceView() {
+		//Make sure icons are not displayed under dates when there is no associated attendance record.
+		//Maybe this can be integrated into testAssociateAttendanceView.
+	}
+	
+	public void testLoginPageToastContainer() {
+		
+	}
+	
+	public void testAssociatePageToastContainer() {
+		
+	}
+	
+	public void testAdminPageToastContainer() {
+		
+	}
+	
+	public void testSuperAdminPageToastContainer() {
+	
+	}
+	
+	public void testAssociateCalendarNavigation() {
+		//This is already done indirectly in testAssociateAttendanceView but maybe the navigation 
+		//buttons should be directly tested too.
+	}
+	
+	public void testAdminCalendarNavigation() {
+		
+	}
+	//If you are having trouble coming up with a test to make, try translating one of the user stories
+	//in Jira into a test case.
+	
+	//It could be a good idea to separate some of these test cases into different suites as well.
+	
+	//Close webdriver and clear database
 	@Override
 	public void afterClassSetup() {
-		//driver.close();
-		//dbic.clearData();
+		driver.close();
+		dbic.clearData();
 	}
 	
 	
