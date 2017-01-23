@@ -3,6 +3,7 @@ package com.revature.sms.controllers;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.revature.sms.domain.dto.bc;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -125,7 +126,6 @@ public class LoginController {
 	}
 
 	/**
-	 * Method to login using stored cookies
 	 * @param token String value of authorization token.
 	 * @param username String value of logged in user's username.
 	 * @return ResponseEntity object containing a Boolean object with value of true if a password change is required, false if it is not.
@@ -133,13 +133,17 @@ public class LoginController {
 	@RequestMapping(value="/cookieLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Object cookieLogin(@RequestHeader(value = "Authorization") String token, @RequestBody String username) {
 		Token masterToken = tr.findByAuthToken(token);
-		masterToken.getUser().blankPassword();
-		masterToken.getUser().setID(0);
-
-		if (masterToken.getUser().getUsername().equals(username)) {
-			return new ResponseEntity<Token>(masterToken, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<ResponseErrorEntity>( new ResponseErrorEntity("Cookie username/token do not match."), HttpStatus.NOT_FOUND);
+		try {
+			masterToken.getUser().blankPassword();
+			masterToken.getUser().setID(0);
+			if (masterToken.getUser().getUsername().equals(username)) {
+				return new ResponseEntity<Token>(masterToken, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Cookie username/token do not match."), HttpStatus.NOT_FOUND);
+			}
+		} catch (NullPointerException e) {
+			Logger.getRootLogger().debug("Inactive token", e);
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Stored token is inactive."), HttpStatus.UNAUTHORIZED);
 		}
 	}
 
