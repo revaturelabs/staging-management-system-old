@@ -18,14 +18,6 @@ sms.controller("associateCertificationsCtrl", function($scope, $state, $mdDialog
 	//sets new date to today, used to set min date on calendar
 	acc.minDate = new Date();
 	
-	
-
-	
-/*	acc.onlyWeekendsPredicate = function(date) {
-		var day = date.getDay();
-		return day === 0 || day === 6;
-	}*/
-	
 	//gets the max date to set for the calendar when scheduling a certification
 	acc.getMaxDate = function() {
 		//loops through all of the user's tasks
