@@ -1,81 +1,54 @@
 
-    var sms = angular.module( "sms" );
-    sms.controller( "managerAttendanceCtrl", function($scope, $state, userService, loginService, $filter, $mdDialog, batchAddFactory){
+    angular
+        .module( "sms" )
+        .controller( "managerAttendanceCtrl", managerAttendanceCtrl );
+    
+    function managerAttendanceCtrl( $scope, $state, userService, loginService, $filter, $mdDialog, batchAddFactory ) {
     	var mac = this;
-    	
-    	// $scope.$parent.suCtrl.title = "Associate Weekly Attendance";
-	
-		
-		// bindables
-		//data bindables
+
+		  // bindables
+		    // data
         mac.user = loginService.getUser();  
 		mac.weekNumber = 4; //make a scope variable that holds the week number, so they can only go forward and back 2 weeks
 		mac.legend = [];
-		//function bindables
+	        // functions
 		mac.toast = toast;
-		mac.logout = logout;
 		mac.newAssociates = newAssociates;
 		mac.verifyAttendance = verifyAttendance;
 		mac.setDateTable = setDateTable;
 		mac.goBackOneWeek = goBackOneWeek;
 		mac.goForwardOneWeek = goForwardOneWeek;
-		
-        
 		mac.addOptions = addOptions;
 
 
-	
-		
+          // initializations
+        mac.addOptions();
+		mac.setDateTable();
+        
+          // functions
+            // sends options and actions to toolbar
 
 		function addOptions() {
 			var actions = [];
-
 			
-			if (mac.user.userRole.name == "superAdmin"){
+			if (mac.user.userRole.name == "superAdmin") {
 				actions.push({
 					"function": mac.newAssociates,
 					"icon": "add",
 					"tooltip": "Add Batch"
 				});
-				// $scope.$emit( "changeFunction", { title: "Weekly Attendance", actions: [
-				// 	{
-				// 	"function": mac.newAssociates,
-				// 	"icon": "add",
-				// 	"tooltip": "Add Batch"
-				// }
-				// ]  });
+			} else if (mac.user.userRole.name == "admin") {
 			}
-			else if (mac.user.userRole.name == "admin"){
 
-				// actions.push({
-				// 	"function": function(){$state.go("managerAttendance")},
-				// 	"icon": "add",
-				// 	"tooltip":  "testing stuff"
-				// });
-				}
-				$scope.$emit("setToolbar", {title: "Weekly Attendance", actions});
+			$scope.$emit("setToolbar", {title: "Weekly Attendance", actions});
 		}
 
-		
-		
-		
-        
-
-    	
-    	function toast(message){
-    		// $scope.$parent.$parent.mastCtrl.toast(message);
+            // calls root-level toast function
+    	function toast( message ) {
             $scope.$emit( "toastMessage", message );
     	};
-    	
-		function logout() {
-            mac.user = {};
-            mac.token = "";
-            loginService.logout();
-            mac.toast("Logged out.");
-            $state.go("login");
-        };
 
-
+            // sets info in table
 		function setDateTable(){
 			/*This block sets the DATE HEADERS IN TABLE*/
 			//set current day
@@ -172,12 +145,8 @@
 				/*end of legend creation*/
         }
 
-		
-    
-        
-        
-
-		  function verifyAttendance(user, selectedDay){
+            // verifies attendance
+		function verifyAttendance(user, selectedDay){
         	//figure out which day was clicked
         	thisDay = mac.thisMonday;
         	if(selectedDay==1){
@@ -229,13 +198,9 @@
         	
         }
         
-        
-        
-        
-        
     	/*change week functions*/
         
-        
+            // sets week to the one previous
     	function goBackOneWeek() {
     		
     		//make sure user can't go back 2 weeks
@@ -278,7 +243,8 @@
     		}
         };
         
-       function goForwardOneWeek() {
+            // sets week to the next one
+        function goForwardOneWeek() {
     	    
         	//make sure user can't go beyond the present week 
     		if(mac.weekNumber < 4){
@@ -323,6 +289,7 @@
     		}
         };
 
+            // adds associates by batch
 		function newAssociates() {
             
               // opens a dialog to allows addition of a new batch of associates
@@ -348,4 +315,4 @@
 		setDateTable();
 		
         
-    });
+    };

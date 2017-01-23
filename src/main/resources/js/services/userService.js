@@ -1,7 +1,9 @@
 
-    var sms = angular.module( "sms" );
-
-    sms.service( "userService", function( $resource, loginService ){
+    angular
+        .module( "sms" )
+        .service( "userService", userService );
+        
+    function userService( $resource, loginService ) {
         var us = this;
         us.userResource = $resource("api/v1/user/:username", 
             { id: "@username" }, 
@@ -33,4 +35,4 @@
         us.remove = function(user, success, error) {
             user.$remove(success, error);
         };
-    });
+    };

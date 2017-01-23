@@ -1,11 +1,13 @@
 
-    var sms = angular.module( "sms" );
+    angular
+        .module( "sms" )
+        .service( "batchTypeService", batchTypeService );
 
-    sms.service( "batchTypeService", function($resource){
+    function batchTypeService( $resource ) {
         var batchTypeResource = $resource("api/v1/batchType");
         var bts = this;
 
         bts.getAll = function(success, error) {
             batchTypeResource.query(success, error);
         };
-    });
+    };

@@ -12,7 +12,7 @@
 
             // functions
         tc.checkPass = checkPass;
-        tc.direct = direct;
+       
         tc.toast = toast;
         tc.logout = logout;
         tc.settings = settings;
@@ -34,19 +34,7 @@
             });
         }
         
-            // directs to either associateAttendance or managerAttendance based on logged in user's role 
-        function direct() {
-            // var userRole = loginService.getUser().userRole.name;    
-            // var userRole = tc.user.userRole.name;
-        
-            // if (userRole == "associate"){
-            //     $state.go("associateAttendance");
-            // } else {
-            //     $state.go("managerAttendance");
-            //  }
 
-            tc.toast("Login Successful.");
-        };
 
             // calls toast function in rootController
         function toast( message ) {
