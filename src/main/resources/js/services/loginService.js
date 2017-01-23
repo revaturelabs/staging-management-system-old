@@ -1,11 +1,18 @@
 
+<<<<<<< HEAD
     angular
         .module( "sms" )
         .service( "loginService", loginService );
         
     function loginService( $resource, $cookies ) {
+=======
+    var sms = angular.module( "sms" );
+
+    sms.service( "loginService", function( $resource, $cookies, $state ) {
+>>>>>>> 068c47f5b6c31f7d236924722b3a037d0975aa4c
         var ls = this;
-        var loginResource = $resource("api/v1/login/cookieLogin", 
+
+        var loginResource = $resource("api/v1/login", 
             {},
             { 
                 save      : { 
@@ -19,7 +26,11 @@
                         "Authorization": function() { return ls.token; }
                     } 
                 },
+<<<<<<< HEAD
                 checkPass : { 
+=======
+                checkPass: { 
+>>>>>>> 068c47f5b6c31f7d236924722b3a037d0975aa4c
                   	method: "POST",  
                 	url: "/api/v1/login/checkpass",
                 	headers: {
@@ -37,7 +48,14 @@
                 }
             }
         );
+        ls.changePass = function(data,success,error){
+        	loginResource.changePass(data,success,error);
+        }
 
+        ls.checkPass = function(username, success,error){
+        	loginResource.checkPass(username, success,error);
+        };
+        
         ls.login = function( loginCred, success, error ) {
             loginResource.save( loginCred, success, error );
         };
@@ -67,9 +85,21 @@
         ls.addUser = function(user) {
             ls.user = user;
         };
+<<<<<<< HEAD
         
         ls.getUser = function() {
             return ls.user;
+=======
+     
+        ls.getUser = function() {
+        	if (ls.user.username == undefined) {
+        		// THIS IS BAD, BUT IT WORKS. FOR NOW.
+				$state.go("login");
+			}
+        	else{
+        		return ls.user;
+        	}
+>>>>>>> 068c47f5b6c31f7d236924722b3a037d0975aa4c
         };
 
         ls.addToken = function(token) {
@@ -77,10 +107,22 @@
         };
 
         ls.getToken = function() {
-            return ls.token;
+        	if(ls.token){
+        		return ls.token;
+        	}
+        	else{
+        		var cookieToken = $cookies.get("RevatureSMSToken");
+        		if (cookieToken) {
+        			return cookieToken;
+        		}
+        	}
+            
         };
+        
+       
 
         return {
+
             login       : ls.login,
             cookieLogin : ls.cookieLogin,
             checkPass   : ls.checkPass,
@@ -89,7 +131,9 @@
             addUser     : ls.addUser,
             getUser     : ls.getUser,
             addToken    : ls.addToken,
-            getToken    : ls.getToken
+            getToken    : ls.getToken,
+            checkPass : ls.checkPass,
+            changePass : ls.changePass
         };
         
     };

@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +26,7 @@ import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.domain.dto.LoginAttemptDTO;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
 import com.revature.sms.domain.dto.UserDTO;
+import com.revature.sms.domain.dto.bc;
 
 /**
  * Server-side controller to handle logging into the application.
@@ -132,10 +133,16 @@ public class LoginController {
 	 */
 	@RequestMapping(value="/cookieLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Object cookieLogin(@RequestHeader(value = "Authorization") String token, @RequestBody String username) {
+<<<<<<< HEAD
 		Token masterToken = tr.findByauthToken(token);
 		try {
 			masterToken.getUser().blankPassword();
 			masterToken.getUser().setID(0);
+=======
+		Token masterToken = tr.findByAuthToken(token);
+		masterToken.getUser().blankPassword();
+		masterToken.getUser().setID(0);
+>>>>>>> 068c47f5b6c31f7d236924722b3a037d0975aa4c
 
 			if (masterToken.getUser().getUsername().equals(username)) {
 				return new ResponseEntity<Token>(masterToken, HttpStatus.OK);
@@ -239,7 +246,7 @@ public class LoginController {
 	 */
 	public boolean isValid(String tokenString, String usernameString) {
 		boolean valid = false;
-		Token token = tr.findByauthToken(tokenString);
+		Token token = tr.findByAuthToken(tokenString);
 		if (token != null) {
 			if (usernameString.equals(token.getUser().getUsername()))
 				valid = true;
