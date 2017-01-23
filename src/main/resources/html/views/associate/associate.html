@@ -24,7 +24,7 @@
      				 
      				<md-menu-content>
      				<div ng-repeat="x in status | orderBy : 'name'"><!-- TODO: make this work once the rest service is working **************************** -->
-     					<md-menu-item><md-button ng-click="assoCtrl.checkIn(x.id)">{{x.name}}</md-button></md-menu-item>
+     					<md-menu-item><md-button ng-click="assoCtrl.checkIn(x)">{{x.name}}</md-button></md-menu-item>
      					<md-menu-divider></md-menu-divider>
      				</div>
      				</md-menu-content>

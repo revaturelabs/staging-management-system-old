@@ -90,9 +90,9 @@
         	for(var i=0; i< asc.user.attendance.length; i++){
         		var d2 = new Date(asc.user.attendance[i].date);
         		if(d.getDate() === d2.getDate() & d.getMonth() === d2.getMonth()){
-        			console.log(status);
-        			console.log(asc.user.attendance[i]);
-        			
+        			console.log(status.id + " " +asc.user.attendance[i].checkedIn.id);
+        			console.log(status.name + " " + asc.user.attendance[i].checkedIn.name);
+        			//TODO: ********************************************************************************** ******************************* update user status and save to db
         		}
         	}
         }
