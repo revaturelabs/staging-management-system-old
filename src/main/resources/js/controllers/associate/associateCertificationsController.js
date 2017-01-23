@@ -22,8 +22,6 @@ sms.controller("associateCertificationsCtrl", function($scope, $state, $mdDialog
 	acc.getMaxDate = function() {
 		//loops through all of the user's tasks
 		for(var i = 0; i < acc.user.tasks.length; i++) {
-			var today = new Date();
-			
 			//sets a user's tasks timestamp date to a date object
     		var certDate = new Date(acc.user.tasks[i].date);
     		var cert = "Certification";
