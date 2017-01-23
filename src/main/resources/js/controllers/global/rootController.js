@@ -18,4 +18,4 @@
         $scope.$on( "toastMessage", function( events, message ) {
             $mdToast.show( $mdToast.simple().textContent( message ).action("OKAY").position("top right").highlightAction(true) );
         })
-    };
+    }

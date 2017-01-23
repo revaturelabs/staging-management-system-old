@@ -309,7 +309,7 @@
             }, function() {
                 mac.toast("Batch addition cancelled.");
             });
-        };
+        }
 		
 		// addOptions();
 		// setDateTable();
