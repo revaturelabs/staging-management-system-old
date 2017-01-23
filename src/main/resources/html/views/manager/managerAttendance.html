@@ -1,0 +1,130 @@
+   
+    <md-table-container ng-if="manAttCtrl.users != undefined">
+        <table md-table>
+            <col>
+            <col ng-class="{highlightToday : (manAttCtrlactiveDay == 1)}">
+            <col ng-class="{highlightToday : (manAttCtrlactiveDay == 2)}">
+            <col ng-class="{highlightToday : (manAttCtrlactiveDay == 3)}">
+            <col ng-class="{highlightToday : (manAttCtrlactiveDay == 4)}">
+            <col ng-class="{highlightToday : (manAttCtrlactiveDay == 5)}">
+            <thead md-head>
+                <tr md-row>
+                    <th md-cell></th>
+                    <th md-cell>Monday</th>
+                    <th md-cell>Tuesday</th>
+                    <th md-cell>Wednesday</th>
+                    <th md-cell>Thursday</th>
+                    <th md-cell>Friday</th>
+                </tr>
+                <tr md-row>
+                    <th>
+                        <md-input-container>
+                            <label><span><md-icon>search</md-icon></span>Search</label>
+                            <input type="text" ng-model="searchBox">
+                        </md-input-container></th>
+                    <th md-cell>{{ manAttCtrl.monday }}</th>
+                    <th md-cell>{{ manAttCtrl.tuesday }}</th>
+                    <th md-cell>{{ manAttCtrl.wednesday }}</th>
+                    <th md-cell>{{ manAttCtrl.thursday }}</th>
+                    <th md-cell>{{ manAttCtrl.friday }}</th>
+                </tr>
+            </thead>
+        
+            <tbody md-body>
+                <tr md-row ng-repeat = "as in manAttCtrl.users | filter:searchBox track by as.username">
+                    <td md-cell>{{ as.firstName }} {{ as.lastName }}</td>
+                    <td md-cell>
+                        <span ng-show="as.thisWeek[0].verified == false || as.thisWeek[0].verified == null" >
+                            <md-icon style="color:orange;" ng-click="manAttCtrl.verifyAttendance(as, 0)">check_circle</md-icon>
+                        </span>
+                        <!-- container for icon -->
+                        <div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
+                        
+                            <!-- set the icon data -->
+                            <md-icon ng-style="{color: as.thisWeek[0].icon.color}" aria-label='{{as.thisWeek[0].icon.name}}' class="material-icons step" ng-class="md-48">
+                        
+                                <!-- changing the text changes the icon-->
+                                {{ as.thisWeek[0].icon.name }}
+                            </md-icon>
+                            <md-icon ng-show="(as.thisWeek[0].checkedIn == null && manAttCtrlactiveDay > 0) || (manAttCtrlactiveWeek == false && as.thisWeek[0].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
+                        </div>
+                    <td md-cell>
+                        <span ng-show="as.thisWeek[1].verified == false || as.thisWeek[1].verified == null" >
+                            <md-icon style="color:orange;" ng-click="manAttCtrl.verifyAttendance(as, 1)">check_circle</md-icon>
+                        </span>
+                        <div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
+                            <md-icon ng-style="{color: as.thisWeek[1].icon.color}" aria-label='{{as.thisWeek[1].icon.name}}' class="material-icons step" ng-class="md-48">
+                                {{ as.thisWeek[1].icon.name }}
+                            </md-icon>
+                            <md-icon ng-show="(as.thisWeek[1].checkedIn == null && manAttCtrlactiveDay > 1) || (manAttCtrlactiveWeek == false && as.thisWeek[1].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
+                        </div>
+                    <td md-cell>
+                        <span ng-show="as.thisWeek[2].verified == false || as.thisWeek[2].verified == null" >
+                            <md-icon style="color:orange;" ng-click="manAttCtrl.verifyAttendance(as, 2)">check_circle</md-icon>
+                        </span>
+                        <div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
+                            <md-icon ng-style="{color: as.thisWeek[2].icon.color}" aria-label='{{as.thisWeek[2].icon.name}}' class="material-icons step" ng-class="md-48">
+                                {{ as.thisWeek[2].icon.name }}
+                            </md-icon>
+                            <md-icon ng-show="(as.thisWeek[2].checkedIn == null && manAttCtrlactiveDay > 2) || (manAttCtrlactiveWeek == false && as.thisWeek[2].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
+                        </div>
+                    <td md-cell>
+                        <span ng-show="as.thisWeek[3].verified == false || as.thisWeek[3].verified == null" >
+                            <md-icon style="color:orange;" ng-click="manAttCtrl.verifyAttendance(as, 3)">check_circle</md-icon>
+                        </span>
+                        <div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
+                            <md-icon ng-style="{color: as.thisWeek[3].icon.color}" aria-label='{{as.thisWeek[3].icon.name}}' class="material-icons step" ng-class="md-48">
+                                {{ as.thisWeek[3].icon.name }}
+                            </md-icon>
+                            <md-icon ng-show="(as.thisWeek[3].checkedIn == null && manAttCtrlactiveDay > 3) || (manAttCtrlactiveWeek == false && as.thisWeek[3].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
+                        </div>
+                    <td md-cell>
+                        <span ng-show="as.thisWeek[4].verified == false || as.thisWeek[4].verified == null" >
+                            <md-icon style="color:orange;" ng-click="manAttCtrl.verifyAttendance(as, 4)">check_circle</md-icon>
+                        </span>
+                        <div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
+                            <md-icon ng-style="{color: as.thisWeek[4].icon.color}" aria-label='{{as.thisWeek[4].icon.name}}' class="material-icons step" ng-class="md-48">
+                                {{ as.thisWeek[4].icon.name }}
+                            </md-icon>
+                            <md-icon ng-show="(as.thisWeek[4].checkedIn == null && manAttCtrlactiveDay > 4) || (manAttCtrlactiveWeek == false && as.thisWeek[4].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
+                        </div>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+    <div ng-if="manAttCtrl.users == undefined" layout="column" layout-wrap layout-align="center center">
+        <div flex="100"> &nbsp; </div>
+        <md-progress-circular flex="100" class="md-accent" md-mode="indeterminate"> </md-progress-circular>
+        <div flex="100"> &nbsp; </div>
+    </div>
+
+    <section layout="row" layout-align="center center">
+    <md-button style="background-color:#D9E9FF;" ng-click="manAttCtrl.goBackOneWeek()"><span><md-icon>keyboard_arrow_left</md-icon></span></md-button>
+    <md-button style="background-color:#D9E9FF;" ng-click="manAttCtrl.goForwardOneWeek()"><span><md-icon>keyboard_arrow_right</md-icon></span></md-button>
+    </section>
+
+    <div layout="row">
+        <div flex="35"></div>
+        <div flex="60">
+            <li ng-repeat="legitem in manAttCtrl.legend">
+
+                <!-- set the icon data -->
+                <md-icon ng-style="{color: '{{legitem.color}}'}" aria-label='{{legitem.name}}' class="material-icons step" ng-class="md-48">
+
+                    <!-- changing the text changes the icon-->
+
+                    {{legitem.name}}
+                </md-icon>
+
+                {{legitem.description}}
+
+            </li>
+        </div>
+    </div>
+    <style>
+    .highlightToday{
+        background:#D9E9FF;
+    }
+    </style>
