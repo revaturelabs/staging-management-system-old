@@ -11,7 +11,7 @@
         aac.user = loginService.getUser();
         aac.curr = new Date();
         aac.today = aac.curr;
-        aac.minWeek = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() - 21 ); 
+        aac.minWeek = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() - 28 ); 
         aac.maxWeek = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() + 7 );
 
             // functions
