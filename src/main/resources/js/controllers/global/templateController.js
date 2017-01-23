@@ -35,7 +35,6 @@
         
             // directs to either associateAttendance or managerAttendance based on logged in user's role 
         function direct() {
-            // var userRole = loginService.getUser().userRole.name;    
             var userRole = tc.user.userRole.name;
         
             if (userRole == "associate"){

@@ -1,7 +1,9 @@
 
-    var sms = angular.module( "sms" );
-
-    sms.service( "loginService", function( $resource, $cookies ) {
+    angular
+        .module( "sms" )
+        .service( "loginService", loginService );
+        
+    function loginService( $resource, $cookies ) {
         var ls = this;
         var loginResource = $resource("api/v1/login/cookieLogin", 
             {},
@@ -90,4 +92,4 @@
             getToken    : ls.getToken
         };
         
-    });
+    };
