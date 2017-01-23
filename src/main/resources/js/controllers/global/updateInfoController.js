@@ -16,7 +16,7 @@
             // for notifications
         function toast( message ) {
             $mdToast.show( $mdToast.simple().textContent( message ).action("OKAY").position("top right").highlightAction(true) );
-        };
+        }
         
             // when user decides to cancel password update
         function cancel() {
@@ -83,4 +83,4 @@
                 uic.toast("Password confirmation does not match.");
             }
         }
-    };
+    }

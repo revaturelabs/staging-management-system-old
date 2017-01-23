@@ -9,5 +9,5 @@
 
         bts.getAll = function(success, error) {
             batchTypeResource.query(success, error);
-        };
-    };
+        }
+    }

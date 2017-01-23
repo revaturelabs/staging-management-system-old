@@ -39,10 +39,10 @@
             }
 
             aac.weekAttendance = $filter( "weekFilter" )( [aac.user], monday )[0].thisWeek;
-            for (var i = 0; i < aac.week.length; i++) {
-                if ( aac.week[i].date.getTime() < aac.today.getTime() ) {
-                    if ( aac.weekAttendance[i] == undefined ) {
-                        aac.weekAttendance[i] = {
+            for (var j = 0; j < aac.week.length; j++) {
+                if ( aac.week[j].date.getTime() < aac.today.getTime() ) {
+                    if ( aac.weekAttendance[j] == undefined ) {
+                        aac.weekAttendance[j] = {
                             verified: false,
                             checkedIn: false
                         }
@@ -50,7 +50,7 @@
                     }
                 }
             }
-        };
+        }
 
             // sets toobar icons and functions
         function setToolbar() {
@@ -83,4 +83,4 @@
         function toast( message ) {
             $scope.$emit( "toastMessage", message );
         }
-    };
+    }

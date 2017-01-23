@@ -125,7 +125,7 @@ public class LoginController {
 
 	}
 
-	/** 
+	/**
 	 * @param token String value of authorization token.
 	 * @param username String value of logged in user's username.
 	 * @return ResponseEntity object containing a Boolean object with value of true if a password change is required, false if it is not.
@@ -142,7 +142,8 @@ public class LoginController {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Cookie username/token do not match."), HttpStatus.NOT_FOUND);
 			}
 		} catch (NullPointerException e) {
-			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Stored token is unactive."), HttpStatus.UNAUTHORIZED);
+			Logger.getRootLogger().debug("Inactive token", e);
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Stored token is inactive."), HttpStatus.UNAUTHORIZED);
 		}
 	}
 

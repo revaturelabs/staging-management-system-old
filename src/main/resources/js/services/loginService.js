@@ -37,18 +37,19 @@
                 	}
                 }
             }
-        );
+        )
+
         ls.changePass = function(data,success,error){
         	loginResource.changePass(data,success,error);
         }
 
         ls.checkPass = function(username, success,error){
         	loginResource.checkPass(username, success,error);
-        };
+        }
         
         ls.login = function( loginCred, success, error ) {
             loginResource.save( loginCred, success, error );
-        };
+        }
         
         ls.cookieLogin = function( username, success, error ) {
             loginResource.cookie( username, success, error );
@@ -56,7 +57,7 @@
 
         ls.checkPass = function(username, success, error){
         	loginResource.checkPass(username, success, error);
-        };
+        }
 
         ls.changePass = function(data, success, error){
         	loginResource.changePass(data, success, error);
@@ -67,14 +68,14 @@
             ls.token = "";
             $cookies.remove("RevatureSMSUseraname");
             $cookies.remove("RevatureSMSToken");
-        };
+        }
 
         ls.user = {};
         ls.token = "";
 
         ls.addUser = function(user) {
             ls.user = user;
-        };
+        }
      
         ls.getUser = function() {
         	if (ls.user.username == undefined) {
@@ -84,11 +85,11 @@
         	else{
         		return ls.user;
         	}
-        };
+        }
 
         ls.addToken = function(token) {
             ls.token = token;
-        };
+        }
 
         ls.getToken = function() {
         	if(ls.token){
@@ -100,8 +101,7 @@
         			return cookieToken;
         		}
         	}
-            
-        };
+        }
         
         return {
             login       : ls.login,
@@ -112,8 +112,6 @@
             addUser     : ls.addUser,
             getUser     : ls.getUser,
             addToken    : ls.addToken,
-            getToken    : ls.getToken,
-            checkPass : ls.checkPass,
-            changePass : ls.changePass
-        };
-    };
+            getToken    : ls.getToken
+        }
+    }

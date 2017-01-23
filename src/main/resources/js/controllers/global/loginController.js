@@ -21,7 +21,7 @@
             // calls master controller's toast function
         function toast(message) {
             $scope.$emit( "toastMessage", message );
-        };
+        }
 
           // logs in the user by conventional means
         function login(isValid) {
@@ -33,7 +33,7 @@
                     lc.toast(error.data.errorMessage);
                 });
             }
-        };
+        }
 
           // logs in the user by means of cookies stored in browser session
         function cookieCheck() {
@@ -54,7 +54,7 @@
             } else {
                 lc.cookieLoad = false;
             }
-        };
+        }
 
 
 
@@ -68,5 +68,5 @@
 
             $state.go("attendance");
             lc.toast("Login Successful.");     
-        };
-    };
+        }
+    }

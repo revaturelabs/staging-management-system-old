@@ -35,14 +35,14 @@
             // calls toast function in rootController
         function toast( message ) {
             $scope.$emit( "toastMessage", message );
-        };
+        }
 
             // logs out
         function logout() {
             loginService.logout();
             tc.toast("Logged out.");
             $state.go("login");
-        };
+        }
 
             // opens dialog to allow changing of password
         function settings( needChange ) {
@@ -59,13 +59,13 @@
             }, function() {
                 tc.toast( "Password change cancelled." );
             });
-        };
+        }
 
           // listeners
             // changes title and actions based on recieved data
         $scope.$on( "setToolbar", function( events, data ) {
             tc.title = data.title;
             tc.actions = data.actions;
-        });
+        })
 
-    };
+    }

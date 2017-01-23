@@ -46,7 +46,7 @@
             // calls root-level toast function
     	function toast( message ) {
             $scope.$emit( "toastMessage", message );
-    	};
+    	}
 
             // sets info in table
 		function setDateTable(){
@@ -241,7 +241,7 @@
     		else{
     			mac.toast("Can't go back more than 4 weeks");
     		}
-        };
+        }
         
             // sets week to the next one
         function goForwardOneWeek() {
@@ -287,7 +287,7 @@
             else{
     			mac.toast("Can't go to future weeks");
     		}
-        };
+        }
 
             // adds associates by batch
 		function newAssociates() {
@@ -311,8 +311,6 @@
             });
         };
 		
-		addOptions();
-		setDateTable();
-		
-        
-    };
+		// addOptions();
+		// setDateTable();
+    }

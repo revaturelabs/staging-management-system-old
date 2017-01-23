@@ -9,5 +9,5 @@
 
         tts.getAll = function(success, error) {
             taskTypeResource.query(success, error);
-        };
-    };
+        }
+    }
