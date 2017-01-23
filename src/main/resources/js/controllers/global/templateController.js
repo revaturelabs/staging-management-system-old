@@ -18,12 +18,19 @@
               // functions
                 // directs to either associateAttendance or managerAttendance based on logged in user's role 
             function direct() {
+               
                 var userRole = loginService.getUser().userRole.name;    
-            
+               
                 if (userRole == "associate"){
+                    
+                   
                     $state.go("associateAttendance");
+                   
+                   
                 } else {
+                   
                     $state.go("managerAttendance");
+                   
                 }
 
                 tc.toast("Login Successful.");
@@ -39,6 +46,7 @@
                 loginService.logout();
                 tc.toast("Logged out.");
                 $state.go("login");
+                
             };
 
                 // opens dialog to allow changing of password

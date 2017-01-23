@@ -5,12 +5,12 @@
     	
     	// $scope.$parent.suCtrl.title = "Associate Weekly Attendance";
 
-
+		
 		// bindables
 		//data bindables
         mac.user = loginService.getUser();  
 		mac.weekNumber = 4; //make a scope variable that holds the week number, so they can only go forward and back 2 weeks
-		
+		mac.legend = [];
 		//function bindables
 		mac.toast = toast;
 		mac.logout = logout;
@@ -28,23 +28,26 @@
 		
 
 		function addOptions() {
-			
+			var actions = [];
 
 			
 			if (mac.user.userRole.name == "superAdmin"){
-	
-				$scope.$emit( "changeFunction", { title: "Weekly Attendance", actions: [
-					{
+				actions.push({
 					"function": mac.newAssociates,
 					"icon": "add",
 					"tooltip": "Add Batch"
-				}
-				]  });
+				});
+				// $scope.$emit( "changeFunction", { title: "Weekly Attendance", actions: [
+				// 	{
+				// 	"function": mac.newAssociates,
+				// 	"icon": "add",
+				// 	"tooltip": "Add Batch"
+				// }
+				// ]  });
 			}
 			else if (mac.user.userRole.name == "admin"){
-				$scope.$emit( "changeFunction", { title: "Weekly Attendance", actions: [
-				]  });
-			}
+				}
+				$scope.$emit("setToolbar", {title: "Weekly Attendance", actions});
 		}
 
 		
