@@ -131,6 +131,7 @@ public class UserDataManager {
 				createdUser.setAttendance(attendance);
 			}
 			if (!tasks.isEmpty()) {
+				atr.save(tasks);
 				createdUser.setTasks(tasks);
 			}
 			if (userRole.getName() != null) {

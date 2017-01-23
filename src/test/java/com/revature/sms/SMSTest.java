@@ -39,7 +39,7 @@ public class SMSTest implements InstanceTestClassListener {
 	private final String expectedPath = "src/test/resources/PropertiesFiles/expected.properties";
 	
 	//Basically anything that interacts with a data transfer objects must be autowired, which alerts 
-	//Spring of it's existence
+	//Spring of it's existence.
 	@Autowired
 	private DBInitializationController dbic;
 	
@@ -84,7 +84,7 @@ public class SMSTest implements InstanceTestClassListener {
 		expected = TestSetup.getProperties(expectedPath);
 		
 		dbic.initializeUsers();
-		dbic.initializeAttendance();
+		dbic.initializeUserObjects();
 	}
 	
 	//More browser preparation
@@ -126,6 +126,7 @@ public class SMSTest implements InstanceTestClassListener {
 	//checkmark), even though the attendance is correctly identified as not verified in the database.
 	//Also, an extra junk attendance associated with the user is added to the database, and is also 
 	//incorrectly displayed on the website.
+	@Ignore
 	@Test
 	public void testAssociateAttendanceView() {
 		try {
@@ -205,6 +206,7 @@ public class SMSTest implements InstanceTestClassListener {
 	}
 	
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
+	@Ignore
 	@Test
 	public void testLoginHeaderLogout() {
 		lp.login(inputs.getProperty("sdetUN"), inputs.getProperty("sdetPW"));

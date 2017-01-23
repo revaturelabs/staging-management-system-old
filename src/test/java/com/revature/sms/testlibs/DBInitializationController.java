@@ -10,10 +10,14 @@ import org.springframework.stereotype.Service;
 import com.codoid.products.exception.FilloException;
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
+import com.revature.sms.domain.AssociateTaskType;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
+import com.revature.sms.domain.dao.AssociateTaskTypeRepo;
 import com.revature.sms.domain.dao.BatchTypeRepo;
+import com.revature.sms.domain.dao.JobAssignmentRepo;
+import com.revature.sms.domain.dao.JobEventTypeRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
 import com.revature.sms.util.ExcelHelper;
 import com.revature.sms.util.Utils;
@@ -30,6 +34,16 @@ public class DBInitializationController {
 	
 	@Autowired
 	private UserRoleRepo urr;
+	
+	@Autowired
+	private AssociateTaskTypeRepo attr;
+	
+	@Autowired
+	private JobAssignmentRepo jar;
+	
+	@Autowired
+	private JobEventTypeRepo jetr;
+	
 	
 	private DBInitializationController() {
 		super();
@@ -67,7 +81,7 @@ public class DBInitializationController {
 
 	//Calling this method with an object that has not called the initializeUsers method yet may cause
 	//problems
-	public void initializeAttendance() {
+	public void initializeUserObjects() {
 		//This createdUsers array must be copied to avoid a ConcurrentModificationException
 		ArrayList<User> arrayCopy = new ArrayList<User>();
 		for (User user: udm.createdUsers) {
@@ -83,34 +97,57 @@ public class DBInitializationController {
 			ArrayList<String> checkIns = null; 
 			ArrayList<String> verifications = null;
 			ArrayList<String> notes = null;
+			ArrayList<String> taskDates = null;
+			ArrayList<String> taskNotes = null;
+			ArrayList<String> taskTypes = null;
 			try {
 				eh = new ExcelHelper(username);
 				dates = eh.getValues("attendanceDate");
 				checkIns = eh.getValues("checkedIn");
 				verifications = eh.getValues("verified");
 				notes = eh.getValues("attendanceNote");
+				
+				taskTypes = eh.getValues("taskType");
+				taskDates = eh.getValues("taskDate");
+				taskNotes = eh.getValues("taskNote");
+				
 			} catch (FilloException e) {}
 		
-			//The inner loop creates each user's attendance records (if they exist) 
-			//and saves them to the database.
+			//The inner loops create each user's attendance records, tasks, or job events 
+			//(when they exist) and save them to the database.
 			int j = 0;
 			ArrayList<AssociateAttendance> attendanceList = new ArrayList<AssociateAttendance>();
 			if (dates != null) {
 				while (j < dates.size()) {
 					String date = dates.get(j);
-					Timestamp ts = Utils.convertDate(date);
+					Timestamp dts = Utils.convertDate(date);
 					String checkedIn = checkIns.get(j);
 					boolean ci = Boolean.parseBoolean(checkedIn);
 					String verified = verifications.get(j);
 					boolean v = Boolean.parseBoolean(verified);
 					String note = notes.get(j);
-					
-					AssociateAttendance aa = new AssociateAttendance(ts, ci, v, note);
-					attendanceList.add(aa);				
+					AssociateAttendance aa = new AssociateAttendance(dts, ci, v, note);
+					attendanceList.add(aa);		
 					j++;
 				}
 			}
-			udm.editTestUser(i, "", "", "", "", new BatchType(), attendanceList, new ArrayList<AssociateTask>(), new UserRole(), new Timestamp(0));
+			
+			int k = 0;
+			ArrayList<AssociateTask> taskList = new ArrayList<AssociateTask>();
+			if (taskDates != null) {
+				while (k < taskDates.size()) {
+					String taskType = taskTypes.get(k);
+					AssociateTaskType att = attr.findByType(taskType);
+					String taskDate = taskDates.get(k);
+					Timestamp tdts = Utils.convertDate(taskDate);
+					String taskNote = taskNotes.get(k);
+					AssociateTask at = new AssociateTask(att, tdts, taskNote);
+					taskList.add(at);	
+					k++;
+				}
+			}
+			
+			udm.editTestUser(i, "", "", "", "", new BatchType(), attendanceList, taskList, new UserRole(), new Timestamp(0));
 			i++;
 		}
 	}	
@@ -119,16 +156,5 @@ public class DBInitializationController {
 	public void clearData() {
 		udm.removeAllTestUsers();
 	}
-	
-	
-	//Ideas for more database initialization methods
-	public void initializeJobEvents() {
-		
-	}
-	
-	public void initializeTasks() {
-		
-	}
-	
 	
 }
