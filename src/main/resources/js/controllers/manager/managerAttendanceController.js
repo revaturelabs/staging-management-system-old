@@ -4,7 +4,7 @@
     	var mac = this;
     	
     	// $scope.$parent.suCtrl.title = "Associate Weekly Attendance";
-
+	
 		
 		// bindables
 		//data bindables
@@ -24,7 +24,7 @@
 		mac.addOptions = addOptions;
 
 
-
+	
 		
 
 		function addOptions() {
@@ -46,6 +46,12 @@
 				// ]  });
 			}
 			else if (mac.user.userRole.name == "admin"){
+
+				// actions.push({
+				// 	"function": function(){$state.go("managerAttendance")},
+				// 	"icon": "add",
+				// 	"tooltip":  "testing stuff"
+				// });
 				}
 				$scope.$emit("setToolbar", {title: "Weekly Attendance", actions});
 		}
@@ -337,8 +343,9 @@
                 mac.toast("Batch addition cancelled.");
             });
         };
-
+		
 		addOptions();
 		setDateTable();
+		
         
     });

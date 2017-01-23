@@ -59,7 +59,7 @@ sms.controller("loginCtrl", function($scope, $state, $cookies, loginService) {
         $cookies.put( "RevatureSMSToken", loginService.getToken() );
 
         $state.go("attendance");
-        
+        lc.toast("Login Successful.");
     };
 
 	  // data

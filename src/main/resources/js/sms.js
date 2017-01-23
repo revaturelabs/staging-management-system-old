@@ -46,7 +46,7 @@
                 .state( "attendance", {
                     parent: "root",
                     url: "/attendance",
-                   // abstract: true,
+                    //abstract: true,
                     // template: "<ui-view/>",
                     views: {
                         "contentView@": {
@@ -54,8 +54,21 @@
                             controller: "templateCtrl",
                             controllerAs: "tempCtrl"
                         }
-                    }
-                })
+                    },
+                    onEnter : function(loginService, $state, $timeout){
+                            var userRole = loginService.getUser().userRole.name;
+                            console.log(userRole);    
+                            $timeout(function(){
+                                if (userRole == "associate"){
+                                    $state.go("associateAttendance");
+                            } else {
+                                $state.go("managerAttendance");
+                            }
+                            })
+                            
+                            
+                        }
+                     })
 
                       // manager attendance
                     .state( "managerAttendance", {

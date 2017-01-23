@@ -20,6 +20,7 @@
           // initialization
         tc.checkPass();
         tc.direct();
+        
 
           // functions
             // pops up dialog if password is default username
@@ -36,13 +37,13 @@
             // directs to either associateAttendance or managerAttendance based on logged in user's role 
         function direct() {
             // var userRole = loginService.getUser().userRole.name;    
-            var userRole = tc.user.userRole.name;
+            // var userRole = tc.user.userRole.name;
         
-            if (userRole == "associate"){
-                $state.go("associateAttendance");
-            } else {
-                $state.go("managerAttendance");
-            }
+            // if (userRole == "associate"){
+            //     $state.go("associateAttendance");
+            // } else {
+            //     $state.go("managerAttendance");
+            //  }
 
             tc.toast("Login Successful.");
         };
