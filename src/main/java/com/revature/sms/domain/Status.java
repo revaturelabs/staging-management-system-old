@@ -25,9 +25,8 @@ public class Status {
 		super();
 	}
 
-	public Status(int iD, String name) {
+	public Status(String name) {
 		super();
-		ID = iD;
 		this.name = name;
 	}
 
