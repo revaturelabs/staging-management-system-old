@@ -19,7 +19,7 @@
 
           // initialization
         tc.checkPass();
-        tc.direct();
+       
         
 
           // functions
