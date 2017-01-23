@@ -35,15 +35,13 @@
                 	}
                 },
                 
-                
                 getStatus:{
                 	method: "GET",
-                	url:"/api/v1/statuses"/*,
+                	url:"/api/v1/statuses",
                 	headers:{
                 		"Content-Type":"application/json"
-                	}*/
+                	}
                 }
-                
                 
             }
         );
@@ -112,8 +110,6 @@
             
         };
         
-       
-
         return {
 
             login       : ls.login,

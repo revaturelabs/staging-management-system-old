@@ -82,7 +82,7 @@
         	$scope.status = success.status;
         	
         },function(error){
-        	console.log(success);
+        	console.log(error);
         });
         //id ="checkInMenu"
             asc.checkIn = function(status){
