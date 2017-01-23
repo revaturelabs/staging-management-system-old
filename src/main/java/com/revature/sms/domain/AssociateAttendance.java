@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -38,8 +40,9 @@ public class AssociateAttendance {
 	/**
 	 * Boolean value representing if the associate has logged in.
 	 */
-	@Column(name="CHECKED_IN", nullable=false)
-	private boolean checkedIn;
+	@ManyToOne
+	@JoinColumn(name="CHECKED_IN", nullable=false)
+	private Status checkedIn;
 	
 	/**
 	 * Boolean value that represents whether an admin has verified an associates attendance.
@@ -68,7 +71,7 @@ public class AssociateAttendance {
 	 * @param note String value that allows admin to include an optional note regarding the associates attendance 
 	 */
 
-	public AssociateAttendance(Timestamp date, boolean checkedIn, boolean verified, String note) {
+	public AssociateAttendance(Timestamp date, Status checkedIn, boolean verified, String note) {
 
 		super();
 		this.date = date;
@@ -114,7 +117,7 @@ public class AssociateAttendance {
 	 * Get method for checkedIn.
 	 * @return checkedIn Boolean value representing if the associate has logged in
 	 */
-	public boolean isCheckedIn() {
+	public Status isCheckedIn() {
 		return checkedIn;
 	}
 	
@@ -122,7 +125,7 @@ public class AssociateAttendance {
 	 * Set method for checkedIn.
 	 * @param checkedIn Boolean value representing if the associate has logged in
 	 */
-	public void setCheckedIn(boolean checkedIn) {
+	public void setCheckedIn(Status checkedIn) {
 		this.checkedIn = checkedIn;
 	}
 
