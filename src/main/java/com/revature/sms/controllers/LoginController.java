@@ -72,10 +72,7 @@ public class LoginController {
 		try {
 			if (u.getHashedPassword().equals(in.getInputPass())) {
 				// Successful login
-				if ("associate".equals(u.getUserRole().getName())) {
-					// if associate mark attendance as present
-					markPresent(u.getUsername());
-				}
+			
 
 				Token token = new Token(u);
 				tr.save(token);
@@ -159,8 +156,7 @@ public class LoginController {
 			for (AssociateAttendance aa : associateAttendanceList) {
 				if (d.getDate() == aa.getDate().getDate() && d.getDay() == aa.getDate().getDay()
 						&& d.getYear() == aa.getDate().getYear()) {
-					// Associate has checked in before and current day exists
-					aa.setCheckedIn(true);
+					
 					aar.save(aa);
 					return;
 				}
@@ -169,13 +165,15 @@ public class LoginController {
 		// Associate has not checked in before
 		// or
 		// Associate has checked in before but current day does not exist
-		AssociateAttendance aa = new AssociateAttendance(d, true, false, "");
+		
+		
+	/*AssociateAttendance aa = new AssociateAttendance(d, true, false, "");
 
 		List<AssociateAttendance> l = user.getAttendance();
 		l.add(aa);
 		user.setAttendance(l);
 
-		ur.save(user);
+		ur.save(user);*/
 	}
 
 	/**

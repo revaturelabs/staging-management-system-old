@@ -72,5 +72,7 @@
     			},function(error){
     				asc.toast(error.data.errorMessage);
     			});
+        
 
+        console.log("status" + loginService.getStatus());
     });
