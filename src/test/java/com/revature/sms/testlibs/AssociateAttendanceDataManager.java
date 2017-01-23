@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.sms.domain.AssociateAttendance;
+import com.revature.sms.domain.Status;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
 
 /**
@@ -37,7 +38,7 @@ public class AssociateAttendanceDataManager {
 	 * @return The associateAttendance object that is created in the database
 	 */
 	
-	public AssociateAttendance createTestAssociateAttendance(Timestamp date, boolean checkedIn, boolean verified, String note){
+	public AssociateAttendance createTestAssociateAttendance(Timestamp date, Status checkedIn, boolean verified, String note){
 		AssociateAttendance newAssociateAttendance = new AssociateAttendance(date, checkedIn, verified, note);
 		tr.save(newAssociateAttendance);
 		createdAssociateAttendances.add(newAssociateAttendance);

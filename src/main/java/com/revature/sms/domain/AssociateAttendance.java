@@ -41,7 +41,7 @@ public class AssociateAttendance {
 	 * Boolean value representing if the associate has logged in.
 	 */
 	@ManyToOne
-	@JoinColumn(name="CHECKED_IN", nullable=false)
+	@JoinColumn(name="CHECKED_IN")
 	private Status checkedIn;
 	
 	/**
@@ -117,7 +117,7 @@ public class AssociateAttendance {
 	 * Get method for checkedIn.
 	 * @return checkedIn Boolean value representing if the associate has logged in
 	 */
-	public Status isCheckedIn() {
+	public Status getCheckedIn() {
 		return checkedIn;
 	}
 	
