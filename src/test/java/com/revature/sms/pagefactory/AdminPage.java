@@ -7,30 +7,37 @@ import org.openqa.selenium.support.FindBy;
 public class AdminPage extends SMSPage {
 
 	@FindBy(tagName="title")
-	WebElement title;
+	public WebElement title;
+	
+	@FindBy(css="[class=\"ng-binding flex\"]")
+	public WebElement header;
 	
 	@FindBy(css="[md-svg-icon=\"img/icons/ic_menu_white_24px.svg\"]")
-	WebElement menuIcon;
+	public WebElement menuIcon;
 	
 	@FindBy(css="[md-svg-icon=\"img/icons/ic_exit_to_app_white_24px.svg\"]")
-	WebElement logoutIcon;
+	public WebElement logoutIcon;
 	
-	@FindBy(name="mainAdminView")
-	WebElement attendanceTable;
+	@FindBy(css="[ng-model=\"searchBox\"]")
+	public WebElement searchBox;
 	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/section/button[1]/span/md-icon")
-	WebElement prevWeek;
+	@FindBy(css="[ng-click=\"goBackOneWeek()\"]")
+	public WebElement prevWeek;
 	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/section/button[2]/span/md-icon")
-	WebElement nextWeek;
+	@FindBy(css="[ng-click=\"goForwardOneWeek()\"]")
+	public WebElement nextWeek;
+	
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/md-table-container/table[1]/tbody/tr/th[4]")
+	public WebElement weekOf;
+	
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/md-table-container/table[2]")
+	public WebElement attendanceTable;
+	
 	
 	
 	public AdminPage(WebDriver driver) {
 		super(driver);
 	}
-
-	public void logout() {
-		logoutIcon.click();
-	}
 	
+	//Someone should add a method to find web elements in the attendance table 
 }

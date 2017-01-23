@@ -7,6 +7,8 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.revature.sms.util.TestSetup;
+
 public class SeleniumPhantomJSTest  {
 	@Test
 	public void TestIt(){

@@ -4,6 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+//This class does not need to be used anymore because of the page factory classes but I guess you can
+//look at this as a reference if you want.
+
 /**
  * WebElementStaticProvider is a class used to look up WebElements.
  * It is important that WebElements are not hard-coded in test cases, due to the fact that
