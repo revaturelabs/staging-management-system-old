@@ -125,8 +125,7 @@ public class LoginController {
 
 	}
 
-	/**
-	 * Method to login using stored cookies
+	/** 
 	 * @param token String value of authorization token.
 	 * @param username String value of logged in user's username.
 	 * @return ResponseEntity object containing a Boolean object with value of true if a password change is required, false if it is not.

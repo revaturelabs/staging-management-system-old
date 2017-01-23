@@ -1,4 +1,5 @@
-var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "md.data.table", "ngResource", "ngCookies", "ui.router"]);
+
+    var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "md.data.table", "ngResource", "ngCookies", "ui.router"]);
 
       // global constants
     sms.constant( "weekdays", [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ] );
@@ -54,17 +55,21 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                             controllerAs: "tempCtrl"
                         }
                     },
-                    onEnter : function(loginService, $state, $timeout){
-                            var userRole = loginService.getUser().userRole.name;
-                            $timeout(function(){
+                    onEnter : function( loginService, $state, $timeout ) {
+                            var user = loginService.getUser();
+                            var userRole = "";
+                            if (user != undefined) {
+                                userRole = user.userRole.name;
+                            }
+                            $timeout( function() {
                                 if (userRole == "associate"){
                                     $state.go("associateAttendance");
-                            } else {
-                                $state.go("managerAttendance");
-                            }
-                            })
-                            
-                            
+                                } else if ( ( userRole == "superAdmin") || ( userRole == "admin" ) ) {
+                                    $state.go("managerAttendance");
+                                } else {
+                                    $state.go("login");
+                                }
+                            }, 100);
                         }
                      })
 
