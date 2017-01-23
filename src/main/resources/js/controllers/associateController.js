@@ -41,7 +41,7 @@
         	
         };
         
-        asc.checkCertDates = function() {
+        asc.certCurrentlyScheduled = function() {
         	for(var i = 0; i < asc.user.tasks.length; i++) {
         		var today = new Date();
         		var certDate = new Date(asc.user.tasks[i].date);
@@ -53,7 +53,7 @@
         }
         
         asc.assocCertifications = function(){
-        	if (asc.checkCertDates()) {
+        	if (asc.certCurrentlyScheduled()) {
         		$mdDialog.show({
             		templateUrl: "html/templates/scheduleCertification.html",
             		controller: "associateCertificationsCtrl as assCertCtrl"
