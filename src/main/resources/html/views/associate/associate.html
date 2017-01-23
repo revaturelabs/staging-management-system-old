@@ -14,16 +14,21 @@
                 
                 <div flex></div>
                 <md-menu>
-                
-                 <md-button class="md-icon-button" aria-label="Schedule Certification" 
-                 	ng-click="ctrl.openMenu($mdOpenMenu, $event)">
-                 	 <md-tooltip>Check-In</md-tooltip>
-                <md-icon class="material-icons"  >done
-               </md-icon>
-                 </md-button>
-     
-              
-                
+	                
+	                 <md-button class="md-icon-button" aria-label="Check in." 
+	                 	ng-click="$mdOpenMenu($event)">
+	                 	 <md-tooltip>Check-In</md-tooltip>
+	                <md-icon class="material-icons"  >done
+	               </md-icon>
+	                 </md-button>
+     				
+     				<md-menu-content>
+     				<div >
+     					<md-menu-item><md-button>something</md-button></md-menu-item>
+     					<md-menu-divider></md-menu-divider>
+     					<md-menu-item><md-button>something</md-button></md-menu-item>
+     				</div>
+     				</md-menu-content>
                 </md-menu>
                 
                 

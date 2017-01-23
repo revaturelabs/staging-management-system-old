@@ -33,9 +33,23 @@
                 		"Content-Type":"application/json",
                 		"Authorization": function(){ return ls.token; }
                 	}
+                },
+                
+                
+                getStatus:{
+                	method: "GET",
+                	url:"/api/v1/statuses",
                 }
+                
+                
             }
         );
+        
+        ls.getStatus = function(data,success,error){
+        	loginResource.getStatus(success,error);
+        }
+        
+        
         ls.changePass = function(data,success,error){
         	loginResource.changePass(data,success,error);
         }
@@ -107,7 +121,8 @@
             addToken    : ls.addToken,
             getToken    : ls.getToken,
             checkPass : ls.checkPass,
-            changePass : ls.changePass
+            changePass : ls.changePass,
+            getStatus : ls.getStatus
         };
         
     });
