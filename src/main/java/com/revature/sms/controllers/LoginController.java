@@ -133,17 +133,10 @@ public class LoginController {
 	 */
 	@RequestMapping(value="/cookieLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Object cookieLogin(@RequestHeader(value = "Authorization") String token, @RequestBody String username) {
-<<<<<<< HEAD
-		Token masterToken = tr.findByauthToken(token);
+		Token masterToken = tr.findByAuthToken(token);
 		try {
 			masterToken.getUser().blankPassword();
 			masterToken.getUser().setID(0);
-=======
-		Token masterToken = tr.findByAuthToken(token);
-		masterToken.getUser().blankPassword();
-		masterToken.getUser().setID(0);
->>>>>>> 068c47f5b6c31f7d236924722b3a037d0975aa4c
-
 			if (masterToken.getUser().getUsername().equals(username)) {
 				return new ResponseEntity<Token>(masterToken, HttpStatus.OK);
 			} else {

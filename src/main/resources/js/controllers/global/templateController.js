@@ -19,8 +19,6 @@
 
           // initialization
         tc.checkPass();
-       
-        
 
           // functions
             // pops up dialog if password is default username
@@ -34,8 +32,6 @@
             });
         }
         
-
-
             // calls toast function in rootController
         function toast( message ) {
             $scope.$emit( "toastMessage", message );
@@ -51,18 +47,18 @@
             // opens dialog to allow changing of password
         function settings( needChange ) {
             $mdDialog.show({
-					templateUrl: "html/templates/updateInformation.html",
-	                controller: "updateInfoCrtl",
-                    controllerAs: "uInfoCtrl",
-	                locals: { needChangePass: needChange },
-                    bindToController: true,
-                    escapeToClose: !needChange,
-                    clickOutsideToClose: !needChange
-				}).then( function() {
-					tc.toast( "Password changed successfully." );
-				}, function() {
-					tc.toast( "Password change cancelled." );
-				});
+                templateUrl: "html/templates/updateInformation.html",
+                controller: "updateInfoCrtl",
+                controllerAs: "uInfoCtrl",
+                locals: { needChangePass: needChange },
+                bindToController: true,
+                escapeToClose: !needChange,
+                clickOutsideToClose: !needChange
+            }).then( function() {
+                tc.toast( "Password changed successfully." );
+            }, function() {
+                tc.toast( "Password change cancelled." );
+            });
         };
 
           // listeners

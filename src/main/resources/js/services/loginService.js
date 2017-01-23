@@ -1,15 +1,9 @@
 
-<<<<<<< HEAD
     angular
         .module( "sms" )
         .service( "loginService", loginService );
         
     function loginService( $resource, $cookies ) {
-=======
-    var sms = angular.module( "sms" );
-
-    sms.service( "loginService", function( $resource, $cookies, $state ) {
->>>>>>> 068c47f5b6c31f7d236924722b3a037d0975aa4c
         var ls = this;
 
         var loginResource = $resource("api/v1/login", 
@@ -26,11 +20,7 @@
                         "Authorization": function() { return ls.token; }
                     } 
                 },
-<<<<<<< HEAD
                 checkPass : { 
-=======
-                checkPass: { 
->>>>>>> 068c47f5b6c31f7d236924722b3a037d0975aa4c
                   	method: "POST",  
                 	url: "/api/v1/login/checkpass",
                 	headers: {
@@ -85,11 +75,6 @@
         ls.addUser = function(user) {
             ls.user = user;
         };
-<<<<<<< HEAD
-        
-        ls.getUser = function() {
-            return ls.user;
-=======
      
         ls.getUser = function() {
         	if (ls.user.username == undefined) {
@@ -99,7 +84,6 @@
         	else{
         		return ls.user;
         	}
->>>>>>> 068c47f5b6c31f7d236924722b3a037d0975aa4c
         };
 
         ls.addToken = function(token) {
@@ -119,10 +103,7 @@
             
         };
         
-       
-
         return {
-
             login       : ls.login,
             cookieLogin : ls.cookieLogin,
             checkPass   : ls.checkPass,
@@ -135,5 +116,4 @@
             checkPass : ls.checkPass,
             changePass : ls.changePass
         };
-        
     };

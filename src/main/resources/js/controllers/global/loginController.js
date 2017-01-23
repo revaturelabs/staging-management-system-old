@@ -39,10 +39,10 @@
         function cookieCheck() {
             lc.cookieLoad = true;
 
-            // var usernameCookie = $cookies.get("RevatureSMSUsername");
-            // var tokenCookie = $cookies.get("RevatureSMSToken");
-            var usernameCookie = undefined;
-            var tokenCookie = undefined;
+            var usernameCookie = $cookies.get("RevatureSMSUsername");
+            var tokenCookie = $cookies.get("RevatureSMSToken");
+            // var usernameCookie = undefined;
+            // var tokenCookie = undefined;
 
             if ( usernameCookie && tokenCookie ) {
                 loginService.addToken(tokenCookie);
@@ -61,13 +61,12 @@
           // sets user and token data and changes state upon successful login
         function loginSuccess(response) {
 
-
             loginService.addUser(response.user);
             loginService.addToken(response.authToken);
             $cookies.put( "RevatureSMSUsername", loginService.getUser().username );
             $cookies.put( "RevatureSMSToken", loginService.getToken() );
 
             $state.go("attendance");
-             lc.toast("Login Successful.");     
+            lc.toast("Login Successful.");     
         };
     };

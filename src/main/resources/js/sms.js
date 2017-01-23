@@ -56,7 +56,6 @@ var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMateri
                     },
                     onEnter : function(loginService, $state, $timeout){
                             var userRole = loginService.getUser().userRole.name;
-                            console.log(userRole);    
                             $timeout(function(){
                                 if (userRole == "associate"){
                                     $state.go("associateAttendance");
