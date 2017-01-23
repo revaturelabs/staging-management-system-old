@@ -1,5 +1,4 @@
-
-    var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "md.data.table", "ngResource", "ngCookies", "ui.router"]);
+var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "md.data.table", "ngResource", "ngCookies", "ui.router"]);
 
       // URL routing
     sms.config( function( $stateProvider, $urlRouterProvider, $locationProvider ) {
@@ -58,6 +57,7 @@
                     }
                 })
 
+                
               // admin page
 			.state( "admin", {
 				url: "/admin",
@@ -83,6 +83,8 @@
 	                    }
 	                })
 			
+
+			
               // associate page
 			.state( "assoc", {
 				url: "/assoc",
@@ -98,7 +100,7 @@
 			})
 
 			//.....................................................................
-			// superadmin view all attendance
+			// associate view all attendance
                 .state( "assocAttendance", {
                     url: "^/weeklyattendence",
                     parent: "assoc",
@@ -106,6 +108,18 @@
                         "mainAssociateView": {
                             templateUrl: "html/views/associate/associateWeeklyAttendence.html",
                             controller: "associateWeeklyAttendenceCtrl as assWeekAttCtrl"
+                        }
+                        
+                    }
+                })
+            // associate view certifications
+                .state( "assocCertifications", {
+                    url: "^/certifications",
+                    parent: "assoc",
+                    views: {
+                        "mainAssociateView": {
+                            templateUrl: "html/views/associate/associateCertifications.html",
+                            controller: "associateCertificationsCtrl as assCertCtrl"
                         }
                         
                     }
