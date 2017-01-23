@@ -38,14 +38,17 @@
                 
                 getStatus:{
                 	method: "GET",
-                	url:"/api/v1/statuses",
+                	url:"/api/v1/statuses"/*,
+                	headers:{
+                		"Content-Type":"application/json"
+                	}*/
                 }
                 
                 
             }
         );
         
-        ls.getStatus = function(data,success,error){
+        ls.getStatus = function(success,error){
         	loginResource.getStatus(success,error);
         }
         

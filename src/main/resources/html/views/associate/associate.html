@@ -13,7 +13,7 @@
                 <div flex>{{assoCtrl.title}} </div>
                 
                 <div flex></div>
-                <md-menu>
+                <md-menu id ="checkInMenu">
 	                
 	                 <md-button class="md-icon-button" aria-label="Check in." 
 	                 	ng-click="$mdOpenMenu($event)">
@@ -21,12 +21,11 @@
 	                <md-icon class="material-icons"  >done
 	               </md-icon>
 	                 </md-button>
-     				
+     				 
      				<md-menu-content>
-     				<div >
-     					<md-menu-item><md-button>something</md-button></md-menu-item>
+     				<div ng-repeat="x in status | orderBy : 'name'"><!-- TODO: make this work once the rest service is working **************************** -->
+     					<md-menu-item><md-button ng-click="assoCtrl.checkIn(x.id)">{{x.name}}</md-button></md-menu-item>
      					<md-menu-divider></md-menu-divider>
-     					<md-menu-item><md-button>something</md-button></md-menu-item>
      				</div>
      				</md-menu-content>
                 </md-menu>

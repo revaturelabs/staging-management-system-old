@@ -74,5 +74,26 @@
     			});
         
 
-        console.log("status" + loginService.getStatus());
+        // Associate checking in
+        loginService.getStatus(function(success){
+        	console.log(asc.user);
+        	console.log(success.status);
+        	
+        	$scope.status = success.status;
+        	
+        },function(error){
+        	console.log(success);
+        });
+        //id ="checkInMenu"
+            asc.checkIn = function(status){
+        	var d = new Date();
+        	for(var i=0; i< asc.user.attendance.length; i++){
+        		var d2 = new Date(asc.user.attendance[i].date);
+        		if(d.getDate() === d2.getDate() & d.getMonth() === d2.getMonth()){
+        			console.log(status);
+        			console.log(asc.user.attendance[i]);
+        			
+        		}
+        	}
+        }
     });
