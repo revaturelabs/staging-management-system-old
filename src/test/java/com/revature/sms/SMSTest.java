@@ -104,69 +104,92 @@ public class SMSTest implements InstanceTestClassListener {
 		Assert.assertEquals(locations.getProperty("siteName"), driver.getTitle());
 	}
 	
+	@Ignore
 	@Test
 	public void verifyDefaultWeek() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
 		Assert.assertTrue(asp.verify());
 		
-		ArrayList<String> expectedWeekdays = new ArrayList<String>();
-		expectedWeekdays.add(expected.getProperty("Mon"));
-		expectedWeekdays.add(expected.getProperty("Tue"));
-		expectedWeekdays.add(expected.getProperty("Wed"));
-		expectedWeekdays.add(expected.getProperty("Thu"));
-		expectedWeekdays.add(expected.getProperty("Fri"));
+		ArrayList<String> expectedMonthDays = new ArrayList<String>();
+		expectedMonthDays.add(expected.getProperty("Mon"));
+		expectedMonthDays.add(expected.getProperty("Tue"));
+		expectedMonthDays.add(expected.getProperty("Wed"));
+		expectedMonthDays.add(expected.getProperty("Thu"));
+		expectedMonthDays.add(expected.getProperty("Fri"));
 		
-		ArrayList<String> rawWeekData = asp.goThroughWeek();
-		ArrayList<String> actualWeekdays = new ArrayList<String>();
-		for (String s:rawWeekData) {
-			String dateAndWeekday = s.replace("\n", "");
-			String pattern = "\\d/\\d\\d";
-			Pattern r = Pattern.compile(pattern);
-			Matcher m = r.matcher(dateAndWeekday);
-			if (m.find()) {
-				actualWeekdays.add(m.group());
-			}
-		}
-		Assert.assertEquals(expectedWeekdays, actualWeekdays);
+		ArrayList<String> actualMonthDays = asp.goThroughWeek();
+		Assert.assertEquals(expectedMonthDays, actualMonthDays);
 	}
 	
-	@Ignore
+	
+	//ERROR??? When I run this test, and an associate is set as checked in and not verified for a 
+	//certain date, the associate is shown as verified for that date on the website (there is a double
+	//checkmark), even though the attendance is correctly identified as not verified in the database.
+	//Also, an extra junk attendance associated with the user is added to the database, and is also 
+	//incorrectly displayed on the website.
 	@Test
 	public void verifyAssociateAttendanceView() {
 		try {
 			ExcelHelper userGetter = new ExcelHelper("NewUsers");
 			ArrayList<String> usernames = userGetter.getValues("username");
 			ArrayList<String> passwords = userGetter.getValues("unhashedPassword");
-			
 			String ericUN = usernames.get(1);
 			String ericPW = passwords.get(1);
-			
-			
 			lp.login(ericUN, ericPW);
 			Assert.assertTrue(asp.verify());
-			ArrayList<String> actualWeekdays = asp.goThroughWeek();
-			ExcelHelper dateGetter = new ExcelHelper(ericUN);
-			ArrayList<String> expectedWeekdays = dateGetter.getValues("attendanceDate");
 			
-			System.out.println("ACTUAL WEEKDAYS:");
-			for (String s:actualWeekdays) {
-				String dateAndWeekday = s.replace("\n", "");
-				String pattern = "\\d/\\d\\d";
-				Pattern r = Pattern.compile(pattern);
-				Matcher m = r.matcher(dateAndWeekday);
-				if (m.find()) {
-					System.out.println(m.group());
+			ExcelHelper attendanceGetter = new ExcelHelper(ericUN);
+			ArrayList<String> expectedDates = attendanceGetter.getValues("attendanceDate");
+			ArrayList<String> checkIns = attendanceGetter.getValues("checkedIn");
+			ArrayList<String> verifications = attendanceGetter.getValues("verified");
+			//ArrayList<String> notes = attendanceGetter.getValues("attendanceNote");
+			
+			ArrayList<String> expectedMonthDays = new ArrayList<String>();
+			for (String s:expectedDates) {
+				String monthDay;
+				if (s.charAt(0) == '0') {
+					monthDay = s.substring(1, 5);
+				} else {
+					monthDay = s.substring(0, 5);
+				}
+				expectedMonthDays.add(monthDay);
+			}
+			
+			//ERROR??? The website says you can't go back more than 3 weeks after trying to go back more than
+			//four weeks
+			String week;
+			String weekBefore;
+			do {
+				week = asp.weekOf.getText();
+				ArrayList<String> actualMonthDays = asp.goThroughWeek();
+				ArrayList<String> icons = asp.goThroughWeekIcons();
+				
+				int aCount = 0;
+				for (String a:actualMonthDays) {
+					int eCount = 0;
+					for (String e:expectedMonthDays) {
+						if (a.equals(e)) {
+							Boolean ci = Boolean.parseBoolean(checkIns.get(eCount));
+							Boolean v = Boolean.parseBoolean(verifications.get(eCount));
+							String icon = icons.get(aCount);
+							if (ci && v) {
+								Assert.assertEquals("done_all", icon);
+							} else if (ci && !v) {
+								Assert.assertEquals("done", icon);
+							} else if (!ci && !v) {
+								Assert.assertEquals("close", icon);
+							} else {
+								System.out.println("You did not fill out the associate attendance spreadsheet correctly.");
+							}						
+						}
+						eCount++;
+					}
+					aCount++;
 				}
 				
-				
-			}
-			System.out.println();
-			System.out.println("EXPECTED WEEKDAYS");
-			for (String s:expectedWeekdays) {
-				System.out.println(s);
-			}
-			
-			
+				asp.prevWeek.click();
+				weekBefore = asp.weekOf.getText();
+			} while (!week.equals(weekBefore));
 		} catch (FilloException e) {}
 	}
 	
@@ -190,8 +213,8 @@ public class SMSTest implements InstanceTestClassListener {
 	//Clear database
 	@Override
 	public void afterClassSetup() {
-		driver.close();
-		dbic.clearData();
+		//driver.close();
+		//dbic.clearData();
 	}
 	
 	

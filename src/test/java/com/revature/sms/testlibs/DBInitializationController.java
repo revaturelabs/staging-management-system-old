@@ -79,7 +79,7 @@ public class DBInitializationController {
 			String username = u.getUsername();
 			ExcelHelper eh;
 			ArrayList<String> dates = null; 
-			ArrayList<String>checkIns = null; 
+			ArrayList<String> checkIns = null; 
 			ArrayList<String> verifications = null;
 			ArrayList<String> notes = null;
 			try {
@@ -90,7 +90,8 @@ public class DBInitializationController {
 				notes = eh.getValues("attendanceNote");
 			} catch (FilloException e) {}
 		
-			//The inner loop creates each user's attendance records and saves them to the database.
+			//The inner loop creates each user's attendance records (if they exist) 
+			//and saves them to the database.
 			int j = 0;
 			ArrayList<AssociateAttendance> attendanceList = new ArrayList<AssociateAttendance>();
 			if (dates != null) {
