@@ -30,17 +30,15 @@ sms.controller("associateCertificationsCtrl", function($scope, $state, $mdDialog
     		
     		//if the task is a certification task and the date has already happened
     		if ( certDate.getTime() <= acc.myDate.getTime() && (acc.user.tasks[i].taskType.type == cert) ) {
-    			//sets max date to be month from today
-    			var returnDate = new Date(acc.myDate.getFullYear(), acc.myDate
+    			//returns max date to be month from today
+    			return new Date(acc.myDate.getFullYear(), acc.myDate
     					.getMonth() + 1, acc.myDate.getDate());
-    			return returnDate;
     		}
 		}
 		//if there are no certs scheduled or there is a scheduled cert that hasn't happened yet
 		//return the user's grad date + 1 month
-		var returnDate = new Date(acc.gradDate.getFullYear(), acc.gradDate
+		return new Date(acc.gradDate.getFullYear(), acc.gradDate
 				.getMonth() + 1, acc.gradDate.getDate());
-		return returnDate;
 	};
 	
 	//today's date

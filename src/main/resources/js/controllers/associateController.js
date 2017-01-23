@@ -43,10 +43,9 @@
         
         asc.certCurrentlyScheduled = function() {
         	for(var i = 0; i < asc.user.tasks.length; i++) {
-        		var today = new Date();
         		var certDate = new Date(asc.user.tasks[i].date);
         		var cert = "Certification";
-        		if ( certDate.getTime() >= today.getTime() && (asc.user.tasks[i].taskType.type == cert) )
+        		if ( certDate.getTime() >= (new Date().getTime()) && (asc.user.tasks[i].taskType.type == cert) )
         			return false;
         	}
         	return true;
