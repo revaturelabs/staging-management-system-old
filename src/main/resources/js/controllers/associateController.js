@@ -41,15 +41,31 @@
         	
         };
         
+        asc.checkCertDates = function() {
+        	for(var i = 0; i < asc.user.tasks.length; i++) {
+        		var today = new Date();
+        		var certDate = new Date(asc.user.tasks[i].date);
+        		var cert = "Certification";
+        		if ( certDate.getTime() >= today.getTime() && (asc.user.tasks[i].taskType.type == cert) )
+        			return false;
+        	}
+        	return true;
+        }
+        
         asc.assocCertifications = function(){
-        	$mdDialog.show({
-        		templateUrl: "html/templates/scheduleCertification.html",
-        		controller: "associateCertificationsCtrl as assCertCtrl"
-        	}).then( function() {
-        		asc.toast("Certification Scheduled");
-            }, function() {
-            	asc.toast("Certification Schedule Cancelled");
-            });
+        	if (asc.checkCertDates()) {
+        		$mdDialog.show({
+            		templateUrl: "html/templates/scheduleCertification.html",
+            		controller: "associateCertificationsCtrl as assCertCtrl"
+            	}).then( function() {
+            		asc.toast("Certification Scheduled");
+                }, function() {
+                	asc.toast("Certification Schedule Cancelled");
+                });
+        	}
+        	else {
+        		asc.toast("You can only schedule one certification at a time.");
+        	}
         };
         
           // data
