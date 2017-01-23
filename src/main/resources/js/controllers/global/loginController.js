@@ -56,8 +56,11 @@
             }
         };
 
+
+
           // sets user and token data and changes state upon successful login
         function loginSuccess(response) {
+
 
             loginService.addUser(response.user);
             loginService.addToken(response.authToken);
@@ -65,6 +68,6 @@
             $cookies.put( "RevatureSMSToken", loginService.getToken() );
 
             $state.go("attendance");
-            
+             lc.toast("Login Successful.");     
         };
     };

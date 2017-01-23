@@ -5,7 +5,7 @@
     
     function managerAttendanceCtrl( $scope, $state, userService, loginService, $filter, $mdDialog, batchAddFactory ) {
     	var mac = this;
-		
+
 		  // bindables
 		    // data
         mac.user = loginService.getUser();  
@@ -20,12 +20,14 @@
 		mac.goForwardOneWeek = goForwardOneWeek;
 		mac.addOptions = addOptions;
 
+
           // initializations
         mac.addOptions();
 		mac.setDateTable();
         
           // functions
             // sends options and actions to toolbar
+
 		function addOptions() {
 			var actions = [];
 			
@@ -37,8 +39,8 @@
 				});
 			} else if (mac.user.userRole.name == "admin") {
 			}
-			
-            $scope.$emit("setToolbar", {title: "Weekly Attendance", actions});
+
+			$scope.$emit("setToolbar", {title: "Weekly Attendance", actions});
 		}
 
             // calls root-level toast function
@@ -308,8 +310,9 @@
                 mac.toast("Batch addition cancelled.");
             });
         };
-
+		
 		addOptions();
 		setDateTable();
+		
         
     };
