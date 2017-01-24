@@ -63,6 +63,10 @@
                     "function": aac.openEvents,
                     "icon"    : "event_note",
                     "tooltip" : "View events"
+                }, { 
+                    "function": aac.assocCertifications, 
+                    "icon"    : "date_range", 
+                    "tooltip" : "Certifications"
                 }]
             });
         }
