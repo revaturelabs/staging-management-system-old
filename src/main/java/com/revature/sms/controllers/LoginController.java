@@ -73,10 +73,12 @@ public class LoginController {
 		try {
 			if (u.getHashedPassword().equals(in.getInputPass())) {
 				// Successful login
+
 				/*if ("associate".equals(u.getUserRole().getName())) {
 					// if associate mark attendance as present
 					markPresent(u.getUsername());
 				}*/
+
 
 				Token token = new Token(u);
 				tr.save(token);
@@ -147,6 +149,7 @@ public class LoginController {
 		}
 	}
 
+
 /*	
  * *//**
 	 * Marks an associate as present
@@ -185,6 +188,7 @@ public class LoginController {
 	}
 */
 	
+
 	/**
 	 * To update user info
 	 * 

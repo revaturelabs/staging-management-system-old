@@ -3,7 +3,7 @@
         .module( "sms" )
         .controller( "associateAttendenceCtrl", associateAttendanceCtrl );
         
-    function associateAttendanceCtrl( $scope, $state, $filter, loginService, weekdays ) {
+    function associateAttendanceCtrl( $mdDialog, $scope, $state, $filter, loginService, userService, weekdays ) {
         var aac = this;
 
           // bindables
@@ -20,6 +20,7 @@
         aac.prevWeek = prevWeek;
         aac.nextWeek = nextWeek;
         aac.toast = toast;
+        aac.checkIn = checkIn;
 
           // initialization
         aac.calcWeek( aac.curr );
@@ -52,9 +53,28 @@
             }
         }
 
+        function todayCheckedIn(){
+        	var d = new Date();
+        	for(var i=0; i< aac.user.attendance.length; i++){
+        		var d2 = new Date(aac.user.attendance[i].date);
+        		if(d.getDate() === d2.getDate() & d.getMonth() === d2.getMonth()){
+        			if(aac.user.attendance[i].checkedIn == true){
+        				//checked in
+        				return {"function": aac.checkIn, "icon": "clear", "tooltip": "Mark as absent"};
+        			}
+        			else{
+        				//not checked in
+        				return {"function": aac.checkIn, "icon": "check", "tooltip": "Check in"};
+        			}
+        		}
+        	}
+        }
             // sets toobar icons and functions
         function setToolbar() {
-            $scope.$emit( "setToolbar", { title: "Weekly attendance", actions: {} } );
+        	
+        	var cin = todayCheckedIn();
+        	
+            $scope.$emit( "setToolbar", { title: "Weekly attendance", actions: {cin} } );
         }
 
             // checks if previous week is before minimum date and resets week dates if not
@@ -77,6 +97,47 @@
                 aac.curr = newDate;
                 aac.calcWeek( aac.curr );
             }
+        }
+        
+        // marks an associate as checked in.
+        function checkIn(){
+        	var d = new Date();
+        	//find cuurent attendance object
+        	for(var i=0; i< aac.user.attendance.length; i++){
+        		var d2 = new Date(aac.user.attendance[i].date);
+        		if(d.getDate() === d2.getDate() & d.getMonth() === d2.getMonth()){
+        			//object found
+        			
+        			//not checked in
+        			if(aac.user.attendance[i].checkedIn == false){
+        				//check in
+        				aac.user.attendance[i].checkedIn = true;
+        				userService.update(aac.user,function(){ aac.toast("Successfully checked in.")},function(error){aac.toast(error)});
+        			}
+        			// checked in
+        			else{
+        				//checkout
+        			    var confirm = $mdDialog.confirm()
+        		          .title('Checkout')
+        		          .textContent('Are you sure you want to mark yourself as absent?')
+        		          .ok('Yes')
+        		          .cancel('No');
+
+        		    $mdDialog.show(confirm).then(function() {
+        		    	//selected yes
+        		    	userService.update(aac.user,function(){aac.user.attendance[i].checkedIn = false;
+        		    	aac.toast("Checked out")},function(){});
+        		    	
+        		    },function(){
+        		    	//selected no
+        		    	aac.toast("Check out cancelled");
+        		    });
+        		    
+        			}
+        			aac.calcWeek( aac.curr );
+        			setToolbar();
+        		}
+        	}
         }
 
             // calls root-level toast function
