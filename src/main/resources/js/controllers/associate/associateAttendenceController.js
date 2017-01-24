@@ -33,7 +33,6 @@
         	aac.toast(getScheduledCert());
         }
         
-
           // functions
             // returns list of date objects representing the week
         function calcWeek( date ) {
@@ -55,7 +54,7 @@
                             verified: false,
                             checkedIn: false
                         }
-                        aac.weekAttendance[j] = $filter( "iconFilter" )( aac.weekAttendance[j] );
+                        aac.weekAttendance[j] = $filter( "iconFilter" )( aac.weekAttendance[j], "week" );
                     }
                 }
             }
@@ -63,7 +62,12 @@
 
             // sets toobar icons and functions
         function setToolbar() {
-            $scope.$emit( "setToolbar", { title: "Weekly attendance", actions: [{ "function": aac.assocCertifications, "icon": "date_range", "tooltip": "Certifications"}] } );
+            $scope.$emit( "setToolbar", { 
+                title: "Weekly attendance", 
+                actions: [{ 
+                    "function": aac.assocCertifications, 
+                    "icon"    : "date_range", 
+                    "tooltip" : "Certifications"}] } );
         }
 
         function assocCertifications() {
