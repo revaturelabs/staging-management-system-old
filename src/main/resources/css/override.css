@@ -2,7 +2,6 @@
     md-dialog {
         max-width: 60%;
     }
-<<<<<<< HEAD
 
     .md-top {
         position: fixed;
@@ -49,7 +48,7 @@
     .attendanceCell {
         padding: 0px !important;
     }
-=======
+
     .changePassword{
     	width:500px;
     }
@@ -67,12 +66,20 @@
 		background: #E8EAF6;
 	}
 	
-	
 	/* search bar css */
 	#search input[type="text"] {
 		background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
 		padding: 6px 15px 6px 35px;
 	}
-	
-	
->>>>>>> 068c47f5b6c31f7d236924722b3a037d0975aa4c
+
+    .eventListRight {
+        text-align: right;
+    }
+
+    .h3Top {
+        font-weight: bold !important;
+    }
+
+    .eventDialog {
+        min-width: 500px;
+    }

@@ -3,7 +3,7 @@
         .module( "sms" )
         .controller( "associateAttendenceCtrl", associateAttendanceCtrl );
         
-    function associateAttendanceCtrl( $scope, $state, $filter, loginService, weekdays ) {
+    function associateAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, weekdays ) {
         var aac = this;
 
           // bindables
@@ -17,6 +17,7 @@
             // functions
         aac.calcWeek = calcWeek;
         aac.setToolbar = setToolbar;
+        aac.openEvents = openEvents;
         aac.prevWeek = prevWeek;
         aac.nextWeek = nextWeek;
         aac.toast = toast;
@@ -54,7 +55,26 @@
 
             // sets toobar icons and functions
         function setToolbar() {
-            $scope.$emit( "setToolbar", { title: "Weekly attendance", actions: {} } );
+            $scope.$emit( "setToolbar", { 
+                title: "Weekly attendance", 
+                actions: [{
+                    "function": aac.openEvents,
+                    "icon"    : "event_note",
+                    "tooltip" : "View events"
+                }]
+            });
+        }
+
+            // opens dialog to display user events
+        function openEvents() {
+            $mdDialog.show({
+                templateUrl: "html/templates/viewEvents.html",
+                controller: "associateViewEventsCtrl as aVECtrl",
+                locals: { events: aac.user.events },
+                bindToController: true,
+                clickOutsideToClose: true,
+                escapeToClose: true
+            });
         }
 
             // checks if previous week is before minimum date and resets week dates if not

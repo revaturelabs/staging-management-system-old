@@ -1,6 +1,7 @@
 package com.revature.sms.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,13 +49,19 @@ public class JobEvent {
 	 * Date object that represents the start date for an associate's job assignment.
 	 */
 	@Column(name="EVENT_DATE", nullable=false)
-	private Date date;
+	private Timestamp date;
 	
 	/**
 	 * String value that allows an admin to include an optional note regarding the associate's job status.
 	 */
 	@Column(name="NOTE")
 	private String note;
+
+	/**
+	 * String value that holds where the event is taking place
+	 */
+	@Column(name="LOCATION")
+	private String location;
 
 	/**
 	 * Default constructor for JobEvent.
@@ -70,7 +77,7 @@ public class JobEvent {
 	 * @param date Date object that represents the start date for an associate's job assignment
 	 * @param note String value that allows an admin to include an optional note regarding the associate's job status
 	 */
-	public JobEvent(JobAssignment assignment, JobEventType type, Date date, String note) {
+	public JobEvent(JobAssignment assignment, JobEventType type, Timestamp date, String note) {
 		super();
 		this.assignment = assignment;
 		this.type = type;
@@ -130,7 +137,7 @@ public class JobEvent {
 	 * Get method for date.
 	 * @return date Date object that represents the start date for an associate's job assignment
 	 */
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 	
@@ -138,7 +145,7 @@ public class JobEvent {
 	 * Set method for date.
 	 * @param date Date object that represents the start date for an associate's job assignment
 	 */
-	public void setDate(Date date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 	
@@ -156,6 +163,22 @@ public class JobEvent {
 	 */
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	/**
+	 * Get method for location.
+	 * @return location String value that holds where the event is taking place
+	 */
+	public String getLocation() {
+		return location;
+	}
+
+	/**
+	 * Set method for location.
+	 * @param location String value that holds where the event is taking place
+	 */
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	/**

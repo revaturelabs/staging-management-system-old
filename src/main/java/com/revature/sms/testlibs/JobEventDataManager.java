@@ -1,6 +1,7 @@
 package com.revature.sms.testlibs;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,36 +32,27 @@ public class JobEventDataManager {
 	
 	@Autowired
 	private JobEventRepo jer;
-	
-	
+
 	/**
 	 * createTestJobEvent is a setup method that is called to create an authorization jobEvent for testing.
 	 * The cleanup method RemoveAllTestJobEvents must be called after an instance of this class is done being used.
 	 * 
 	 * @return The jobEvent object that is created in the database
 	 */
-	
-	public JobEvent createTestJobEvent(JobAssignment assignment, JobEventType type, Date date, String note){
+	public JobEvent createTestJobEvent(JobAssignment assignment, JobEventType type, Timestamp date, String note){
 		JobEvent newJobEvent = new JobEvent(assignment, type, date, note);
 		jer.save(newJobEvent);
 		createdJobEvents.add(newJobEvent);
 		return newJobEvent;
 	}
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * A cleanup method that must be called when an instance of the class is done being used.
 	 */
-	
 	public void removeAllTestJobEvents(){
 		for(JobEvent i:createdJobEvents){
 			jer.delete(i);
 		}
 		createdJobEvents.clear();
 	}
-	
 }
