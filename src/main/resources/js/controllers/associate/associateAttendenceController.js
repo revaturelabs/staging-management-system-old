@@ -101,34 +101,38 @@
         
         // marks an associate as checked in.
         function checkIn(){
-        	
         	var d = new Date();
+        	//find cuurent attendance object
         	for(var i=0; i< aac.user.attendance.length; i++){
         		var d2 = new Date(aac.user.attendance[i].date);
         		if(d.getDate() === d2.getDate() & d.getMonth() === d2.getMonth()){
+        			//object found
+        			
+        			//not checked in
         			if(aac.user.attendance[i].checkedIn == false){
         				//check in
         				aac.user.attendance[i].checkedIn = true;
         				userService.update(aac.user,function(){ aac.toast("Successfully checked in.")},function(error){aac.toast(error)});
         			}
+        			// checked in
         			else{
         				//checkout
-        				
-        				
-        				//TODO: add dialog
         			    var confirm = $mdDialog.confirm()
         		          .title('Checkout')
         		          .textContent('Are you sure you want to mark yourself as absent?')
-        		          .ariaLabel('Lucky day')
-        		          //.targetEvent(ev)
         		          .ok('Yes')
         		          .cancel('No');
 
         		    $mdDialog.show(confirm).then(function() {
-        		    	userService.update(aac.user,function(){ 
-        		    		aac.user.attendance[i].checkedIn = false;
-        		    		aac.toast("Successfully checked out.")},function(error){aac.toast(error)});
+        		    	//selected yes
+        		    	userService.update(aac.user,function(){aac.user.attendance[i].checkedIn = false;
+        		    	aac.toast("Checked out");},function(){});
+        		    	
+        		    },function(){
+        		    	//selected no
+        		    	aac.toast("Check out cancelled");
         		    });
+        		    
         			}
         			aac.calcWeek( aac.curr );
         			setToolbar();
