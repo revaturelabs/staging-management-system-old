@@ -3,7 +3,7 @@
         .module( "sms" )
         .controller( "loginCtrl", loginCtrl );
         
-    function loginCtrl( $scope, $state, $cookies, loginService ) {
+    function loginCtrl( $scope, $state, $cookies, $mdToast, loginService ) {
         var lc = this;
 
           // bindables
@@ -13,6 +13,7 @@
         lc.login = login;
         lc.cookieCheck = cookieCheck;
         lc.loginSuccess = loginSuccess;
+        lc.associateCertToast = associateCertToast;
 
           // initialization
         lc.cookieCheck();
@@ -56,10 +57,8 @@
             }
         }
 
-
-
           // sets user and token data and changes state upon successful login
-        function loginSuccess(response) {
+        function loginSuccess( response ) {
 
             loginService.addUser(response.user);
             loginService.addToken(response.authToken);
@@ -67,6 +66,34 @@
             $cookies.put( "RevatureSMSToken", loginService.getToken() );
 
             $state.go("attendance");
-            lc.toast("Login Successful.");     
+            lc.toast("Login Successful.");
+            lc.associateCertToast();
+        }
+
+          // notifies user of upcoming certification
+        function associateCertToast() {
+            var user = loginService.getUser();
+            if ( user.userRole.name == "associate" ) {
+                user.tasks.forEach( function(task) {
+                    console.log(task);
+                    if (task.taskType == "Certification") {
+                        var now = new Date();
+                        if ( task.date.getTime() > now.getTIme() ) {
+                            var message;
+                            if ( task.date.getTime() > new Date( now.getFullYear(), now.getMonth(), now.getDate() + 14).getTime() ) {
+                                message = task.note + " scheduled for " + task.date.getMonth() + "/" + task.date.getDate();
+                            } else {
+                                message = "You have your " + task.note + " scheduled for ";
+                                if ( new Date( today.getFullYear(), today.getMonth(), today.getDate() + 1).getTime() > today.getTime() ) {
+                                    message += "tomorrow.";
+                                } else {
+                                    message += "__ days from now.";
+                                }
+                            }
+                            $mdToast.show( $mdToast.simple().textContent( message ).action("OKAY").position("top right").highlightAction(true).hideDelay(0) );
+                        }
+                    }
+                })
+            }
         }
     }
