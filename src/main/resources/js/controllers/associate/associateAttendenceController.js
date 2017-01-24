@@ -52,14 +52,14 @@
 
             aac.weekAttendance = $filter( "weekFilter" )( [aac.user], monday )[0].thisWeek;
             for (var j = 0; j < aac.week.length; j++) {
-                if ( aac.week[j].date.getTime() < aac.today.getTime() ) {
-                    if ( aac.weekAttendance[j] == undefined ) {
+                if ( aac.week[j].date.getTime() < aac.today.getTime() &&  aac.weekAttendance[j] == undefined) {
+                  
                         aac.weekAttendance[j] = {
                             verified: false,
                             checkedIn: false
                         }
                         aac.weekAttendance[j] = $filter( "iconFilter" )( aac.weekAttendance[j] );
-                    }
+                   
                 }
             }
         }
@@ -69,7 +69,7 @@
         	for(var i=0; i< aac.user.attendance.length; i++){
         		var d2 = new Date(aac.user.attendance[i].date);
         		if(d.getDate() == d2.getDate() && d.getMonth() == d2.getMonth()){
-        			if(aac.user.attendance[i].checkedIn == true){/////////////////////////////////////////////////////////////////////////
+        			if(aac.user.attendance[i].checkedIn){
         				//checked in
         				return {"function": aac.checkIn, "icon": "clear", "tooltip": "Mark as absent"};
         			}
@@ -103,7 +103,7 @@
             	}
             	else {
             		aac.toast("You can only schedule one certification at a time.");
-            		//aac.toast(getScheduledCert());
+            
             	}
             }
         
@@ -193,7 +193,7 @@
         			//object found
         			
         			//not checked in
-        			if(aac.user.attendance[i].checkedIn == false){
+        			if(!aac.user.attendance[i].checkedIn){
         				//check in
         				aac.user.attendance[i].checkedIn = true;
         				userService.update(aac.user,function(){ 
@@ -212,7 +212,7 @@
         			    
         			    aac.x = aac.user.attendance[i];
         			    
-	        		    $mdDialog.show(confirm).then(function(i) {
+	        		    $mdDialog.show(confirm).then(function() {
 	        		    	//selected yes
 	        		    	//checkout
 	        		    	aac.x.checkedIn = false;
@@ -223,7 +223,7 @@
 	        		    	},function(){});
 	        		    	
 	        		    	//show error
-		        		 },function(error){
+		        		 },function(){
 		        		    	//selected no
 		        		    	aac.toast("Check out cancelled");
 		        		 });
