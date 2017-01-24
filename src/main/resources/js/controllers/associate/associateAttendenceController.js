@@ -6,15 +6,15 @@
     function associateAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, weekdays ) {
         var aac = this;
 
-          // bindables
-            // data
+        // bindables
+        // data
         aac.user = loginService.getUser();
         aac.curr = new Date();
         aac.today = aac.curr;
         aac.minWeek = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() - 28 ); 
         aac.maxWeek = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() + 7 );
 
-            // functions
+        // functions
         aac.calcWeek = calcWeek;
         aac.setToolbar = setToolbar;
         aac.assocCertifications = assocCertifications;
@@ -25,7 +25,7 @@
         aac.nextWeek = nextWeek;
         aac.toast = toast;
 
-          // initialization
+        // initialization
         aac.calcWeek( aac.curr );
         aac.setToolbar();
         
@@ -108,6 +108,7 @@
         	);
         }
         
+
         //If the user has a scheduled cert, return the formatted date of that cert, otherwise return null
         function getScheduledCert() {
         	for(var i = 0; i < aac.user.tasks.length; i++) {
@@ -128,11 +129,12 @@
         				return "Certification date is tomorrow.";
         			}
         		}
-        	}
         	return null;
+        	}
         }
            
     
+
          // checks if previous week is before minimum date and resets week dates if not
         function prevWeek() {
             var newDate = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() - 7 );
