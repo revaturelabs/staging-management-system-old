@@ -43,14 +43,12 @@
 
             aac.weekAttendance = $filter( "weekFilter" )( [aac.user], monday )[0].thisWeek;
             for (var j = 0; j < aac.week.length; j++) {
-                if ( aac.week[j].date.getTime() < aac.today.getTime() ) {
-                    if ( aac.weekAttendance[j] == undefined ) {
-                        aac.weekAttendance[j] = {
-                            verified: false,
-                            checkedIn: false
-                        }
-                        aac.weekAttendance[j] = $filter( "iconFilter" )( aac.weekAttendance[j] );
+                if ( (aac.week[j].date.getTime() < aac.today.getTime()) && ( aac.weekAttendance[j] == undefined ) ) {
+                    aac.weekAttendance[j] = {
+                        verified: false,
+                        checkedIn: false
                     }
+                    aac.weekAttendance[j] = $filter( "iconFilter" )( aac.weekAttendance[j] );
                 }
             }
         }
@@ -95,7 +93,6 @@
                     });
             	}
             	else {
-            		//aac.toast("You can only schedule one certification at a time.");
             		aac.toast("Certification Scheduled: " + getScheduledCert() );
             	}
             }
