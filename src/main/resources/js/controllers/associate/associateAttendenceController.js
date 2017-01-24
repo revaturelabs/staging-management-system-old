@@ -17,7 +17,12 @@
             // functions
         aac.calcWeek = calcWeek;
         aac.setToolbar = setToolbar;
+<<<<<<< HEAD
         aac.openEvents = openEvents;
+=======
+        aac.assocCertifications = assocCertifications;
+        aac.getScheduledCert = getScheduledCert;
+>>>>>>> 8f75c1d27f2e052b8190d49f726429557ebe23d1
         aac.prevWeek = prevWeek;
         aac.nextWeek = nextWeek;
         aac.toast = toast;
@@ -77,6 +82,35 @@
             });
         }
 
+        function assocCertifications() {
+            	if (getScheduledCert() == null) {
+            		$mdDialog.show({
+                		templateUrl: "html/templates/scheduleCertification.html",
+                		controller: "associateCertificationsCtrl as assCertCtrl"
+                	}).then( function() {
+                		aac.toast("Certification Scheduled");
+                    }, function() {
+                    	aac.toast("Certification Schedule Cancelled");
+                    });
+            	}
+            	else {
+            		//aac.toast("You can only schedule one certification at a time.");
+            		aac.toast("Certification Scheduled: " + getScheduledCert() );
+            	}
+            }
+        
+        //If the user has a scheduled cert, return the formatted date of that cert, otherwise return null
+        function getScheduledCert() {
+        	for(var i = 0; i < aac.user.tasks.length; i++) {
+        		var certDate = new Date(aac.user.tasks[i].date);
+        		var cert = "Certification";
+        		if ( certDate.getTime() >= (new Date().getTime()) && (aac.user.tasks[i].taskType.type == cert) )
+        			return ((certDate.getMonth()) + 1) + "/" + certDate.getDate() + "/" + certDate.getFullYear();
+        	}
+        	return null;
+        }
+           
+    
             // checks if previous week is before minimum date and resets week dates if not
         function prevWeek() {
             var newDate = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() - 7 );
