@@ -17,12 +17,9 @@
             // functions
         aac.calcWeek = calcWeek;
         aac.setToolbar = setToolbar;
-<<<<<<< HEAD
         aac.openEvents = openEvents;
-=======
         aac.assocCertifications = assocCertifications;
         aac.getScheduledCert = getScheduledCert;
->>>>>>> 8f75c1d27f2e052b8190d49f726429557ebe23d1
         aac.prevWeek = prevWeek;
         aac.nextWeek = nextWeek;
         aac.toast = toast;
@@ -99,7 +96,7 @@
             	}
             }
         
-        //If the user has a scheduled cert, return the formatted date of that cert, otherwise return null
+            // if the user has a scheduled cert, return the formatted date of that cert, otherwise return null
         function getScheduledCert() {
         	for(var i = 0; i < aac.user.tasks.length; i++) {
         		var certDate = new Date(aac.user.tasks[i].date);
