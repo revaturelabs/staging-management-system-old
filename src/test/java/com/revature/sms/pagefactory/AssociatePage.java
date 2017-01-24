@@ -26,13 +26,13 @@ public class AssociatePage extends SMSPage {
 	@FindBy(tagName="tbody")
 	public WebElement weekTable;
 	
-	@FindBy(css="[ng-click=\"assWeekAttCtrl.getPreviousWeek()\"]")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/div/div/div[2]/button[1]/md-icon")
 	public WebElement prevWeek;
 	
-	@FindBy(css="[ng-click=\"assWeekAttCtrl.getNextWeek()\"]")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/div/div/div[2]/button[2]/md-icon")
 	public WebElement nextWeek;
 	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/div[3]/div[2]/p")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/div/div/div[2]/div")
 	public WebElement weekOf;
 	
 

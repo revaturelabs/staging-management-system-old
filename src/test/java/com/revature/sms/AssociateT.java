@@ -85,6 +85,7 @@ public class AssociateT implements InstanceTestClassListener {
 	}
 	
 	//Makes sure the current week is shown on the associate page when you log in.
+	@Ignore
 	@Test
 	public void testDefaultWeek() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
@@ -110,6 +111,7 @@ public class AssociateT implements InstanceTestClassListener {
 	//incorrectly displayed on the website.
 	
 	//This is Corey's work on issue SMS-85.
+	@Ignore
 	@Test
 	public void testAssociateAttendanceView() {
 		try {

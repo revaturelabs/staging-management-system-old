@@ -96,16 +96,15 @@ public class SuperAdminT implements InstanceTestClassListener {
 	}
 	
 	
-	//Corey's Test ideas
-	public void testCertificationScheduling() {
-		
-	}
-
 	public void testBatchCreation() {
 		
 	}
 	
-	public void testSearchBar() {
+	
+	
+	
+	//Corey's Test ideas
+	public void testCertificationScheduling() {
 		
 	}
 	
