@@ -33,7 +33,7 @@ import com.revature.sms.util.ExcelHelper;
 @RunWith(SpringInstanceTestClassRunner.class)
 @SpringBootTest
 public class SMSTest implements InstanceTestClassListener {
-	private final String browser = "Chrome"; 
+	private final String browser = "PhantomJS"; 
 	private final String inputsPath = "src/test/resources/PropertiesFiles/inputs.properties";
 	private final String locationsPath = "src/test/resources/PropertiesFiles/locations.properties";
 	private final String expectedPath = "src/test/resources/PropertiesFiles/expected.properties";
@@ -58,20 +58,16 @@ public class SMSTest implements InstanceTestClassListener {
 	
 	@Override
 	public void beforeClassSetup() {
-	    if (System.getProperty("os.name").equalsIgnoreCase("Windows 10")) {  //If you are a tester with a different windows os, add it to this if statement.
 	    	if (browser.equals("Chrome")) {
 	    		webDriver = TestSetup.getChrome();
 	    	}
 	    	if (browser.equals("Internet Explorer")) {
 	    		webDriver = TestSetup.getIE();
 	    	}
-	    } else {
-	    	System.out.println("This line should be printed in Jenkins.");
-	    	webDriver = new PhantomJSDriver();
-	    }
+	    	if (browser.equals("PhantomJS")) {
+	    		webDriver = TestSetup.getPhantomJS();
+	    	}
 	    	
-	    	
-		
 		//Allows the driver to take advantage of an event listener
 		driver = new EventFiringWebDriver(webDriver);
 		eventListener = new EventListener();
@@ -80,7 +76,6 @@ public class SMSTest implements InstanceTestClassListener {
 		
 		//Initialize properties files
 		inputs = TestSetup.getProperties(inputsPath);
-		locations = TestSetup.getProperties(locationsPath);
 		expected = TestSetup.getProperties(expectedPath);
 		
 		dbic.initializeUsers();
@@ -209,9 +204,21 @@ public class SMSTest implements InstanceTestClassListener {
 	@Ignore
 	@Test
 	public void testLoginHeaderLogout() {
-		lp.login(inputs.getProperty("sdetUN"), inputs.getProperty("sdetPW"));
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
 		Assert.assertTrue(asp.verify());
 		Assert.assertEquals(locations.getProperty("associatePg"), asp.header.getText());  //Asserts that the title given in the blue bar towards the top of the page is the same as expected.
+		asp.logoutIcon.click();
+		Assert.assertTrue(lp.verify());
+		
+		lp.login(inputs.getProperty("sdetUN"), inputs.getProperty("sdetPW"));
+		Assert.assertTrue(asp.verify());
+		Assert.assertEquals(locations.getProperty("associatePg"), asp.header.getText());  
+		asp.logoutIcon.click();
+		Assert.assertTrue(lp.verify());
+		
+		lp.login(inputs.getProperty("dotnetUN"), inputs.getProperty("dotnetPW"));
+		Assert.assertTrue(asp.verify());
+		Assert.assertEquals(locations.getProperty("associatePg"), asp.header.getText());  
 		asp.logoutIcon.click();
 		Assert.assertTrue(lp.verify());
 		
@@ -228,16 +235,23 @@ public class SMSTest implements InstanceTestClassListener {
 		Assert.assertTrue(lp.verify());
 	}
 	
+	
+	
+	public void testAdminAttendanceView() {
+		
+	}
+	
+	
+	
+	
+	
+	
 	//Corey's Test ideas
 	public void testCertificationScheduling() {
 		
 	}
 
 	public void testBatchCreation() {
-		
-	}
-	
-	public void testAdminAttendanceView() {
 		
 	}
 	
@@ -283,7 +297,7 @@ public class SMSTest implements InstanceTestClassListener {
 	@Override
 	public void afterClassSetup() {
 		driver.close();
-		dbic.clearData();
+		//dbic.clearData();
 	}
 	
 	
