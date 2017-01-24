@@ -129,8 +129,9 @@
         				return "Certification date is tomorrow.";
         			}
         		}
-        	return null;
         	}
+        	return null;
+
         }
            
     
