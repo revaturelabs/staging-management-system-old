@@ -220,7 +220,7 @@
 	        		    		aac.toast("Checked out");
 	        		    		aac.calcWeek( aac.curr );
 	        		    		aac.setToolbar();
-	        		    	},function(){});
+	        		    	});
 	        		    	
 	        		    	//show error
 		        		 },function(){
