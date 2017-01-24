@@ -328,7 +328,10 @@ public class UserController {
 		if (userDTO.getTasks() != null){
 			user.setTasks(userDTO.getTasks());
 		}
-
+		if (userDTO.getSkill() != null){
+			user.setSkill(userDTO.getSkill());
+		}
+		
 		return user;
 
 	}
