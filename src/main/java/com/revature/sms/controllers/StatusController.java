@@ -32,12 +32,7 @@ public class StatusController {
 			 List<Status> list = sts.findAll();
 			 return new ResponseEntity<bc>((new bc(list)), HttpStatus.OK);
 	}
-	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List getAllUS() {
-		List<User> statusList = usr.findAll();
-		
-		return statusList;
-	}
+
 	
 }
 
