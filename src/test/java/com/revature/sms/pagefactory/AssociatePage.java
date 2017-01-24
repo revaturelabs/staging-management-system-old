@@ -17,10 +17,10 @@ public class AssociatePage extends SMSPage {
 	@FindBy(css="[class=\"ng-binding flex\"]")
 	public WebElement header;
 	
-	@FindBy(css="[md-svg-icon=\"img/icons/ic_menu_white_24px.svg\"]")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/md-toolbar/div/button[1]/md-icon")
 	public WebElement menuIcon;
 	
-	@FindBy(css="[md-svg-icon=\"img/icons/ic_exit_to_app_white_24px.svg\"]")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/md-toolbar/div/button[3]/md-icon")
 	public WebElement logoutIcon;
 	
 	@FindBy(tagName="tbody")

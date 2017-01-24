@@ -1,4 +1,4 @@
-package com.revature.sms.testlibs;
+package com.revature.sms.database;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -131,6 +131,7 @@ public class UserDataManager {
 				createdUser.setAttendance(attendance);
 			}
 			if (!tasks.isEmpty()) {
+				atr.save(tasks);
 				createdUser.setTasks(tasks);
 			}
 			if (userRole.getName() != null) {
