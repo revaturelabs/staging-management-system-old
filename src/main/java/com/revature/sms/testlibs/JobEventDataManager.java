@@ -40,8 +40,8 @@ public class JobEventDataManager {
 	 * @return The jobEvent object that is created in the database
 	 */
 	
-	public JobEvent createTestJobEvent(User associate, JobAssignment assignment, JobEventType type, Date date, String note){
-		JobEvent newJobEvent = new JobEvent(associate, assignment, type, date, note);
+	public JobEvent createTestJobEvent(JobAssignment assignment, JobEventType type, Date date, String note){
+		JobEvent newJobEvent = new JobEvent(assignment, type, date, note);
 		jer.save(newJobEvent);
 		createdJobEvents.add(newJobEvent);
 		return newJobEvent;

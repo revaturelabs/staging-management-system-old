@@ -46,7 +46,7 @@
                             verified: false,
                             checkedIn: false
                         }
-                        aac.weekAttendance[i] = $filter( "iconFilter" )( aac.weekAttendance[i] );
+                        aac.weekAttendance[j] = $filter( "iconFilter" )( aac.weekAttendance[j] );
                     }
                 }
             }
