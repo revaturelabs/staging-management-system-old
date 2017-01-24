@@ -3,7 +3,7 @@
         .module( "sms" )
         .controller( "associateAttendenceCtrl", associateAttendanceCtrl );
         
-    function associateAttendanceCtrl( $scope, $state, $filter, loginService, userService, weekdays ) {
+    function associateAttendanceCtrl( $mdDialog, $scope, $state, $filter, loginService, userService, weekdays ) {
         var aac = this;
 
           // bindables
@@ -53,11 +53,27 @@
             }
         }
 
+        function todayCheckedIn(){
+        	var d = new Date();
+        	for(var i=0; i< aac.user.attendance.length; i++){
+        		var d2 = new Date(aac.user.attendance[i].date);
+        		if(d.getDate() === d2.getDate() & d.getMonth() === d2.getMonth()){
+        			if(aac.user.attendance[i].checkedIn == true){
+        				//checked in
+        				return {"function": aac.checkIn, "icon": "clear", "tooltip": "Mark as absent"};
+        			}
+        			else{
+        				//not checked in
+        				return {"function": aac.checkIn, "icon": "check", "tooltip": "Check in"};
+        			}
+        		}
+        	}
+        }
             // sets toobar icons and functions
         function setToolbar() {
-        	var cin = {"function": aac.checkIn,
-        					"icon": "check",
-        					"tooltip": "Check in"};
+        	
+        	var cin = todayCheckedIn();
+        	
             $scope.$emit( "setToolbar", { title: "Weekly attendance", actions: {cin} } );
         }
 
@@ -85,23 +101,39 @@
         
         // marks an associate as checked in.
         function checkIn(){
-        	//console.log(aac.user);
         	
         	var d = new Date();
         	for(var i=0; i< aac.user.attendance.length; i++){
         		var d2 = new Date(aac.user.attendance[i].date);
         		if(d.getDate() === d2.getDate() & d.getMonth() === d2.getMonth()){
-        			aac.user.attendance[i].checkedIn = true;
-        			console.log(aac.user.attendance[i].checkedIn);
-        			//TODO: ********************************************************************************** ******************************* update user status and save to db
-        			userService.update(aac.user,function(){},function(error){aac.toast(error)});
+        			if(aac.user.attendance[i].checkedIn == false){
+        				//check in
+        				aac.user.attendance[i].checkedIn = true;
+        				userService.update(aac.user,function(){ aac.toast("Successfully checked in.")},function(error){aac.toast(error)});
+        			}
+        			else{
+        				//checkout
+        				
+        				
+        				//TODO: add dialog
+        			    var confirm = $mdDialog.confirm()
+        		          .title('Checkout')
+        		          .textContent('Are you sure you want to mark yourself as absent?')
+        		          .ariaLabel('Lucky day')
+        		          //.targetEvent(ev)
+        		          .ok('Yes')
+        		          .cancel('No');
+
+        		    $mdDialog.show(confirm).then(function() {
+        		    	userService.update(aac.user,function(){ 
+        		    		aac.user.attendance[i].checkedIn = false;
+        		    		aac.toast("Successfully checked out.")},function(error){aac.toast(error)});
+        		    });
+        			}
         			aac.calcWeek( aac.curr );
+        			setToolbar();
         		}
         	}
-        	
-        	
-        	
-        	
         }
 
             // calls root-level toast function

@@ -73,10 +73,6 @@ public class LoginController {
 		try {
 			if (u.getHashedPassword().equals(in.getInputPass())) {
 				// Successful login
-				if ("associate".equals(u.getUserRole().getName())) {
-					// if associate mark attendance as present
-					markPresent(u.getUsername());
-				}
 
 				Token token = new Token(u);
 				tr.save(token);
@@ -145,41 +141,6 @@ public class LoginController {
 			Logger.getRootLogger().debug("Inactive token", e);
 			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Stored token is inactive."), HttpStatus.UNAUTHORIZED);
 		}
-	}
-
-	/**
-	 * Marks an associate as present
-	 * 
-	 * @param username
-	 *            User to be marked as present
-	 */
-	private void markPresent(String username) {
-		User user = ur.findByUsername(username);
-		Timestamp d = new Timestamp(new java.util.Date().getTime());
-		List<AssociateAttendance> associateAttendanceList = user.getAttendance();
-
-		if (!associateAttendanceList.isEmpty()) {
-
-			for (AssociateAttendance aa : associateAttendanceList) {
-				if (d.getDate() == aa.getDate().getDate() && d.getDay() == aa.getDate().getDay()
-						&& d.getYear() == aa.getDate().getYear()) {
-					// Associate has checked in before and current day exists
-					aa.setCheckedIn(true);
-					aar.save(aa);
-					return;
-				}
-			}
-		}
-		// Associate has not checked in before
-		// or
-		// Associate has checked in before but current day does not exist
-		AssociateAttendance aa = new AssociateAttendance(d, true, false, "");
-
-		List<AssociateAttendance> l = user.getAttendance();
-		l.add(aa);
-		user.setAttendance(l);
-
-		ur.save(user);
 	}
 
 	/**
