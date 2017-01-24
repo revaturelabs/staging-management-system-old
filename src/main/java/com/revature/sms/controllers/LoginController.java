@@ -73,10 +73,10 @@ public class LoginController {
 		try {
 			if (u.getHashedPassword().equals(in.getInputPass())) {
 				// Successful login
-				if ("associate".equals(u.getUserRole().getName())) {
+				/*if ("associate".equals(u.getUserRole().getName())) {
 					// if associate mark attendance as present
 					markPresent(u.getUsername());
-				}
+				}*/
 
 				Token token = new Token(u);
 				tr.save(token);
@@ -147,12 +147,13 @@ public class LoginController {
 		}
 	}
 
-	/**
+/*	
+ * *//**
 	 * Marks an associate as present
 	 * 
 	 * @param username
 	 *            User to be marked as present
-	 */
+	 *//*
 	private void markPresent(String username) {
 		User user = ur.findByUsername(username);
 		Timestamp d = new Timestamp(new java.util.Date().getTime());
@@ -170,6 +171,7 @@ public class LoginController {
 				}
 			}
 		}
+
 		// Associate has not checked in before
 		// or
 		// Associate has checked in before but current day does not exist
@@ -181,7 +183,8 @@ public class LoginController {
 
 		ur.save(user);
 	}
-
+*/
+	
 	/**
 	 * To update user info
 	 * 
