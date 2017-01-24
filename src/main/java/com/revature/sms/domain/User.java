@@ -1,17 +1,20 @@
 package com.revature.sms.domain;
 
-import java.security.MessageDigest;
+import java.security.MessageDigest; 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -98,10 +101,17 @@ public class User {
 	private Timestamp graduationDate;
 	
 	/**
+	 * List of skills that a user has
+	 */
+	@ManyToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private List<Technical_Skills> skill;
+	
+	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
 	 */
 	public User() {
 		super();
+		this.skill = new ArrayList<Technical_Skills>();
 	}
 
 	/**
@@ -132,6 +142,37 @@ public class User {
 		this.graduationDate = graduationDate;
 	}
 
+	/**
+	 * skills implemented
+	 * Constructor for User object. This constructor is specifically designed to
+	 * be used for creating a User who is an associate. Initializes all instance variables except for ID, as that is
+	 * automatically generated on creation. 
+	 * @param username String that represents the username of the User object.
+	 * @param firstName String that represents the first name of the User object.
+	 * @param lastName String that represents the last name of the User object.
+	 * @param hashedPassword String that represents the hashedPassword of the User object.
+	 * @param batchType BatchType object that represents the specific BatchType that the User belongs to.
+	 * @param attendance List containing AssociateAttendence objects that keeps track of the user's attendance.
+	 * @param tasks List containing AssociateTask objects that keeps track of the user's tasks.
+	 * @param userRole UserRole object that keeps track of the user's specific role.
+	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
+	 * @param skills gets a list of technical skills that an associate has
+	 */
+	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
+			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate, 
+			List<Technical_Skills> skills) {
+		super();
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.hashedPassword = hashedPassword;
+		this.batchType = batchType;
+		this.attendance = attendance;
+		this.tasks = tasks;
+		this.userRole = userRole;
+		this.graduationDate = graduationDate;
+		this.skill = skills;
+	}
 	// constructor for non-associate
 	/**
 	 * Constructor for User object. This constructor is meant to be used to create
@@ -331,13 +372,29 @@ public class User {
 	}
 
 	/**
+	 * Method that retrieves the list of skills of the user
+	 */
+	public List<Technical_Skills> getSkill() {
+		return skill;
+	}
+
+	/**
+	 * Method that manually sets the skills of the user object
+	 */
+	public void setSkill(List<Technical_Skills> skill) {
+		this.skill = skill;
+	}
+	
+	/**
 	 * Method that returns a string representation of the current User object.
 	 */
+	
 	@Override
 	public String toString() {
 		return "User [ID=" + ID + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", hashedPassword=" + hashedPassword + ", batchType=" + batchType + ", attendance=" + attendance
-				+ ", tasks=" + tasks + ", userRole=" + userRole + "]";
+				+ ", tasks=" + tasks + ", userRole=" + userRole + ", graduationDate=" + graduationDate + ", skill="
+				+ skill + "]";
 	}
 
 	/**
