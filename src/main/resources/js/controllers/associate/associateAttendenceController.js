@@ -115,7 +115,7 @@
         		var certDate = new Date(aac.user.tasks[i].date);
         		var cert = "Certification";
         		if (aac.isSameDate(certDate)) {
-        			return "Certification date is today."
+        			return "Certification date is today.";
         		}
         		else if ( certDate.getTime() >= (new Date().getTime()) && (aac.user.tasks[i].taskType.type == cert) ) {
         			var daysAway = days_between(aac.today, certDate) + 1;
