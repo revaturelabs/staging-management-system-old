@@ -11,23 +11,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
 
 import com.revature.sms.util.InstanceTestClassListener;
 import com.revature.sms.util.SpringInstanceTestClassRunner;
 import com.revature.sms.util.TestSetup;
-import com.codoid.products.exception.FilloException;
-import com.revature.sms.database.DBInitializationController;
-import com.revature.sms.pagefactory.AdminPage;
-import com.revature.sms.pagefactory.AssociatePage;
 import com.revature.sms.pagefactory.LoginPage;
 import com.revature.sms.pagefactory.SuperAdminPage;
 import com.revature.sms.util.EventListener;
-import com.revature.sms.util.ExcelHelper;
 
 @Service
 @RunWith(SpringInstanceTestClassRunner.class)
@@ -44,8 +37,6 @@ public class SuperAdminT implements InstanceTestClassListener {
 	static EventFiringWebDriver driver;
 	static EventListener eventListener; 
 	private LoginPage lp;
-	private AssociatePage asp;
-	private AdminPage adp;
 	private SuperAdminPage sap;
 	
 	
@@ -74,8 +65,6 @@ public class SuperAdminT implements InstanceTestClassListener {
 	public void before() {
 		driver.get(inputs.getProperty("url"));
 		lp = new LoginPage(driver);
-		asp = new AssociatePage(driver);
-		adp = new AdminPage(driver);
 		sap = new SuperAdminPage(driver);
 		
 		//Make sure the login page is loaded correctly 
@@ -97,24 +86,17 @@ public class SuperAdminT implements InstanceTestClassListener {
 	
 	
 	//Corey's Test ideas
-	public void testCertificationScheduling() {
-		
-	}
-
-	public void testBatchCreation() {
-		
-	}
-	
 	public void testSearchBar() {
 		
 	}
 	
-	public void testLoginPageToastContainer() {
+	public void testBatchCreation() {
+		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
 		
 	}
 	
-	public void testSuperAdminPageToastContainer() {
-	
+	public void testCertificationScheduling() {
+		
 	}
 	
 	public void testAdminCalendarNavigation() {

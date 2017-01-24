@@ -35,6 +35,11 @@ public class AssociatePage extends SMSPage {
 	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/div[3]/div[2]/p")
 	public WebElement weekOf;
 	
+	@FindBy(className="md-material-icon menu-icon ng-binding ng-scope material-icons")
+	public WebElement certification;
+	
+	@FindBy(className="md-material-icon menu-icon ng-scope material-icons")
+	public WebElement settings;
 
 	public AssociatePage(WebDriver driver) {
 		super(driver);
