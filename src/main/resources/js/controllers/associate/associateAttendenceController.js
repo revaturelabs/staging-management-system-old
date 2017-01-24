@@ -58,7 +58,7 @@
         	for(var i=0; i< aac.user.attendance.length; i++){
         		var d2 = new Date(aac.user.attendance[i].date);
         		if(d.getDate() === d2.getDate() & d.getMonth() === d2.getMonth()){
-        			if(aac.user.attendance[i].checkedIn == true){
+        			if(aac.user.attendance[i].checkedIn != true){/////////////////////////////////////////////////////////////////////////
         				//checked in
         				return {"function": aac.checkIn, "icon": "clear", "tooltip": "Mark as absent"};
         			}
@@ -112,30 +112,39 @@
         			if(aac.user.attendance[i].checkedIn == false){
         				//check in
         				aac.user.attendance[i].checkedIn = true;
-        				userService.update(aac.user,function(){ aac.toast("Successfully checked in.")},function(error){aac.toast(error)});
+        				userService.update(aac.user,function(){ 
+        					aac.toast("Successfully checked in.")
+        		    		aac.calcWeek( aac.curr );
+        		    		aac.setToolbar();
+        		    		},function(error){aac.toast(error)});
         			}
         			// checked in
         			else{
-        				//checkout
         			    var confirm = $mdDialog.confirm()
         		          .title('Checkout')
         		          .textContent('Are you sure you want to mark yourself as absent?')
         		          .ok('Yes')
         		          .cancel('No');
-
-        		    $mdDialog.show(confirm).then(function() {
-        		    	//selected yes
-        		    	userService.update(aac.user,function(){aac.user.attendance[i].checkedIn = false;
-        		    	aac.toast("Checked out");},function(){});
-        		    	
-        		    },function(){
-        		    	//selected no
-        		    	aac.toast("Check out cancelled");
-        		    });
-        		    
+        			    
+        			    aac.x = aac.user.attendance[i];
+        			    
+	        		    $mdDialog.show(confirm).then(function(i) {
+	        		    	//selected yes
+	        		    	//checkout
+	        		    	aac.x.checkedIn = false;
+	        		    	userService.update(aac.user,function(){
+	        		    		aac.toast("Checked out");
+	        		    		aac.calcWeek( aac.curr );
+	        		    		aac.setToolbar();
+	        		    	},function(){});
+	        		    	
+	        		    	//show error
+		        		 },function(error){
+		        		    	//selected no
+		        		    	aac.toast("Check out cancelled");
+		        		 });
         			}
-        			aac.calcWeek( aac.curr );
-        			setToolbar();
+
         		}
         	}
         }
