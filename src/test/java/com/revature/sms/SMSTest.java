@@ -121,6 +121,8 @@ public class SMSTest implements InstanceTestClassListener {
 	//checkmark), even though the attendance is correctly identified as not verified in the database.
 	//Also, an extra junk attendance associated with the user is added to the database, and is also 
 	//incorrectly displayed on the website.
+	
+	//This is Corey's work on issue SMS-85.
 	@Ignore
 	@Test
 	public void testAssociateAttendanceView() {
