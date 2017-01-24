@@ -103,7 +103,7 @@ public class User {
 	/**
 	 * List of skills that a user has
 	 */
-	@ManyToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Technical_Skills> skill;
 	
 	/**

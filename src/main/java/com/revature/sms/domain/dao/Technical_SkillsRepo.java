@@ -28,12 +28,12 @@ public interface Technical_SkillsRepo extends JpaRepository<Technical_Skills, In
 	 * @param associate User object that matches to the list of technical skills to retrieve.
 	 * @return List of technical skills associated with the supplied user.
 	 */
-	List<Technical_Skills> findbyAssociate(User associate);
+	//List<Technical_Skills> findbyAssociate(User associate);
 	
 	/**
 	 * Method to retrieve users list by specific skill.
 	 * @param skill object that matches to the list of users to retrieve.
 	 * @return List of users associated with the supplied skill.
 	 */
-	List<User> findbySkill(Technical_Skills skill);
+	//List<User> findbySkill(Technical_Skills skill);
 }
