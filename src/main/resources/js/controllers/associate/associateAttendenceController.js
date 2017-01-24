@@ -3,7 +3,7 @@
         .module( "sms" )
         .controller( "associateAttendenceCtrl", associateAttendanceCtrl );
         
-    function associateAttendanceCtrl( $scope, $state, $filter, loginService, weekdays ) {
+    function associateAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, weekdays ) {
         var aac = this;
 
           // bindables
@@ -17,6 +17,8 @@
             // functions
         aac.calcWeek = calcWeek;
         aac.setToolbar = setToolbar;
+        aac.assocCertifications = assocCertifications;
+        aac.getScheduledCert = getScheduledCert;
         aac.prevWeek = prevWeek;
         aac.nextWeek = nextWeek;
         aac.toast = toast;
@@ -54,9 +56,38 @@
 
             // sets toobar icons and functions
         function setToolbar() {
-            $scope.$emit( "setToolbar", { title: "Weekly attendance", actions: {} } );
+            $scope.$emit( "setToolbar", { title: "Weekly attendance", actions: [{ "function": aac.assocCertifications, "icon": "date_range", "tooltip": "Certifications"}] } );
         }
 
+        function assocCertifications() {
+            	if (getScheduledCert() == null) {
+            		$mdDialog.show({
+                		templateUrl: "html/templates/scheduleCertification.html",
+                		controller: "associateCertificationsCtrl as assCertCtrl"
+                	}).then( function() {
+                		aac.toast("Certification Scheduled");
+                    }, function() {
+                    	aac.toast("Certification Schedule Cancelled");
+                    });
+            	}
+            	else {
+            		//aac.toast("You can only schedule one certification at a time.");
+            		aac.toast("Certification Scheduled: " + getScheduledCert() );
+            	}
+            }
+        
+        //If the user has a scheduled cert, return the formatted date of that cert, otherwise return null
+        function getScheduledCert() {
+        	for(var i = 0; i < aac.user.tasks.length; i++) {
+        		var certDate = new Date(aac.user.tasks[i].date);
+        		var cert = "Certification";
+        		if ( certDate.getTime() >= (new Date().getTime()) && (aac.user.tasks[i].taskType.type == cert) )
+        			return ((certDate.getMonth()) + 1) + "/" + certDate.getDate() + "/" + certDate.getFullYear();
+        	}
+        	return null;
+        }
+           
+    
             // checks if previous week is before minimum date and resets week dates if not
         function prevWeek() {
             var newDate = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() - 7 );
