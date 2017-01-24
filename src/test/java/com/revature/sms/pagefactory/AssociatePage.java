@@ -18,10 +18,13 @@ public class AssociatePage extends SMSPage {
 	public WebElement header;
 	
 	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/md-toolbar/div/button[1]/md-icon")
-	public WebElement menuIcon;
+	public WebElement certification;
+	
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/md-toolbar/div/button[2]/md-icon")
+	public WebElement settings;
 	
 	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/md-toolbar/div/button[3]/md-icon")
-	public WebElement logoutIcon;
+	public WebElement logout;
 	
 	@FindBy(tagName="tbody")
 	public WebElement weekTable;
@@ -34,12 +37,6 @@ public class AssociatePage extends SMSPage {
 	
 	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/div/div/div[2]/div")
 	public WebElement weekOf;
-	
-	@FindBy(className="md-material-icon menu-icon ng-binding ng-scope material-icons")
-	public WebElement certification;
-	
-	@FindBy(className="md-material-icon menu-icon ng-scope material-icons")
-	public WebElement settings;
 
 	public AssociatePage(WebDriver driver) {
 		super(driver);

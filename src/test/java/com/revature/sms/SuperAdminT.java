@@ -80,7 +80,7 @@ public class SuperAdminT implements InstanceTestClassListener {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
 		Assert.assertTrue(sap.verify());
 		Assert.assertEquals(expected.getProperty("superAdminPg"), sap.header.getText());
-		sap.logoutIcon.click();
+		sap.logout.click();
 		Assert.assertTrue(lp.verify());
 	}
 	
