@@ -3,7 +3,7 @@
         .module( "sms" )
         .controller( "associateAttendenceCtrl", associateAttendanceCtrl );
         
-    function associateAttendanceCtrl( $scope, $state, $filter, loginService, weekdays ) {
+    function associateAttendanceCtrl( $scope, $state, $filter, loginService, userService, weekdays ) {
         var aac = this;
 
           // bindables
@@ -20,6 +20,7 @@
         aac.prevWeek = prevWeek;
         aac.nextWeek = nextWeek;
         aac.toast = toast;
+        aac.checkIn = checkIn;
 
           // initialization
         aac.calcWeek( aac.curr );
@@ -54,7 +55,10 @@
 
             // sets toobar icons and functions
         function setToolbar() {
-            $scope.$emit( "setToolbar", { title: "Weekly attendance", actions: {} } );
+        	var cin = {"function": aac.checkIn,
+        					"icon": "check",
+        					"tooltip": "Check in"};
+            $scope.$emit( "setToolbar", { title: "Weekly attendance", actions: {cin} } );
         }
 
             // checks if previous week is before minimum date and resets week dates if not
@@ -77,6 +81,27 @@
                 aac.curr = newDate;
                 aac.calcWeek( aac.curr );
             }
+        }
+        
+        // marks an associate as checked in.
+        function checkIn(){
+        	//console.log(aac.user);
+        	
+        	var d = new Date();
+        	for(var i=0; i< aac.user.attendance.length; i++){
+        		var d2 = new Date(aac.user.attendance[i].date);
+        		if(d.getDate() === d2.getDate() & d.getMonth() === d2.getMonth()){
+        			aac.user.attendance[i].checkedIn = true;
+        			console.log(aac.user.attendance[i].checkedIn);
+        			//TODO: ********************************************************************************** ******************************* update user status and save to db
+        			userService.update(aac.user,function(){},function(error){aac.toast(error)});
+        			aac.calcWeek( aac.curr );
+        		}
+        	}
+        	
+        	
+        	
+        	
         }
 
             // calls root-level toast function
