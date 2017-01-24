@@ -26,4 +26,7 @@
 		padding: 6px 15px 6px 35px;
 	}
 	
-	
+	.mainCard
+	{
+     	margin-bottom: 0px !important;
+	}

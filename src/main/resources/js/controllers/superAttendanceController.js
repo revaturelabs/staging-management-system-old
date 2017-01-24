@@ -9,6 +9,13 @@
     	sac.toast = function(message){
     		$scope.$parent.$parent.mastCtrl.toast(message);
     	};
+    	/*set up values for sliding information card */
+    	//says when the card is in use
+    	sac.showInformation = false;
+    	//says if the user is on a mobile device
+    	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    		sac.smallDevice = true;
+    	}
     	
     	/*This block sets the DATE HEADERS IN TABLE*/
     	//set current day
@@ -84,6 +91,8 @@
 	        	sac.users = $filter("associateFilter")(response);
 	        	//filter the associates to get the date objects that are only for the current week
 	        	sac.users = $filter("weekFilter")(sac.users, sac.thisMonday);
+	        	//filter the associates to get the task information
+	        	sac.users = $filter("taskFilter")(sac.users, today);
 	        	
 	        }, function(error){
 	        	sac.toast("Error in retrieving all associates.");
@@ -108,7 +117,7 @@
         
         /*create a verify attendance functions*/
 
-        $scope.verifyAttendance = function(user, selectedDay, currentStatus){
+        sac.verifyAttendance = function(user, selectedDay, currentStatus){
         	rightNow = new Date();
         	
         	//figure out which day was clicked
@@ -180,7 +189,7 @@
         //make a scope variable that holds the week number, so they can only go forward and back 2 weeks
          var weekNumber = 4;
         
-    	$scope.goBackOneWeek = function() {
+    	sac.goBackOneWeek = function() {
     		
     		//make sure user can't go back 2 weeks
     		if(weekNumber > 0){
@@ -193,7 +202,7 @@
     		}
         };
         
-        $scope.goForwardOneWeek = function() {
+        sac.goForwardOneWeek = function() {
     	    
         	//make sure user can't go beyond the present week 
     		if(weekNumber < 4){
@@ -254,19 +263,14 @@
         
         //Retrieve associate Info 
         sac.showInfo = function(user){
-        	//$mdSidenav("left").close();
-        	console.log(user);
-        	$mdDialog.show({
-				templateUrl: "html/templates/associateInfo.html",
-                controller: "associateInfoCtrl as aInfoCtrl",
-                locals:{'user':user},
-                bindToController:true
-			}).then( function(){
-				sac.toast(" Success");
-			},function(){
-				sac.toast("Cancel");
-			});
-        	
-        };
+        	sac.showInformation = true;
+        	sac.currentUser = user;
+        }
+        
+        sac.hideInfo = function(){
+        	sac.showInformation = false;
+        	sac.currentUser = null;
+        }
+        
         
     });
