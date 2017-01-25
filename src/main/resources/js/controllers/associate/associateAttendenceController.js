@@ -2,10 +2,8 @@
     angular
         .module( "sms" )
         .controller( "associateAttendenceCtrl", associateAttendanceCtrl );
-        
 
     function associateAttendanceCtrl( $mdDialog, $scope, $state, $filter, loginService, userService, weekdays ) {
-
         var aac = this;
 
           // bindables
@@ -51,13 +49,11 @@
             aac.weekAttendance = $filter( "weekFilter" )( [aac.user], monday )[0].thisWeek;
             for (var j = 0; j < aac.week.length; j++) {
                 if ( aac.week[j].date.getTime() < aac.today.getTime() &&  aac.weekAttendance[j] == undefined) {
-                  
-                        aac.weekAttendance[j] = {
-                            verified: false,
-                            checkedIn: false
-                        }
-                        aac.weekAttendance[j] = $filter( "iconFilter" )( aac.weekAttendance[j], "week" );
+                    aac.weekAttendance[j] = {
+                        verified: false,
+                        checkedIn: false
                     }
+                    aac.weekAttendance[j] = $filter( "iconFilter" )( aac.weekAttendance[j], "week" );
                 }
             }
         }
@@ -72,20 +68,20 @@
 	    		aac.calcWeek( aac.curr );
 	    		aac.setToolbar();
 	    	});
-		 };
+		 }
 		 
         function updateSuccess(){ 
 			aac.toast("Successfully checked in.")
     		aac.calcWeek( aac.curr );
     		aac.setToolbar();
-    		};
+    	}
           //end sonarQube appeasement
         
         function todayCheckedIn(){
         	var d = new Date();
         	for(var i=0; i< aac.user.attendance.length; i++){
         		var d2 = new Date(aac.user.attendance[i].date);
-        		if(d.getDate() === d2.getDate() && d.getMonth() === d2.getMonth()){
+        		if(d.getDate() == d2.getDate() && d.getMonth() == d2.getMonth()){
         			if(aac.user.attendance[i].verified){
         				return null;
         			}
@@ -113,39 +109,38 @@
         	userService.update(aac.user,function(){});
         	return {"function": aac.checkIn, "icon": "check", "tooltip": "Check in"};
         }
+
             // sets toobar icons and functions
         function setToolbar() {
         	var actions=[];
         	
-        	actions.push({ 
-                "function": aac.assocCertifications, 
-                "icon"    : "date_range", 
-                "tooltip" : "Certifications"});
-        	
         	var cin = todayCheckedIn();
-        	
         	if(cin != null){
         		actions.push(cin);
         	}
+            actions.push({ 
+                "function": aac.assocCertifications, 
+                "icon"    : "date_range", 
+                "tooltip" : "Certifications"});
+
             $scope.$emit( "setToolbar", { title: "Weekly attendance", actions } );
-        
         }
 
         function assocCertifications() {
-            	if (getScheduledCert() == null) {
-            		$mdDialog.show({
-                		templateUrl: "html/templates/scheduleCertification.html",
-                		controller: "associateCertificationsCtrl as assCertCtrl"
-                	}).then( function() {
-                		aac.toast("Certification Scheduled");
-                    }, function() {
-                    	aac.toast("Certification Schedule Cancelled");
-                    });
-            	}
-            	else {
-            		aac.toast("You can only schedule one certification at a time.");
-            	}
+            if (getScheduledCert() == null) {
+                $mdDialog.show({
+                    templateUrl: "html/templates/scheduleCertification.html",
+                    controller: "associateCertificationsCtrl as assCertCtrl"
+                }).then( function() {
+                    aac.toast("Certification Scheduled");
+                }, function() {
+                    aac.toast("Certification Schedule Cancelled");
+                });
             }
+            else {
+                aac.toast("You can only schedule one certification at a time.");
+            }
+        }
         
         function days_between(date1, date2) {
 
