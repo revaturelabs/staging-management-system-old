@@ -37,7 +37,6 @@
 					"icon": "add",
 					"tooltip": "Add Batch"
 				});
-			} else if (mac.user.userRole.name == "admin") {
 			}
 
 			$scope.$emit("setToolbar", {title: "Weekly Attendance", actions});
