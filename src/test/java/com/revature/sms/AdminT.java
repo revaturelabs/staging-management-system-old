@@ -95,20 +95,35 @@ public class AdminT implements InstanceTestClassListener {
 	}
 	
 	
-	
 	//Corey's Test ideas
-	//@Test
+	
+	// Test to enter username in search box and verify correct associate name is returned
+	@Test
 	public void testSearchBar() {
+		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
+		Assert.assertTrue(adp.verify());
+		Assert.assertEquals(expected.getProperty("adminPg"), adp.header.getText());
 		
 		adp.searchBox.sendKeys("Java");
 		Assert.assertEquals(expected.getProperty("java"), adp.searchResult.getText());
+		System.out.println("Search result: " + adp.searchResult.getText());
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		adp.searchBox.clear();
 		
 		adp.searchBox.sendKeys("DotNet");
 		Assert.assertEquals(expected.getProperty("dotnet"), adp.searchResult.getText());
+		System.out.println("Search result: " + adp.searchResult.getText());
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		adp.searchBox.clear();
 		
 		adp.searchBox.sendKeys("SDET");
 		Assert.assertEquals(expected.getProperty("sdet"), adp.searchResult.getText());
+		System.out.println("Search result: " + adp.searchResult.getText());
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		adp.searchBox.clear();
 		
+		adp.logout.click();
+		Assert.assertTrue(lp.verify());
 	}
 	
 	public void testAdminAttendanceView() {

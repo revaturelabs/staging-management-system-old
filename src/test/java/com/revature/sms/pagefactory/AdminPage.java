@@ -30,7 +30,7 @@ public class AdminPage extends SMSPage {
 	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/md-table-container/table")
 	public WebElement attendanceTable;
 	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/md-table-container/table[2]/tbody/tr/td[1]")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/md-table-container/table/tbody/tr/td[1]")
 	public WebElement searchResult;
 	
 	
