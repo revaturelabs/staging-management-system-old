@@ -103,13 +103,25 @@
         			}
         		}
         	}
+        	
+           	// day doesn't exist create new day
+        	aac.user.attendance.push({
+        		verified: false,
+        		checkedIn: false,
+        		date: new Date().getTime(),
+        		note: "",
+        		id: null
+        		});
+        	console.log(aac.user.attendance);
+        	
+        	userService.update(aac.user,function(){},function(){});
+        	return {"function": aac.checkIn, "icon": "check", "tooltip": "Check in"};
         }
             // sets toobar icons and functions
         function setToolbar() {
         	var actions=[];
         	
         	actions.push({ "function": aac.assocCertifications, "icon": "date_range", "tooltip": "Certifications"});
-        	
         	
         	var cin = todayCheckedIn();
         	
@@ -133,7 +145,6 @@
             	}
             	else {
             		aac.toast("You can only schedule one certification at a time.");
-            
             	}
             }
         
@@ -185,8 +196,6 @@
         		}
         	}
         	return null;
-
-
         }
 
          // checks if previous week is before minimum date and resets week dates if not
