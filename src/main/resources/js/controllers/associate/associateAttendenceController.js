@@ -112,9 +112,8 @@
         		note: "",
         		id: null
         		});
-        	console.log(aac.user.attendance);
         	
-        	userService.update(aac.user,function(){},function(){});
+        	userService.update(aac.user,function(){});
         	return {"function": aac.checkIn, "icon": "check", "tooltip": "Check in"};
         }
             // sets toobar icons and functions
