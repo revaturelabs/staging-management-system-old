@@ -3,18 +3,20 @@
         .module( "sms" )
         .controller( "associateAttendenceCtrl", associateAttendanceCtrl );
         
-    function associateAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, weekdays ) {
+
+    function associateAttendanceCtrl( $mdDialog, $scope, $state, $filter, loginService, userService, weekdays ) {
+
         var aac = this;
 
-        // bindables
-        // data
+          // bindables
+            // data
         aac.user = loginService.getUser();
         aac.curr = new Date();
         aac.today = aac.curr;
         aac.minWeek = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() - 28 ); 
         aac.maxWeek = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() + 7 );
 
-        // functions
+            // functions
         aac.calcWeek = calcWeek;
         aac.setToolbar = setToolbar;
         aac.assocCertifications = assocCertifications;
@@ -24,11 +26,11 @@
         aac.prevWeek = prevWeek;
         aac.nextWeek = nextWeek;
         aac.toast = toast;
+        aac.checkIn = checkIn;
 
-        // initialization
-        aac.calcWeek( aac.curr );
+          // initialization
         aac.setToolbar();
-        
+        aac.calcWeek( aac.curr );
         if (getScheduledCert() != null) {
         	aac.toast(getScheduledCert());
         }
@@ -48,8 +50,8 @@
 
             aac.weekAttendance = $filter( "weekFilter" )( [aac.user], monday )[0].thisWeek;
             for (var j = 0; j < aac.week.length; j++) {
-                if ( aac.week[j].date.getTime() < aac.today.getTime() ) {
-                    if ( aac.weekAttendance[j] == undefined ) {
+                if ( aac.week[j].date.getTime() < aac.today.getTime() &&  aac.weekAttendance[j] == undefined) {
+                  
                         aac.weekAttendance[j] = {
                             verified: false,
                             checkedIn: false
@@ -60,14 +62,73 @@
             }
         }
 
+          // SonarQube appeasement
+        function dialogYes() {
+	    	//selected yes
+	    	//checkout
+	    	aac.x.checkedIn = false;
+	    	userService.update(aac.user,function(){
+	    		aac.toast("Checked out");
+	    		aac.calcWeek( aac.curr );
+	    		aac.setToolbar();
+	    	});
+		 };
+		 
+        function updateSuccess(){ 
+			aac.toast("Successfully checked in.")
+    		aac.calcWeek( aac.curr );
+    		aac.setToolbar();
+    		};
+          //end sonarQube appeasement
+        
+        function todayCheckedIn(){
+        	var d = new Date();
+        	for(var i=0; i< aac.user.attendance.length; i++){
+        		var d2 = new Date(aac.user.attendance[i].date);
+        		if(d.getDate() === d2.getDate() && d.getMonth() === d2.getMonth()){
+        			if(aac.user.attendance[i].verified){
+        				return null;
+        			}
+        			
+        			if(aac.user.attendance[i].checkedIn){
+        				//checked in
+        				return {"function": aac.checkIn, "icon": "clear", "tooltip": "Mark as absent"};
+        			}
+        			else{
+        				//not checked in
+        				return {"function": aac.checkIn, "icon": "check", "tooltip": "Check in"};
+        			}
+        		}
+        	}
+        	
+           	// day doesn't exist create new day
+        	aac.user.attendance.push({
+        		verified: false,
+        		checkedIn: false,
+        		date: new Date().getTime(),
+        		note: "",
+        		id: null
+        		});
+        	
+        	userService.update(aac.user,function(){});
+        	return {"function": aac.checkIn, "icon": "check", "tooltip": "Check in"};
+        }
             // sets toobar icons and functions
         function setToolbar() {
-            $scope.$emit( "setToolbar", { 
-                title: "Weekly attendance", 
-                actions: [{ 
-                    "function": aac.assocCertifications, 
-                    "icon"    : "date_range", 
-                    "tooltip" : "Certifications"}] } );
+        	var actions=[];
+        	
+        	actions.push({ 
+                "function": aac.assocCertifications, 
+                "icon"    : "date_range", 
+                "tooltip" : "Certifications"});
+        	
+        	var cin = todayCheckedIn();
+        	
+        	if(cin != null){
+        		actions.push(cin);
+        	}
+            $scope.$emit( "setToolbar", { title: "Weekly attendance", actions } );
+        
         }
 
         function assocCertifications() {
@@ -83,7 +144,6 @@
             	}
             	else {
             		aac.toast("You can only schedule one certification at a time.");
-            		//aac.toast(getScheduledCert());
             	}
             }
         
@@ -135,10 +195,7 @@
         		}
         	}
         	return null;
-
         }
-           
-    
 
          // checks if previous week is before minimum date and resets week dates if not
         function prevWeek() {
@@ -160,6 +217,40 @@
                 aac.curr = newDate;
                 aac.calcWeek( aac.curr );
             }
+        }
+        
+        // marks an associate as checked in.
+        function checkIn(){
+        	var d = new Date();
+        	//find current attendance object
+        	for(var i=0; i< aac.user.attendance.length; i++){
+        		var d2 = new Date(aac.user.attendance[i].date);
+        		if(d.getDate() === d2.getDate() && d.getMonth() === d2.getMonth()){
+        			//object found
+        			
+        			//not checked in
+        			if(!aac.user.attendance[i].checkedIn){
+        				//check in
+        				aac.user.attendance[i].checkedIn = true;
+        				userService.update(aac.user,updateSuccess);
+        			}
+        			// checked in
+        			else{
+        			    var confirm = $mdDialog.confirm()
+        		          .title('Checkout')
+        		          .textContent('Are you sure you want to mark yourself as absent?')
+        		          .ok('Yes')
+        		          .cancel('No');
+
+        			    aac.x = aac.user.attendance[i];
+        			    
+	        		    $mdDialog.show(confirm).then(dialogYes);
+
+        			}
+				break;
+
+        		}
+        	}
         }
 
             // calls root-level toast function
