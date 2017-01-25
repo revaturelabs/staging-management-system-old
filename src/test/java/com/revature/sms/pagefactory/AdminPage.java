@@ -21,7 +21,6 @@ public class AdminPage extends SMSPage {
 	@FindBy(css="[ng-model=\"searchBox\"]")
 	public WebElement searchBox;
 	
-
 	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/section/button[1]/span/md-icon")
 	public WebElement prevWeek;
 	

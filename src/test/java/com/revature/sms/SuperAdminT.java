@@ -80,6 +80,7 @@ public class SuperAdminT implements InstanceTestClassListener {
 	
 	
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
+	@Ignore
 	@Test
 	public void testLoginHeaderLogout() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
@@ -93,12 +94,28 @@ public class SuperAdminT implements InstanceTestClassListener {
 	public void testBatchCreation() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
 		
-		//String thing1 = driver.findElement(By.tagName("md-dialog")).getAttribute("class");
-		//System.out.println("Thing 1: "+thing1);
-		
 		sap.addBatch.click();
 		Assert.assertTrue(cbw.verify());
-		cbw.cancel.click();
+		cbw.firstName.sendKeys(inputs.getProperty("firstName"));
+		cbw.lastName.sendKeys(inputs.getProperty("lastName"));
+		cbw.addToList.click();
+		cbw.firstName.sendKeys(inputs.getProperty("firstName2"));
+		cbw.lastName.sendKeys(inputs.getProperty("lastName2"));
+		cbw.addToList.click();
+		
+		cbw.curriculum.click();
+		ArrayList<WebElement> elements = (ArrayList<WebElement>) driver.findElements(By.xpath("//*[@class=\"md-text ng-binding\"]"));
+		for (WebElement e:elements) {
+			String text = e.getText();
+			if (text.equals(inputs.getProperty("curriculum"))) {
+				e.click();
+			}
+		}
+		
+		cbw.enterDate.clear();
+		cbw.enterDate.sendKeys(inputs.getProperty("batchStartDate"));
+		cbw.submit.click();
+		driver.findElement(By.xpath("//*[@id=\"dialogContent_14\"]/div/div/button/span")).click();
 		sap.logout.click();
 	}
 	
