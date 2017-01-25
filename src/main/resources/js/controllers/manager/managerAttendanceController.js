@@ -52,6 +52,21 @@
             });
         }
 
+            // sends options and actions to toolbar
+		function addOptions() {
+			var actions = [];
+			
+			if (mac.user.userRole.name == "superAdmin") {
+				actions.push({
+					"function": mac.newAssociates,
+					"icon": "add",
+					"tooltip": "Add Batch"
+				});
+			}
+
+			$scope.$emit("setToolbar", {title: "Weekly Attendance", actions});
+		}
+
             // adds object representing this week's attendance to each user
         function calcWeek( date ) {
             

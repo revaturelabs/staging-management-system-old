@@ -1,6 +1,7 @@
 package com.revature.sms.domain;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,14 +30,7 @@ public class JobEvent {
 	@SequenceGenerator(allocationSize = 1, name = "jobEventSeq", sequenceName = "JOB_EVENT_SEQ")
 	@GeneratedValue(generator = "jobEventSeq", strategy = GenerationType.SEQUENCE)
 	private int ID;
-	
-	/**
-	 * User object that represents the associate in this job assignment record.
-	 */
-	@ManyToOne
-	@JoinColumn(name="ASSOCIATE")
-	private User associate;
-	
+
 	/**
 	 * JobAssignment object that represents the job that an associate has been assigned to.
 	 */
@@ -55,13 +49,19 @@ public class JobEvent {
 	 * Date object that represents the start date for an associate's job assignment.
 	 */
 	@Column(name="EVENT_DATE", nullable=false)
-	private Date date;
+	private Timestamp date;
 	
 	/**
 	 * String value that allows an admin to include an optional note regarding the associate's job status.
 	 */
 	@Column(name="NOTE")
 	private String note;
+
+	/**
+	 * String value that holds where the event is taking place
+	 */
+	@Column(name="LOCATION")
+	private String location;
 
 	/**
 	 * Default constructor for JobEvent.
@@ -72,15 +72,13 @@ public class JobEvent {
 
 	/**
 	 * Parameterized constructor for JobEvent.
-	 * @param associate User object that represents the associate in this job assignment record
 	 * @param assignment JobAssignment object that represents the job that an associate has been assigned to
 	 * @param type JobEventType object that represents the type of job an associate is assigned to
 	 * @param date Date object that represents the start date for an associate's job assignment
 	 * @param note String value that allows an admin to include an optional note regarding the associate's job status
 	 */
-	public JobEvent(User associate, JobAssignment assignment, JobEventType type, Date date, String note) {
+	public JobEvent(JobAssignment assignment, JobEventType type, Timestamp date, String note) {
 		super();
-		this.associate = associate;
 		this.assignment = assignment;
 		this.type = type;
 		this.date = date;
@@ -101,22 +99,6 @@ public class JobEvent {
 	 */
 	public void setID(int iD) {
 		ID = iD;
-	}
-	
-	/**
-	 * Get method for associate.
-	 * @return associate User object that represents the associate in this job assignment record
-	 */
-	public User getAssociate() {
-		return associate;
-	}
-	
-	/**
-	 * Set method for associate.
-	 * @param associate User object that represents the associate in this job assignment record
-	 */
-	public void setAssociate(User associate) {
-		this.associate = associate;
 	}
 	
 	/**
@@ -155,7 +137,7 @@ public class JobEvent {
 	 * Get method for date.
 	 * @return date Date object that represents the start date for an associate's job assignment
 	 */
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 	
@@ -163,7 +145,7 @@ public class JobEvent {
 	 * Set method for date.
 	 * @param date Date object that represents the start date for an associate's job assignment
 	 */
-	public void setDate(Date date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 	
@@ -184,11 +166,27 @@ public class JobEvent {
 	}
 
 	/**
+	 * Get method for location.
+	 * @return location String value that holds where the event is taking place
+	 */
+	public String getLocation() {
+		return location;
+	}
+
+	/**
+	 * Set method for location.
+	 * @param location String value that holds where the event is taking place
+	 */
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	/**
 	 * toString method for JobEvent.
 	 */
 	@Override
 	public String toString() {
-		return "JobEvent [ID=" + ID + ", associate=" + associate.getUsername() + ", assignment=" + assignment + ", type=" + type.getType()
+		return "JobEvent [ID=" + ID + ", assignment=" + assignment + ", type=" + type.getType()
 				+ ", date=" + date + ", note=" + note + "]";
 	}
 	

@@ -48,6 +48,12 @@ public class AssociateTask {
 	 */
 	@Column(name="Note")
 	private String note;
+	
+	/**
+	 * String value that represents if an assoicate has passed a certain task.
+	 */
+	@Column(name="Passed", nullable=false)
+	private boolean passed;
 
 	/**
 	 * Default constructor for AssociateTask.
@@ -68,6 +74,7 @@ public class AssociateTask {
 		this.taskType = taskType;
 		this.date = date;
 		this.note = note;
+		this.passed = false;
 	}
 
 	/**
@@ -130,6 +137,22 @@ public class AssociateTask {
 	 */
 	public void setNote(String note) {
 		this.note = note;
+	}
+	
+	/**
+	 * Get method for passed.
+	 * @return passed String value that represents if an assoicate has passed a certain task.
+	 */
+	public boolean getPassed() {
+		return passed;
+	}
+	
+	/**
+	 * Set method for passed
+	 * @param passed - String value that represents if an assoicate has passed a certain task.
+	 */
+	public void setPassed(boolean passed) {
+		this.passed = passed;
 	}
 
 	/**
