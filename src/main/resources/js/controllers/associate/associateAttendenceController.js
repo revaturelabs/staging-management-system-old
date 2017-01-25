@@ -82,12 +82,17 @@
     		aac.calcWeek( aac.curr );
     		aac.setToolbar();
     		};
+    //end sonarQube appeasement
         
         function todayCheckedIn(){
         	var d = new Date();
         	for(var i=0; i< aac.user.attendance.length; i++){
         		var d2 = new Date(aac.user.attendance[i].date);
         		if(d.getDate() === d2.getDate() && d.getMonth() === d2.getMonth()){
+        			if(aac.user.attendance[i].verified){
+        				return null;
+        			}
+        			
         			if(aac.user.attendance[i].checkedIn){
         				//checked in
         				return {"function": aac.checkIn, "icon": "clear", "tooltip": "Mark as absent"};
@@ -101,12 +106,18 @@
         }
             // sets toobar icons and functions
         function setToolbar() {
-
+        	var actions=[];
+        	
+        	actions.push({ "function": aac.assocCertifications, "icon": "date_range", "tooltip": "Certifications"});
+        	
         	
         	var cin = todayCheckedIn();
         	
-
-            $scope.$emit( "setToolbar", { title: "Weekly attendance", actions: [cin,{ "function": aac.assocCertifications, "icon": "date_range", "tooltip": "Certifications"}] } );
+        	if(cin != null){
+        		actions.push(cin);
+        	}
+            $scope.$emit( "setToolbar", { title: "Weekly attendance", actions } );
+        
         }
 
         function assocCertifications() {
@@ -203,7 +214,7 @@
         // marks an associate as checked in.
         function checkIn(){
         	var d = new Date();
-        	//find cuurent attendance object
+        	//find current attendance object
         	for(var i=0; i< aac.user.attendance.length; i++){
         		var d2 = new Date(aac.user.attendance[i].date);
         		if(d.getDate() === d2.getDate() && d.getMonth() === d2.getMonth()){
@@ -225,7 +236,7 @@
 
         			    aac.x = aac.user.attendance[i];
         			    
-	        		    $mdDialog.show(confirm).then(dialogYes,aac.toast("Check out cancelled"));
+	        		    $mdDialog.show(confirm).then(dialogYes);
 
         			}
 				break;
