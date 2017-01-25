@@ -11,9 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +19,10 @@ import com.revature.sms.util.InstanceTestClassListener;
 import com.revature.sms.util.SpringInstanceTestClassRunner;
 import com.revature.sms.util.TestSetup;
 import com.codoid.products.exception.FilloException;
-import com.revature.sms.database.DBInitializationController;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;
 import com.revature.sms.pagefactory.LoginPage;
+import com.revature.sms.pagefactory.ScheduleCertificationWindow;
 import com.revature.sms.pagefactory.SuperAdminPage;
 import com.revature.sms.util.EventListener;
 import com.revature.sms.util.ExcelHelper;
@@ -47,6 +45,7 @@ public class AssociateT implements InstanceTestClassListener {
 	private AssociatePage asp;
 	private AdminPage adp;
 	private SuperAdminPage sap;
+	private ScheduleCertificationWindow scw;
 	
 	
 	@Override
@@ -77,6 +76,7 @@ public class AssociateT implements InstanceTestClassListener {
 		asp = new AssociatePage(driver);
 		adp = new AdminPage(driver);
 		sap = new SuperAdminPage(driver);
+		scw = new ScheduleCertificationWindow(driver);
 		
 		//Make sure the login page is loaded correctly 
 		Assert.assertEquals(expected.getProperty("siteName"), driver.getTitle());
@@ -85,6 +85,7 @@ public class AssociateT implements InstanceTestClassListener {
 	}
 	
 	//Makes sure the current week is shown on the associate page when you log in.
+	@Ignore
 	@Test
 	public void testDefaultWeek() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
@@ -99,7 +100,7 @@ public class AssociateT implements InstanceTestClassListener {
 		
 		ArrayList<String> actualMonthDays = asp.goThroughWeek();
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
-		asp.logoutIcon.click();
+		asp.logout.click();
 	}
 	
 	
@@ -110,6 +111,7 @@ public class AssociateT implements InstanceTestClassListener {
 	//incorrectly displayed on the website.
 	
 	//This is Corey's work on issue SMS-85.
+	@Ignore
 	@Test
 	public void testAssociateAttendanceView() {
 		try {
@@ -184,7 +186,7 @@ public class AssociateT implements InstanceTestClassListener {
 			} while (!week.equals(weekBefore));
 		} catch (FilloException e) {}
 		finally {
-			asp.logoutIcon.click();
+			asp.logout.click();
 		}
 	}
 	
@@ -194,22 +196,32 @@ public class AssociateT implements InstanceTestClassListener {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
 		Assert.assertTrue(asp.verify());
 		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  //Asserts that the title given in the blue bar towards the top of the page is the same as expected.
-		asp.logoutIcon.click();
+		asp.logout.click();
 		Assert.assertTrue(lp.verify());
 		
 		lp.login(inputs.getProperty("sdetUN"), inputs.getProperty("sdetPW"));
 		Assert.assertTrue(asp.verify());
 		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
-		asp.logoutIcon.click();
+		asp.logout.click();
 		Assert.assertTrue(lp.verify());
 		
 		lp.login(inputs.getProperty("dotnetUN"), inputs.getProperty("dotnetPW"));
 		Assert.assertTrue(asp.verify());
 		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
-		asp.logoutIcon.click();
+		asp.logout.click();
 		Assert.assertTrue(lp.verify());
 		
 	}
+	
+	@Test
+	public void testCertificationScheduling() {
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
+		asp.certification.click();
+		Assert.assertTrue(scw.verify());
+		scw.cancel.click();
+		asp.logout.click();
+	}
+	
 	
 	
 	//Corey's Test ideas
@@ -237,7 +249,7 @@ public class AssociateT implements InstanceTestClassListener {
 	//Close webdriver and clear database
 	@Override
 	public void afterClassSetup() {
-		driver.close();
+		//driver.close();
 	}
 	
 	//Inconsequential change

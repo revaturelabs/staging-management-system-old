@@ -90,7 +90,7 @@ public class AdminT implements InstanceTestClassListener {
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
 		Assert.assertTrue(adp.verify());
 		Assert.assertEquals(expected.getProperty("adminPg"), adp.header.getText());
-		adp.logoutIcon.click();
+		adp.logout.click();
 		Assert.assertTrue(lp.verify());
 	}
 	

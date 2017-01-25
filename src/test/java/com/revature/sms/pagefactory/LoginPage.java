@@ -30,11 +30,8 @@ public class LoginPage extends SMSPage {
 	}
 	
 	public void login(String username, String password) {
-		System.out.println(driver.getTitle());
 		unField.sendKeys(username);
-		System.out.println("Username: "+username);
 		pwField.sendKeys(password);
-		System.out.println("Password: "+password);
 		submit.click();
 	}
 	
