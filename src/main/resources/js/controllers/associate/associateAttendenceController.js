@@ -118,7 +118,7 @@
         			return "Certification date is today.";
         		}
         		else if ( certDate.getTime() >= (new Date().getTime()) && (aac.user.tasks[i].taskType.type == cert) ) {
-        			var daysAway = days_between(aac.today, certDate) + 1;
+        			var daysAway = days_between(aac.today, certDate);
         			if (daysAway >= 14) {
         				return "Certification scheduled for: " +  ((certDate.getMonth()) + 1) + "/" + certDate.getDate() + "/" + certDate.getFullYear();
         			}
