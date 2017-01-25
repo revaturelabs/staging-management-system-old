@@ -75,7 +75,6 @@
             var user = loginService.getUser();
             if ( user.userRole.name == "associate" ) {
                 user.tasks.forEach( function(task) {
-                    console.log(task);
                     if (task.taskType == "Certification") {
                         var now = new Date();
                         if ( task.date.getTime() > now.getTIme() ) {
