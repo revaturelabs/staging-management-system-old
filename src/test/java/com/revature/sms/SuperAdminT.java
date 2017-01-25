@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.revature.sms.util.InstanceTestClassListener;
 import com.revature.sms.util.SpringInstanceTestClassRunner;
 import com.revature.sms.util.TestSetup;
+import com.revature.sms.pagefactory.ChangePasswordWindow;
 import com.revature.sms.pagefactory.CreateBatchWindow;
 import com.revature.sms.pagefactory.LoginPage;
 import com.revature.sms.pagefactory.SuperAdminPage;
@@ -40,8 +41,9 @@ public class SuperAdminT implements InstanceTestClassListener {
 	static EventFiringWebDriver driver;
 	static EventListener eventListener; 
 	private LoginPage lp;
-	private CreateBatchWindow cbw;
 	private SuperAdminPage sap;
+	private CreateBatchWindow cbw;
+	private ChangePasswordWindow cpw;
 	
 	
 	@Override
@@ -71,6 +73,7 @@ public class SuperAdminT implements InstanceTestClassListener {
 		lp = new LoginPage(driver);
 		sap = new SuperAdminPage(driver);
 		cbw = new CreateBatchWindow(driver);
+		cpw = new ChangePasswordWindow(driver);
 		
 		//Make sure the login page is loaded correctly 
 		Assert.assertEquals(expected.getProperty("siteName"), driver.getTitle());
@@ -90,6 +93,7 @@ public class SuperAdminT implements InstanceTestClassListener {
 		Assert.assertTrue(lp.verify());
 	}
 	
+	@Ignore
 	@Test
 	public void testBatchCreation() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
@@ -119,7 +123,40 @@ public class SuperAdminT implements InstanceTestClassListener {
 		sap.logout.click();
 	}
 	
+	@Ignore
+	@Test
+	public void testPasswordChange() {
+		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
+		sap.settings.click();
+		Assert.assertTrue(cpw.verify());
+		cpw.oldPass.sendKeys(inputs.getProperty("superAdminPW"));
+		cpw.newPass.sendKeys(inputs.getProperty("superAdminPW2"));
+		cpw.confirmPass.sendKeys(inputs.getProperty("superAdminPW2"));
+		cpw.submit.click();
+		sap.logout.click();
+		
+		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW2"));
+		sap.settings.click();
+		Assert.assertTrue(cpw.verify());
+		cpw.oldPass.sendKeys(inputs.getProperty("superAdminPW2"));
+		cpw.newPass.sendKeys(inputs.getProperty("superAdminPW"));
+		cpw.confirmPass.sendKeys(inputs.getProperty("superAdminPW"));
+		cpw.submit.click();
+		sap.logout.click();
+		
+		
+		
+	}
 	
+	@Test
+	public void testCancelButtons() {
+		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
+		sap.addBatch.click();
+		cbw.cancel.click();
+		sap.settings.click();
+		cpw.cancel.click();
+		sap.logout.click();
+	}
 	
 	
 	public void testSearchBar() {
