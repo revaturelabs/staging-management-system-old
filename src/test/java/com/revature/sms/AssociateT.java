@@ -22,6 +22,7 @@ import com.codoid.products.exception.FilloException;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;
 import com.revature.sms.pagefactory.LoginPage;
+import com.revature.sms.pagefactory.ScheduleCertificationWindow;
 import com.revature.sms.pagefactory.SuperAdminPage;
 import com.revature.sms.util.EventListener;
 import com.revature.sms.util.ExcelHelper;
@@ -44,6 +45,7 @@ public class AssociateT implements InstanceTestClassListener {
 	private AssociatePage asp;
 	private AdminPage adp;
 	private SuperAdminPage sap;
+	private ScheduleCertificationWindow scw;
 	
 	
 	@Override
@@ -74,6 +76,7 @@ public class AssociateT implements InstanceTestClassListener {
 		asp = new AssociatePage(driver);
 		adp = new AdminPage(driver);
 		sap = new SuperAdminPage(driver);
+		scw = new ScheduleCertificationWindow(driver);
 		
 		//Make sure the login page is loaded correctly 
 		Assert.assertEquals(expected.getProperty("siteName"), driver.getTitle());
@@ -210,6 +213,16 @@ public class AssociateT implements InstanceTestClassListener {
 		
 	}
 	
+	@Test
+	public void testCertificationScheduling() {
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
+		asp.certification.click();
+		Assert.assertTrue(scw.verify());
+		scw.cancel.click();
+		asp.logout.click();
+	}
+	
+	
 	
 	//Corey's Test ideas
 	public void negativeTestAssociateAttendanceView() {
@@ -236,7 +249,7 @@ public class AssociateT implements InstanceTestClassListener {
 	//Close webdriver and clear database
 	@Override
 	public void afterClassSetup() {
-		driver.close();
+		//driver.close();
 	}
 	
 	//Inconsequential change

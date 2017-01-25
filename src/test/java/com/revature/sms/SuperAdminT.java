@@ -10,7 +10,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.revature.sms.util.InstanceTestClassListener;
 import com.revature.sms.util.SpringInstanceTestClassRunner;
 import com.revature.sms.util.TestSetup;
+import com.revature.sms.pagefactory.CreateBatchWindow;
 import com.revature.sms.pagefactory.LoginPage;
 import com.revature.sms.pagefactory.SuperAdminPage;
 import com.revature.sms.util.EventListener;
@@ -37,6 +40,7 @@ public class SuperAdminT implements InstanceTestClassListener {
 	static EventFiringWebDriver driver;
 	static EventListener eventListener; 
 	private LoginPage lp;
+	private CreateBatchWindow cbw;
 	private SuperAdminPage sap;
 	
 	
@@ -66,6 +70,7 @@ public class SuperAdminT implements InstanceTestClassListener {
 		driver.get(inputs.getProperty("url"));
 		lp = new LoginPage(driver);
 		sap = new SuperAdminPage(driver);
+		cbw = new CreateBatchWindow(driver);
 		
 		//Make sure the login page is loaded correctly 
 		Assert.assertEquals(expected.getProperty("siteName"), driver.getTitle());
@@ -84,7 +89,18 @@ public class SuperAdminT implements InstanceTestClassListener {
 		Assert.assertTrue(lp.verify());
 	}
 	
-	
+	@Test
+	public void testBatchCreation() {
+		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
+		
+		//String thing1 = driver.findElement(By.tagName("md-dialog")).getAttribute("class");
+		//System.out.println("Thing 1: "+thing1);
+		
+		sap.addBatch.click();
+		Assert.assertTrue(cbw.verify());
+		cbw.cancel.click();
+		sap.logout.click();
+	}
 	
 	
 	
@@ -93,10 +109,7 @@ public class SuperAdminT implements InstanceTestClassListener {
 	
 	}
 	
-	public void testBatchCreation() {
-		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
-		
-	}
+	
 	
 	public void testCertificationScheduling() {
 		
