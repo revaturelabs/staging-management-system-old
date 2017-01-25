@@ -29,8 +29,9 @@
         aac.checkIn = checkIn;
 
         // initialization
-        aac.calcWeek( aac.curr );
         aac.setToolbar();
+        aac.calcWeek( aac.curr );
+        
         
         if (getScheduledCert() != null) {
         	aac.toast(getScheduledCert());
@@ -68,7 +69,7 @@
         	var d = new Date();
         	for(var i=0; i< aac.user.attendance.length; i++){
         		var d2 = new Date(aac.user.attendance[i].date);
-        		if(d.getDate() == d2.getDate() && d.getMonth() == d2.getMonth()){
+        		if(d.getDate() === d2.getDate() && d.getMonth() === d2.getMonth()){
         			if(aac.user.attendance[i].checkedIn){
         				//checked in
         				return {"function": aac.checkIn, "icon": "clear", "tooltip": "Mark as absent"};
@@ -79,6 +80,17 @@
         			}
         		}
         	}
+        	// day doesn't exist create new day
+/*        	aac.user.attendance.push({
+                verified: false,
+                checkedIn: false
+            });
+        	console.log(new Date().getTime());
+        	console.log(aac.user.attendance);
+        	
+        	userService.update(aac.user,function(){},function(){});
+			return {"function": aac.checkIn, "icon": "check", "tooltip": "Check in"};*/
+
         }
             // sets toobar icons and functions
         function setToolbar() {
@@ -158,8 +170,6 @@
 
 
         }
-           
-    
 
          // checks if previous week is before minimum date and resets week dates if not
         function prevWeek() {
@@ -196,11 +206,7 @@
         			if(!aac.user.attendance[i].checkedIn){
         				//check in
         				aac.user.attendance[i].checkedIn = true;
-        				userService.update(aac.user,function(){ 
-        					aac.toast("Successfully checked in.")
-        		    		aac.calcWeek( aac.curr );
-        		    		aac.setToolbar();
-        		    		},function(error){aac.toast(error)});
+        				userService.update(aac.user,updateSuccess);
         			}
         			// checked in
         			else{
@@ -208,25 +214,11 @@
         		          .title('Checkout')
         		          .textContent('Are you sure you want to mark yourself as absent?')
         		          .ok('Yes')
+        		          .cancel('No');
 
-        			    
         			    aac.x = aac.user.attendance[i];
         			    
-	        		    $mdDialog.show(confirm).then(function() {
-	        		    	//selected yes
-	        		    	//checkout
-	        		    	aac.x.checkedIn = false;
-	        		    	userService.update(aac.user,function(){
-	        		    		aac.toast("Checked out");
-	        		    		aac.calcWeek( aac.curr );
-	        		    		aac.setToolbar();
-	        		    	});
-	        		    	
-	        		    	//show error
-		        		 },function(){
-		        		    	//selected no
-		        		    	aac.toast("Check out cancelled");
-		        		 });
+	        		    $mdDialog.show(confirm).then(dialogYes,aac.toast("Check out cancelled"));
 
         			}
 				break;
@@ -239,4 +231,22 @@
         function toast( message ) {
             $scope.$emit( "toastMessage", message );
         }
+        
+        //SonarQube appeasement
+        var dialogYes = function() {
+	    	//selected yes
+	    	//checkout
+	    	aac.x.checkedIn = false;
+	    	userService.update(aac.user,function(){
+	    		aac.toast("Checked out");
+	    		aac.calcWeek( aac.curr );
+	    		aac.setToolbar();
+	    	});
+		 };
+		 
+      var updateSuccess = function(){ 
+			aac.toast("Successfully checked in.")
+    		aac.calcWeek( aac.curr );
+    		aac.setToolbar();
+    		};
     }
