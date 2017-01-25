@@ -97,7 +97,17 @@ public class AdminT implements InstanceTestClassListener {
 	
 	
 	//Corey's Test ideas
+	//@Test
 	public void testSearchBar() {
+		
+		adp.searchBox.sendKeys("Java");
+		Assert.assertEquals(expected.getProperty("java"), adp.searchResult.getText());
+		
+		adp.searchBox.sendKeys("DotNet");
+		Assert.assertEquals(expected.getProperty("dotnet"), adp.searchResult.getText());
+		
+		adp.searchBox.sendKeys("SDET");
+		Assert.assertEquals(expected.getProperty("sdet"), adp.searchResult.getText());
 		
 	}
 	

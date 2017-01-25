@@ -12,26 +12,28 @@ public class AdminPage extends SMSPage {
 	@FindBy(css="[class=\"ng-binding flex\"]")
 	public WebElement header;
 	
-	@FindBy(css="[md-svg-icon=\"img/icons/ic_menu_white_24px.svg\"]")
-	public WebElement menuIcon;
+	//@FindBy(css="[md-svg-icon=\"img/icons/ic_menu_white_24px.svg\"]")
+	//public WebElement menuIcon;
 	
-	@FindBy(css="[md-svg-icon=\"img/icons/ic_exit_to_app_white_24px.svg\"]")
+	//@FindBy(css="[md-svg-icon=\"img/icons/ic_exit_to_app_white_24px.svg\"]")
+	@FindBy(css="[ng-click=\"tempCtrl.logout()\"]")
 	public WebElement logoutIcon;
 	
 	@FindBy(css="[ng-model=\"searchBox\"]")
 	public WebElement searchBox;
 	
-	@FindBy(css="[ng-click=\"goBackOneWeek()\"]")
+	@FindBy(css="[ng-click=\"manAttCtrl.goBackOneWeek()\"]")
 	public WebElement prevWeek;
 	
-	@FindBy(css="[ng-click=\"goForwardOneWeek()\"]")
+	@FindBy(css="[ng-click=\"manAttCtrl.goForwardOneWeek()\"]")
 	public WebElement nextWeek;
 	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/md-table-container/table[1]/tbody/tr/th[4]")
-	public WebElement weekOf;
-	
+
 	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/md-table-container/table[2]")
 	public WebElement attendanceTable;
+	
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/md-table-container/table[2]/tbody/tr/td[1]")
+	public WebElement searchResult;
 	
 	
 	
