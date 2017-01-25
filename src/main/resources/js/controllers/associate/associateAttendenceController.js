@@ -27,6 +27,7 @@
         aac.nextWeek = nextWeek;
         aac.toast = toast;
         aac.checkIn = checkIn;
+        //aac.udateSkills = updateSkills;
 
         // initialization
         aac.setToolbar();
@@ -121,7 +122,8 @@
         	var actions=[];
         	
         	actions.push({ "function": aac.assocCertifications, "icon": "date_range", "tooltip": "Certifications"});
-        	
+        	//actions.push({ "function": aac.updateSkills, "icon": "info", "tooltip": "Update Skills"});
+
         	var cin = todayCheckedIn();
         	
         	if(cin != null){
@@ -146,6 +148,10 @@
             		aac.toast("You can only schedule one certification at a time.");
             	}
             }
+        
+        //function updateSkills() {
+        	//console.log("skill function");
+       // }
         
         function days_between(date1, date2) {
 

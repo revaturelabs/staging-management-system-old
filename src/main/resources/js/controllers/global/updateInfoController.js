@@ -11,6 +11,7 @@
         uic.toast = toast;
         uic.cancel = cancel;
         uic.submit = submit;
+        uic.submitSkills = submitSkills;
 
           // functions
             // for notifications
@@ -83,4 +84,10 @@
                 uic.toast("Password confirmation does not match.");
             }
         }
+        
+        function submitSkills() {
+        	uic.user = loginService.getUser();
+        	console.log(uic.user);
+        }
+        
     }
