@@ -41,19 +41,6 @@
                         }
                     }
                 })
-                
-                //  // superadmin view all tasks
-                // .state( "superTask", {
-                //     url: "^/task",
-                //     parent: "super",
-                //     views: {
-                //         "mainSuperView": {
-                //             templateUrl: "html/views/superadmin/superTask.html",
-                //             controller: "superTaskCtrl as supTaskCtrl"
-                //         }
-                        
-                //     }
-                // })
 
                   // attendance
                 .state( "attendance", {
@@ -113,20 +100,6 @@
                             } 
                         }
                     })
-                
-            // associate view certifications
-                // .state( "assocCertifications", {
-                //     url: "^/certifications",
-                //     parent: "assoc",
-                //     views: {
-                //         "mainAssociateView": {
-                //             templateUrl: "html/views/associate/associateCertifications.html",
-                //             controller: "associateCertificationsCtrl as assCertCtrl"
-                //         }
-                        
-                //     }
-                // })
-
 	});
 
       // theme config

@@ -5,9 +5,9 @@ sms.filter("iconFilter", function(){
 
 		// a list of all usable icons
         var iconData = [
-            {name: 'done'  , color: "#00A" },
-            {name: 'close', color: "#A00" },
-            {name: 'done_all' , color: "#59E2A8" },
+            {name: 'done'  , color: "#00A", tooltip: "Checked in" },
+            {name: 'close', color: "#A00", tooltip: "Absent" },
+            {name: 'done_all' , color: "#59E2A8", tooltip: "Verified" },
             {name: 'library_books' , color: "#E91E63"},
             {name: 'looks', color: "#E91E63"},
             {name: 'library_books' , color: "gray"},

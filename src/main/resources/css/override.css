@@ -51,12 +51,20 @@
         size: 24px;
     }
 
-    .associateAttendanceTable h3, .associateAttendanceTable p {
+    .attendanceTable tbody h3 {
+        margin: 2px 0px 0px 0px;
+    } 
+    
+    .attendanceTable tbody p {
+        margin: 0px 0px 2px 0px;
+    }
+
+    .attendanceTable thead h3, .attendanceTable thead p {
         margin: 0px 0px 0px 0px;
         text-align: center;
     }
 
-    .associateAttendanceTable p {
+    .attendanceTable p {
         font-weight: normal;
     }
 
@@ -69,10 +77,32 @@
         word-wrap: break-word;
     }
 
-    .associateAttendanceTable th {
+    .attendanceTable th {
         width: 20%;
+    }
+
+    .attendanceTable .attendanceCell {
+        width: 15% !important;
     }
 
     .attendanceCell {
         padding: 0px !important;
+    }
+
+    .rowIndex {
+        position: relative;
+        top: 7px;
+        left: -25px;
+
+        width: 23px;
+        margin: 0px;
+
+        color: rgba(0,0,0,0.54);
+
+        text-align: right;
+    }
+
+    .rowName {
+        position: relative;
+        left: -10px;
     }
