@@ -65,6 +65,24 @@
             }
         }
 
+        //SonarQube appeasement
+        var dialogYes = function() {
+	    	//selected yes
+	    	//checkout
+	    	aac.x.checkedIn = false;
+	    	userService.update(aac.user,function(){
+	    		aac.toast("Checked out");
+	    		aac.calcWeek( aac.curr );
+	    		aac.setToolbar();
+	    	});
+		 };
+		 
+      var updateSuccess = function(){ 
+			aac.toast("Successfully checked in.")
+    		aac.calcWeek( aac.curr );
+    		aac.setToolbar();
+    		};
+        
         function todayCheckedIn(){
         	var d = new Date();
         	for(var i=0; i< aac.user.attendance.length; i++){
@@ -80,17 +98,6 @@
         			}
         		}
         	}
-        	// day doesn't exist create new day
-/*        	aac.user.attendance.push({
-                verified: false,
-                checkedIn: false
-            });
-        	console.log(new Date().getTime());
-        	console.log(aac.user.attendance);
-        	
-        	userService.update(aac.user,function(){},function(){});
-			return {"function": aac.checkIn, "icon": "check", "tooltip": "Check in"};*/
-
         }
             // sets toobar icons and functions
         function setToolbar() {
@@ -231,22 +238,4 @@
         function toast( message ) {
             $scope.$emit( "toastMessage", message );
         }
-        
-        //SonarQube appeasement
-        var dialogYes = function() {
-	    	//selected yes
-	    	//checkout
-	    	aac.x.checkedIn = false;
-	    	userService.update(aac.user,function(){
-	    		aac.toast("Checked out");
-	    		aac.calcWeek( aac.curr );
-	    		aac.setToolbar();
-	    	});
-		 };
-		 
-      var updateSuccess = function(){ 
-			aac.toast("Successfully checked in.")
-    		aac.calcWeek( aac.curr );
-    		aac.setToolbar();
-    		};
     }
