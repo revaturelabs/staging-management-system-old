@@ -189,7 +189,7 @@
         	//find cuurent attendance object
         	for(var i=0; i< aac.user.attendance.length; i++){
         		var d2 = new Date(aac.user.attendance[i].date);
-        		if(d.getDate() === d2.getDate() & d.getMonth() === d2.getMonth()){
+        		if(d.getDate() === d2.getDate() && d.getMonth() === d2.getMonth()){
         			//object found
         			
         			//not checked in
@@ -229,6 +229,7 @@
 		        		 });
 
         			}
+				break;
 
         		}
         	}
