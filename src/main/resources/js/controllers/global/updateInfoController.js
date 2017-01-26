@@ -107,15 +107,15 @@
         	console.log($scope.skillToAdd);
         	
         	var add = removeFromAvailSkill($scope.skillToAdd);
-        	
-        	if(add != null){
-        		uic.currentSkill.push(add);
+        	console.log(add);
+        	if(add != null | add != undefined){
+        		uic.currentSkills.push(add);
         	}
         	
-        	uic.user.skill = uic.currentSkill;
+        	uic.user.skill = uic.currentSkills;
         }
         
-        function removeFromAvailSkill()}{
+        function removeFromAvailSkill(){
         	for(var i =0; i < uic.availSkills.length; i++){
         		if($scope.skillToAdd == uic.availSkills[i].id){
         			
@@ -131,7 +131,7 @@
         }
         
         function removeFromCurrentSkills(id){
-        	
+        	console.log(id);
         }
         
         
