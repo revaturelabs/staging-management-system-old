@@ -1,50 +1,50 @@
- <div class="md-padding" layout="column">
-    
-        <md-table-container class="associateAttendanceTable">
-            <table md-table>
-                
-                <thead md-head>
-                    <tr md-row layout-align="space-around center">
-                        <th md-column class="attendanceCell" layout-align="center center" ng-repeat="day in assocAttCtrl.week">
-                            <h3> {{ day.name }} </h3>
-                            <p> {{ day.date | date:'M/dd' }} </p>
-                        </th>
-                    </tr>
-                </thead>
+<div class="md-padding" layout="column">
 
-                <tbody>
-                    <tr md-row>
-                        <td md-cell class="attendanceCell" flex="20" ng-repeat="day in assocAttCtrl.weekAttendance track by $index">
-                            <div class="tableData" layout-align="center center"> 
-                                <md-icon class="md-material-icon" ng-style="{ color: day.icon.color }"> {{ day.icon.name }} </md-icon>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-        
-            </table>
-        </md-table-container>
+    <md-table-container class="associateAttendanceTable">
+        <table md-table>
 
-        <div layout="row">
-            <div flex> </div>
+            <thead md-head>
+                <tr md-row layout-align="space-around center">
+                    <th md-column id="assocTableHeader" class="attendanceCell" layout-align="center center" ng-repeat="day in assocAttCtrl.week">
+                        <h3> {{ day.name }} </h3>
+                        <p> {{ day.date | date:'M/dd' }} </p>
+                    </th>
+                </tr>
+            </thead>
 
-            <div flex="25" layout="row" layout-align="center center">
+            <tbody>
+                <tr md-row>
+                    <td md-cell id="assocWeeklyAttendance" class="attendanceCell" flex="20" ng-repeat="day in assocAttCtrl.weekAttendance track by $index">
+                        <div class="tableData" layout-align="center center">
+                            <md-icon class="md-material-icon" ng-style="{ color: day.icon.color }"> {{ day.icon.name }} </md-icon>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
 
-                <md-button class="md-icon-button" aria-label="Logout" ng-click="assocAttCtrl.prevWeek()">
-                    <md-tooltip> Previous week </md-tooltip>
-                    <md-icon class="md-material-icon page-icon"> arrow_back </md-icon>
-                </md-button>
-                
-                <div flex style="text-align: center"> {{ assocAttCtrl.weekLabel }} </div>
+        </table>
+    </md-table-container>
 
-                <md-button class="md-icon-button" aria-label="Logout" ng-click="assocAttCtrl.nextWeek()">
-                    <md-tooltip> Next week </md-tooltip>
-                    <md-icon class="md-material-icon page-icon"> arrow_forward </md-icon>
-                </md-button>
+    <div layout="row">
+        <div flex> </div>
 
-            </div>
+        <div flex="25" layout="row" layout-align="center center">
 
-            <div flex> </div>
+            <md-button id="assocPrevWeekButton" class="md-icon-button" aria-label="Logout" ng-click="assocAttCtrl.prevWeek()">
+                <md-tooltip> Previous week </md-tooltip>
+                <md-icon class="md-material-icon page-icon"> arrow_back </md-icon>
+            </md-button>
+
+            <div flex style="text-align: center"> {{ assocAttCtrl.weekLabel }} </div>
+
+            <md-button id="assocNextWeekButton" class="md-icon-button" aria-label="Logout" ng-click="assocAttCtrl.nextWeek()">
+                <md-tooltip> Next week </md-tooltip>
+                <md-icon class="md-material-icon page-icon"> arrow_forward </md-icon>
+            </md-button>
+
         </div>
-    
+
+        <div flex> </div>
     </div>
+
+</div>
