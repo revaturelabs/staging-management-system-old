@@ -6,8 +6,23 @@
     function updateInfoCtrl ( $scope, $state, $mdToast, $mdDialog, loginService ) {
         var uic = this;
 
+        function populateSkills(){
+        	var skills = [];
+
+        	skills.push({"ts_id": 1, "skill": "Java"});
+            skills.push({"ts_id": 2, "skill": "html"});
+            return skills;
+        }
+        
           // bindables
-            // functions
+        uic.user = loginService.getUser();
+        uic.currentSkills = uic.user.skill;
+        
+        //need GET ENDPOINT
+        //uic.availSkills = userService.getSkills();
+        uic.availSkills = populateSkills();
+        
+        // functions
         uic.toast = toast;
         uic.cancel = cancel;
         uic.submit = submit;
@@ -56,7 +71,6 @@
                 if(oldPassH != newPassH){
                       // old and new passwords are different
                     
-                    uic.user = loginService.getUser();
                     uic.token = loginService.getToken();
                     var data={"username": uic.user.username, 
                         "oldPassword": oldPassH, 
@@ -71,7 +85,6 @@
                                 uic.toast(response.data.errorMessage);
                             });
                     
-                    uic.user = "";
                     uic.token = "";
                     
                 }else{
@@ -86,8 +99,14 @@
         }
         
         function submitSkills() {
-        	uic.user = loginService.getUser();
+        	//Test code REMOVE WHEN DONE--------
         	console.log(uic.user);
+        	uic.currentSkills.push({"ts_id": 1, "skill": "Java"});
+        	console.log(uic.currentSkills);
+        	//----------------------------------
+        	
         }
+        
+        
         
     }
