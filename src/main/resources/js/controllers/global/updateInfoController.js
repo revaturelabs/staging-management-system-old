@@ -3,7 +3,7 @@
         .module( "sms" )
         .controller( "updateInfoCrtl", updateInfoCtrl );
         
-    function updateInfoCtrl ( $scope, $state, $mdToast, $mdDialog, loginService, skillService ) {
+    function updateInfoCtrl ( $scope, $state, $mdToast, $mdDialog, loginService, skillService, userService ) {
         var uic = this;
 
         function populateSkills(){
@@ -29,6 +29,7 @@
         uic.getSkills = getSkills;
         uic.submitSkills = submitSkills;
         uic.removeFromCurrentSkills = removeFromCurrentSkills;
+        uic.saveSkills = saveSkills;
 
           // initializations
         uic.getSkills();
@@ -150,6 +151,16 @@
         	}
         	
         }
+        
+        function saveSkills(){
+        	console.log(uic.user);
+        	
+        	userService.update(uic.user,function(){
+        		uic.toast("Skills updated");
+        	});
+        }
+        
+        
         
         
     }

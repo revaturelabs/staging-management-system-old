@@ -36,26 +36,26 @@
         </div>
         <hr>
         <div class="md-padding">
-        <form name="updateSkillsForm" ng-submit="uInfoCtrl.submitSkills()" novalidate>
-		<md-input-container>
-			  <md-select ng-model="skillToAdd" placeholder="Skill">
-			    	<md-option ng-value="x.id" ng-repeat="x in uInfoCtrl.availSkills | orderBy: 'skill'">{{ x.skill }}</md-option>
-			  </md-select>
-		</md-input-container>
-
-		<md-button type="submit" class="md-primary">Add</md-button>        
-        <ul>
-        	<li  ng-repeat="s in uInfoCtrl.currentSkills">
-        		{{s.skill}} 
-        	    <md-button class="md-icon-button" ng-click="uInfoCtrl.removeFromCurrentSkills(s.id)">
-                	<md-icon class="md-material-icon menu-icon" Style="color:red"> clear </md-icon>
-            	</md-button>
-        	</li>
-        </ul>
-        
-        
-        
-        </form>
+	        <form name="updateSkillsForm" ng-submit="uInfoCtrl.submitSkills()" novalidate>
+			<md-input-container>
+				  <md-select ng-model="skillToAdd" placeholder="Skill">
+				    	<md-option ng-value="x.id" ng-repeat="x in uInfoCtrl.availSkills | orderBy: 'skill'">{{ x.skill }}</md-option>
+				  </md-select>
+			</md-input-container>
+	
+			<md-button type="submit" class="md-primary">Add</md-button>        
+	        </form>
+	        
+	        <ul>
+	        	<li  ng-repeat="s in uInfoCtrl.currentSkills">
+	        		{{s.skill}} 
+		        	<md-button class="md-icon-button" ng-click="uInfoCtrl.removeFromCurrentSkills(s.id)">
+		              	<md-icon class="md-material-icon menu-icon" Style="color:red"> clear </md-icon>
+		          	</md-button>
+		       	</li>
+		    </ul>
+		    
+		    <md-button type="submit" class="md-primary" ng-click="uInfoCtrl.saveSkills()">Save Skills</md-button>
         </div>
 
     </md-dialog>
