@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -104,14 +105,15 @@ public class User {
 	 * List of skills that a user has
 	 */
 	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private List<Technical_Skills> skill;
+	private Set<Technical_Skills> skill;
 	
 	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
 	 */
 	public User() {
 		super();
-		this.skill = new ArrayList<Technical_Skills>();
+		//this.skill = new ArrayList<Technical_Skills>();
+		System.out.println("user no arg constructor");
 	}
 
 	/**
@@ -140,6 +142,7 @@ public class User {
 		this.tasks = tasks;
 		this.userRole = userRole;
 		this.graduationDate = graduationDate;
+		System.out.println("user original construct");
 	}
 
 	/**
@@ -160,7 +163,7 @@ public class User {
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate, 
-			List<Technical_Skills> skills) {
+			Set<Technical_Skills> skills) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -172,6 +175,7 @@ public class User {
 		this.userRole = userRole;
 		this.graduationDate = graduationDate;
 		this.skill = skills;
+		System.out.println("user construct all");
 	}
 	// constructor for non-associate
 	/**
@@ -374,14 +378,14 @@ public class User {
 	/**
 	 * Method that retrieves the list of skills of the user
 	 */
-	public List<Technical_Skills> getSkill() {
+	public Set<Technical_Skills> getSkill() {
 		return skill;
 	}
 
 	/**
 	 * Method that manually sets the skills of the user object
 	 */
-	public void setSkill(List<Technical_Skills> skill) {
+	public void setSkill(Set<Technical_Skills> skill) {
 		this.skill = skill;
 	}
 	

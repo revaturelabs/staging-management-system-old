@@ -1,5 +1,6 @@
 package com.revature.sms.domain.dao;
 
+
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,7 +29,7 @@ public interface Technical_SkillsRepo extends JpaRepository<Technical_Skills, In
 	 * @param associate User object that matches to the list of technical skills to retrieve.
 	 * @return List of technical skills associated with the supplied user.
 	 */
-	//List<Technical_Skills> findbyAssociate(User associate);
+	//List<Technical_Skills> findbyTS_ID(User associate);
 	
 	/**
 	 * Method to retrieve users list by specific skill.
