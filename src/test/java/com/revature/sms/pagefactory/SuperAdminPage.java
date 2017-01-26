@@ -36,6 +36,9 @@ public class SuperAdminPage extends SMSPage {
 	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/md-table-container/table")
 	public WebElement attendanceTable;
 	
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/md-table-container/table/tbody/tr/td[1]")
+	public WebElement searchResult;
+	
 	
 	public SuperAdminPage(WebDriver driver) {
 		super(driver);

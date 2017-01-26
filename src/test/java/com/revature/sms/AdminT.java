@@ -94,9 +94,6 @@ public class AdminT implements InstanceTestClassListener {
 		Assert.assertTrue(lp.verify());
 	}
 	
-	
-	//Corey's Test ideas
-	
 	// Test to enter username in search box and verify correct associate name is returned
 	@Test
 	public void testSearchBar() {
@@ -106,20 +103,14 @@ public class AdminT implements InstanceTestClassListener {
 		
 		adp.searchBox.sendKeys("Java");
 		Assert.assertEquals(expected.getProperty("java"), adp.searchResult.getText());
-		System.out.println("Search result: " + adp.searchResult.getText());
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		adp.searchBox.clear();
 		
 		adp.searchBox.sendKeys("DotNet");
 		Assert.assertEquals(expected.getProperty("dotnet"), adp.searchResult.getText());
-		System.out.println("Search result: " + adp.searchResult.getText());
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		adp.searchBox.clear();
 		
 		adp.searchBox.sendKeys("SDET");
 		Assert.assertEquals(expected.getProperty("sdet"), adp.searchResult.getText());
-		System.out.println("Search result: " + adp.searchResult.getText());
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		adp.searchBox.clear();
 		
 		adp.logout.click();

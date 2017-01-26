@@ -93,6 +93,28 @@ public class SuperAdminT implements InstanceTestClassListener {
 		Assert.assertTrue(lp.verify());
 	}
 	
+	@Test
+	public void testSearchBar() {
+		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
+		Assert.assertTrue(sap.verify());
+		Assert.assertEquals(expected.getProperty("adminPg"), sap.header.getText());
+		
+		sap.searchBox.sendKeys("Java");
+		Assert.assertEquals(expected.getProperty("java"), sap.searchResult.getText());
+		sap.searchBox.clear();
+		
+		sap.searchBox.sendKeys("DotNet");
+		Assert.assertEquals(expected.getProperty("dotnet"), sap.searchResult.getText());
+		sap.searchBox.clear();
+		
+		sap.searchBox.sendKeys("SDET");
+		Assert.assertEquals(expected.getProperty("sdet"), sap.searchResult.getText());
+		sap.searchBox.clear();
+		
+		sap.logout.click();
+		Assert.assertTrue(lp.verify());
+	}
+	
 	@Ignore
 	@Test
 	public void testBatchCreation() {
@@ -143,11 +165,9 @@ public class SuperAdminT implements InstanceTestClassListener {
 		cpw.confirmPass.sendKeys(inputs.getProperty("superAdminPW"));
 		cpw.submit.click();
 		sap.logout.click();
-		
-		
-		
 	}
 	
+	@Ignore
 	@Test
 	public void testCancelButtons() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
@@ -157,13 +177,6 @@ public class SuperAdminT implements InstanceTestClassListener {
 		cpw.cancel.click();
 		sap.logout.click();
 	}
-	
-	
-	public void testSearchBar() {
-	
-	}
-	
-	
 	
 	public void testCertificationScheduling() {
 		
