@@ -124,8 +124,7 @@
         function removeFromAvailSkill(){
         	for(var i =0; i < uic.availSkills.length; i++){
         		if($scope.skillToAdd == uic.availSkills[i].id){
-        			console.log("availskils" + i);
-        			console.log(uic.availSkills[i]);
+
         			var toReturn = {id:uic.availSkills[i].id, skill:uic.availSkills[i].skill};
         			
         			//remove from avail skills
@@ -138,11 +137,12 @@
         }
         
         function removeFromCurrentSkills(id){
-        	console.log(id);
         	for(var i =0; i < uic.currentSkills.length; i++){
         		if(id == uic.currentSkills[i].id){
         			//remove from avail skills
-        			uic.availSkills.push({"id":uic.currentSkills.id, "skill":uic.currentSkills.skill});
+        			console.log("availskils" + i);
+        			console.log(uic.currentSkills[i]);
+        			uic.availSkills.push({"id":uic.currentSkills[i].id, "skill":uic.currentSkills[i].skill});
         			uic.currentSkills.splice(i,1);
                 	uic.user.skill = uic.currentSkills;
                 	break;
