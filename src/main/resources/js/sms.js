@@ -113,20 +113,6 @@
                             } 
                         }
                     })
-                
-            // associate view certifications
-                .state( "assocCertifications", {
-                    url: "^/certifications",
-                    parent: "assoc",
-                    views: {
-                        "mainAssociateView": {
-                            templateUrl: "html/views/associate/associateCertifications.html",
-                            controller: "associateCertificationsCtrl as assCertCtrl"
-                        }
-                        
-                    }
-                })
-
 	});
 
       // theme config

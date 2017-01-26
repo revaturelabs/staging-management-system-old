@@ -1,269 +1,296 @@
-<div layout="row">
-	<div ng-show="manAttCtrl.showInformation" id="associateInformationDiv" ng-class="{showInformationDiv : (manAttCtrl.showInformation), showBigInformationDiv : (manAttCtrl.showInformation && manAttCtrl.smallDevice)}">
-		<div id="fixedContainer">
-			<div id="closeIconContainer">
-				<span><md-icon id="closeIcon" ng-click="manAttCtrl.hideInfo()">compare_arrows</md-icon></span>
-			</div>
-			<md-card md-whiteframe="8dp">
-				<md-card-title>
-					<md-card-title-text>
-						<span class="md-headline">
-						{{ manAttCtrl.currentUser.firstName }} {{ manAttCtrl.currentUser.lastName }} - {{ manAttCtrl.currentUser.batchType.type}} {{ manAttCtrl.currentUser.gradDateDisplay}}
-						</span>
-					</md-card-title-text>
-				</md-card-title>
-				<md-card-content>
-						<span>{{ manAttCtrl.currentUser.username }}
-							<div style="float: right;;" ng-show="manAttCtrl.currentUser.project"> Current project :{{ manAttCtrl.currentUser.project }}</div>
-							<div style="float: right;;" ng-hide="manAttCtrl.currentUser.project">This associate is not currently on a project</div>
-						</span>
-						<p>
-							Panel Status: 
-							<span ng-show="manAttCtrl.currentUser.panels[0]">{{ manAttCtrl.currentUser.panels[0].note }} {{ manAttCtrl.currentUser.panels[0].dateDisplay }}</span>
-							<span ng-hide="manAttCtrl.currentUser.panels[0]">No Status to note</span>
-						</p>
-				</md-card-content>
-			</md-card>
-			<md-card md-whiteframe="8dp" class="skillCard">
-				<md-card-title>
-					<md-card-title-text>
-						<span class="md-headline">Skillz</span>
-					</md-card-title-text>
-				</md-card-title>
-				<md-card-content>
-					No content to display
-				</md-card-content>
-			</md-card>
-			<md-card md-whiteframe="8dp" class="certCard">
-				<md-card-title>
-					<md-card-title-text>
-						<span class="md-headline">Certifications</span>
-					</md-card-title-text>
-				</md-card-title>
-				<md-card-content>
-					<span ng-hide="manAttCtrl.currentUser.certs[0].date">There is no data to display</span>
-					<ul ng-show="manAttCtrl.currentUser.certs[0].date">
-						<li ng-repeat="cert in manAttCtrl.currentUser.certs | orderBy:'-date'">
-						<md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48">{{ cert.icon.name }}</md-icon>
-						{{cert.note}} {{ cert.dateDisplay }}</li>
-					</ul>
-				</md-card-content>
-			</md-card>
-		</div>
-	</div>
 
-	<div id="attendanceTableDiv" ng-class="{resizeAttendanceDiv : (manAttCtrl.showInformation), resizeSmallAttendanceDiv : (manAttCtrl.showInformation && manAttCtrl.smallDevice)}">
-		<md-card md-whiteframe="2dp">
-			<md-table-container ng-hide="manAttCtrl.showInformation && manAttCtrl.smallDevice">
-				<table md-table>
-					<tr md-row>
-						<th style="width: 32%;" colspan="2">
-							<md-input-container>
-								<div id="search" >
-									<input type="text" placeholder="Search..." ng-model="searchBox">
-								</div>
-							</md-input-container></th>
-						<th style="width: 16%;">
-							<span>
-								<md-icon
-									class="material-icons"
-									ng-click="manAttCtrl.goBackOneWeek()" 
-									style=" cursor: pointer;">
-									arrow_back
-									<md-tooltip>Last week</md-tooltip>
-						</md-icon></span></th>
-						<th style="width: 16%;">Week of {{manAttCtrl.monday}}</th>
-						<th style="width: 16%;">
-							<span>
-								<md-icon 
-									class="material-icons"
-									ng-click="manAttCtrl.goForwardOneWeek()" 
-									style=" cursor: pointer;">
-									arrow_forward
-									<md-tooltip>Next week</md-tooltip>
-						</md-icon></span></th>
-						<th style="width: 16%;"></th>
-					</tr>
-				</table>
-			</md-table-container>
-						
-			<md-table-container>			
-				<table md-table class="attendanceTable">
-					<col>
-					<col ng-class="{highlightToday : (manAttCtrl.activeDay == 1)}">
-					<col ng-class="{highlightToday : (manAttCtrl.activeDay == 2)}">
-					<col ng-class="{highlightToday : (manAttCtrl.activeDay == 3)}">
-					<col ng-class="{highlightToday : (manAttCtrl.activeDay == 4)}">
-					<col ng-class="{highlightToday : (manAttCtrl.activeDay == 5)}">
-					<thead md-head ng-hide="manAttCtrl.showInformation && manAttCtrl.smallDevice">
-						
-						<tr md-row>
-							<th style="width: 16%;">Name</th>
-							<th style="width: 16%;">Monday</th>
-							<th style="width: 16%;">Tuesday</th>
-							<th style="width: 16%;">Wednesday</th>
-							<th style="width: 16%;">Thursday</th>
-							<th style="width: 16%;">Friday</th>
-						</tr>
-						<tr md-row>
-							<th></th>
-							<th>{{ manAttCtrl.monday }}</th>
-							<th>{{ manAttCtrl.tuesday }}</th>
-							<th>{{ manAttCtrl.wednesday }}</th>
-							<th>{{ manAttCtrl.thursday }}</th>
-							<th>{{ manAttCtrl.friday }}</th>
-						</tr>
-					</thead>
-			
-					<tbody md-body>
-						<tr md-row ng-repeat = "as in manAttCtrl.users | filter:searchBox track by as.username">
-							<td md-cell ng-click="manAttCtrl.showInfo(as)" ng-class="{activeUser : (as.username == manAttCtrl.currentUser.username)}">
-								<div class="notificationContainer"><md-icon ng-show="as.notification.icon" md-whiteframe="2dp" ng-style="{color: as.notification.icon.color}" class="material-icons step notificationIcon" ng-class="md-48">{{ as.notification.icon.name }}</md-icon></div>
-								{{ as.firstName }} {{ as.lastName }}
-							</td>
-							<td md-cell ng-click="manAttCtrl.verifyAttendance(as, 0, as.thisWeek[0].verified)" style="text-align: center; text-indent: 18px;"
-								ng-hide="manAttCtrl.showInformation && manAttCtrl.smallDevice">
-								<!-- container for icon -->
-								<div class="preview-glyphs iconDemo glyph">
-								
-								    <!-- set the icon data -->
-								    <md-icon ng-if="as.thisWeek[0].icon.name" ng-style="{color: as.thisWeek[0].icon.color}" aria-label='{{as.thisWeek[0].icon.name}}' class="material-icons step" ng-class="md-48">
-								
-								        <!-- changing the text changes the icon-->
-								        {{ as.thisWeek[0].icon.name }}
-								    </md-icon>
-								    <md-icon ng-if="(as.thisWeek[0].checkedIn == null && manAttCtrl.activeDay > 1) || (manAttCtrl.activeWeek == false && as.thisWeek[1].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
-								</div>
-							</td>
-							<td md-cell ng-click="manAttCtrl.verifyAttendance(as, 1, as.thisWeek[1].verified)"  style="text-align: center; text-indent: 18px;"
-								ng-hide="manAttCtrl.showInformation && manAttCtrl.smallDevice">
-								<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
-								    <md-icon ng-if="as.thisWeek[1].icon.name" ng-style="{color: as.thisWeek[1].icon.color}" aria-label='{{as.thisWeek[1].icon.name}}' class="material-icons step" ng-class="md-48">
-								        {{ as.thisWeek[1].icon.name }}
-								    </md-icon>
-								    <md-icon ng-if="(as.thisWeek[1].checkedIn == null && manAttCtrl.activeDay > 1) || (manAttCtrl.activeWeek == false && as.thisWeek[1].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
-								</div>
-							</td>
-							<td md-cell ng-click="manAttCtrl.verifyAttendance(as, 2, as.thisWeek[2].verified)"  style="text-align: center; text-indent: 18px;"
-								ng-hide="manAttCtrl.showInformation && manAttCtrl.smallDevice">
-								<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
-								    <md-icon ng-if="as.thisWeek[2].icon.name" ng-style="{color: as.thisWeek[2].icon.color}" aria-label='{{as.thisWeek[2].icon.name}}' class="material-icons step" ng-class="md-48">
-								        {{ as.thisWeek[2].icon.name }}
-								    </md-icon>
-								    <md-icon ng-if="(as.thisWeek[2].checkedIn == null && manAttCtrl.activeDay > 2) || (manAttCtrl.activeWeek == false && as.thisWeek[2].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
-								</div>
-							</td>
-							<td md-cell ng-click="manAttCtrl.verifyAttendance(as, 3, as.thisWeek[3].verified)"  style="text-align: center; text-indent: 18px;"
-								ng-hide="manAttCtrl.showInformation && manAttCtrl.smallDevice">
-								<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
-								    <md-icon ng-if="as.thisWeek[3].icon.name" ng-style="{color: as.thisWeek[3].icon.color}" aria-label='{{as.thisWeek[3].icon.name}}' class="material-icons step" ng-class="md-48">
-								        {{ as.thisWeek[3].icon.name }}
-								    </md-icon>
-								    <md-icon ng-if="(as.thisWeek[3].checkedIn == null && manAttCtrl.activeDay > 3) || (manAttCtrl.activeWeek == false && as.thisWeek[3].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
-								</div>
-							</td>
-							<td md-cell ng-click="manAttCtrl.verifyAttendance(as, 4, as.thisWeek[4].verified)"  style="text-align: center; text-indent: 10px;"
-								ng-hide="manAttCtrl.showInformation && manAttCtrl.smallDevice">
-								<div class="preview-glyphs iconDemo glyph" flex layout-align="center center" style="text-align: center;">
-								    <md-icon ng-if="as.thisWeek[4].icon.name" ng-style="{color: as.thisWeek[4].icon.color}" aria-label='{{as.thisWeek[4].icon.name}}' class="material-icons step" ng-class="md-48">
-								        {{ as.thisWeek[4].icon.name }}
-								    </md-icon>
-								    <md-icon ng-if="(as.thisWeek[4].checkedIn == null && manAttCtrl.activeDay > 4) || (manAttCtrl.activeWeek == false && as.thisWeek[4].checkedIn == null)" ng-style="{color: '#A00'}" aria-label="Not Checked In" class="material-icons step" ng-class="md-48">close</md-icon>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</md-table-container>
-		
-			<div layout="row" ng-hide="manAttCtrl.showInformation && manAttCtrl.smallDevice">
-				<div style="width: 35%"></div>
-				<div>
-					<li ng-repeat="legitem in manAttCtrl.legend">
-						<md-icon
-							ng-style="{color: '{{legitem.color}}'}"
-							aria-label='{{legitem.name}}' class="material-icons step"
-							ng-class="md-48">
-							{{legitem.name}}
-						</md-icon>
-						{{legitem.description}}
-			
-					</li>
-				</div>
-			</div>
-		</md-card>
-	</div>
-</div>
-<style type="text/css">
-	
-	.showInformationDiv{
-		width:33%;
-	}
-	.showBigInformationDiv{
-		width:50%;
-	}
-	
-	.resizeAttendanceDiv{
-		width:67% !important;
-	}
-	.resizeSmallAttendanceDiv{
-		width:50%;
-	}
-	.activeUser{
-		background: #5C6BC0;
-		color: white !important;
-	}
-	#attendanceTableDiv{
-		width: 100%;
-	}
-	#associateInformationDiv md-card{
-		background-color: #5C6BC0;
-		color: white !important;
-		width: 100%;
-		overflow-y: auto;
-	}
-	#fixedContainer{
-		position: fixed;
-		width: 32%;
-	}
-	#associateInformationDiv .skillCard{
-		width:46%;
-		height: 23em;
-		display: inline-block;
-	}
-	#associateInformationDiv .certCard{
-		width:46%;
-		height: 23em;
-		display: inline-block;
-	}
-	#associateInformationDiv ul{
-		list-style: none;
-	}
-	.notificationContainer{
-		position:relative;
-	}
-	.notificationIcon{
-		background: white;
-		position: absolute;
-		right:-22px;
-		top:-15px;
-	}
-	.certIcon{
-		background: white;
-		float: right;
-		position: relative;
-		left: -7em;
-	}
-	#closeIconContainer{
-		position:fixed;
-		width: 32%;
-	}
-	#closeIcon{
-		cursor: pointer;
-		position: relative;
-		left: 87%;
-		margin-top: 5%;
-		font-size: 44px;
-		color: white !important;
-	}
-</style>
+    <div layout="row">
+
+          <!-- Associate info card -->
+        <div ng-show="manAttCtrl.infoOpen" id="associateInformationDiv" ng-class="{showInformationDiv : (manAttCtrl.infoOpen), showBigInformationDiv : (manAttCtrl.infoOpen && manAttCtrl.smallDevice)}">
+            <div id="fixedContainer">
+                <div id="closeIconContainer">
+                    <span><md-icon id="closeIcon" ng-click="manAttCtrl.closeInfo()">compare_arrows</md-icon></span>
+                </div>
+                <md-card md-whiteframe="8dp">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">
+                                {{ manAttCtrl.selectedUser.firstName }} {{ manAttCtrl.selectedUser.lastName }} - 
+                                ({{ manAttCtrl.selectedUser.batchType.type}} {{ manAttCtrl.selectedUser.graduationDate | date:"MM/dd"}})
+                            </span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                            <span>{{ manAttCtrl.selectedUser.username }}
+                                <div style="float: right;;" ng-show="manAttCtrl.selectedUser.project"> Current project :{{ manAttCtrl.selectedUser.project }}</div>
+                                <div style="float: right;;" ng-hide="manAttCtrl.selectedUser.project">This associate is not currently on a project</div>
+                            </span>
+                            <p>
+                                Panel Status: 
+                                <span ng-show="manAttCtrl.selectedUser.panels[0]">{{ manAttCtrl.selectedUser.panels[0].note }} {{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
+                                <span ng-hide="manAttCtrl.selectedUser.panels[0]">No Status to note</span>
+                            </p>
+                    </md-card-content>
+                </md-card>
+                <md-card md-whiteframe="8dp" class="skillCard">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Skills</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <p>
+                            No content to display
+                        </p>
+                    </md-card-content>
+                </md-card>
+                <md-card md-whiteframe="8dp" class="certCard">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Certifications</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <span ng-hide="manAttCtrl.selectedUser.certs[0].date">There is no data to display</span>
+                        <div ng-show="manAttCtrl.selectedUser.certs[0].date">
+                            <div ng-repeat="cert in manAttCtrl.selectedUser.certs | orderBy:'-date'" class="certList">
+                            <md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48">{{ cert.icon.name }}</md-icon>
+                            {{cert.note}} {{ cert.dateDisplay }}</div>
+                        </div>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+
+          <!-- Associate attendance table -->
+        <div id="attendanceTableDiv" ng-class="{resizeAttendanceDiv : (manAttCtrl.infoOpen), resizeSmallAttendanceDiv : (manAttCtrl.infoOpen && supAttCtrl.smallDevice)}">
+            <md-card class="md-padding" layout="column">
+            
+                <div class="loadedContainer" ng-if="manAttCtrl.users != undefined">
+                    <div layout="row">
+                        <div flex> </div>
+
+                        <div flex="25" layout="row" layout-align="center center">
+
+                            <md-button class="md-icon-button" aria-label="Logout" ng-click="manAttCtrl.prevWeek()">
+                                <md-tooltip> Previous week </md-tooltip>
+                                <md-icon class="md-material-icon page-icon"> arrow_back </md-icon>
+                            </md-button>
+                            
+                            <div flex style="text-align: center"> {{ manAttCtrl.weekLabel }} </div>
+
+                            <md-button class="md-icon-button" aria-label="Logout" ng-click="manAttCtrl.nextWeek()">
+                                <md-tooltip> Next week </md-tooltip>
+                                <md-icon class="md-material-icon page-icon"> arrow_forward </md-icon>
+                            </md-button>
+
+                        </div>
+
+                        <div flex> </div>
+                    </div>
+
+                    <md-table-container class="attendanceTable">
+                        <table md-table>
+                            
+                            <thead md-head md-order="manAttCtrl.tableOrder">
+                                <tr md-row layout-align="space-around center">
+                                    <th md-column class="attendanceCell" layout-align="center center">
+                                    <!--<th md-column class="attendanceCell" layout-align="center center" md-order-by="firstName"> --> <!-- Used for sorting, not necessary with this iteration -->
+                                        <h3> Associate name </h3>
+                                    </th>
+                                    <th md-column class="attendanceCell" layout-align="center center" ng-repeat="day in manAttCtrl.week">
+                                        <h3> {{ day.name }} </h3>
+                                        <p> {{ day.date | date:'M/dd' }} </p>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr md-row ng-repeat="user in manAttCtrl.users | orderBy:manAttCtrl.tableOrder" ng-class="{highlightSelected: manAttCtrl.selectedUser == user}">
+                                    <td md-cell flex="25" ng-click="manAttCtrl.toggleInfo(user)">
+                                        <div layout="row">
+                                            <div class="notificationContainer">
+                                                <md-icon ng-show="user.notification.icon" md-whiteframe="2dp" ng-style="{color: user.notification.icon.color}" class="material-icons step notificationIcon" ng-class="md-48">
+                                                    {{ user.notification.icon.name }}
+                                                </md-icon>
+                                            </div>
+                                            <h2 class="rowIndex"> {{ $index + 1 }} </h3>
+                                            <div class="md-2-line rowName">
+                                                <h3> {{ user.firstName }} {{ user.lastName }} </h3>
+                                                <p> {{ user.username }} </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td md-cell class="attendanceCell" flex="15" ng-repeat="day in user.weekAttendance track by $index" ng-click="manAttCtrl.verify( user, $index )">
+                                        <div class="tableData" layout-align="center center">
+                                            <md-tooltip> {{ day.icon.tooltip }} </md-tooltip>
+                                            <md-icon class="md-material-icon" ng-style="{ color: day.icon.color }"> {{ day.icon.name }} </md-icon>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                    
+                        </table>
+                    </md-table-container>
+
+                    <div layout="row">
+                        <div flex> </div>
+
+                        <div flex="25" layout="row" layout-align="center center">
+
+                            <md-button class="md-icon-button" aria-label="Logout" ng-click="manAttCtrl.prevWeek()">
+                                <md-tooltip> Previous week </md-tooltip>
+                                <md-icon class="md-material-icon page-icon"> arrow_back </md-icon>
+                            </md-button>
+                            
+                            <div flex style="text-align: center"> {{ manAttCtrl.weekLabel }} </div>
+
+                            <md-button class="md-icon-button" aria-label="Logout" ng-click="manAttCtrl.nextWeek()">
+                                <md-tooltip> Next week </md-tooltip>
+                                <md-icon class="md-material-icon page-icon"> arrow_forward </md-icon>
+                            </md-button>
+
+                        </div>
+
+                        <div flex> </div>
+                    </div>
+                
+                </div>
+
+                <div class="loadingContainer" ng-if="manAttCtrl.users == undefined" layout="column" layout-wrap layout-align="center center">
+                    <div flex="100"> &nbsp; </div>
+                    <md-progress-circular flex="100" class="md-accent" md-mode="indeterminate"> </md-progress-circular>
+                    <div flex="100"> &nbsp; </div>
+                </div>
+            </md-card>
+        </div>
+
+    </div>
+
+    <style type="text/css">
+        .showInformationDiv{
+            width:33%;
+        }
+        .showBigInformationDiv{
+            width:50%;
+        }
+        
+        .resizeAttendanceDiv{
+            width:67% !important;
+        }
+        .resizeSmallAttendanceDiv{
+            width:50%;
+        }
+        .activeUser{
+            background: #5C6BC0;
+            color: white !important;
+        }
+        #attendanceTableDiv{
+            width: 100%;
+        }
+        #associateInformationDiv md-card{
+            background-color: #5C6BC0;
+            color: white !important;
+            width: 100%;
+            overflow-y: auto;
+        }
+        #fixedContainer{
+            position: fixed;
+            width: 32%;
+        }
+        /*#associateInformationDiv .skillCard{
+            width:46%;
+            height: 23em;
+            display: inline-block;
+        }
+        #associateInformationDiv .certCard{
+            width:46%;
+            height: 23em;
+            display: inline-block;
+        }*/
+        #associateInformationDiv ul{
+            list-style: none;
+        }
+        .notificationContainer{
+            position:relative;
+        }
+        .notificationIcon{
+            background: white;
+            position: absolute;
+            right:-176px;
+            top:6px;
+        }
+        #closeIconContainer{
+            position:fixed;
+            width: 32%;
+        }
+        #closeIcon{
+            cursor: pointer;
+            position: relative;
+            left: 87%;
+            margin-top: 5%;
+            font-size: 44px;
+            color: white !important;
+        }
+        .showInformationDiv{
+            width:33%;
+        }
+        .showBigInformationDiv{
+            width:50%;
+        }
+        
+        .resizeAttendanceDiv{
+            width:67% !important;
+        }
+        .resizeSmallAttendanceDiv{
+            width:50%;
+        }
+        .activeUser{
+            background: #5C6BC0;
+            color: white !important;
+        }
+        #attendanceTableDiv{
+            width: 100%;
+        }
+        #associateInformationDiv md-card{
+            background-color: #5C6BC0;
+            color: white !important;
+            width: 100%;
+            overflow-y: auto;
+        }
+        #fixedContainer{
+            position: fixed;
+            width: 32%;
+        }
+        /*#associateInformationDiv .skillCard{
+            width:46%;
+            height: 23em;
+            display: inline-block;
+        }
+        #associateInformationDiv .certCard{
+            width:46%;
+            height: 23em;
+            display: inline-block;
+        }*/
+        #associateInformationDiv ul{
+            list-style: none;
+        }
+        .notificationContainer{
+            position:relative;
+        }
+        .certIcon{
+            background: white;
+            float: left;
+            position: relative;
+            top: -3px;
+            left: -.5em;
+        }
+        #closeIconContainer{
+            position:fixed;
+            width: 32%;
+        }
+        #closeIcon{
+            cursor: pointer;
+            position: relative;
+            left: 87%;
+            margin-top: 5%;
+            font-size: 44px;
+            color: white !important;
+        }
+    </style>
