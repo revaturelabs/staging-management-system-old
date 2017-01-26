@@ -64,10 +64,8 @@ public class LoginTest_IGNORE_FOR_NOW {
 	@Ignore
 	public void testAssociateLogin(){
 		
-	
-		
-		User testUser = users.getAssociate();
-		udm.createTestUser(testUser);
+//		User testUser = users.getAssociate();
+//		udm.createTestUser(testUser);
 		
 		
 		driver.navigate().to("http://dev.revature.pro");
@@ -102,9 +100,9 @@ public class LoginTest_IGNORE_FOR_NOW {
 	@Ignore
 	@Test
 	public void testWrongPasswordLogin(){
-		User loginAttemptingUser = users.getAssociate();
+//		User loginAttemptingUser = users.getAssociate();
 		User otherUser = users.getSuperAdmin();
-		udm.createTestUser(loginAttemptingUser);
+//		udm.createTestUser(loginAttemptingUser);
 		udm.createTestUser(otherUser);
 		//TODO: Write a negative test case that fails when the test fails to log in with an invalid password, with another user's password, and without a password.
 	}

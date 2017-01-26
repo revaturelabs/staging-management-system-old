@@ -38,28 +38,7 @@ public class TestUserProvider {
 	public TestUserProvider(){
 		super();
 	}
-	
-	/**
-	 * getAssociate creates and returns a specific associate-role User
-	 * @param urr2
-	 * @param btr 
-	 * @return The associate user
-	 * username - TestAssociateOne
-	 * firstname - Albert
-	 * lastname - Einstein
-	 * password - E=MC^2
-	 * BatchType - Java
-	 * UserRole - Associate
-	 * GraduationDate - Jan 1, 2017
-	 */
-	
-	public User getAssociate(){
 
-		
-		return new User("TestAssociateOne", "Albert", "Einstein", hashPassword("E=MC^2"), btr.findByType("Java"), new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(), urr.findByName("associate"), new Timestamp(2017, 1, 1, 0, 0, 0, 0));
-		
-	}
-	
 	/**
 	 * getAdmin creates and returns a specific admin-role User
 	 * @return The admin user

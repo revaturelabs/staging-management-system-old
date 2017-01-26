@@ -4,6 +4,9 @@ sms.filter("weekFilter", function($filter){
 		//filter associate attendance by current viewing monday
 		var thisWeek = {};
 		
+		//set a value for the iconFilter
+		iconInput = "week";
+		
 		//pull in current monday and set the rest of the week up
 		m = monday;
 		tuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
@@ -26,32 +29,32 @@ sms.filter("weekFilter", function($filter){
 					thisWeek.monday = {};
 					thisWeek.monday.verified = attendance.verified;
 					thisWeek.monday.checkedIn = attendance.checkedIn;
-					thisWeek.monday = $filter("iconFilter")(thisWeek.monday);
+					thisWeek.monday = $filter("iconFilter")(thisWeek.monday, iconInput);
 				}
 				if(day.getDate()==tuesday.getDate() && day.getMonth()==tuesday.getMonth()){
 					thisWeek.tuesday = {};
 					thisWeek.tuesday.verified = attendance.verified;
 					thisWeek.tuesday.checkedIn = attendance.checkedIn;
-					thisWeek.tuesday = $filter("iconFilter")(thisWeek.tuesday);
+					thisWeek.tuesday = $filter("iconFilter")(thisWeek.tuesday, iconInput);
 				}
 				if(day.getDate()==wednesday.getDate() && day.getMonth()==wednesday.getMonth()){
 					thisWeek.wednesday = {};
 					thisWeek.wednesday.verified = attendance.verified;
 					thisWeek.wednesday.checkedIn = attendance.checkedIn;
-					thisWeek.wednesday = $filter("iconFilter")(thisWeek.wednesday);
+					thisWeek.wednesday = $filter("iconFilter")(thisWeek.wednesday, iconInput);
 				}
 				if(day.getDate()==thursday.getDate() && day.getMonth()==thursday.getMonth()){
 					thisWeek.thursday = {};
 					thisWeek.thursday.verified = attendance.verified;
 					thisWeek.thursday.checkedIn = attendance.checkedIn;
-					thisWeek.thursday = $filter("iconFilter")(thisWeek.thursday);
+					thisWeek.thursday = $filter("iconFilter")(thisWeek.thursday, iconInput);
 					
 				}
 				if(day.getDate()==friday.getDate() && day.getMonth()==friday.getMonth()){
 					thisWeek.friday = {};
 					thisWeek.friday.verified = attendance.verified;
 					thisWeek.friday.checkedIn = attendance.checkedIn;
-					thisWeek.friday = $filter("iconFilter")(thisWeek.friday);
+					thisWeek.friday = $filter("iconFilter")(thisWeek.friday, iconInput);
 				}
 				//fill out each day with day objects based on values received during for loop
 				user.thisWeek[0] = thisWeek.monday;

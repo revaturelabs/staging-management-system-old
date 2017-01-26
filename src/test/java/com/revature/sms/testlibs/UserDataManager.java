@@ -98,13 +98,6 @@ public class UserDataManager {
 	 * @return The user object that is created in the database
 	 */
 	
-	public User createTestUser(String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
-			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate){
-		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole, graduationDate);
-		return createTestUser(newUser);
-	}
-	
-	
 		//Corey's Method
 		//Changes one or more of the fields of a user. These changes are reflected in both the database and this
 	    //this UserDataManager object.
@@ -146,7 +139,6 @@ public class UserDataManager {
 			createdUsers.add(userIndex, createdUser);
 			
 		}
-	
 	
 	
 	/**
