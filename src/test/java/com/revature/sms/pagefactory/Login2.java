@@ -1,0 +1,47 @@
+package com.revature.sms.pagefactory;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+
+public class Login2 extends SMSPage {
+	
+	@FindBy(xpath="/html/head/title")
+	public WebElement title;
+	
+	@FindBy(tagName="span")
+	public WebElement header;
+	
+	@FindBy(css="[type=\"text\"]")
+	public WebElement unField;
+	
+	@FindBy(css="[type=\"password\"]")
+	public WebElement pwField;
+	
+	@FindBy(css="[type=\"submit\"]")
+	public WebElement submit;
+	
+	
+	
+	
+	public Login2(WebDriver driver) {
+		super(driver);
+	}
+	
+	public void login(String username, String password) {
+		unField.sendKeys(username);
+		pwField.sendKeys(password);
+		submit.click();
+	}
+	
+	/*
+	public String getTitle() {
+		System.out.println("In getTitle");
+		System.out.println("Tag name: "+title.getTagName());
+		System.out.println("Text: "+title.getText());
+		return title.getText();
+	}
+	*/
+}
+

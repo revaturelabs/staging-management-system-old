@@ -1,3 +1,4 @@
+
 package com.revature.sms;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ import com.revature.sms.util.ExcelHelper;
 @Service
 @RunWith(SpringInstanceTestClassRunner.class)
 @SpringBootTest
-public class AssociateT implements InstanceTestClassListener {
+public class AssociateT3 implements InstanceTestClassListener {
 	private final String browser = "Chrome"; 
 	private final String inputsPath = "src/test/resources/PropertiesFiles/inputs.properties";
 	private final String expectedPath = "src/test/resources/PropertiesFiles/expected.properties";
@@ -257,4 +258,3 @@ public class AssociateT implements InstanceTestClassListener {
 	
 	
 }
-

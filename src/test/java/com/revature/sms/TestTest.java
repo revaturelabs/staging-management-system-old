@@ -20,6 +20,7 @@ import com.revature.sms.util.TestSetup;
 import com.codoid.products.exception.FilloException;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;
+import com.revature.sms.pagefactory.Login2;
 import com.revature.sms.pagefactory.LoginPage;
 import com.revature.sms.pagefactory.ScheduleCertificationWindow;
 import com.revature.sms.pagefactory.SuperAdminPage;
@@ -29,7 +30,7 @@ import com.revature.sms.util.ExcelHelper;
 @Service
 @RunWith(SpringInstanceTestClassRunner.class)
 @SpringBootTest
-public class AssociateT implements InstanceTestClassListener {
+public class TestTest implements InstanceTestClassListener {
 	private final String browser = "Chrome"; 
 	private final String inputsPath = "src/test/resources/PropertiesFiles/inputs.properties";
 	private final String expectedPath = "src/test/resources/PropertiesFiles/expected.properties";
@@ -40,7 +41,7 @@ public class AssociateT implements InstanceTestClassListener {
 	static WebDriver webDriver;
 	static EventFiringWebDriver driver;
 	static EventListener eventListener; 
-	private LoginPage lp;
+	private Login2 lp;
 	private AssociatePage asp;
 	private AdminPage adp;
 	private SuperAdminPage sap;
@@ -71,7 +72,7 @@ public class AssociateT implements InstanceTestClassListener {
 	@Before
 	public void before() {
 		driver.get(inputs.getProperty("url"));
-		lp = new LoginPage(driver);
+		lp = new Login2(driver);
 		asp = new AssociatePage(driver);
 		adp = new AdminPage(driver);
 		sap = new SuperAdminPage(driver);
@@ -79,35 +80,12 @@ public class AssociateT implements InstanceTestClassListener {
 		
 		//Make sure the login page is loaded correctly 
 		Assert.assertEquals(expected.getProperty("siteName"), driver.getTitle());
-		System.out.println("Here");
+		System.out.println("HHHHHHHEEEEEEEERRRRRRRREEEEEE");
+		System.out.println("NNNNNNEEEEEWWWWWTHHHINNNGGG");
 		Assert.assertTrue(lp.verify());
-		System.out.println("There");
+		System.out.println("AAAAAAAAAFFFFFFFFFFFFFFTTTTTTTEEEEEEEEEERRRRRRRRR");
 		Assert.assertEquals(expected.getProperty("loginPg"), lp.header.getText());
 	}
-	
-	//Tests that when different types of users login and logout, they are navigated to the correct pages
-	@Test
-	public void testLoginHeaderLogout() {
-		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
-		Assert.assertTrue(asp.verify());
-		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  //Asserts that the title given in the blue bar towards the top of the page is the same as expected.
-		asp.logout.click();
-		Assert.assertTrue(lp.verify());
-		
-		lp.login(inputs.getProperty("sdetUN"), inputs.getProperty("sdetPW"));
-		Assert.assertTrue(asp.verify());
-		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
-		asp.logout.click();
-		Assert.assertTrue(lp.verify());
-		
-		lp.login(inputs.getProperty("dotnetUN"), inputs.getProperty("dotnetPW"));
-		Assert.assertTrue(asp.verify());
-		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
-		asp.logout.click();
-		Assert.assertTrue(lp.verify());
-		
-	}
-	
 	
 	//Makes sure the current week is shown on the associate page when you log in.
 	@Ignore
@@ -215,6 +193,29 @@ public class AssociateT implements InstanceTestClassListener {
 		}
 	}
 	
+	//Tests that when different types of users login and logout, they are navigated to the correct pages
+	@Test
+	public void testLoginHeaderLogout() {
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
+		Assert.assertTrue(asp.verify());
+		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  //Asserts that the title given in the blue bar towards the top of the page is the same as expected.
+		asp.logout.click();
+		Assert.assertTrue(lp.verify());
+		
+		lp.login(inputs.getProperty("sdetUN"), inputs.getProperty("sdetPW"));
+		Assert.assertTrue(asp.verify());
+		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
+		asp.logout.click();
+		Assert.assertTrue(lp.verify());
+		
+		lp.login(inputs.getProperty("dotnetUN"), inputs.getProperty("dotnetPW"));
+		Assert.assertTrue(asp.verify());
+		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
+		asp.logout.click();
+		Assert.assertTrue(lp.verify());
+		
+	}
+	
 	@Ignore
 	@Test
 	public void testCertificationScheduling() {
@@ -257,4 +258,3 @@ public class AssociateT implements InstanceTestClassListener {
 	
 	
 }
-
