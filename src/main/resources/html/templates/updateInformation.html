@@ -37,11 +37,20 @@
         <hr>
         <div class="md-padding">
         <form name="updateSkillsForm" ng-submit="uInfoCtrl.submitSkills()" novalidate>
+		<md-input-container>
+			  <md-select ng-model="skillToAdd" placeholder="Skill">
+			    	<md-option ng-value="x.id" ng-repeat="x in uInfoCtrl.availSkills | orderBy: 'skill'">{{ x.skill }}</md-option>
+			  </md-select>
+		</md-input-container>
 
-		{{uInfoCtrl.availSkills}}
-		<md-button type="submit" class="md-primary">  Submit</md-button>        
+		<md-button type="submit" class="md-primary">Add</md-button>        
         <ul>
-        	<li  ng-repeat="x in uInfoCtrl.currentSkills">{{x.skill}}</li>
+        	<li  ng-repeat="s in uInfoCtrl.currentSkills">
+        		{{s.skill}} 
+        	    <md-button class="md-icon-button" ng-click="uInfoCtrl.removeFromCurrentSkills(s.id)">
+                	<md-icon class="md-material-icon menu-icon" Style="color:red"> clear </md-icon>
+            	</md-button>
+        	</li>
         </ul>
         
         

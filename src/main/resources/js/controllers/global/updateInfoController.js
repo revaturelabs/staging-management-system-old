@@ -9,8 +9,8 @@
         function populateSkills(){
         	var skills = [];
 
-        	skills.push({"ts_id": 1, "skill": "Java"});
-            skills.push({"ts_id": 2, "skill": "html"});
+        	skills.push({"id": 1, "skill": "Java"});
+            skills.push({"id": 2, "skill": "html"});
             return skills;
         }
         
@@ -27,6 +27,7 @@
         uic.cancel = cancel;
         uic.submit = submit;
         uic.submitSkills = submitSkills;
+        uic.removeFromCurrentSkills = removeFromCurrentSkills;
 
           // functions
             // for notifications
@@ -101,12 +102,37 @@
         function submitSkills() {
         	//Test code REMOVE WHEN DONE--------
         	console.log(uic.user);
-        	uic.currentSkills.push({"ts_id": 1, "skill": "Java"});
-        	console.log(uic.currentSkills);
         	//----------------------------------
         	
+        	console.log($scope.skillToAdd);
+        	
+        	var add = removeFromAvailSkill($scope.skillToAdd);
+        	
+        	if(add != null){
+        		uic.currentSkill.push(add);
+        	}
+        	
+        	uic.user.skill = uic.currentSkill;
         }
         
+        function removeFromAvailSkill()}{
+        	for(var i =0; i < uic.availSkills.length; i++){
+        		if($scope.skillToAdd == uic.availSkills[i].id){
+        			
+        			var toReturn = {id:uic.availSkills[i].id, skill:uic.availSkills[i].skill};
+        			
+        			//remove from avail skills
+        			uic.availSkills.splice(i,1);
+        			
+        			return toReturn;
+        		}
+        	}
+        	return null;
+        }
+        
+        function removeFromCurrentSkills(id){
+        	
+        }
         
         
     }
