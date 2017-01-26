@@ -24,6 +24,7 @@ import com.codoid.products.exception.FilloException;
 import com.revature.sms.database.DBInitializationController;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;
+import com.revature.sms.pagefactory.ChangePasswordWindow;
 import com.revature.sms.pagefactory.LoginPage;
 import com.revature.sms.pagefactory.SuperAdminPage;
 import com.revature.sms.util.EventListener;
@@ -47,6 +48,7 @@ public class AdminT implements InstanceTestClassListener {
 	private AssociatePage asp;
 	private AdminPage adp;
 	private SuperAdminPage sap;
+	private ChangePasswordWindow cpw;
 	
 	
 	@Override
@@ -77,6 +79,7 @@ public class AdminT implements InstanceTestClassListener {
 		asp = new AssociatePage(driver);
 		adp = new AdminPage(driver);
 		sap = new SuperAdminPage(driver);
+		cpw = new ChangePasswordWindow(driver);
 		
 		//Make sure the login page is loaded correctly 
 		Assert.assertEquals(expected.getProperty("siteName"), driver.getTitle());
@@ -95,6 +98,7 @@ public class AdminT implements InstanceTestClassListener {
 	}
 	
 	// Test to enter username in search box and verify correct associate name is returned
+	@Ignore
 	@Test
 	public void testSearchBar() {
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
@@ -116,6 +120,30 @@ public class AdminT implements InstanceTestClassListener {
 		adp.logout.click();
 		Assert.assertTrue(lp.verify());
 	}
+	
+	@Ignore
+	@Test
+	public void testPasswordChange() {
+		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
+		adp.settings.click();
+		Assert.assertTrue(cpw.verify());
+		cpw.oldPass.sendKeys(inputs.getProperty("adminPW"));
+		cpw.newPass.sendKeys(inputs.getProperty("adminPW2"));
+		cpw.confirmPass.sendKeys(inputs.getProperty("adminPW2"));
+		cpw.submit.click();
+		adp.logout.click();
+		
+		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW2"));
+		adp.settings.click();
+		Assert.assertTrue(cpw.verify());
+		cpw.oldPass.sendKeys(inputs.getProperty("adminPW2"));
+		cpw.newPass.sendKeys(inputs.getProperty("adminPW"));
+		cpw.confirmPass.sendKeys(inputs.getProperty("adminPW"));
+		cpw.submit.click();
+		adp.logout.click();
+						
+	}
+	
 	
 	public void testAdminAttendanceView() {
 		
