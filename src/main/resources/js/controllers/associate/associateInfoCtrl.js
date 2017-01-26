@@ -49,4 +49,4 @@
     		$mdDialog.cancel();
     	}
 
-    };
+    }
