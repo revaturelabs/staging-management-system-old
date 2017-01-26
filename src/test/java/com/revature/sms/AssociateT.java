@@ -11,9 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
 
@@ -24,28 +22,21 @@ import com.codoid.products.exception.FilloException;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;
 import com.revature.sms.pagefactory.LoginPage;
+import com.revature.sms.pagefactory.ScheduleCertificationWindow;
 import com.revature.sms.pagefactory.SuperAdminPage;
-import com.revature.sms.testlibs.DBInitializationController;
 import com.revature.sms.util.EventListener;
 import com.revature.sms.util.ExcelHelper;
 
 @Service
 @RunWith(SpringInstanceTestClassRunner.class)
 @SpringBootTest
-public class SMSTest implements InstanceTestClassListener {
-	private final String browser = "PhantomJS"; 
+public class AssociateT implements InstanceTestClassListener {
+	private final String browser = "Chrome"; 
 	private final String inputsPath = "src/test/resources/PropertiesFiles/inputs.properties";
-	private final String locationsPath = "src/test/resources/PropertiesFiles/locations.properties";
 	private final String expectedPath = "src/test/resources/PropertiesFiles/expected.properties";
-	
-	//Basically anything that interacts with a data transfer objects must be autowired, which alerts 
-	//Spring of it's existence.
-	@Autowired
-	private DBInitializationController dbic;
 	
 	//Allow properties files, webdrivers, and page objects to be used in the tests
 	static Properties inputs;
-	static Properties locations;
 	static Properties expected;
 	static WebDriver webDriver;
 	static EventFiringWebDriver driver;
@@ -54,6 +45,7 @@ public class SMSTest implements InstanceTestClassListener {
 	private AssociatePage asp;
 	private AdminPage adp;
 	private SuperAdminPage sap;
+	private ScheduleCertificationWindow scw;
 	
 	
 	@Override
@@ -63,9 +55,6 @@ public class SMSTest implements InstanceTestClassListener {
 	    	}
 	    	if (browser.equals("Internet Explorer")) {
 	    		webDriver = TestSetup.getIE();
-	    	}
-	    	if (browser.equals("PhantomJS")) {
-	    		webDriver = TestSetup.getPhantomJS();
 	    	}
 	    	
 		//Allows the driver to take advantage of an event listener
@@ -77,9 +66,6 @@ public class SMSTest implements InstanceTestClassListener {
 		//Initialize properties files
 		inputs = TestSetup.getProperties(inputsPath);
 		expected = TestSetup.getProperties(expectedPath);
-		
-		dbic.initializeUsers();
-		dbic.initializeUserObjects();
 	}
 	
 	//More browser preparation
@@ -90,14 +76,16 @@ public class SMSTest implements InstanceTestClassListener {
 		asp = new AssociatePage(driver);
 		adp = new AdminPage(driver);
 		sap = new SuperAdminPage(driver);
+		scw = new ScheduleCertificationWindow(driver);
 		
 		//Make sure the login page is loaded correctly 
-		Assert.assertEquals(locations.getProperty("siteName"), driver.getTitle());
+		Assert.assertEquals(expected.getProperty("siteName"), driver.getTitle());
 		Assert.assertTrue(lp.verify());
-		Assert.assertEquals(locations.getProperty("loginPg"), lp.header.getText());
+		Assert.assertEquals(expected.getProperty("loginPg"), lp.header.getText());
 	}
 	
 	//Makes sure the current week is shown on the associate page when you log in.
+	@Ignore
 	@Test
 	public void testDefaultWeek() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
@@ -112,7 +100,7 @@ public class SMSTest implements InstanceTestClassListener {
 		
 		ArrayList<String> actualMonthDays = asp.goThroughWeek();
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
-		asp.logoutIcon.click();
+		asp.logout.click();
 	}
 	
 	
@@ -121,6 +109,8 @@ public class SMSTest implements InstanceTestClassListener {
 	//checkmark), even though the attendance is correctly identified as not verified in the database.
 	//Also, an extra junk attendance associated with the user is added to the database, and is also 
 	//incorrectly displayed on the website.
+	
+	//This is Corey's work on issue SMS-85.
 	@Ignore
 	@Test
 	public void testAssociateAttendanceView() {
@@ -196,89 +186,55 @@ public class SMSTest implements InstanceTestClassListener {
 			} while (!week.equals(weekBefore));
 		} catch (FilloException e) {}
 		finally {
-			asp.logoutIcon.click();
+			asp.logout.click();
 		}
 	}
 	
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
-	@Ignore
 	@Test
 	public void testLoginHeaderLogout() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
 		Assert.assertTrue(asp.verify());
-		Assert.assertEquals(locations.getProperty("associatePg"), asp.header.getText());  //Asserts that the title given in the blue bar towards the top of the page is the same as expected.
-		asp.logoutIcon.click();
+		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  //Asserts that the title given in the blue bar towards the top of the page is the same as expected.
+		asp.logout.click();
 		Assert.assertTrue(lp.verify());
 		
 		lp.login(inputs.getProperty("sdetUN"), inputs.getProperty("sdetPW"));
 		Assert.assertTrue(asp.verify());
-		Assert.assertEquals(locations.getProperty("associatePg"), asp.header.getText());  
-		asp.logoutIcon.click();
+		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
+		asp.logout.click();
 		Assert.assertTrue(lp.verify());
 		
 		lp.login(inputs.getProperty("dotnetUN"), inputs.getProperty("dotnetPW"));
 		Assert.assertTrue(asp.verify());
-		Assert.assertEquals(locations.getProperty("associatePg"), asp.header.getText());  
-		asp.logoutIcon.click();
+		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
+		asp.logout.click();
 		Assert.assertTrue(lp.verify());
-		
-		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
-		Assert.assertTrue(adp.verify());
-		Assert.assertEquals(locations.getProperty("adminPg"), adp.header.getText());
-		adp.logoutIcon.click();
-		Assert.assertTrue(lp.verify());
-		
-		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
-		Assert.assertTrue(sap.verify());
-		Assert.assertEquals(locations.getProperty("superAdminPg"), sap.header.getText());
-		sap.logoutIcon.click();
-		Assert.assertTrue(lp.verify());
-	}
-	
-	
-	
-	public void testAdminAttendanceView() {
 		
 	}
 	
-	
-	
+	@Test
+	public void testCertificationScheduling() {
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
+		asp.certification.click();
+		Assert.assertTrue(scw.verify());
+		scw.cancel.click();
+		asp.logout.click();
+	}
 	
 	
 	
 	//Corey's Test ideas
-	public void testCertificationScheduling() {
-		
-	}
-
-	public void testBatchCreation() {
-		
-	}
-	
-	public void testSearchBar() {
-		
-	}
-	
 	public void negativeTestAssociateAttendanceView() {
 		//Make sure icons are not displayed under dates when there is no associated attendance record.
 		//Maybe this can be integrated into testAssociateAttendanceView.
 	}
 	
-	public void testLoginPageToastContainer() {
-		
-	}
 	
 	public void testAssociatePageToastContainer() {
 		
 	}
 	
-	public void testAdminPageToastContainer() {
-		
-	}
-	
-	public void testSuperAdminPageToastContainer() {
-	
-	}
 	
 	public void testAssociateCalendarNavigation() {
 		//This is already done indirectly in testAssociateAttendanceView but maybe the navigation 
@@ -288,19 +244,15 @@ public class SMSTest implements InstanceTestClassListener {
 	public void testAdminCalendarNavigation() {
 		
 	}
-	//If you are having trouble coming up with a test to make, try translating one of the user stories
-	//in Jira into a test case.
 	
-	//It could be a good idea to separate some of these test cases into different suites as well.
 	
 	//Close webdriver and clear database
 	@Override
 	public void afterClassSetup() {
-		driver.close();
-		//dbic.clearData();
+		//driver.close();
 	}
 	
-	
+	//Inconsequential change
 	
 	
 }

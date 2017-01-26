@@ -1,5 +1,8 @@
 package com.revature.sms.pagefactory;
 
+import java.util.ArrayList;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,33 +15,34 @@ public class SuperAdminPage extends SMSPage {
 	@FindBy(css="[class=\"ng-binding flex\"]")
 	public WebElement header;
 	
-	@FindBy(css="[md-svg-icon=\"img/icons/ic_menu_white_24px.svg\"]")
-	public WebElement menuIcon;
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/md-toolbar/div/button[1]/md-icon")
+	public WebElement addBatch;
 	
-	@FindBy(css="[md-svg-icon=\"img/icons/ic_exit_to_app_white_24px.svg\"]")
-	public WebElement logoutIcon;
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/md-toolbar/div/button[2]/md-icon")
+	public WebElement settings;
+	
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/md-toolbar/div/button[3]/md-icon")
+	public WebElement logout;
 	
 	@FindBy(css="[ng-model=\"searchBox\"]")
 	public WebElement searchBox;
 	
-	@FindBy(css="[ng-click=\"goBackOneWeek()\"]")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/section/button[1]/span/md-icon")
 	public WebElement prevWeek;
 	
-	@FindBy(css="[ng-click=\"goForwardOneWeek()\"]")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/section/button[2]/span/md-icon")
 	public WebElement nextWeek;
 	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/md-table-container/table[1]/tbody/tr/th[4]")
-	public WebElement weekOf;
-	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/md-table-container/table[2]")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/md-table-container/table")
 	public WebElement attendanceTable;
 	
-	@FindBy(css="[md-svg-icon=\"img/icons/ic_add_white_24px.svg\"]")
-	public WebElement addAssociate;
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/md-table-container/table/tbody/tr/td[1]")
+	public WebElement searchResult;
 	
-
+	
 	public SuperAdminPage(WebDriver driver) {
 		super(driver);
 	}
+	
 	
 }

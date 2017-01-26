@@ -18,23 +18,25 @@ public class AssociatePage extends SMSPage {
 	public WebElement header;
 	
 	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/md-toolbar/div/button[1]/md-icon")
-	public WebElement menuIcon;
+	public WebElement certification;
+	
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/md-toolbar/div/button[2]/md-icon")
+	public WebElement settings;
 	
 	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/md-toolbar/div/button[3]/md-icon")
-	public WebElement logoutIcon;
+	public WebElement logout;
 	
 	@FindBy(tagName="tbody")
 	public WebElement weekTable;
 	
-	@FindBy(css="[ng-click=\"assWeekAttCtrl.getPreviousWeek()\"]")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/div/div/div[2]/button[1]/md-icon")
 	public WebElement prevWeek;
 	
-	@FindBy(css="[ng-click=\"assWeekAttCtrl.getNextWeek()\"]")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/div/div/div[2]/button[2]/md-icon")
 	public WebElement nextWeek;
 	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/div/ui-view/div[3]/div[2]/p")
+	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/div/div/div[2]/div")
 	public WebElement weekOf;
-	
 
 	public AssociatePage(WebDriver driver) {
 		super(driver);

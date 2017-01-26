@@ -35,5 +35,15 @@ public class EventListener extends AbstractWebDriverEventListener {
 		}
 	}
 	
+	@Override
+	public void afterChangeValueOf(WebElement element, WebDriver driver) {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 }
 

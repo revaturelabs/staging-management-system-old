@@ -55,10 +55,9 @@ public class TestSetup {
 		return new InternetExplorerDriver();
 	}
 	
-	public static WebDriver getPhantomJS() {
-		System.setProperty("phantomjs.binary.path", phantomJSDriverPath);
-		return new PhantomJSDriver();
-	}
+
+	
+	
 		
 		
 		

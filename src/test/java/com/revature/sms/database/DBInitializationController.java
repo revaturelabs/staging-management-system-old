@@ -1,4 +1,4 @@
-package com.revature.sms.testlibs;
+package com.revature.sms.database;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class DBInitializationController {
 	private JobEventTypeRepo jetr;
 	
 	
-	private DBInitializationController() {
+	DBInitializationController() {
 		super();
 	}
 	
