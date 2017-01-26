@@ -2,16 +2,24 @@
     angular
         .module( "sms" )
         .controller( "associateAttendenceCtrl", associateAttendanceCtrl );
-
+/**
+ * @description AngularJs controller for associate attendance functionality.
+ */
     function associateAttendanceCtrl( $mdDialog, $scope, $state, $filter, loginService, userService, weekdays ) {
         var aac = this;
 
           // bindables
             // data
+
+        /**@prop {object} user Currently logged in user. */
         aac.user = loginService.getUser();
+        /**@prop {object} curr Date for the current week being shown */
         aac.curr = new Date();
+        /**@prop {object} today Todays current date. */
         aac.today = aac.curr;
+        /**@prop {object} minWeek The earliest week that can be shown. */
         aac.minWeek = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() - 28 ); 
+         /**@prop {object} minWeek The latest week that can be shown. */
         aac.maxWeek = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() + 7 );
 
             // functions
