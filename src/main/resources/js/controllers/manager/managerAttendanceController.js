@@ -238,7 +238,7 @@
     		}
         }
         
-        function weekChange(dayChange){
+        function weekChange(dayChange) {
         	/*set the new week up*/
 	        m = new Date();
 	        m.setFullYear(setMonday.getFullYear(), setMonday.getMonth(), (setMonday.getDate()+dayChange));
@@ -268,7 +268,7 @@
 	        if(mac.thisCurrentMonday.getDate()==mac.thisMonday.getDate() && mac.thisCurrentMonday.getMonth()==mac.thisMonday.getMonth()){
 	        	mac.activeDay = w;
 	        }
-        };
+        }
         
         /*end change week functions*/
         
