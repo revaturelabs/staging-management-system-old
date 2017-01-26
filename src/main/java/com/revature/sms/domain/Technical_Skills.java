@@ -2,6 +2,7 @@ package com.revature.sms.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.JoinColumn;
 
 /**
@@ -40,18 +44,20 @@ public class Technical_Skills {
 	/**
 	 * List of users associated with skill
 	 */
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="USER_SKILLS", 
 	joinColumns=@JoinColumn(name="TS_ID"), 
 	inverseJoinColumns=@JoinColumn(name="USER_ID"))
-	private List<User> users;
+	private Set<User> users;
 
 	/**
 	 * Null args constructor. Doesn't initialize any of the technical_skills instance variables.
 	 */
 	public Technical_Skills() {
 		super();
-		this.users = new ArrayList<User>();
+		//this.users = new ArrayList<User>();
+		System.out.println("tech_skills no arg");
 	}
 
 	/**
@@ -61,6 +67,7 @@ public class Technical_Skills {
 	public Technical_Skills(String skill) {
 		super();
 		this.skill = skill;
+		System.out.println("tech skills skill construct");
 	}
 
 	/**
@@ -68,10 +75,11 @@ public class Technical_Skills {
 	 * @param skill represents the unique skill that an associate has
 	 * @param users gives a list of users for that specific skill
 	 */
-	public Technical_Skills(String skill, List<User> users) {
+	public Technical_Skills(String skill, Set<User> users) {
 		super();
 		this.skill = skill;
 		this.users = users;
+		System.out.println("tech skills all construct");
 	}
 
 	/**
@@ -111,14 +119,15 @@ public class Technical_Skills {
 	/**
 	 * Method that retrieves the list of users of the skill
 	 */
-	public List<User> getUsers() {
+	
+	public Set<User> getUsers() {
 		return users;
 	}
 
 	/**
 	 * Method that manually sets the users of the skill object
 	 */
-	public void setUsers(List<User> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 

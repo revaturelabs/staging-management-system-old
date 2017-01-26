@@ -3,6 +3,7 @@ package com.revature.sms.domain.dto;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
@@ -23,7 +24,7 @@ public class UserDTO {
 	private List<AssociateAttendance> attendance;
 	private Timestamp graduationDate;
 	private List<AssociateTask> tasks;
-	private List<Technical_Skills> skill;
+	private Set<Technical_Skills> skill;
 	
 	public UserDTO() {
 		super();
@@ -53,7 +54,7 @@ public class UserDTO {
 	
 	public UserDTO(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			UserRole userRole, Timestamp graduationDate, List<AssociateTask> tasks, 
-			List<Technical_Skills> skill) {
+			Set<Technical_Skills> skill) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -152,11 +153,11 @@ public class UserDTO {
 		this.tasks = tasks;
 	}
 
-	public List<Technical_Skills> getSkill() {
+	public Set<Technical_Skills> getSkill() {
 		return skill;
 	}
 
-	public void setSkill(List<Technical_Skills> skill) {
+	public void setSkill(Set<Technical_Skills> skill) {
 		this.skill = skill;
 	}
 
