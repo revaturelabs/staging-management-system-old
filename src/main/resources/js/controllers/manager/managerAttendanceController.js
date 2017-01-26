@@ -21,6 +21,7 @@
         mac.calcWeek = calcWeek;
         mac.filterWeek = filterWeek;
         mac.toggleInfo = toggleInfo;
+        mac.closeInfo = closeInfo;
         mac.verify = verify;
         mac.setToolbar = setToolbar;
         mac.prevWeek = prevWeek;
@@ -45,7 +46,8 @@
             // gets all users' information
         function getUsers( success ) {
             userService.getAll( function(response) {
-                mac.users = $filter( "associateFilter" )(response);
+                mac.users = $filter( "associateFilter" )( response );
+                mac.users = $filter( "taskFilter" )( mac.users, mac.today );
                 mac.calcWeek( mac.curr );
             }, function(error) {
                 mac.toast("Error retrieving all users.");
@@ -117,6 +119,12 @@
                 mac.infoOpen = true;
                 mac.selectedUser = user;
             }
+        }
+
+            // closes associate info panel
+        function closeInfo() {
+            mac.infoOpen = false;
+            mac.selectedUser = null;
         }
 
             // verifies/unverifies user's attendance

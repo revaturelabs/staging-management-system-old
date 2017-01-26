@@ -227,3 +227,7 @@
     .eventDialog {
         min-width: 500px;
     }
+
+    .highlightSelected {
+        background-color: #9fa8da;
+    }

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
     <div layout="row">
 
@@ -6,36 +5,39 @@
         <div ng-show="manAttCtrl.infoOpen" id="associateInformationDiv" ng-class="{showInformationDiv : (manAttCtrl.infoOpen), showBigInformationDiv : (manAttCtrl.infoOpen && manAttCtrl.smallDevice)}">
             <div id="fixedContainer">
                 <div id="closeIconContainer">
-                    <span><md-icon id="closeIcon" ng-click="manAttCtrl.hideInfo()">compare_arrows</md-icon></span>
+                    <span><md-icon id="closeIcon" ng-click="manAttCtrl.closeInfo()">compare_arrows</md-icon></span>
                 </div>
                 <md-card md-whiteframe="8dp">
                     <md-card-title>
                         <md-card-title-text>
                             <span class="md-headline">
-                            {{ manAttCtrl.currentUser.firstName }} {{ manAttCtrl.currentUser.lastName }} - {{ manAttCtrl.currentUser.batchType.type}} {{ manAttCtrl.currentUser.gradDateDisplay}}
+                                {{ manAttCtrl.selectedUser.firstName }} {{ manAttCtrl.selectedUser.lastName }} - 
+                                ({{ manAttCtrl.selectedUser.batchType.type}} {{ manAttCtrl.selectedUser.graduationDate | date:"MM/dd"}})
                             </span>
                         </md-card-title-text>
                     </md-card-title>
                     <md-card-content>
-                            <span>{{ manAttCtrl.currentUser.username }}
-                                <div style="float: right;;" ng-show="manAttCtrl.currentUser.project"> Current project :{{ manAttCtrl.currentUser.project }}</div>
-                                <div style="float: right;;" ng-hide="manAttCtrl.currentUser.project">This associate is not currently on a project</div>
+                            <span>{{ manAttCtrl.selectedUser.username }}
+                                <div style="float: right;;" ng-show="manAttCtrl.selectedUser.project"> Current project :{{ manAttCtrl.selectedUser.project }}</div>
+                                <div style="float: right;;" ng-hide="manAttCtrl.selectedUser.project">This associate is not currently on a project</div>
                             </span>
                             <p>
                                 Panel Status: 
-                                <span ng-show="manAttCtrl.currentUser.panels[0]">{{ manAttCtrl.currentUser.panels[0].note }} {{ manAttCtrl.currentUser.panels[0].dateDisplay }}</span>
-                                <span ng-hide="manAttCtrl.currentUser.panels[0]">No Status to note</span>
+                                <span ng-show="manAttCtrl.selectedUser.panels[0]">{{ manAttCtrl.selectedUser.panels[0].note }} {{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
+                                <span ng-hide="manAttCtrl.selectedUser.panels[0]">No Status to note</span>
                             </p>
                     </md-card-content>
                 </md-card>
                 <md-card md-whiteframe="8dp" class="skillCard">
                     <md-card-title>
                         <md-card-title-text>
-                            <span class="md-headline">Skillz</span>
+                            <span class="md-headline">Skills</span>
                         </md-card-title-text>
                     </md-card-title>
                     <md-card-content>
-                        No content to display
+                        <p>
+                            No content to display
+                        </p>
                     </md-card-content>
                 </md-card>
                 <md-card md-whiteframe="8dp" class="certCard">
@@ -45,12 +47,12 @@
                         </md-card-title-text>
                     </md-card-title>
                     <md-card-content>
-                        <span ng-hide="manAttCtrl.currentUser.certs[0].date">There is no data to display</span>
-                        <ul ng-show="manAttCtrl.currentUser.certs[0].date">
-                            <li ng-repeat="cert in manAttCtrl.currentUser.certs | orderBy:'-date'">
+                        <span ng-hide="manAttCtrl.selectedUser.certs[0].date">There is no data to display</span>
+                        <div ng-show="manAttCtrl.selectedUser.certs[0].date">
+                            <div ng-repeat="cert in manAttCtrl.selectedUser.certs | orderBy:'-date'" class="certList">
                             <md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48">{{ cert.icon.name }}</md-icon>
-                            {{cert.note}} {{ cert.dateDisplay }}</li>
-                        </ul>
+                            {{cert.note}} {{ cert.dateDisplay }}</div>
+                        </div>
                     </md-card-content>
                 </md-card>
             </div>
@@ -100,9 +102,14 @@
                             </thead>
 
                             <tbody>
-                                <tr md-row ng-repeat="user in manAttCtrl.users | orderBy:manAttCtrl.tableOrder">
+                                <tr md-row ng-repeat="user in manAttCtrl.users | orderBy:manAttCtrl.tableOrder" ng-class="{highlightSelected: manAttCtrl.selectedUser == user}">
                                     <td md-cell flex="25" ng-click="manAttCtrl.toggleInfo(user)">
                                         <div layout="row">
+                                            <div class="notificationContainer">
+                                                <md-icon ng-show="user.notification.icon" md-whiteframe="2dp" ng-style="{color: user.notification.icon.color}" class="material-icons step notificationIcon" ng-class="md-48">
+                                                    {{ user.notification.icon.name }}
+                                                </md-icon>
+                                            </div>
                                             <h2 class="rowIndex"> {{ $index + 1 }} </h3>
                                             <div class="md-2-line rowName">
                                                 <h3> {{ user.firstName }} {{ user.lastName }} </h3>
@@ -155,6 +162,7 @@
         </div>
 
     </div>
+
     <style type="text/css">
         .showInformationDiv{
             width:33%;
@@ -186,7 +194,7 @@
             position: fixed;
             width: 32%;
         }
-        #associateInformationDiv .skillCard{
+        /*#associateInformationDiv .skillCard{
             width:46%;
             height: 23em;
             display: inline-block;
@@ -195,7 +203,7 @@
             width:46%;
             height: 23em;
             display: inline-block;
-        }
+        }*/
         #associateInformationDiv ul{
             list-style: none;
         }
@@ -205,14 +213,73 @@
         .notificationIcon{
             background: white;
             position: absolute;
-            right:-22px;
-            top:-15px;
+            right:-176px;
+            top:6px;
+        }
+        #closeIconContainer{
+            position:fixed;
+            width: 32%;
+        }
+        #closeIcon{
+            cursor: pointer;
+            position: relative;
+            left: 87%;
+            margin-top: 5%;
+            font-size: 44px;
+            color: white !important;
+        }
+        .showInformationDiv{
+            width:33%;
+        }
+        .showBigInformationDiv{
+            width:50%;
+        }
+        
+        .resizeAttendanceDiv{
+            width:67% !important;
+        }
+        .resizeSmallAttendanceDiv{
+            width:50%;
+        }
+        .activeUser{
+            background: #5C6BC0;
+            color: white !important;
+        }
+        #attendanceTableDiv{
+            width: 100%;
+        }
+        #associateInformationDiv md-card{
+            background-color: #5C6BC0;
+            color: white !important;
+            width: 100%;
+            overflow-y: auto;
+        }
+        #fixedContainer{
+            position: fixed;
+            width: 32%;
+        }
+        /*#associateInformationDiv .skillCard{
+            width:46%;
+            height: 23em;
+            display: inline-block;
+        }
+        #associateInformationDiv .certCard{
+            width:46%;
+            height: 23em;
+            display: inline-block;
+        }*/
+        #associateInformationDiv ul{
+            list-style: none;
+        }
+        .notificationContainer{
+            position:relative;
         }
         .certIcon{
             background: white;
-            float: right;
+            float: left;
             position: relative;
-            left: -7em;
+            top: -3px;
+            left: -.5em;
         }
         #closeIconContainer{
             position:fixed;
