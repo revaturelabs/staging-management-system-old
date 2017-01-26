@@ -11,6 +11,11 @@
         mac.user = loginService.getUser();  
 		mac.weekNumber = 4; //make a scope variable that holds the week number, so they can only go forward and back 2 weeks
 		mac.legend = [];
+		mac.showInformation = false;
+		//if we eanted better responsive design
+		/*if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    		mac.smallDevice = true;
+    	}*/
 	        // functions
 		mac.toast = toast;
 		mac.newAssociates = newAssociates;
@@ -19,6 +24,9 @@
 		mac.goBackOneWeek = goBackOneWeek;
 		mac.goForwardOneWeek = goForwardOneWeek;
 		mac.addOptions = addOptions;
+		mac.weekChange = weekChange;
+		mac.showInfo = showInfo;
+		mac.hideInfo = hideInfo;
 
 
           // initializations
@@ -122,6 +130,8 @@
 				mac.users = $filter("associateFilter")(response);
 				//filter the associates to get the date objects that are only for the current week
 				mac.users = $filter("weekFilter")(mac.users, mac.thisMonday);
+				//filter the associates to get the task information
+				mac.users = $filter("taskFilter")(mac.users, today);
 				
 			}, function(error){
 				mac.toast("Error in retrieving all associates.");
@@ -175,7 +185,7 @@
     			}
     		})
         	
-    		//if the object wwasn't updated then the object will be created
+    		//if the object wasn't updated then the object will be created
     		if(!updated){
     			newAttendace = {};
     			
@@ -202,40 +212,11 @@
             // sets week to the one previous
     	function goBackOneWeek() {
     		
-    		//make sure user can't go back 2 weeks
-    		if(mac.weekNumber > 0){
+    		//make sure user can't go back 4 weeks
+    		if(weekNumber > 0){
     			mac.activeWeek = false;
-    			mac.weekNumber -= 1;
-    			
-    			/*set the new week up*/
-    			m = new Date();
-    	        m.setFullYear(mac.setMonday.getFullYear(), mac.setMonday.getMonth(), (mac.setMonday.getDate()-7));
-    	        
-    	        mac.setMonday.setFullYear(m.getFullYear(), m.getMonth(), m.getDate());
-    	        mac.thisMonday = m;
-    	        mac.thisTuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
-    	        mac.thisWednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
-    	        mac.thisThursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
-    	        mac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
-    	        
-    	        /*set all scope days to print on top of table*/
-    	        mac.monday = (mac.thisMonday.getMonth()+1)+"/"+mac.thisMonday.getDate();
-    	        mac.tuesday = (mac.thisTuesday.getMonth()+1)+"/"+mac.thisTuesday.getDate();
-    	        mac.wednesday = (mac.thisWednesday.getMonth()+1)+"/"+mac.thisWednesday.getDate();
-    	        mac.thursday = (mac.thisThursday.getMonth()+1)+"/"+mac.thisThursday.getDate();
-    	        mac.friday = (mac.thisFriday.getMonth()+1)+"/"+mac.thisFriday.getDate();
-    	        
-    	        /*filter the week so only the current week is visible*/
-    	        mac.users = $filter("weekFilter")(mac.users, mac.thisMonday);
-    	        
-    	        /*setting active days*/
-    	        /*remove active day*/
-    	        mac.activeDay = null;
-    	        
-    	        /*see if this week is the active day week*/
-    	        if(mac.thisCurrentMonday.getDate()==mac.thisMonday.getDate() && mac.thisCurrentMonday.getMonth()==mac.thisMonday.getMonth()){
-    	        	mac.activeDay = w;
-    	        }
+    			weekNumber -= 1;
+    			mac.weekChange(-7);
     		}
     		else{
     			mac.toast("Can't go back more than 4 weeks");
@@ -246,47 +227,68 @@
         function goForwardOneWeek() {
     	    
         	//make sure user can't go beyond the present week 
-    		if(mac.weekNumber < 4){
+    		if(weekNumber < 4){
     		
-    			mac.weekNumber += 1;
-    			if(mac.weekNumber == 4){
+    			weekNumber += 1;
+    			if(weekNumber == 4){
     				mac.activeWeek = true;
     			}
-        	
-        		/*set the new week up*/
-    	        m = new Date();
-    	        m.setFullYear(mac.setMonday.getFullYear(), mac.setMonday.getMonth(), (mac.setMonday.getDate()+7));
-    	        
-    	        mac.setMonday.setFullYear(m.getFullYear(), m.getMonth(), m.getDate());
-    	        mac.thisMonday = m;
-    	        mac.thisTuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
-    	        mac.thisWednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
-    	        mac.thisThursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
-    	        mac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
-    	        
-    	        /*set all scope days to print on top of table*/
-    	        mac.monday = (mac.thisMonday.getMonth()+1)+"/"+mac.thisMonday.getDate();
-    	        mac.tuesday = (mac.thisTuesday.getMonth()+1)+"/"+mac.thisTuesday.getDate();
-    	        mac.wednesday = (mac.thisWednesday.getMonth()+1)+"/"+mac.thisWednesday.getDate();
-    	        mac.thursday = (mac.thisThursday.getMonth()+1)+"/"+mac.thisThursday.getDate();
-    	        mac.friday = (mac.thisFriday.getMonth()+1)+"/"+mac.thisFriday.getDate();
-    	        
-    	        /*filter the week so only the current week is visible*/
-    	        mac.users = $filter("weekFilter")(mac.users, mac.thisMonday);
-    	        
-    	        /*setting active days*/
-    	        /*remove active day*/
-    	        mac.activeDay = null;
-    	        
-    	        /*see if this week is the active day week*/
-    	        if(mac.thisCurrentMonday.getDate()==mac.thisMonday.getDate() && mac.thisCurrentMonday.getMonth()==mac.thisMonday.getMonth()){
-    	        	mac.activeDay = w;
-    	        }
+    			mac.weekChange(7);
     		}
             else{
     			mac.toast("Can't go to future weeks");
     		}
         }
+        
+        function weekChange(dayChange) {
+        	/*set the new week up*/
+	        m = new Date();
+	        m.setFullYear(setMonday.getFullYear(), setMonday.getMonth(), (setMonday.getDate()+dayChange));
+	        
+	        setMonday.setFullYear(m.getFullYear(), m.getMonth(), m.getDate());
+	        mac.thisMonday = m;
+	        mac.thisTuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
+	        mac.thisWednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
+	        mac.thisThursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
+	        mac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
+	        
+	        /*set all scope days to print on top of table*/
+	        mac.monday = (mac.thisMonday.getMonth()+1)+"/"+mac.thisMonday.getDate();
+	        mac.tuesday = (mac.thisTuesday.getMonth()+1)+"/"+mac.thisTuesday.getDate();
+	        mac.wednesday = (mac.thisWednesday.getMonth()+1)+"/"+mac.thisWednesday.getDate();
+	        mac.thursday = (mac.thisThursday.getMonth()+1)+"/"+mac.thisThursday.getDate();
+	        mac.friday = (mac.thisFriday.getMonth()+1)+"/"+mac.thisFriday.getDate();
+	        
+	        /*filter the week so only the current week is visible*/
+	        mac.users = $filter("weekFilter")(mac.users, mac.thisMonday);
+	        
+	        /*setting active days*/
+	        /*remove active day*/
+	        mac.activeDay = null;
+	        
+	        /*see if this week is the active day week*/
+	        if(mac.thisCurrentMonday.getDate()==mac.thisMonday.getDate() && mac.thisCurrentMonday.getMonth()==mac.thisMonday.getMonth()){
+	        	mac.activeDay = w;
+	        }
+        }
+        
+        /*end change week functions*/
+        
+      //Retrieve associate Info 
+        function showInfo(user){
+        	mac.showInformation = true;
+        	mac.currentUser = user;
+        	if(user.graduationDate){
+        		gradDate = new Date(user.graduationDate);
+        		mac.currentUser.gradDateDisplay = (gradDate.getMonth()+1)+"/"+gradDate.getDate()+"/"+gradDate.getFullYear();
+        	}
+        }
+        
+        function hideInfo(){
+        	mac.showInformation = false;
+        	mac.currentUser = null;
+        }
+        
 
             // adds associates by batch
 		function newAssociates() {
