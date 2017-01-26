@@ -12,6 +12,7 @@ import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.AssociateTaskType;
 import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.JobEvent;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.AssociateTaskTypeRepo;
@@ -59,6 +60,7 @@ public class DBInitializationController {
 			ArrayList<String> batchTypes = eh.getValues("batchType");
 			List<AssociateAttendance> attendance = new ArrayList<AssociateAttendance>();
 			List<AssociateTask> tasks = new ArrayList<AssociateTask>();
+			List<JobEvent> events = new ArrayList<JobEvent>();
 			ArrayList<String> userRoles = eh.getValues("userRole");
 			ArrayList<String> graduationDates = eh.getValues("graduationDate");
 			
@@ -72,7 +74,7 @@ public class DBInitializationController {
 				String graduationDate = graduationDates.get(i);
 				Timestamp gts = Utils.convertDate(graduationDate);
 				
-				udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole, gts);
+				udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, events, userRole, gts);
 				i++;
 			}
 		} catch (FilloException e) {}

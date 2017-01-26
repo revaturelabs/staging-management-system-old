@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.JobEvent;
 import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
@@ -98,6 +99,13 @@ public class UserDataManager {
 	 * @return The user object that is created in the database
 	 */
 	
+	public User createTestUser(String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
+			List<AssociateAttendance> attendance, List<AssociateTask> tasks, List<JobEvent> events, UserRole userRole, Timestamp graduationDate){
+		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, events, userRole, graduationDate);
+		return createTestUser(newUser);
+	}
+	
+	
 		//Corey's Method
 		//Changes one or more of the fields of a user. These changes are reflected in both the database and this
 	    //this UserDataManager object.
@@ -139,6 +147,7 @@ public class UserDataManager {
 			createdUsers.add(userIndex, createdUser);
 			
 		}
+	
 	
 	
 	/**
