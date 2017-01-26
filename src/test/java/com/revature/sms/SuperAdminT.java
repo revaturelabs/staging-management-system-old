@@ -48,12 +48,12 @@ public class SuperAdminT implements InstanceTestClassListener {
 	
 	@Override
 	public void beforeClassSetup() {
-	    	if (browser.equals("Chrome")) {
-	    		webDriver = TestSetup.getChrome();
-	    	}
-	    	if (browser.equals("Internet Explorer")) {
-	    		webDriver = TestSetup.getIE();
-	    	}
+	    if (browser.equals("Chrome")) {
+	    	webDriver = TestSetup.getChrome();
+	    }
+	    if (browser.equals("Internet Explorer")) {
+	    	webDriver = TestSetup.getIE();
+	    }
 	    	
 		//Allows the driver to take advantage of an event listener
 		driver = new EventFiringWebDriver(webDriver);
