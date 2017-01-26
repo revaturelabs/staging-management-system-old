@@ -3,7 +3,7 @@
         .module( "sms" )
         .controller( "updateInfoCrtl", updateInfoCtrl );
         
-    function updateInfoCtrl ( $scope, $state, $mdToast, $mdDialog, loginService ) {
+    function updateInfoCtrl ( $scope, $state, $mdToast, $mdDialog, loginService, skillService ) {
         var uic = this;
 
         function populateSkills(){
@@ -19,16 +19,20 @@
         uic.currentSkills = uic.user.skill;
         
         //need GET ENDPOINT
-        //uic.availSkills = userService.getSkills();
-        uic.availSkills = populateSkills();
+//        uic.availSkills = skillService.getSkills();
+        //uic.availSkills = populateSkills();
         
         // functions
         uic.toast = toast;
         uic.cancel = cancel;
         uic.submit = submit;
+        uic.getSkills = getSkills;
         uic.submitSkills = submitSkills;
         uic.removeFromCurrentSkills = removeFromCurrentSkills;
 
+          // initializations
+        uic.getSkills();
+        
           // functions
             // for notifications
         function toast( message ) {
@@ -99,6 +103,12 @@
             }
         }
         
+        function getSkills() {
+        	skillService.getAll(function(response) {
+        		uic.availSkills = response;
+        	}, function(error) {
+        	})
+        }
         function submitSkills() {
         	var add = removeFromAvailSkill($scope.skillToAdd);
         	console.log("add");
