@@ -27,11 +27,13 @@
 			<md-card md-whiteframe="8dp" class="skillCard">
 				<md-card-title>
 					<md-card-title-text>
-						<span class="md-headline">Skillz</span>
+						<span class="md-headline">Skills</span>
 					</md-card-title-text>
 				</md-card-title>
 				<md-card-content>
-					No content to display
+					<p>
+						No content to display
+					</p>
 				</md-card-content>
 			</md-card>
 			<md-card md-whiteframe="8dp" class="certCard">
@@ -42,11 +44,11 @@
 				</md-card-title>
 				<md-card-content>
 					<span ng-hide="manAttCtrl.currentUser.certs[0].date">There is no data to display</span>
-					<ul ng-show="manAttCtrl.currentUser.certs[0].date">
-						<li ng-repeat="cert in manAttCtrl.currentUser.certs | orderBy:'-date'">
+					<div ng-show="manAttCtrl.currentUser.certs[0].date">
+						<div ng-repeat="cert in manAttCtrl.currentUser.certs | orderBy:'-date'" class="certList">
 						<md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48">{{ cert.icon.name }}</md-icon>
-						{{cert.note}} {{ cert.dateDisplay }}</li>
-					</ul>
+						{{cert.note}} {{ cert.dateDisplay }}</div>
+					</div>
 				</md-card-content>
 			</md-card>
 		</div>
@@ -175,22 +177,6 @@
 					</tbody>
 				</table>
 			</md-table-container>
-		
-			<div layout="row" ng-hide="manAttCtrl.showInformation && manAttCtrl.smallDevice">
-				<div style="width: 35%"></div>
-				<div>
-					<li ng-repeat="legitem in manAttCtrl.legend">
-						<md-icon
-							ng-style="{color: '{{legitem.color}}'}"
-							aria-label='{{legitem.name}}' class="material-icons step"
-							ng-class="md-48">
-							{{legitem.name}}
-						</md-icon>
-						{{legitem.description}}
-			
-					</li>
-				</div>
-			</div>
 		</md-card>
 	</div>
 </div>
@@ -221,12 +207,13 @@
 		color: white !important;
 		width: 100%;
 		overflow-y: auto;
+		max-height: 10.5em;
 	}
 	#fixedContainer{
 		position: fixed;
 		width: 32%;
 	}
-	#associateInformationDiv .skillCard{
+	/* #associateInformationDiv .skillCard{
 		width:46%;
 		height: 23em;
 		display: inline-block;
@@ -235,7 +222,7 @@
 		width:46%;
 		height: 23em;
 		display: inline-block;
-	}
+	} */
 	#associateInformationDiv ul{
 		list-style: none;
 	}
@@ -248,11 +235,15 @@
 		right:-22px;
 		top:-15px;
 	}
+	.certList{
+		margin-bottom: 1em;
+		padding-left: 1em;
+	}
 	.certIcon{
 		background: white;
-		float: right;
+		float: left;
 		position: relative;
-		left: -7em;
+		left:-0.5em;
 	}
 	#closeIconContainer{
 		position:fixed;

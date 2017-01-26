@@ -138,20 +138,6 @@
 			});
 			
 			/*this is the end of getting the users*/
-			
-			/*create a legend for the table symbols*/
-			
-			//used as a legend to display what the icon data is
-			mac.legend = [
-				{name: 'check_circle'  , color: "orange", description: "click to verify attendance" },
-				{name: 'done'  , color: "#00A", description: "if the associate checked in but has NOT yet been verified" },
-				{name: 'close', color: "#A00" , description: "if the associate is NOT checked in and NOT verified"},
-				{name: 'done_all' , color: "rgb(89, 226, 168)" , description: "if the associate's attendance has been verified" },
-
-				{name: '    ' , color: "#777", description: "no information available yet" }
-
-			]; 
-				/*end of legend creation*/
         }
 
             // verifies attendance
