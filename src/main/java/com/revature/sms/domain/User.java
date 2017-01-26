@@ -72,18 +72,27 @@ public class User {
 	@JoinColumn(name = "BATCH_TYPE")
 	private BatchType batchType;
 
-/**
- * List containing AssociateAttendence objects that keeps track of the user's attendance.
- */
+	/**
+	 * List containing AssociateAttendence objects that keeps track of the user's attendance.
+	 */
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="ASSOCIATE")
 	private List<AssociateAttendance> attendance;
+
 	/**
 	 * List containing AssociateTask objects that keeps track of the user's tasks.
 	 */
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="ASSOCIATE")
 	private List<AssociateTask> tasks;
+
+	/**
+	 * List containing JobEvent objects that keeps track of the user's events.
+	 */
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="ASSOCIATE")
+	private List<JobEvent> events;
+
 	/**
 	 * UserRole object that keeps track of the user's specific role.
 	 */
@@ -115,11 +124,12 @@ public class User {
 	 * @param batchType BatchType object that represents the specific BatchType that the User belongs to.
 	 * @param attendance List containing AssociateAttendence objects that keeps track of the user's attendance.
 	 * @param tasks List containing AssociateTask objects that keeps track of the user's tasks.
+	 * @param events List containing JobEvent objects that keeps track of the user's events.
 	 * @param userRole UserRole object that keeps track of the user's specific role.
 	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
-			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate) {
+			List<AssociateAttendance> attendance, List<AssociateTask> tasks, List<JobEvent> events, UserRole userRole, Timestamp graduationDate) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -128,6 +138,7 @@ public class User {
 		this.batchType = batchType;
 		this.attendance = attendance;
 		this.tasks = tasks;
+		this.events = events;
 		this.userRole = userRole;
 		this.graduationDate = graduationDate;
 	}
@@ -296,7 +307,25 @@ public class User {
 	public void setTasks(List<AssociateTask> tasks) {
 		this.tasks = tasks;
 	}
-	
+
+	/**
+	 * Method that retrieves the list of JobEvent objects that represents the User's events.
+	 * @return events List containing all the JobEvent objects that belongs to
+	 * the User object.
+	 */
+	public List<JobEvent> getEvents() {
+		return events;
+	}
+
+	/**
+	 * Method that sets the list of JobEvent objects that represents the User's events.
+	 * @param events List containing all the JobEvent objects that belongs to
+	 * the User object.
+	 */
+	public void setEvents(List<JobEvent> events) {
+		this.events = events;
+	}
+
 	/**
 	 * Method that retrieves the role of the current user.
 	 * @return userRole UserRole object that represents the current user's role.

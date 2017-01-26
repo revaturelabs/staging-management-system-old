@@ -1,32 +1,88 @@
+md-dialog {
+	max-width: 60%;
+}
 
-    md-dialog {
-        max-width: 60%;
-    }
-    .changePassword{
-    	width:500px;
-    }
-    
-    .InputContainer{
-    	padding-bottom:0px;
-    }
-    
-    /* attendance table css */
-    .attendanceTable tbody tr:hover {
-		background-color: #E8EAF6;
-	}
-	
-	.highlightToday {
-		background: #E8EAF6;
-	}
-	
-	
-	/* search bar css */
-	#search input[type="text"] {
-		background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
-		padding: 6px 15px 6px 35px;
-	}
-	
-	.mainCard
-	{
-     	margin-bottom: 0px !important;
-	}
+.md-top {
+	position: fixed;
+	top: 66px;
+}
+
+.md-right {
+	position: fixed;
+	right: 16px;
+}
+
+.menu-icon {
+	color: white;
+	size: 24px;
+}
+
+.page-icon {
+	color: dimgrey;
+	size: 24px;
+}
+
+.associateAttendanceTable h3, .associateAttendanceTable p {
+	margin: 0px 0px 0px 0px;
+	text-align: center;
+}
+
+.associateAttendanceTable p {
+	font-weight: normal;
+}
+
+.tableData {
+	text-align: center;
+}
+
+table[md-data-table]>tbody>tr>td:nth-child(2) {
+	max-width: 20%;
+	word-wrap: break-word;
+}
+
+.associateAttendanceTable th {
+	width: 20%;
+}
+
+.attendanceCell {
+	padding: 0px !important;
+}
+
+.changePassword {
+	width: 500px;
+}
+
+.InputContainer {
+	padding-bottom: 0px;
+}
+
+/* attendance table css */
+.attendanceTable tbody tr:hover {
+	background-color: #E8EAF6;
+}
+
+.highlightToday {
+	background: #E8EAF6;
+}
+
+/* search bar css */
+#search input[type="text"] {
+	background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
+	padding: 6px 15px 6px 35px;
+}
+
+.mainCard {
+	margin-bottom: 0px !important;
+}
+
+.eventListRight {
+	text-align: right;
+}
+
+.h3Top {
+	font-weight: bold !important;
+}
+
+.eventDialog {
+	min-width: 500px;
+}
