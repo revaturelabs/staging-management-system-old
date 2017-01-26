@@ -19,6 +19,7 @@
         // functions
         aac.calcWeek = calcWeek;
         aac.setToolbar = setToolbar;
+        aac.openEvents = openEvents;
         aac.assocCertifications = assocCertifications;
         aac.getScheduledCert = getScheduledCert;
         aac.days_between = days_between;
@@ -53,14 +54,12 @@
 
             aac.weekAttendance = $filter( "weekFilter" )( [aac.user], monday )[0].thisWeek;
             for (var j = 0; j < aac.week.length; j++) {
-                if ( aac.week[j].date.getTime() < aac.today.getTime() &&  aac.weekAttendance[j] == undefined) {
-                  
-                        aac.weekAttendance[j] = {
-                            verified: false,
-                            checkedIn: false
-                        }
-                        aac.weekAttendance[j] = $filter( "iconFilter" )( aac.weekAttendance[j] );
-                   
+                if ( (aac.week[j].date.getTime() < aac.today.getTime()) && ( aac.weekAttendance[j] == undefined ) ) {
+                    aac.weekAttendance[j] = {
+                        verified: false,
+                        checkedIn: false
+                    }
+                    aac.weekAttendance[j] = $filter( "iconFilter" )( aac.weekAttendance[j] );
                 }
             }
         }
@@ -118,17 +117,37 @@
         }
             // sets toobar icons and functions
         function setToolbar() {
-        	var actions=[];
-        	
-        	actions.push({ "function": aac.assocCertifications, "icon": "date_range", "tooltip": "Certifications"});
-        	
-        	var cin = todayCheckedIn();
-        	
+
+            var actions = [{
+                "function": aac.openEvents,
+                "icon"    : "event_note",
+                "tooltip" : "View events"
+            }, { 
+                "function": aac.assocCertifications, 
+                "icon"    : "date_range", 
+                "tooltip" : "Certifications"
+            }];
+
+            var cin = todayCheckedIn();
         	if(cin != null){
         		actions.push(cin);
         	}
-            $scope.$emit( "setToolbar", { title: "Weekly attendance", actions } );
-        
+
+            $scope.$emit( "setToolbar", { 
+                title: "Weekly attendance", 
+                actions });
+        }
+
+            // opens dialog to display user events
+        function openEvents() {
+            $mdDialog.show({
+                templateUrl: "html/templates/viewEvents.html",
+                controller: "associateViewEventsCtrl as aVECtrl",
+                locals: { events: aac.user.events },
+                bindToController: true,
+                clickOutsideToClose: true,
+                escapeToClose: true
+            });
         }
 
         function assocCertifications() {
@@ -173,7 +192,7 @@
         }
         
 
-        //If the user has a scheduled cert, return the formatted date of that cert, otherwise return null
+          // if the user has a scheduled cert, return the formatted date of that cert, otherwise return null
         function getScheduledCert() {
         	for(var i = 0; i < aac.user.tasks.length; i++) {
         		var certDate = new Date(aac.user.tasks[i].date);
