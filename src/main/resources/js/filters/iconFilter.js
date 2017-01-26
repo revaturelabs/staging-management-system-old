@@ -8,17 +8,16 @@ sms.filter("iconFilter", function(){
             {name: 'done'  , color: "#00A" },
             {name: 'close', color: "#A00" },
             {name: 'done_all' , color: "#59E2A8" },
-            {name: 'library_books' , color: "#E91E63"},
-            {name: 'looks', color: "#E91E63"},
-            {name: 'library_books' , color: "gray"},
-            {name: 'looks', color: "gray"},
+            {name: 'turned_in' , color: "#E91E63"},
+            {name: 'library_books', color: "#E91E63"},
+            {name: 'turned_in' , color: "gray"},
+            {name: 'library_books', color: "gray"},
             {name: 'looks_one', color: "#E91E63"},
             {name: 'looks_two', color: "#E91E63"},
             {name: 'looks_3', color: "#E91E63"},
             {name: 'looks_4', color: "#E91E63"},
             {name: 'looks_5', color: "#E91E63"},
             {name: 'looks_6', color: "#E91E63"},
-            
          ];
 		
         

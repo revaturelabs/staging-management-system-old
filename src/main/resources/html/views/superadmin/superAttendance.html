@@ -1,43 +1,55 @@
 <div layout="row">
 	<div ng-show="supAttCtrl.showInformation" id="associateInformationDiv" ng-class="{showInformationDiv : (supAttCtrl.showInformation), showBigInformationDiv : (supAttCtrl.showInformation && supAttCtrl.smallDevice)}">
-		<md-card md-whiteframe="8dp">
-			<md-card-title> 
-				<md-icon style="text-align: left" class="material-icons step" ng-class="md-48" ng-click="supAttCtrl.hideInfo()">trending_flat</md-icon>
-				<md-card-title-text style="text-align: center"><h3>Associate Info</h3></md-card-title-text> 
-			</md-card-title>
-			<table>
-				<thead>
-					<tr>
-						<th colspan="2" style="width: 50%;"><h2>Name</h2></th>
-						<th colspan="2"><h2>{{ supAttCtrl.currentUser.firstName }} {{ supAttCtrl.currentUser.lastName }}</h2></th>
-					</tr>
-					<tr class="noBottom">
-						<th colspan="4"><h2>Panels</h2></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="panel in supAttCtrl.currentUser.panels | orderBy:'-date'">
-						<td>
-							<md-icon style="background: white;" ng-show="panel.icon" md-whiteframe="2dp" ng-style="{color: panel.icon.color}" class="material-icons step" ng-class="md-48">{{ panel.icon.name }}</md-icon>
-						</td>
-						<td colspan="2">
-							<span style="text-align: center">{{panel.note}}</span>
-						</td>
-						<td><span style="text-align: center">{{ panel.dateDisplay }}</span></td>
-					</tr>
-					<tr class="noBottom"><th colspan="4"><h2>Certifications</h2></th></tr>
-					<tr ng-repeat="cert in supAttCtrl.currentUser.certs  | orderBy:'-date'">
-						<td>
-							<md-icon style="background: white;" ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step" ng-class="md-48">{{ cert.icon.name }}</md-icon>
-						</td>
-						<td colspan="2">{{ cert.note }}</td>
-						<td>{{ cert.dateDisplay }}</td>
-					</tr>
-				</tbody>
-			
-			
-			</table>
-		</md-card>
+		<div id="fixedContainer">
+			<div id="closeIconContainer">
+				<span><md-icon id="closeIcon" ng-click="supAttCtrl.hideInfo()">compare_arrows</md-icon></span>
+			</div>
+			<md-card md-whiteframe="8dp">
+				<md-card-title>
+					<md-card-title-text>
+						<span class="md-headline">
+						{{ supAttCtrl.currentUser.firstName }} {{ supAttCtrl.currentUser.lastName }} - {{ supAttCtrl.currentUser.batchType.type}} {{ supAttCtrl.currentUser.gradDateDisplay}}
+						</span>
+					</md-card-title-text>
+				</md-card-title>
+				<md-card-content>
+						<span>{{ supAttCtrl.currentUser.username }}
+							<div style="float: right;;" ng-show="supAttCtrl.currentUser.project"> Current project :{{ supAttCtrl.currentUser.project }}</div>
+							<div style="float: right;;" ng-hide="supAttCtrl.currentUser.project">This associate is not currently on a project</div>
+						</span>
+						<p>
+							Panel Status: 
+							<span ng-show="supAttCtrl.currentUser.panels[0]">{{ supAttCtrl.currentUser.panels[0].note }} {{ supAttCtrl.currentUser.panels[0].dateDisplay }}</span>
+							<span ng-hide="supAttCtrl.currentUser.panels[0]">No Status to note</span>
+						</p>
+				</md-card-content>
+			</md-card>
+			<md-card md-whiteframe="8dp" class="skillCard">
+				<md-card-title>
+					<md-card-title-text>
+						<span class="md-headline">Skillz</span>
+					</md-card-title-text>
+				</md-card-title>
+				<md-card-content>
+					No content to display
+				</md-card-content>
+			</md-card>
+			<md-card md-whiteframe="8dp" class="certCard">
+				<md-card-title>
+					<md-card-title-text>
+						<span class="md-headline">Certifications</span>
+					</md-card-title-text>
+				</md-card-title>
+				<md-card-content>
+					<span ng-hide="supAttCtrl.currentUser.certs[0].date">There is no data to display</span>
+					<ul ng-show="supAttCtrl.currentUser.certs[0].date">
+						<li ng-repeat="cert in supAttCtrl.currentUser.certs | orderBy:'-date'">
+						<md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48">{{ cert.icon.name }}</md-icon>
+						{{cert.note}} {{ cert.dateDisplay }}</li>
+					</ul>
+				</md-card-content>
+			</md-card>
+		</div>
 	</div>
 
 	<div id="attendanceTableDiv" ng-class="{resizeAttendanceDiv : (supAttCtrl.showInformation), resizeSmallAttendanceDiv : (supAttCtrl.showInformation && supAttCtrl.smallDevice)}">
@@ -106,7 +118,7 @@
 					<tbody md-body>
 						<tr md-row ng-repeat = "as in supAttCtrl.users | filter:searchBox track by as.username">
 							<td md-cell ng-click="supAttCtrl.showInfo(as)" ng-class="{activeUser : (as.username == supAttCtrl.currentUser.username)}">
-								<md-icon ng-show="as.notification.icon" md-whiteframe="2dp" ng-style="{color: as.notification.icon.color}" style="background: white;" class="material-icons step" ng-class="md-48">{{ as.notification.icon.name }}</md-icon>
+								<div class="notificationContainer"><md-icon ng-show="as.notification.icon" md-whiteframe="2dp" ng-style="{color: as.notification.icon.color}" class="material-icons step notificationIcon" ng-class="md-48">{{ as.notification.icon.name }}</md-icon></div>
 								{{ as.firstName }} {{ as.lastName }}
 							</td>
 							<td md-cell ng-click="supAttCtrl.verifyAttendance(as, 0, as.thisWeek[0].verified)" style="text-align: center; text-indent: 18px;"
@@ -187,9 +199,6 @@
 	.showInformationDiv{
 		width:33%;
 	}
-	.showInformationDiv md-card{
-		color: white !important;
-	}
 	.showBigInformationDiv{
 		width:50%;
 	}
@@ -209,17 +218,59 @@
 	}
 	#associateInformationDiv md-card{
 		background-color: #5C6BC0;
-	} 
-	#associateInformationDiv md-card table{
-		border-collapse:collapse;
+		color: white !important;
+		width: 100%;
+		overflow-y: auto;
 	}
-	#associateInformationDiv md-card table tr{
-		border-bottom: 1pt solid white;
+	#fixedContainer{
+		position: fixed;
+		width: 32%;
 	}
-	#associateInformationDiv md-card table tr:LAST-CHILD{
-		border-bottom: none;
+	#associateInformationDiv .skillCard{
+		width:46%;
+		height: 23em;
+		display: inline-block;
 	}
-	#associateInformationDiv md-card table tr.noBottom{
-		border-bottom: none;
+	#associateInformationDiv .certCard{
+		width:46%;
+		height: 23em;
+		display: inline-block;
+	}
+	#associateInformationDiv ul{
+		list-style: none;
+	}
+	.notificationContainer{
+		position:relative;
+	}
+	.notificationIcon{
+		background: white;
+		position: absolute;
+		right:-22px;
+		top:-15px;
+	}
+	.certIcon{
+		background: white;
+		float: right;
+		position: relative;
+		left: -7em;
+	}
+	#closeIconContainer{
+		position:fixed;
+		width: 32%;
+	}
+	#closeIcon{
+		cursor: pointer;
+		position: relative;
+		left: 87%;
+		margin-top: 5%;
+		font-size: 44px;
+		color: white !important;
+	}
+	.certIcon{
+		background: white;
+		float: right;
+		position: relative;
+		top: inherit;
+		left: -7em;
 	}
 </style>

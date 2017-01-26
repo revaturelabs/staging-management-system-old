@@ -265,6 +265,10 @@
         sac.showInfo = function(user){
         	sac.showInformation = true;
         	sac.currentUser = user;
+        	if(user.graduationDate){
+        		gradDate = new Date(user.graduationDate);
+        		sac.currentUser.gradDateDisplay = (gradDate.getMonth()+1)+"/"+gradDate.getDate()+"/"+gradDate.getFullYear();
+        	}
         }
         
         sac.hideInfo = function(){
