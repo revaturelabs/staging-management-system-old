@@ -2,21 +2,19 @@
     angular
         .module( "sms" )
         .controller( "associateAttendenceCtrl", associateAttendanceCtrl );
-        
 
     function associateAttendanceCtrl( $mdDialog, $scope, $state, $filter, loginService, userService, weekdays ) {
-
         var aac = this;
 
-        // bindables
-        // data
+          // bindables
+            // data
         aac.user = loginService.getUser();
         aac.curr = new Date();
         aac.today = aac.curr;
         aac.minWeek = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() - 28 ); 
         aac.maxWeek = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() + 7 );
 
-        // functions
+            // functions
         aac.calcWeek = calcWeek;
         aac.setToolbar = setToolbar;
         aac.openEvents = openEvents;
@@ -29,16 +27,13 @@
         aac.toast = toast;
         aac.checkIn = checkIn;
 
-        // initialization
+          // initialization
         aac.setToolbar();
         aac.calcWeek( aac.curr );
-        
-        
         if (getScheduledCert() != null) {
         	aac.toast(getScheduledCert());
         }
         
-
           // functions
             // returns list of date objects representing the week
         function calcWeek( date ) {
@@ -59,13 +54,13 @@
                         verified: false,
                         checkedIn: false
                     }
-                    aac.weekAttendance[j] = $filter( "iconFilter" )( aac.weekAttendance[j] );
+                    aac.weekAttendance[j] = $filter( "iconFilter" )( aac.weekAttendance[j], "week" );
                 }
             }
         }
 
-        //SonarQube appeasement
-        var dialogYes = function() {
+          // SonarQube appeasement
+        function dialogYes() {
 	    	//selected yes
 	    	//checkout
 	    	aac.x.checkedIn = false;
@@ -74,20 +69,20 @@
 	    		aac.calcWeek( aac.curr );
 	    		aac.setToolbar();
 	    	});
-		 };
+		 }
 		 
-      var updateSuccess = function(){ 
+        function updateSuccess(){ 
 			aac.toast("Successfully checked in.")
     		aac.calcWeek( aac.curr );
     		aac.setToolbar();
-    		};
-    //end sonarQube appeasement
+    	}
+          //end sonarQube appeasement
         
         function todayCheckedIn(){
         	var d = new Date();
         	for(var i=0; i< aac.user.attendance.length; i++){
         		var d2 = new Date(aac.user.attendance[i].date);
-        		if(d.getDate() === d2.getDate() && d.getMonth() === d2.getMonth()){
+        		if(d.getDate() == d2.getDate() && d.getMonth() == d2.getMonth()){
         			if(aac.user.attendance[i].verified){
         				return null;
         			}
@@ -115,23 +110,28 @@
         	userService.update(aac.user,function(){});
         	return {"function": aac.checkIn, "icon": "check", "tooltip": "Check in"};
         }
+
             // sets toobar icons and functions
         function setToolbar() {
-
-            var actions = [{
-                "function": aac.openEvents,
-                "icon"    : "event_note",
-                "tooltip" : "View events"
-            }, { 
-                "function": aac.assocCertifications, 
-                "icon"    : "date_range", 
-                "tooltip" : "Certifications"
-            }];
-
-            var cin = todayCheckedIn();
+        	var actions=[];
+        	
+        	var cin = todayCheckedIn();
         	if(cin != null){
         		actions.push(cin);
         	}
+
+              // view all events
+            actions.push({
+                "function": aac.openEvents,
+                "icon"    : "event_note",
+                "tooltip" : "View events"
+            })
+              // schedule certification
+            actions.push({ 
+                "function": aac.assocCertifications, 
+                "icon"    : "date_range", 
+                "tooltip" : "Certifications"
+            });
 
             $scope.$emit( "setToolbar", { 
                 title: "Weekly attendance", 
@@ -151,20 +151,20 @@
         }
 
         function assocCertifications() {
-            	if (getScheduledCert() == null) {
-            		$mdDialog.show({
-                		templateUrl: "html/templates/scheduleCertification.html",
-                		controller: "associateCertificationsCtrl as assCertCtrl"
-                	}).then( function() {
-                		aac.toast("Certification Scheduled");
-                    }, function() {
-                    	aac.toast("Certification Schedule Cancelled");
-                    });
-            	}
-            	else {
-            		aac.toast("You can only schedule one certification at a time.");
-            	}
+            if (getScheduledCert() == null) {
+                $mdDialog.show({
+                    templateUrl: "html/templates/scheduleCertification.html",
+                    controller: "associateCertificationsCtrl as assCertCtrl"
+                }).then( function() {
+                    aac.toast("Certification Scheduled");
+                }, function() {
+                    aac.toast("Certification Schedule Cancelled");
+                });
             }
+            else {
+                aac.toast("You can only schedule one certification at a time.");
+            }
+        }
         
         function days_between(date1, date2) {
 
