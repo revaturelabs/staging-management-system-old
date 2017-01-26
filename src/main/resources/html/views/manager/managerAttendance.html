@@ -1,12 +1,59 @@
+<<<<<<< HEAD
 
     <div layout="row">
 
           <!-- Associate info card -->
         <div ng-show="manAttCtrl.infoOpen" id="associateInformationDiv" ng-class="{showInformationDiv : (manAttCtrl.infoOpen), showBigInformationDiv : (manAttCtrl.infoOpen && manAttCtrl.smallDevice)}">
-            <md-card>
-                {{ manAttCtrl.selectedUser.firstName }} {{ manAttCtrl.selectedUser.lastName }}
-                {{ manAttCtrl.selectedUser.username }}
-            </md-card>
+            <div id="fixedContainer">
+                <div id="closeIconContainer">
+                    <span><md-icon id="closeIcon" ng-click="manAttCtrl.hideInfo()">compare_arrows</md-icon></span>
+                </div>
+                <md-card md-whiteframe="8dp">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">
+                            {{ manAttCtrl.currentUser.firstName }} {{ manAttCtrl.currentUser.lastName }} - {{ manAttCtrl.currentUser.batchType.type}} {{ manAttCtrl.currentUser.gradDateDisplay}}
+                            </span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                            <span>{{ manAttCtrl.currentUser.username }}
+                                <div style="float: right;;" ng-show="manAttCtrl.currentUser.project"> Current project :{{ manAttCtrl.currentUser.project }}</div>
+                                <div style="float: right;;" ng-hide="manAttCtrl.currentUser.project">This associate is not currently on a project</div>
+                            </span>
+                            <p>
+                                Panel Status: 
+                                <span ng-show="manAttCtrl.currentUser.panels[0]">{{ manAttCtrl.currentUser.panels[0].note }} {{ manAttCtrl.currentUser.panels[0].dateDisplay }}</span>
+                                <span ng-hide="manAttCtrl.currentUser.panels[0]">No Status to note</span>
+                            </p>
+                    </md-card-content>
+                </md-card>
+                <md-card md-whiteframe="8dp" class="skillCard">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Skillz</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        No content to display
+                    </md-card-content>
+                </md-card>
+                <md-card md-whiteframe="8dp" class="certCard">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Certifications</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <span ng-hide="manAttCtrl.currentUser.certs[0].date">There is no data to display</span>
+                        <ul ng-show="manAttCtrl.currentUser.certs[0].date">
+                            <li ng-repeat="cert in manAttCtrl.currentUser.certs | orderBy:'-date'">
+                            <md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48">{{ cert.icon.name }}</md-icon>
+                            {{cert.note}} {{ cert.dateDisplay }}</li>
+                        </ul>
+                    </md-card-content>
+                </md-card>
+            </div>
         </div>
 
           <!-- Associate attendance table -->
@@ -109,13 +156,9 @@
 
     </div>
     <style type="text/css">
-        
         .showInformationDiv{
             width:33%;
         }
-        /*.showInformationDiv md-card{
-            color: white !important;
-        }*/
         .showBigInformationDiv{
             width:50%;
         }
@@ -133,19 +176,54 @@
         #attendanceTableDiv{
             width: 100%;
         }
-        /*#associateInformationDiv md-card{
+        #associateInformationDiv md-card{
             background-color: #5C6BC0;
-        } */
-        #associateInformationDiv md-card table{
-            border-collapse:collapse;
+            color: white !important;
+            width: 100%;
+            overflow-y: auto;
         }
-        #associateInformationDiv md-card table tr{
-            border-bottom: 1pt solid white;
+        #fixedContainer{
+            position: fixed;
+            width: 32%;
         }
-        #associateInformationDiv md-card table tr:LAST-CHILD{
-            border-bottom: none;
+        #associateInformationDiv .skillCard{
+            width:46%;
+            height: 23em;
+            display: inline-block;
         }
-        #associateInformationDiv md-card table tr.noBottom{
-            border-bottom: none;
+        #associateInformationDiv .certCard{
+            width:46%;
+            height: 23em;
+            display: inline-block;
+        }
+        #associateInformationDiv ul{
+            list-style: none;
+        }
+        .notificationContainer{
+            position:relative;
+        }
+        .notificationIcon{
+            background: white;
+            position: absolute;
+            right:-22px;
+            top:-15px;
+        }
+        .certIcon{
+            background: white;
+            float: right;
+            position: relative;
+            left: -7em;
+        }
+        #closeIconContainer{
+            position:fixed;
+            width: 32%;
+        }
+        #closeIcon{
+            cursor: pointer;
+            position: relative;
+            left: 87%;
+            margin-top: 5%;
+            font-size: 44px;
+            color: white !important;
         }
     </style>

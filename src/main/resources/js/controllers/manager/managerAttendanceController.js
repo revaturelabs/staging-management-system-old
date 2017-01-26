@@ -208,7 +208,7 @@
         function toast( message ) {
             $scope.$emit( "toastMessage", message );
         }
-
+        
             // adds associates by batch
 		function newAssociates() {
             
