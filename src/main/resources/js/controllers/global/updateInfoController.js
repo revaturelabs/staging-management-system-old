@@ -113,6 +113,7 @@
         	}
         	
         	uic.user.skill = uic.currentSkills;
+        	$scope.skillToAdd="";
         }
         
         function removeFromAvailSkill(){
@@ -132,6 +133,17 @@
         
         function removeFromCurrentSkills(id){
         	console.log(id);
+        	for(var i =0; i < uic.currentSkills.length; i++){
+        		if(id == uic.currentSkills[i].id){
+        			//remove from avail skills
+        			console.log(uic.currentSkills[i]);
+        			uic.availSkills.push({"id":uic.currentSkills.id, "skill":uic.currentSkills.skill});
+        			uic.currentSkills.splice(i,1);
+                	uic.user.skill = uic.currentSkills;
+                	break;
+        		}
+        	}
+        	
         }
         
         
