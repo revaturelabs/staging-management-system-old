@@ -130,6 +130,8 @@
 				mac.users = $filter("associateFilter")(response);
 				//filter the associates to get the date objects that are only for the current week
 				mac.users = $filter("weekFilter")(mac.users, mac.thisMonday);
+				//filter the associates to get the task information
+				mac.users = $filter("taskFilter")(mac.users, today);
 				
 			}, function(error){
 				mac.toast("Error in retrieving all associates.");
