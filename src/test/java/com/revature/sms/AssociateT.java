@@ -79,9 +79,7 @@ public class AssociateT implements InstanceTestClassListener {
 		
 		//Make sure the login page is loaded correctly 
 		Assert.assertEquals(expected.getProperty("siteName"), driver.getTitle());
-		System.out.println("Here");
 		Assert.assertTrue(lp.verify());
-		System.out.println("There");
 		Assert.assertEquals(expected.getProperty("loginPg"), lp.header.getText());
 	}
 	
