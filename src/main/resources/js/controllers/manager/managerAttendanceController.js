@@ -43,6 +43,7 @@
                 mac.smallDevice = false;
             }
         }
+
             // gets all users' information
         function getUsers( success ) {
             userService.getAll( function(response) {
@@ -182,12 +183,19 @@
 
             // sets toobar icons and functions
         function setToolbar() {
+            var actions = [];
+            if (mac.user.userRole.name == "superAdmin") {
+                actions.push( {
+                    "function": mac.newAssociates,
+                    "icons"   : "add",
+                    "tooltip" : "Add batch of new associates."
+                })
+            }
+
             $scope.$emit( "setToolbar", { 
                 title: "Weekly attendance", 
-                actions: [{ 
-                    "function": mac.newAssociates, 
-                    "icon"    : "add", 
-                    "tooltip" : "Add batch of new associates"}] } );
+                actions }
+            );
         }
 
             // checks if previous week is before minimum date and resets week dates if not
