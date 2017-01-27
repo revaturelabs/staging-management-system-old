@@ -2,28 +2,42 @@
     angular
         .module( "sms" )
         .controller( "updateInfoCrtl", updateInfoCtrl );
-        
+        /**
+         * @description AngularJS controller for updating a password (and eventually other info)
+         */
     function updateInfoCtrl ( $scope, $state, $mdToast, $mdDialog, loginService ) {
         var uic = this;
 
           // bindables
             // functions
+        /**@var {function} toast function reference variable. */
         uic.toast = toast;
+        /**@var {function} cancel function reference variable. */
         uic.cancel = cancel;
+        /**@var {function} submit function reference variable. */
         uic.submit = submit;
 
           // functions
-            // for notifications
+             /**
+             * @description Displays a toast notification.
+             * @param {string} message The value of the message to be shown.
+             */
         function toast( message ) {
             $mdToast.show( $mdToast.simple().textContent( message ).action("OKAY").position("top right").highlightAction(true) );
         }
         
-            // when user decides to cancel password update
+
+        /**
+         * @description Cancel the currently opened dialog window.
+         */
         function cancel() {
             $mdDialog.cancel();
         }
         
-            // when user submits updated password
+           
+            /**
+             * @description Submit the changed password to update the users password.
+             */
         function submit() {
               //check for empty passwords
             if(oldPass.value === ""){
