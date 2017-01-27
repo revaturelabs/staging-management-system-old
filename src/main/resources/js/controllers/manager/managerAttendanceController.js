@@ -6,6 +6,7 @@
       * @description AngularJs controller for Manager attendance module (both versions of Admins)
       */   
     function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, batchAddFactory, weekdays ) {
+       /**@prop {function} Reference variable for this controller */
         var mac = this;
 
           // bindables
@@ -16,22 +17,37 @@
         mac.curr = new Date();
         /**@prop {Date} today Today's date. */
         mac.today = mac.curr;
+         /**@prop {Date} minWeek The earliest week that can be looked at.. */
         mac.minWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() - 28 ); 
+         /**@prop {Date} maxWeek The latest week that can be looked at. */
         mac.maxWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() + 7 );
+         /**@prop {boolean} infoOpen Variable that tells if the info tabs are open or not. */
         mac.infoOpen = false;
 
             // functions
+        /**@var {function} findDevice function reference variable. */
         mac.findDevice = findDevice;
+        /**@var {function} getUsers function reference variable. */
         mac.getUsers = getUsers;
+        /**@var {function} calcWeek function reference variable. */
         mac.calcWeek = calcWeek;
+        /**@var {function} filterWeek function reference variable. */
         mac.filterWeek = filterWeek;
+        /**@var {function} toggleInfo function reference variable. */
         mac.toggleInfo = toggleInfo;
+        /**@var {function} closeInfo function reference variable. */
         mac.closeInfo = closeInfo;
+        /**@var {function} verify function reference variable. */
         mac.verify = verify;
+        /**@var {function} setToolbar function reference variable. */
         mac.setToolbar = setToolbar;
+        /**@var {function} prevWeek function reference variable. */
         mac.prevWeek = prevWeek;
+        /**@var {function} nextWeek function reference variable. */
         mac.nextWeek = nextWeek;
+        /**@var {function} toast function reference variable. */
         mac.toast = toast;
+        /**@var {function} newAssociates function reference variable. */
         mac.newAssociates = newAssociates;
 
           // initialization
@@ -40,7 +56,9 @@
         mac.setToolbar();
         
           // functions
-            // set browser size based on device
+            /**
+             * @description Sets the browser size based on the device being used.
+             */
         function findDevice() {
             if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
                 mac.smallDevice = true;
@@ -49,6 +67,9 @@
             }
         }
             // gets all users' information
+        /**
+         * @description Retrieves the information for all users from teh server.
+         */
         function getUsers( success ) {
             userService.getAll( function(response) {
                 mac.users = $filter( "associateFilter" )( response );
@@ -59,22 +80,9 @@
             });
         }
 
-            // sends options and actions to toolbar
-		function addOptions() {
-			var actions = [];
-			
-			if (mac.user.userRole.name == "superAdmin") {
-				actions.push({
-					"function": mac.newAssociates,
-					"icon": "add",
-					"tooltip": "Add Batch"
-				});
-			}
-
-			$scope.$emit("setToolbar", {title: "Weekly Attendance", actions});
-		}
-
-            // adds object representing this week's attendance to each user
+            /**
+             * @description Adds the information for this weeks attendance to each of the users.
+             */
         function calcWeek( date ) {
             
             var monday = new Date( date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1 );
@@ -91,7 +99,9 @@
             });
         }
 
-            // filters this week's attendance from the give user
+            /**
+             * @description Filters the current weeks attendance from the users.
+             */
         function filterWeek( monday, user ) {
             var weekAttendance = $filter( "weekFilter" )( [user], monday )[0].thisWeek;
             for (var i = 0; i < mac.week.length; i++) {
@@ -112,6 +122,9 @@
         }
 
             // sets selected user and opens/closes info panel
+            /**
+             * @description Opens/closes the info panel and sets the selected user to display the relevant info.
+             */
         function toggleInfo( user ) {
             if (mac.infoOpen) {
                 if (mac.selectedUser == user) {
@@ -126,14 +139,18 @@
             }
         }
 
-            // closes associate info panel
+        /**
+         * @description Closes the info panel.
+         */
         function closeInfo() {
             mac.infoOpen = false;
             mac.selectedUser = null;
         }
 
-            // verifies/unverifies user's attendance
-              // confirmation dialog pops up if unverifying attendance
+        /**
+         * @description Verifies and unverifies the clicked users attendance. Opens a confirmation dialog
+         * if unverifing an already verified associate. 
+         */
         function verify( user, index ) {
             var selectedDay = mac.week[index].date;
             if (user.attendance) {
@@ -185,17 +202,27 @@
             }    
         }
 
-            // sets toobar icons and functions
+        /**
+         * @description Sets the toolbar options based on the role of the associate. 
+         * At the moment, only relevant to add superAdmin options to superAdmin users when logged in,
+         * as superAdmin should always have all the options that admins do.
+         */
         function setToolbar() {
-            $scope.$emit( "setToolbar", { 
-                title: "Weekly attendance", 
-                actions: [{ 
-                    "function": mac.newAssociates, 
-                    "icon"    : "add", 
-                    "tooltip" : "Add batch of new associates"}] } );
+            if (mac.user.userRole.name == "superAdmin") {
+                $scope.$emit( "setToolbar", { 
+                    title: "Weekly attendance", 
+                    actions: [{ 
+                        "function": mac.newAssociates, 
+                        "icon"    : "add", 
+                        "tooltip" : "Add batch of new associates"}] } );
+            }
         }
 
-            // checks if previous week is before minimum date and resets week dates if not
+            
+            /**
+             * @description Changes display to the previous week, unless the current week displayed
+             * is the minimum week. In that case, an error notification is displayed. 
+             */
         function prevWeek() {
             var newDate = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() - 7 );
             if ( newDate.getTime() < mac.minWeek.getTime() ) {
@@ -206,7 +233,10 @@
             }
         }
 
-            // checks if next week is after maximum date and resets week dates if not
+            /**
+             * @description Changes display to the next week, unless the current week displayed
+             * is the maximum week. In that case, an error notification is displayed. 
+             */
         function nextWeek() {
             var newDate = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() + 7 );
             if ( newDate.getTime() > mac.maxWeek.getTime() ) {
@@ -217,7 +247,10 @@
             }
         }
 
-            // calls root-level toast function
+            /**
+             * @description Displays a toast notification.
+             * @param {string} message The value of the message to be shown.
+             */
         function toast( message ) {
             $scope.$emit( "toastMessage", message );
         }
