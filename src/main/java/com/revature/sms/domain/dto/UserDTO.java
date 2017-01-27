@@ -3,10 +3,12 @@ package com.revature.sms.domain.dto;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.Technical_Skills;
 import com.revature.sms.domain.UserRole;
 
 public class UserDTO {
@@ -22,6 +24,7 @@ public class UserDTO {
 	private List<AssociateAttendance> attendance;
 	private Timestamp graduationDate;
 	private List<AssociateTask> tasks;
+	private Set<Technical_Skills> skill;
 	
 	public UserDTO() {
 		super();
@@ -48,8 +51,21 @@ public class UserDTO {
 		this.graduationDate = graduationDate;
 		this.tasks = tasks;
 	}
-
 	
+	public UserDTO(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
+			UserRole userRole, Timestamp graduationDate, List<AssociateTask> tasks, 
+			Set<Technical_Skills> skill) {
+		super();
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.hashedPassword = hashedPassword;
+		this.batchType = batchType;
+		this.userRole = userRole;
+		this.graduationDate = graduationDate;
+		this.tasks = tasks;
+		this.skill = skill;
+	}
 
 	public String getUsername() {
 		return username;
@@ -137,5 +153,12 @@ public class UserDTO {
 		this.tasks = tasks;
 	}
 
+	public Set<Technical_Skills> getSkill() {
+		return skill;
+	}
+
+	public void setSkill(Set<Technical_Skills> skill) {
+		this.skill = skill;
+	}
 
 }
