@@ -83,8 +83,7 @@
             var oldPassH = CryptoJS.SHA1(oldPass.value).toString();
             var newPassH = CryptoJS.SHA1(newPass.value).toString();
             var confirmPassH = CryptoJS.SHA1(confirmPass.value).toString();
-            
-            if(newPassH == confirmPassH){
+                        if(newPassH == confirmPassH){
                   // new passwords match
                 if(oldPassH != newPassH){
                       // old and new passwords are different
@@ -125,6 +124,7 @@
         	})
         }
         function submitSkills() {
+            if($scope.skillToAdd == undefined || $scope.skillToAdd == "" ){ return; } 
         	var add = removeFromAvailSkill();
         	uic.currentSkills.push(add);
         	
