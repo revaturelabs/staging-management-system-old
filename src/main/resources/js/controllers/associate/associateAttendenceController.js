@@ -143,6 +143,7 @@
         		id: null
         		});
         	
+        	// for SonarQube
         	userService.update(aac.user,function(){});
         	return {"function": aac.checkIn, "icon": "check", "tooltip": "Check in"};
         }
