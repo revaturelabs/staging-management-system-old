@@ -15,13 +15,9 @@
         tc.user = loginService.getUser();
 
             // functions
-         /**@var {function} checkPass function reference variable. */   
         tc.checkPass = checkPass;
-       /**@var {function} toast function reference variable. */
         tc.toast = toast;
-        /**@var {function} logout function reference variable. */
         tc.logout = logout;
-        /**@var {function} settings function reference variable. */
         tc.settings = settings;
 
           // initialization

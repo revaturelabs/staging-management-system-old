@@ -10,11 +10,9 @@
 
           // bindables
             // functions
-        /**@var {function} toast function reference variable. */
+       
         uic.toast = toast;
-        /**@var {function} cancel function reference variable. */
         uic.cancel = cancel;
-        /**@var {function} submit function reference variable. */
         uic.submit = submit;
 
           // functions
