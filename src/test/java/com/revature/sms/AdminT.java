@@ -98,7 +98,6 @@ public class AdminT implements InstanceTestClassListener {
 	}
 	
 	// Test to enter username in search box and verify correct associate name is returned
-	@Ignore
 	@Test
 	public void testSearchBar() {
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
@@ -121,7 +120,6 @@ public class AdminT implements InstanceTestClassListener {
 		Assert.assertTrue(lp.verify());
 	}
 	
-	@Ignore
 	@Test
 	public void testPasswordChange() {
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
@@ -143,6 +141,16 @@ public class AdminT implements InstanceTestClassListener {
 		adp.logout.click();
 						
 	}
+	
+
+	@Test
+	public void testCancelButtons() {
+		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
+		adp.settings.click();
+		cpw.cancel.click();
+		adp.logout.click();
+	}
+	
 	
 	
 	public void testAdminAttendanceView() {

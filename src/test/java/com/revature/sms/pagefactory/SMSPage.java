@@ -1,6 +1,9 @@
 package com.revature.sms.pagefactory;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,32 +21,49 @@ public abstract class SMSPage {
 	}
 	
 	//Verifies that the web driver is currently on the page specified by this page object
+	@SuppressWarnings("unchecked")
 	public boolean verify() {
 		Class<? extends SMSPage> thisClass = null;
 		thisClass = this.getClass();
 		Field[] fields = thisClass.getDeclaredFields();
 		WebElement fieldValue = null;
+		List<WebElement> fieldValues = null;
+		boolean result = true;
 		int i=0;
-		while (i<fields.length) {
-			try {
-				fieldValue = (WebElement) fields[i].get(this);
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
+		while (i<fields.length && result) {
+			try {	
+				try {
+					fieldValue = (WebElement) fields[i].get(this);
+					if (verifyField(fieldValue) == false) {
+						result = false;
+					}
+				} catch (ClassCastException e) {
+					fieldValues = (List<WebElement>) fields[i].get(this);
+					for (WebElement f:fieldValues) {
+						if (verifyField(f) == false) {
+							result = false;
+						}
+					}	
+				}
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 			}
-			try {
-				fieldValue.isDisplayed();
-			} catch (NoSuchElementException e) {
-				System.out.println(e.getMessage());
-				return false;
-			}
 			i++;
 		}
-		
-		return true;
+		return result;
 	}
 	
+	private boolean verifyField(WebElement fieldValue) {
+		try {
+			fieldValue.isDisplayed();
+		} catch (NoSuchElementException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+		return true;
+	}
+		
+		
 	public Select makeSelection(String fieldName, String selection) {
 		Class<? extends SMSPage> thisClass = null;
 		thisClass = this.getClass();

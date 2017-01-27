@@ -93,6 +93,7 @@ public class SuperAdminT implements InstanceTestClassListener {
 		Assert.assertTrue(lp.verify());
 	}
 	
+	@Ignore
 	@Test
 	public void testSearchBar() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
@@ -113,36 +114,6 @@ public class SuperAdminT implements InstanceTestClassListener {
 		
 		sap.logout.click();
 		Assert.assertTrue(lp.verify());
-	}
-	
-	@Ignore
-	@Test
-	public void testBatchCreation() {
-		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
-		
-		sap.addBatch.click();
-		Assert.assertTrue(cbw.verify());
-		cbw.firstName.sendKeys(inputs.getProperty("firstName"));
-		cbw.lastName.sendKeys(inputs.getProperty("lastName"));
-		cbw.addToList.click();
-		cbw.firstName.sendKeys(inputs.getProperty("firstName2"));
-		cbw.lastName.sendKeys(inputs.getProperty("lastName2"));
-		cbw.addToList.click();
-		
-		cbw.curriculum.click();
-		ArrayList<WebElement> elements = (ArrayList<WebElement>) driver.findElements(By.xpath("//*[@class=\"md-text ng-binding\"]"));
-		for (WebElement e:elements) {
-			String text = e.getText();
-			if (text.equals(inputs.getProperty("curriculum"))) {
-				e.click();
-			}
-		}
-		
-		cbw.enterDate.clear();
-		cbw.enterDate.sendKeys(inputs.getProperty("batchStartDate"));
-		cbw.submit.click();
-		driver.findElement(By.xpath("//*[@id=\"dialogContent_14\"]/div/div/button/span")).click();
-		sap.logout.click();
 	}
 	
 	@Ignore
@@ -178,12 +149,34 @@ public class SuperAdminT implements InstanceTestClassListener {
 		sap.logout.click();
 	}
 	
-	public void testCertificationScheduling() {
-		
-	}
 	
-	public void testAdminCalendarNavigation() {
+	@Test
+	public void testBatchCreation() {
+		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
 		
+		sap.addBatch.click();
+		Assert.assertTrue(cbw.verify());
+		cbw.firstName.sendKeys(inputs.getProperty("firstName"));
+		cbw.lastName.sendKeys(inputs.getProperty("lastName"));
+		cbw.addToList.click();
+		cbw.firstName.sendKeys(inputs.getProperty("firstName2"));
+		cbw.lastName.sendKeys(inputs.getProperty("lastName2"));
+		cbw.addToList.click();
+		
+		cbw.curriculum.click();
+		ArrayList<WebElement> elements = (ArrayList<WebElement>) driver.findElements(By.xpath("//*[@class=\"md-text ng-binding\"]"));
+		for (WebElement e:elements) {
+			String text = e.getText();
+			if (text.equals(inputs.getProperty("curriculum"))) {
+				e.click();
+			}
+		}
+		
+		cbw.enterDate.clear();
+		cbw.enterDate.sendKeys(inputs.getProperty("batchStartDate"));
+		cbw.submit.click();
+		driver.findElement(By.xpath("//*[@id=\"dialogContent_13\"]/div/div/button")).click();
+		sap.logout.click();
 	}
 	
 	

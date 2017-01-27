@@ -108,7 +108,6 @@ public class AssociateT implements InstanceTestClassListener {
 	
 	
 	//Makes sure the current week is shown on the associate page when you log in.
-	@Ignore
 	@Test
 	public void testDefaultWeek() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
@@ -125,6 +124,18 @@ public class AssociateT implements InstanceTestClassListener {
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
 		asp.logout.click();
 	}
+	
+	
+
+	@Test
+	public void testCertificationCancelling() {
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
+		asp.certification.click();
+		Assert.assertTrue(scw.verify());
+		scw.cancel.click();
+		asp.logout.click();
+	}
+	
 	
 	
 	//ERROR??? When I run this test, and an associate is set as checked in and not verified for a 
@@ -211,16 +222,6 @@ public class AssociateT implements InstanceTestClassListener {
 		finally {
 			asp.logout.click();
 		}
-	}
-	
-	@Ignore
-	@Test
-	public void testCertificationScheduling() {
-		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
-		asp.certification.click();
-		Assert.assertTrue(scw.verify());
-		scw.cancel.click();
-		asp.logout.click();
 	}
 	
 	

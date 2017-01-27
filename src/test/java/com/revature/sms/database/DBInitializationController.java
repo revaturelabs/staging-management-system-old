@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.codoid.products.exception.FilloException;
@@ -24,6 +25,7 @@ import com.revature.sms.util.ExcelHelper;
 import com.revature.sms.util.Utils;
 
 //This class can be used before tests to conveniently populate the database with test data from Excel.  
+@Component
 @Service
 public class DBInitializationController {
 

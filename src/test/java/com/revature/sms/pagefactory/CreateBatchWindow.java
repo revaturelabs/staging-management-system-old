@@ -9,13 +9,13 @@ public class CreateBatchWindow extends SMSPage {
 	@FindBy(id="firstName")
 	public WebElement firstName;
 	
-	@FindBy(id="input_4")
+	@FindBy(id="lastName")
 	public WebElement lastName;
 	
-	@FindBy(id="select_5")
+	@FindBy(xpath="//*[@ng-model=\"bACtrl.selectedBatchType\"]")
 	public WebElement curriculum;
 	
-	@FindBy(id="input_8")
+	@FindBy(xpath="//*[@class=\"md-datepicker-input md-input\"]")
 	public WebElement enterDate;
 	
 	@FindBy(xpath="//div/div[2]/form/div/button")
