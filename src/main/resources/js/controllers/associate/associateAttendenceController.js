@@ -47,7 +47,7 @@
         aac.toast = toast;
         /**@var {function} getScheduledCert function reference variable. */
         aac.checkIn = checkIn;
-        //aac.udateSkills = updateSkills;
+        
 
           // initialization
         aac.setToolbar();
