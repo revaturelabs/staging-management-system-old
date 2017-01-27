@@ -1,6 +1,9 @@
 
     var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "md.data.table", "ngResource", "ngCookies", "ui.router"]);
 
+      // global constants
+    sms.constant( "weekdays", [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ] );
+
       // URL routing
     sms.config( function( $stateProvider, $urlRouterProvider, $locationProvider ) {
 
@@ -8,97 +11,108 @@
 		$urlRouterProvider.otherwise("/login");
 
 		$stateProvider
-              // login
-			.state( "login", {
-				url: "/login",
-                views: {
-                    "mainView": {
-    				    templateUrl: "html/views/login.html",
-	    			    controller: "loginCtrl as logCtrl"
-                    }
-                }
-			})
-               
-              // superadmin page
-			.state( "super", {
-				url: "/super",
+              
+              // root
+            .state( "root", {
+                // url: "",
+                abstract: true,
+                // template: "<ui-view/>",
+                controller: "rootCtrl",
+                controllerAs: "rootCtrl",
                 views: {
                     "topBarView": {
                         templateUrl: "html/views/topBar.html"
-                    },
-                    "mainView": {
-    				    templateUrl: "html/views/superadmin/super.html",
-	    			    controller: "superCtrl as suCtrl"
                     }
                 }
-			})
-                  // superadmin view all attendance
-                .state( "superAttendance", {
-                    url: "^/attendance",
+            })
+
+                  // login
+                .state( "login", {
+                    parent: "root",
+                    url: "/login",
+                    views: {
+                        "contentView@": {
+                            templateUrl: "html/views/login.html",
+                            controller: "loginCtrl",
+                            controllerAs: "logCtrl"
+                        },
+                        "topBarView@": {
+                            template: ""
+                        }
+                    }
+                })
+                
+                 // superadmin view all tasks
+                .state( "superTask", {
+                    url: "^/task",
                     parent: "super",
                     views: {
                         "mainSuperView": {
-                            templateUrl: "html/views/superadmin/superAttendance.html",
-                            controller: "superAttendanceCtrl as supAttCtrl"
+                            templateUrl: "html/views/superadmin/superTask.html",
+                            controller: "superTaskCtrl as supTaskCtrl"
                         }
                         
                     }
                 })
 
-              // admin page
-			.state( "admin", {
-				url: "/admin",
-                views: {
-                    "topBarView": {
-                        templateUrl: "html/views/topBar.html"
-                    },
-                    "mainView": {
-    				    templateUrl: "html/views/admin/admin.html",
-	    			    controller: "adminCtrl as adCtrl"
-                    }
-                }
-			})
-				 // admin view all attendance
-	                .state( "adminAttendance", {
-	                    url: "^/associate-attendance",
-	                    parent: "admin",
-	                    views: {
-	                        "mainAdminView": {
-	                            templateUrl: "html/views/admin/associate-attendance-table.html",
-	                            controller: "adminAttendanceCtrl as adAttCtrl"
-	                        }
-	                    }
-	                })
-			
-              // associate page
-			.state( "assoc", {
-				url: "/assoc",
-                views: {
-                    "topBarView": {
-                        templateUrl: "html/views/topBar.html"
-                    },
-                    "mainView": {
-    				    templateUrl: "html/views/associate/associate.html",
-	    			    controller: "associateCtrl as assoCtrl"
-                    }
-                }
-			})
-
-			//.....................................................................
-			// superadmin view all attendance
-                .state( "assocAttendance", {
-                    url: "^/weeklyattendence",
-                    parent: "assoc",
+                  // attendance
+                .state( "attendance", {
+                    parent: "root",
+                    url: "/attendance",
+                    //abstract: true,
+                    // template: "<ui-view/>",
                     views: {
-                        "mainAssociateView": {
-                            templateUrl: "html/views/associate/associateWeeklyAttendence.html",
-                            controller: "associateWeeklyAttendenceCtrl as assWeekAttCtrl"
+                        "contentView@": {
+                            templateUrl: "html/templates/mainTemplate.html",
+                            controller: "templateCtrl",
+                            controllerAs: "tempCtrl"
                         }
-                        
-                    }
-                })
-			//........................................................................
+                    },
+                    onEnter : function( loginService, $state, $timeout ) {
+                            var user = loginService.getUser();
+                            var userRole = "";
+                            if (user != undefined) {
+                                userRole = user.userRole.name;
+                            }
+                            $timeout( function() {
+                                if (userRole == "associate"){
+                                    $state.go("associateAttendance");
+                                } else if ( ( userRole == "superAdmin") || ( userRole == "admin" ) ) {
+                                    $state.go("managerAttendance");
+                                } else {
+                                    $state.go("login");
+                                }
+                            }, 100);
+                        }
+                     })
 
+                      // manager attendance
+                    .state( "managerAttendance", {
+                        parent: "attendance",
+                        url: "",
+                        // abstract: true
+                        // template: "<ui-view/>"
+                        views: {
+                            "mainView" : {
+                                templateUrl: "html/views/manager/managerAttendance.html",
+                                controller: "managerAttendanceCtrl",
+                                controllerAs: "manAttCtrl"
+                            }
+                        }
+                    })
+                    
+                      // associate attendance
+                    .state( "associateAttendance", {
+                        parent: "attendance",
+                        url: "",
+                        views: {
+                            "mainView": {
+                                templateUrl: "html/views/associate/associateAttendance.html",
+                                controller: "associateAttendenceCtrl",
+                                controllerAs: "assocAttCtrl"
+                            } 
+                        }
+                    })
 	});
 
       // theme config

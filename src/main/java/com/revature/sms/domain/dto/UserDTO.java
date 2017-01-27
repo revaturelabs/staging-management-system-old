@@ -20,9 +20,8 @@ public class UserDTO {
 	private String oldPassword;
 	private String newPassword;
 	private List<AssociateAttendance> attendance;
-	private List<AssociateTask> associateTask;
 	private Timestamp graduationDate;
-
+	private List<AssociateTask> tasks;
 	
 	public UserDTO() {
 		super();
@@ -38,7 +37,7 @@ public class UserDTO {
 	}
 
 	public UserDTO(String username, String firstName, String lastName,String password, UserRole userRole,
-			BatchType batchType, Timestamp graduationDate) {
+			BatchType batchType, Timestamp graduationDate, List<AssociateTask> tasks) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -47,6 +46,7 @@ public class UserDTO {
 		this.userRole = userRole;
 		this.batchType = batchType;
 		this.graduationDate = graduationDate;
+		this.tasks = tasks;
 	}
 
 	
@@ -122,14 +122,6 @@ public class UserDTO {
 		this.attendance = attendance;
 	}
 	
-	public List<AssociateTask> getAssociateTask() {
-		return associateTask;
-	}
-
-	public void setAssociateTask(List<AssociateTask> associateTask) {
-		this.associateTask = associateTask;
-	}
-	
 	public Timestamp getGraduationDate() {
 		return graduationDate;
 	}
@@ -137,5 +129,13 @@ public class UserDTO {
 	public void setGraduationDate(Timestamp graduationDate) {
 		this.graduationDate = graduationDate;
 	}
+	public List<AssociateTask> getTasks() {
+		return tasks;
+	}
+	
+	public void setTasks(List<AssociateTask> tasks) {
+		this.tasks = tasks;
+	}
+
 
 }
