@@ -9,14 +9,11 @@
           // bindables
             // data
             // functions
-         /**@var {function} okay function reference variable. */
         avec.okay = okay;
         
           // initialization
 
-        /**
-         * @description Closes the window showing the events
-         */
+          // functions
         function okay() {
             $mdDialog.hide();
         }
