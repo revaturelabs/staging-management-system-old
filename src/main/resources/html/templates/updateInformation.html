@@ -4,27 +4,61 @@
         <div class="md-toolbar-tools">
             <h2>Change password</h2>
         </div>
-    </md-toolbar>
 
-    <div class="md-padding">
-        <form id="updateForm" name="updateInfoForm" ng-submit="uInfoCtrl.submit()" novalidate>
+        </md-toolbar>
 
-            <div layout="column" layout-align="center space-around">
-                <md-input-container class="InputContainer">
-                    <label> Current password </label>
-                    <input id="oldPass" ng-bind="uic.oldPass" type="password">
-                </md-input-container>
+        <div class="md-padding">
+            <form name="updateInfoForm" ng-submit="uInfoCtrl.submit()" novalidate>
+            
+                <div layout="column" layout-align="center space-around">
+                    <md-input-container class="InputContainer"> 
+                        <label> Current password </label> 
+                        <input id="oldPass" ng-bind="uic.oldPass" type="password">
+                    </md-input-container>
+                
+                    <md-input-container class="InputContainer"> 
+                        <label> New password </label> 
+                        <input id="newPass" ng-bind="uic.newPass" type="password">
+                    </md-input-container>
+                    
+                    <md-input-container class="InputContainer"> 
+                        <label> Confirm new password </label> 
+                        <input id="confirmPass" ng-bind="uic.confirmPass" type="password"> 
+                    </md-input-container>
+                </div>
+                
+                <div layout="row" layout-align="end end">
+                    <div flex> </div>
+                    <md-button type="submit" class="md-primary"> Submit </md-button>
+                    <md-button type="button" id="updateCancel" ng-if="uInfoCtrl.needChangePass == false" class="md-accent" ng-click="uInfoCtrl.cancel()"> Cancel </md-button>
+                </div>
+            
+            </form>
+        </div>
+        <hr>
+        <div class="md-padding">
+	        <form name="updateSkillsForm" ng-submit="uInfoCtrl.submitSkills()" novalidate>
+			<md-input-container>
+				  <md-select ng-model="skillToAdd" placeholder="Skill">
+				    	<md-option ng-value="x.id" ng-repeat="x in uInfoCtrl.availSkills | orderBy: 'skill'">{{ x.skill }}</md-option>
+				  </md-select>
+			</md-input-container>
+	
+			<md-button type="submit" class="md-primary">Add</md-button>        
+	        </form>
+	        
+	        <ul>
+	        	<li  ng-repeat="s in uInfoCtrl.currentSkills">
+	        		{{s.skill}} 
+		        	<md-button class="md-icon-button" ng-click="uInfoCtrl.removeFromCurrentSkills(s.id)">
+		              	<md-icon class="md-material-icon menu-icon" Style="color:red"> clear </md-icon>
+		          	</md-button>
+		       	</li>
+		    </ul>
+		    
+		    <md-button type="submit" class="md-primary" ng-click="uInfoCtrl.saveSkills()">Save Skills</md-button>
+        </div>
 
-                <md-input-container class="InputContainer">
-                    <label> New password </label>
-                    <input id="newPass" ng-bind="uic.newPass" type="password">
-                </md-input-container>
-
-                <md-input-container class="InputContainer">
-                    <label> Confirm new password </label>
-                    <input id="confirmPass" ng-bind="uic.confirmPass" type="password">
-                </md-input-container>
-            </div>
 
             <div layout="row" layout-align="end end">
                 <div flex> </div>
