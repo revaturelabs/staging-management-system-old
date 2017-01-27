@@ -120,22 +120,13 @@
         	skillService.getAll(function(response) {
         		uic.availSkills = response;
         		
-        		console.log("availskills");
-        		console.log(uic.availSkills);
-        		
         		removeFromCSkills();
-
-        		console.log("after remove");
-        		console.log(uic.availSkills);
-        		
         	}, function(error) {
         	})
         }
         function submitSkills() {
-        	var add = removeFromAvailSkill($scope.skillToAdd);
-        	console.log("add");
-        	console.log(add);
-        	if(add != null | add != undefined){
+        	var add = removeFromAvailSkill();
+        	if(add != null || add != undefined){
         		uic.currentSkills.push(add);
         	}
         	
@@ -162,8 +153,6 @@
         	for(var i =0; i < uic.currentSkills.length; i++){
         		if(id == uic.currentSkills[i].id){
         			//remove from avail skills
-        			console.log("availskils" + i);
-        			console.log(uic.currentSkills[i]);
         			uic.availSkills.push({"id":uic.currentSkills[i].id, "skill":uic.currentSkills[i].skill});
         			uic.currentSkills.splice(i,1);
                 	uic.user.skill = uic.currentSkills;
@@ -173,8 +162,6 @@
         }
         
         function saveSkills(){
-        	console.log(uic.user);
-        	
         	userService.update(uic.user,function(){
         		uic.toast("Skills updated");
         	});
@@ -184,7 +171,6 @@
         	for (var i = 0; i< uic.currentSkills.length;i++){
         		for(var j = 0; j < uic.availSkills.length; j++ ){
         			if(uic.currentSkills[i].skill == uic.availSkills[j].skill){
-        				console.log(uic.availSkills[j].skill);
         				uic.availSkills.splice(j,1);
         				break;
         			}
