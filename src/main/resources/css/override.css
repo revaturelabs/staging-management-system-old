@@ -2,8 +2,147 @@
     md-dialog {
         max-width: 60%;
     }
-<<<<<<< HEAD
+    
+    .changePassword{
+    	width:500px;
+    }
+    
+    .InputContainer{
+    	padding-bottom:0px;
+    }
+    
+    /* attendance table css */
+    .attendanceTable tbody tr:hover {
+		background-color: #E8EAF6;
+	}
+	
+	.highlightToday {
+		background: #E8EAF6;
+	}
+	
+	
+	/* search bar css */
+	#search input[type="text"] {
+		background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
+		padding: 6px 15px 6px 35px;
+	}
+	
+	.mainCard
+	{
+     	margin-bottom: 0px !important;
+	}
 
+    .md-top {
+        position: fixed;
+        top: 66px;
+    }
+
+    .md-right {
+        position: fixed;
+        right: 16px;
+    }
+
+    .menu-icon {
+        color: white;
+        size: 24px;
+    }
+
+    .page-icon {
+        color: dimgrey;
+        size: 24px;
+    }
+
+    .attendanceTable tbody h3 {
+        margin: 2px 0px 0px 0px;
+    } 
+    
+    .attendanceTable tbody p {
+        margin: 0px 0px 2px 0px;
+    }
+
+    .attendanceTable thead h3, .attendanceTable thead p {
+        margin: 0px 0px 0px 0px;
+        text-align: center;
+    }
+
+    .attendanceTable p {
+        font-weight: normal;
+    }
+
+    .tableData {
+        text-align: center;
+    }
+
+    table[md-data-table] > tbody > tr > td:nth-child(2) {
+        max-width: 20%;
+        word-wrap: break-word;
+    }
+
+    .attendanceTable th {
+        width: 20%;
+    }
+
+    .attendanceTable .attendanceCell {
+        width: 15% !important;
+    }
+
+    .attendanceCell {
+        padding: 0px !important;
+    }
+
+    .rowIndex {
+        position: relative;
+        top: 7px;
+        left: -25px;
+
+        width: 23px;
+        margin: 0px;
+
+        color: rgba(0,0,0,0.54);
+
+        text-align: right;
+    }
+
+    .rowName {
+        position: relative;
+        left: -10px;
+    }
+    
+    .changePassword{
+    	width:500px;
+    }
+    
+    .InputContainer{
+    	padding-bottom:0px;
+    }
+    
+    /* attendance table css */
+    .attendanceTable tbody tr:hover {
+		background-color: #E8EAF6;
+	}
+	
+	.highlightToday {
+		background: #E8EAF6;
+	}
+	
+	/* search bar css */
+	#search input[type="text"] {
+		background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
+		padding: 6px 15px 6px 35px;
+	}
+
+    .eventListRight {
+        text-align: right;
+    }
+
+    .h3Top {
+        font-weight: bold !important;
+    }
+
+    .eventDialog {
+        min-width: 500px;
+    }
+        
     .md-top {
         position: fixed;
         top: 66px;
@@ -37,7 +176,7 @@
         text-align: center;
     }
 
-    table[md-data-table] > tbody > tr > td:nth-child(2) {
+    table[md-data-table]>tbody>tr>td:nth-child(2) {
         max-width: 20%;
         word-wrap: break-word;
     }
@@ -49,30 +188,46 @@
     .attendanceCell {
         padding: 0px !important;
     }
-=======
-    .changePassword{
-    	width:500px;
+
+    .changePassword {
+        width: 500px;
     }
-    
-    .InputContainer{
-    	padding-bottom:0px;
+
+    .InputContainer {
+        padding-bottom: 0px;
     }
-    
+
     /* attendance table css */
     .attendanceTable tbody tr:hover {
-		background-color: #E8EAF6;
-	}
-	
-	.highlightToday {
-		background: #E8EAF6;
-	}
-	
-	
-	/* search bar css */
-	#search input[type="text"] {
-		background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
-		padding: 6px 15px 6px 35px;
-	}
-	
-	
->>>>>>> 068c47f5b6c31f7d236924722b3a037d0975aa4c
+        background-color: #E8EAF6;
+    }
+
+    .highlightToday {
+        background: #E8EAF6;
+    }
+
+    /* search bar css */
+    #search input[type="text"] {
+        background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
+        padding: 6px 15px 6px 35px;
+    }
+
+    .mainCard {
+        margin-bottom: 0px !important;
+    }
+
+    .eventListRight {
+        text-align: right;
+    }
+
+    .h3Top {
+        font-weight: bold !important;
+    }
+
+    .eventDialog {
+        min-width: 500px;
+    }
+
+    .highlightSelected {
+        background-color: #9fa8da;
+    }

@@ -1,0 +1,33 @@
+
+    <div role="dialog" class="eventDialog">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                Job events
+            </div>
+        </md-toolbar>
+
+        <md-content>
+            <md-list class="md-dense">
+                <md-list-item class="md-3-line" ng-repeat="event in aVECtrl.events" ng-click="null">
+                    <div class="md-list-item-text" layout="column"> 
+                        <h3 class="h3Top"> {{ event.assignment.companyName }} - {{ event.assignment.location }} </h3>
+                        <h4> {{ event.type.type }} - {{ event.assignment.jobTitle }} </h4>
+                        <p> {{ event.note }} </p>
+                    </div>
+                    <div flex> </div>
+                    <div class="md-list-item-text eventListRight" layout="column">
+                        <h3> {{ event.date | date:'dd MMMM, yyyy' }} </h3>
+                        <h4> {{ event.location }} </h4>
+                        <p> &nbsp; </p>
+                    </div>
+                </md-list-item>
+            </md-list>
+
+            <div layout="row">
+                <div flex> </div>
+                <md-button class="md-primary" ng-click="aVECtrl.okay()"> OKAY </md-button>
+            </div>
+        </md-content>
+
+    </div>

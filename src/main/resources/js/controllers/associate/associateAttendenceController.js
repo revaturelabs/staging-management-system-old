@@ -2,45 +2,66 @@
     angular
         .module( "sms" )
         .controller( "associateAttendenceCtrl", associateAttendanceCtrl );
-        
-
+/**
+ * @description AngularJs controller for associate attendance functionality.
+ */
     function associateAttendanceCtrl( $mdDialog, $scope, $state, $filter, loginService, userService, weekdays ) {
-
+       
+       
         var aac = this;
 
-        // bindables
-        // data
+          // bindables
+            // data
+
+        /**@prop {object} user Currently logged in user. */
         aac.user = loginService.getUser();
+        /**@prop {object} curr Date for the current week being shown */
         aac.curr = new Date();
+        /**@prop {object} today Todays current date. */
         aac.today = aac.curr;
+        /**@prop {object} minWeek The earliest week that can be shown. */
         aac.minWeek = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() - 28 ); 
+         /**@prop {object} minWeek The latest week that can be shown. */
         aac.maxWeek = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() + 7 );
 
-        // functions
+            // functions
+        /**@var {function} calcWeek function reference variable. */
         aac.calcWeek = calcWeek;
+         /**@var {function} setToolbar function reference variable. */
         aac.setToolbar = setToolbar;
+         /**@var {function} openEvents function reference variable. */
+        aac.openEvents = openEvents;
+         /**@var {function} assocCertifications function reference variable. */
         aac.assocCertifications = assocCertifications;
+         /**@var {function} getScheduledCert function reference variable. */
         aac.getScheduledCert = getScheduledCert;
+        /**@var {function} getScheduledCert function reference variable. */
         aac.days_between = days_between;
+        /**@var {function} getScheduledCert function reference variable. */
         aac.isSameDate = isSameDate;
+        /**@var {function} getScheduledCert function reference variable. */
         aac.prevWeek = prevWeek;
+        /**@var {function} getScheduledCert function reference variable. */
         aac.nextWeek = nextWeek;
+        /**@var {function} getScheduledCert function reference variable. */
         aac.toast = toast;
+        /**@var {function} getScheduledCert function reference variable. */
         aac.checkIn = checkIn;
         //aac.udateSkills = updateSkills;
 
-        // initialization
+          // initialization
         aac.setToolbar();
         aac.calcWeek( aac.curr );
-        
-        
         if (getScheduledCert() != null) {
         	aac.toast(getScheduledCert());
         }
         
-
           // functions
             // returns list of date objects representing the week
+
+            /**
+             * @description Creates a list of date objects to represent the week.
+             */
         function calcWeek( date ) {
             
             var monday = new Date( date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1 );
@@ -54,20 +75,22 @@
 
             aac.weekAttendance = $filter( "weekFilter" )( [aac.user], monday )[0].thisWeek;
             for (var j = 0; j < aac.week.length; j++) {
-                if ( aac.week[j].date.getTime() < aac.today.getTime() &&  aac.weekAttendance[j] == undefined) {
-                  
-                        aac.weekAttendance[j] = {
-                            verified: false,
-                            checkedIn: false
-                        }
-                        aac.weekAttendance[j] = $filter( "iconFilter" )( aac.weekAttendance[j] );
-                   
+                if ( (aac.week[j].date.getTime() < aac.today.getTime()) && ( aac.weekAttendance[j] == undefined ) ) {
+                    aac.weekAttendance[j] = {
+                        verified: false,
+                        checkedIn: false
+                    }
+                    aac.weekAttendance[j] = $filter( "iconFilter" )( aac.weekAttendance[j], "week" );
                 }
             }
         }
 
-        //SonarQube appeasement
-        var dialogYes = function() {
+          // SonarQube appeasement
+
+          /**
+           * @description Changes the users status from CheckedIn to Absent. Not entirely sure why this is an option but it's here.
+           */
+        function dialogYes() {
 	    	//selected yes
 	    	//checkout
 	    	aac.x.checkedIn = false;
@@ -76,20 +99,26 @@
 	    		aac.calcWeek( aac.curr );
 	    		aac.setToolbar();
 	    	});
-		 };
-		 
-      var updateSuccess = function(){ 
+		 }
+		 /**
+          * @description Method that runs when update was successful.
+          */
+        function updateSuccess(){ 
 			aac.toast("Successfully checked in.")
     		aac.calcWeek( aac.curr );
     		aac.setToolbar();
-    		};
-    //end sonarQube appeasement
-        
+    	}
+          //end sonarQube appeasement
+        /**
+         * @description Determines if the logged in user has checked in today or not,
+         * and adjusts an options to be added to the actiont toolbar accordingly.
+         * @return {object} Option for the toolbar.
+         */
         function todayCheckedIn(){
         	var d = new Date();
         	for(var i=0; i< aac.user.attendance.length; i++){
         		var d2 = new Date(aac.user.attendance[i].date);
-        		if(d.getDate() === d2.getDate() && d.getMonth() === d2.getMonth()){
+        		if(d.getDate() == d2.getDate() && d.getMonth() == d2.getMonth()){
         			if(aac.user.attendance[i].verified){
         				return null;
         			}
@@ -117,42 +146,75 @@
         	userService.update(aac.user,function(){});
         	return {"function": aac.checkIn, "icon": "check", "tooltip": "Check in"};
         }
-            // sets toobar icons and functions
+
+            
+            /**
+             * @description Sets the tooblar functions for an associate.
+             */
         function setToolbar() {
         	var actions=[];
         	
-        	actions.push({ "function": aac.assocCertifications, "icon": "date_range", "tooltip": "Certifications"});
-        	//actions.push({ "function": aac.updateSkills, "icon": "info", "tooltip": "Update Skills"});
-
         	var cin = todayCheckedIn();
-        	
         	if(cin != null){
         		actions.push(cin);
         	}
-            $scope.$emit( "setToolbar", { title: "Weekly attendance", actions } );
-        
+
+              // view all events
+            actions.push({
+                "function": aac.openEvents,
+                "icon"    : "event_note",
+                "tooltip" : "View events"
+            })
+              // schedule certification
+            actions.push({ 
+                "function": aac.assocCertifications, 
+                "icon"    : "date_range", 
+                "tooltip" : "Certifications"
+            });
+
+            $scope.$emit( "setToolbar", { 
+                title: "Weekly attendance", 
+                actions });
         }
 
+            // opens dialog to display user events
+            /**
+             * @description Opens the dialog to display events for the logged in associate.
+             */
+        function openEvents() {
+            $mdDialog.show({
+                templateUrl: "html/templates/viewEvents.html",
+                controller: "associateViewEventsCtrl as aVECtrl",
+                locals: { events: aac.user.events },
+                bindToController: true,
+                clickOutsideToClose: true,
+                escapeToClose: true
+            });
+        }
+        /**
+         * @description Displays the dialog window for scheduling a certification.
+         */
         function assocCertifications() {
-            	if (getScheduledCert() == null) {
-            		$mdDialog.show({
-                		templateUrl: "html/templates/scheduleCertification.html",
-                		controller: "associateCertificationsCtrl as assCertCtrl"
-                	}).then( function() {
-                		aac.toast("Certification Scheduled");
-                    }, function() {
-                    	aac.toast("Certification Schedule Cancelled");
-                    });
-            	}
-            	else {
-            		aac.toast("You can only schedule one certification at a time.");
-            	}
+            if (getScheduledCert() == null) {
+                $mdDialog.show({
+                    templateUrl: "html/templates/scheduleCertification.html",
+                    controller: "associateCertificationsCtrl as assCertCtrl"
+                }).then( function() {
+                    aac.toast("Certification Scheduled");
+                }, function() {
+                    aac.toast("Certification Schedule Cancelled");
+                });
             }
-        
-        //function updateSkills() {
-        	//console.log("skill function");
-       // }
-        
+            else {
+                aac.toast("You can only schedule one certification at a time.");
+            }
+        }
+        /**
+         * @description Determines the difference betwen the two supplied dates.
+         * @param {date} date1 First supplied date.
+         * @param {date} date2 Second supplied date.
+         * @returns {number} Number of days between the two dates
+         */
         function days_between(date1, date2) {
 
             // The number of milliseconds in one day
@@ -170,6 +232,10 @@
 
         }
         
+        /**
+         * @description Checks to see if the date supplied is the same date is the same as today.
+         * @returns {boolean} Result
+         */
         function isSameDate(date) {
         	return (
         		aac.today.getFullYear() == date.getFullYear() &&
@@ -179,7 +245,10 @@
         }
         
 
-        //If the user has a scheduled cert, return the formatted date of that cert, otherwise return null
+          /**
+           * @description Gets the date of the schedule certification if it exists.
+           * @returns {string|null} Formatted date of the certification if it exists, null if one doesn't.
+           */
         function getScheduledCert() {
         	for(var i = 0; i < aac.user.tasks.length; i++) {
         		var certDate = new Date(aac.user.tasks[i].date);
@@ -203,7 +272,10 @@
         	return null;
         }
 
-         // checks if previous week is before minimum date and resets week dates if not
+         /**
+          * @description Goes to the previous week in the attendance display, unless the display is on the minimum
+          * week already.
+          */
         function prevWeek() {
             var newDate = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() - 7 );
             if ( newDate.getTime() < aac.minWeek.getTime() ) {
@@ -214,7 +286,11 @@
             }
         }
 
-            // checks if next week is after maximum date and resets week dates if not
+            
+        /**
+          * @description Goes to the next week in the attendance display, unless the display is on the maximum
+          * week already.
+          */
         function nextWeek() {
             var newDate = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() + 7 );
             if ( newDate.getTime() > aac.maxWeek.getTime() ) {
@@ -225,7 +301,10 @@
             }
         }
         
-        // marks an associate as checked in.
+        
+        /**
+         * @description Marks the associate as checked in, or shows a dialog asking if the associate wants to be marked as absent.
+         */
         function checkIn(){
         	var d = new Date();
         	//find current attendance object
@@ -259,7 +338,10 @@
         	}
         }
 
-            // calls root-level toast function
+         /**
+           * @description Displays a toast notification.
+           * @param {string} message The value of the message to be shown.
+           */
         function toast( message ) {
             $scope.$emit( "toastMessage", message );
         }

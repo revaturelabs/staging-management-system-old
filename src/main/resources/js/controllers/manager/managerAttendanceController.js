@@ -2,293 +2,259 @@
     angular
         .module( "sms" )
         .controller( "managerAttendanceCtrl", managerAttendanceCtrl );
-    
-    function managerAttendanceCtrl( $scope, $state, userService, loginService, $filter, $mdDialog, batchAddFactory ) {
-    	var mac = this;
+     /**
+      * @description AngularJs controller for Manager attendance module (both versions of Admins)
+      */   
+    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, batchAddFactory, weekdays ) {
+       /**@prop {function} Reference variable for this controller */
+        var mac = this;
 
-		  // bindables
-		    // data
-        mac.user = loginService.getUser();  
-		mac.weekNumber = 4; //make a scope variable that holds the week number, so they can only go forward and back 2 weeks
-		mac.legend = [];
-	        // functions
-		mac.toast = toast;
-		mac.newAssociates = newAssociates;
-		mac.verifyAttendance = verifyAttendance;
-		mac.setDateTable = setDateTable;
-		mac.goBackOneWeek = goBackOneWeek;
-		mac.goForwardOneWeek = goForwardOneWeek;
-		mac.addOptions = addOptions;
+          // bindables
+            // data
+        /**@prop {object} user Currently logged in user. */
+        mac.user = loginService.getUser();
+        /**@prop {Date} curr Date of the currently selected week. */
+        mac.curr = new Date();
+        /**@prop {Date} today Today's date. */
+        mac.today = mac.curr;
+         /**@prop {Date} minWeek The earliest week that can be looked at.. */
+        mac.minWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() - 28 ); 
+         /**@prop {Date} maxWeek The latest week that can be looked at. */
+        mac.maxWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() + 7 );
+         /**@prop {boolean} infoOpen Variable that tells if the info tabs are open or not. */
+        mac.infoOpen = false;
 
+            // functions
+        /**@var {function} findDevice function reference variable. */
+        mac.findDevice = findDevice;
+        /**@var {function} getUsers function reference variable. */
+        mac.getUsers = getUsers;
+        /**@var {function} calcWeek function reference variable. */
+        mac.calcWeek = calcWeek;
+        /**@var {function} filterWeek function reference variable. */
+        mac.filterWeek = filterWeek;
+        /**@var {function} toggleInfo function reference variable. */
+        mac.toggleInfo = toggleInfo;
+        /**@var {function} closeInfo function reference variable. */
+        mac.closeInfo = closeInfo;
+        /**@var {function} verify function reference variable. */
+        mac.verify = verify;
+        /**@var {function} setToolbar function reference variable. */
+        mac.setToolbar = setToolbar;
+        /**@var {function} prevWeek function reference variable. */
+        mac.prevWeek = prevWeek;
+        /**@var {function} nextWeek function reference variable. */
+        mac.nextWeek = nextWeek;
+        /**@var {function} toast function reference variable. */
+        mac.toast = toast;
+        /**@var {function} newAssociates function reference variable. */
+        mac.newAssociates = newAssociates;
 
-          // initializations
-        mac.addOptions();
-		mac.setDateTable();
+          // initialization
+        mac.findDevice();
+        mac.getUsers();
+        mac.setToolbar();
         
           // functions
-            // sends options and actions to toolbar
+            /**
+             * @description Sets the browser size based on the device being used.
+             */
+        function findDevice() {
+            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+                mac.smallDevice = true;
+            } else {
+                mac.smallDevice = false;
+            }
+        }
+            // gets all users' information
+        /**
+         * @description Retrieves the information for all users from teh server.
+         */
+        function getUsers( success ) {
+            userService.getAll( function(response) {
+                mac.users = $filter( "associateFilter" )( response );
+                mac.users = $filter( "taskFilter" )( mac.users, mac.today );
+                mac.calcWeek( mac.curr );
+            }, function(error) {
+                mac.toast("Error retrieving all users.");
+            });
+        }
 
-		function addOptions() {
-			var actions = [];
-			
-			if (mac.user.userRole.name == "superAdmin") {
-				actions.push({
-					"function": mac.newAssociates,
-					"icon": "add",
-					"tooltip": "Add Batch"
-				});
-			} else if (mac.user.userRole.name == "admin") {
-			}
+            /**
+             * @description Adds the information for this weeks attendance to each of the users.
+             */
+        function calcWeek( date ) {
+            
+            var monday = new Date( date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1 );
+            mac.weekLabel = "Week of " + (monday.getMonth() + 1) + "/" + (monday.getDate());
+            mac.week = [ { name: "Monday", date: monday } ];
 
-			$scope.$emit("setToolbar", {title: "Weekly Attendance", actions});
-		}
+            for (var i = 1; i < 5; i++) {
+                var newDate = new Date( monday.getFullYear(), monday.getMonth(), monday.getDate() + i )
+                mac.week.push( { name: weekdays[newDate.getDay()], date: newDate } );
+            }
 
-            // calls root-level toast function
-    	function toast( message ) {
+            mac.users.forEach( function(user) {
+                mac.filterWeek( monday, user );
+            });
+        }
+
+            /**
+             * @description Filters the current weeks attendance from the users.
+             */
+        function filterWeek( monday, user ) {
+            var weekAttendance = $filter( "weekFilter" )( [user], monday )[0].thisWeek;
+            for (var i = 0; i < mac.week.length; i++) {
+                if ( mac.week[i].date.getTime() < mac.today.getTime() ) {
+                    if ( weekAttendance[i] == undefined ) {
+                        weekAttendance[i] = {
+                            verified: false,
+                            checkedIn: false
+                        }
+                        weekAttendance[i] = $filter( "iconFilter" )( weekAttendance[i], "week" );
+                    }
+                }
+            }
+            while ( weekAttendance.length != 5 ) {
+                weekAttendance.push({});
+            }
+            user.weekAttendance = weekAttendance;
+        }
+
+            // sets selected user and opens/closes info panel
+            /**
+             * @description Opens/closes the info panel and sets the selected user to display the relevant info.
+             */
+        function toggleInfo( user ) {
+            if (mac.infoOpen) {
+                if (mac.selectedUser == user) {
+                    mac.infoOpen = false;
+                    mac.selectedUser = null;
+                } else {
+                    mac.selectedUser = user;
+                }
+            } else {
+                mac.infoOpen = true;
+                mac.selectedUser = user;
+            }
+        }
+
+        /**
+         * @description Closes the info panel.
+         */
+        function closeInfo() {
+            mac.infoOpen = false;
+            mac.selectedUser = null;
+        }
+
+        /**
+         * @description Verifies and unverifies the clicked users attendance. Opens a confirmation dialog
+         * if unverifing an already verified associate. 
+         */
+        function verify( user, index ) {
+            var selectedDay = mac.week[index].date;
+            if (user.attendance) {
+                var found = false;
+                user.attendance.forEach( function(attendance) {
+                    var attDate = new Date(attendance.date);
+                    if ( (attDate.getFullYear() == selectedDay.getFullYear() && attDate.getMonth() == selectedDay.getMonth() && attDate.getDate() == selectedDay.getDate() ) ) {
+                        if (attendance.verified) {
+                                // issue with this not showing the updated attendance until another update is made
+                                  // will work out later
+                            // var confirm = $mdDialog.confirm()
+                            //     .title("Are you sure you want to retract attendance verification?")
+                            //     .ok("YES")
+                            //     .cancel("CANCEL");
+                            // $mdDialog.show(confirm).then(function() {
+                            //     attendance.verified = false;
+                            //     attendance.note = "Unverified";
+                            // });
+                            attendance.verified = false;
+                        } else {
+                            attendance.verified = true;
+                            attendance.note = "Verified";
+                        }
+                        found = true;
+                        attendance.note +=  " by " + mac.user.firstName + " " + mac.user.lastName + 
+                            " at " + mac.today.getHours() + ":" + padZero(mac.today.getMinutes()) + 
+                            " on " + mac.today.getMonth() + 1 + "/" + mac.today.getDate() + "/" + mac.today.getFullYear();
+                    }
+                })
+
+                if (!found) {
+                    var attendance = {
+                        date: selectedDay,
+                        checkedIn: false,
+                        verified: true,
+                        note: "Verified by " + mac.user.firstName + " " + mac.user.lastName + 
+                            " at " + mac.today.getHours() + ":" + padZero(mac.today.getMinutes) + 
+                            " on " + mac.today.getMonth() + 1 + "/" + mac.today.getDate() + "/" + mac.today.getFullYear()
+                    }
+                    user.attendance.push( attendance );
+                }
+                userService.update( user, function() {
+                    mac.toast("Attendance updated.");
+                    // mac.calcWeek( mac.curr );
+                    mac.getUsers();
+                }, function() {
+                    mac.toast("Could not udpdate attendance.")
+                });
+            }    
+        }
+
+        /**
+         * @description Sets the toolbar options based on the role of the associate. 
+         * At the moment, only relevant to add superAdmin options to superAdmin users when logged in,
+         * as superAdmin should always have all the options that admins do.
+         */
+        function setToolbar() {
+            if (mac.user.userRole.name == "superAdmin") {
+                $scope.$emit( "setToolbar", { 
+                    title: "Weekly attendance", 
+                    actions: [{ 
+                        "function": mac.newAssociates, 
+                        "icon"    : "add", 
+                        "tooltip" : "Add batch of new associates"}] } );
+            }
+        }
+
+            
+            /**
+             * @description Changes display to the previous week, unless the current week displayed
+             * is the minimum week. In that case, an error notification is displayed. 
+             */
+        function prevWeek() {
+            var newDate = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() - 7 );
+            if ( newDate.getTime() < mac.minWeek.getTime() ) {
+                mac.toast( "Cannot view attendance older than four weeks." );
+            } else {
+                mac.curr = newDate;
+                mac.calcWeek( mac.curr );
+            }
+        }
+
+            /**
+             * @description Changes display to the next week, unless the current week displayed
+             * is the maximum week. In that case, an error notification is displayed. 
+             */
+        function nextWeek() {
+            var newDate = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() + 7 );
+            if ( newDate.getTime() > mac.maxWeek.getTime() ) {
+                mac.toast( "Cannot view attendance in the future." );
+            } else {
+                mac.curr = newDate;
+                mac.calcWeek( mac.curr );
+            }
+        }
+
+            /**
+             * @description Displays a toast notification.
+             * @param {string} message The value of the message to be shown.
+             */
+        function toast( message ) {
             $scope.$emit( "toastMessage", message );
-    	}
-
-            // sets info in table
-		function setDateTable(){
-			/*This block sets the DATE HEADERS IN TABLE*/
-			//set current day
-			var today = new Date();
-			//Remove the timestamp from the object, just need the date
-			today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-			var day = today.getDate();
-			var w = today.getDay();
-			//day is the day of the month
-			//w is the day of the week
-			
-			
-			// the following block sets monday based on what day of the week it is
-			var m = new Date();
-			//set an active day for week change functions for the column highlighting
-			mac.activeDay = 1;
-			mac.activeWeek = true;
-			if(w==0){
-				m.setDate(day+1);
-				mac.activeDay = 0;
-			}
-			if(w==2){
-				m.setDate(day-1);
-				mac.activeDay = 2;
-			}
-			if(w==3){
-				m.setDate(day-2);
-				mac.activeDay = 3;
-			}
-			if(w==4){
-				m.setDate(day-3);
-				mac.activeDay = 4;
-			}
-			if(w==5){
-				m.setDate(day-4);
-				mac.activeDay = 5;
-			}
-			if(w==6){
-				m.setDate(day-5);
-				mac.activeDay = 6;
-			}
-				
-			//set global monday for day week change functions
-			mac.thisCurrentMonday = m;
-			
-			//set all days of the week based on monday
-			mac.setMonday = new Date();
-			mac.setMonday.setDate(m.getDate());
-			mac.thisMonday = m;
-			mac.thisTuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
-			mac.thisWednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
-			mac.thisThursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
-			mac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
-			
-			//data bind all scope days to print on top of table
-			mac.monday = (mac.thisMonday.getMonth()+1)+"/"+mac.thisMonday.getDate();
-			mac.tuesday = (mac.thisTuesday.getMonth()+1)+"/"+mac.thisTuesday.getDate();
-			mac.wednesday = (mac.thisWednesday.getMonth()+1)+"/"+mac.thisWednesday.getDate();
-			mac.thursday = (mac.thisThursday.getMonth()+1)+"/"+mac.thisThursday.getDate();
-			mac.friday = (mac.thisFriday.getMonth()+1)+"/"+mac.thisFriday.getDate();
-			
-			/* this is the end of the setting up the week block */
-			
-			
-			
-			/*get all attendance for the week for all associates*/
-			
-			//run user service to get all users
-			userService.getAll(function(response){
-				
-				//in the response filter out users that aren't associates
-				mac.users = $filter("associateFilter")(response);
-				//filter the associates to get the date objects that are only for the current week
-				mac.users = $filter("weekFilter")(mac.users, mac.thisMonday);
-				
-			}, function(error){
-				mac.toast("Error in retrieving all associates.");
-			});
-			
-			/*this is the end of getting the users*/
-			
-			/*create a legend for the table symbols*/
-			
-			//used as a legend to display what the icon data is
-			mac.legend = [
-				{name: 'check_circle'  , color: "orange", description: "click to verify attendance" },
-				{name: 'done'  , color: "#00A", description: "if the associate checked in but has NOT yet been verified" },
-				{name: 'close', color: "#A00" , description: "if the associate is NOT checked in and NOT verified"},
-				{name: 'done_all' , color: "rgb(89, 226, 168)" , description: "if the associate's attendance has been verified" },
-
-				{name: '    ' , color: "#777", description: "no information available yet" }
-
-			]; 
-				/*end of legend creation*/
-        }
-
-            // verifies attendance
-		function verifyAttendance(user, selectedDay){
-        	//figure out which day was clicked
-        	thisDay = mac.thisMonday;
-        	if(selectedDay==1){
-            	thisDay = mac.thisTuesday;
-            }
-            if(selectedDay==2){
-            	thisDay = mac.thisWednesday;
-            }
-            if(selectedDay==3){
-            	thisDay = mac.thisThursday;
-            }
-            if(selectedDay==4){
-            	thisDay = mac.thisFriday;
-            }
-        	
-            //get the attendance object that matches the clicked on day
-            //accomplish this by doing a for each loop that looks through each object
-            //set a variable that varifies the object has been updated
-            updated = false;
-            user.attendance.forEach(function(attendance){
-    			day = new Date(attendance.date);
-    			if(day.getDate()==thisDay.getDate() && day.getMonth()==thisDay.getMonth()){
-    				//set the status to true on the object
-    				attendance.verified = true;
-    				attendance.checkedIn = true;
-    				updated = true;
-    			}
-    		})
-        	
-    		//if the object wwasn't updated then the object will be created
-    		if(!updated){
-    			newAttendace = {};
-    			
-    			newAttendace.date = thisDay;
-    			newAttendace.verified = true;
-    			newAttendace.checkedIn = true;
-    			newAttendace.note = "Checked in and validated by admin";
-    			
-    			user.attendance.push(newAttendace);
-    		}
-    		
-    		//call user service to send the update to the database
-        	userService.update(user, function(response){
-        		mac.toast("Successful update");
-        		mac.users = $filter("weekFilter")(mac.users, mac.thisMonday);
-        	}, function(error){
-        		mac.toast("Error updating user attendance");
-        	})
-        	
         }
         
-    	/*change week functions*/
-        
-            // sets week to the one previous
-    	function goBackOneWeek() {
-    		
-    		//make sure user can't go back 2 weeks
-    		if(mac.weekNumber > 0){
-    			mac.activeWeek = false;
-    			mac.weekNumber -= 1;
-    			
-    			/*set the new week up*/
-    			m = new Date();
-    	        m.setFullYear(mac.setMonday.getFullYear(), mac.setMonday.getMonth(), (mac.setMonday.getDate()-7));
-    	        
-    	        mac.setMonday.setFullYear(m.getFullYear(), m.getMonth(), m.getDate());
-    	        mac.thisMonday = m;
-    	        mac.thisTuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
-    	        mac.thisWednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
-    	        mac.thisThursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
-    	        mac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
-    	        
-    	        /*set all scope days to print on top of table*/
-    	        mac.monday = (mac.thisMonday.getMonth()+1)+"/"+mac.thisMonday.getDate();
-    	        mac.tuesday = (mac.thisTuesday.getMonth()+1)+"/"+mac.thisTuesday.getDate();
-    	        mac.wednesday = (mac.thisWednesday.getMonth()+1)+"/"+mac.thisWednesday.getDate();
-    	        mac.thursday = (mac.thisThursday.getMonth()+1)+"/"+mac.thisThursday.getDate();
-    	        mac.friday = (mac.thisFriday.getMonth()+1)+"/"+mac.thisFriday.getDate();
-    	        
-    	        /*filter the week so only the current week is visible*/
-    	        mac.users = $filter("weekFilter")(mac.users, mac.thisMonday);
-    	        
-    	        /*setting active days*/
-    	        /*remove active day*/
-    	        mac.activeDay = null;
-    	        
-    	        /*see if this week is the active day week*/
-    	        if(mac.thisCurrentMonday.getDate()==mac.thisMonday.getDate() && mac.thisCurrentMonday.getMonth()==mac.thisMonday.getMonth()){
-    	        	mac.activeDay = w;
-    	        }
-    		}
-    		else{
-    			mac.toast("Can't go back more than 4 weeks");
-    		}
-        }
-        
-            // sets week to the next one
-        function goForwardOneWeek() {
-    	    
-        	//make sure user can't go beyond the present week 
-    		if(mac.weekNumber < 4){
-    		
-    			mac.weekNumber += 1;
-    			if(mac.weekNumber == 4){
-    				mac.activeWeek = true;
-    			}
-        	
-        		/*set the new week up*/
-    	        m = new Date();
-    	        m.setFullYear(mac.setMonday.getFullYear(), mac.setMonday.getMonth(), (mac.setMonday.getDate()+7));
-    	        
-    	        mac.setMonday.setFullYear(m.getFullYear(), m.getMonth(), m.getDate());
-    	        mac.thisMonday = m;
-    	        mac.thisTuesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+1));
-    	        mac.thisWednesday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+2));
-    	        mac.thisThursday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+3));
-    	        mac.thisFriday = new Date(m.getFullYear(), m.getMonth(), (m.getDate()+4));
-    	        
-    	        /*set all scope days to print on top of table*/
-    	        mac.monday = (mac.thisMonday.getMonth()+1)+"/"+mac.thisMonday.getDate();
-    	        mac.tuesday = (mac.thisTuesday.getMonth()+1)+"/"+mac.thisTuesday.getDate();
-    	        mac.wednesday = (mac.thisWednesday.getMonth()+1)+"/"+mac.thisWednesday.getDate();
-    	        mac.thursday = (mac.thisThursday.getMonth()+1)+"/"+mac.thisThursday.getDate();
-    	        mac.friday = (mac.thisFriday.getMonth()+1)+"/"+mac.thisFriday.getDate();
-    	        
-    	        /*filter the week so only the current week is visible*/
-    	        mac.users = $filter("weekFilter")(mac.users, mac.thisMonday);
-    	        
-    	        /*setting active days*/
-    	        /*remove active day*/
-    	        mac.activeDay = null;
-    	        
-    	        /*see if this week is the active day week*/
-    	        if(mac.thisCurrentMonday.getDate()==mac.thisMonday.getDate() && mac.thisCurrentMonday.getMonth()==mac.thisMonday.getMonth()){
-    	        	mac.activeDay = w;
-    	        }
-    		}
-            else{
-    			mac.toast("Can't go to future weeks");
-    		}
-        }
-
             // adds associates by batch
 		function newAssociates() {
             
@@ -296,7 +262,9 @@
                 // opens another dialog upon success to show added associates' info
             $mdDialog.show({
                 templateUrl: "html/templates/batchAdd.html",
-                controller: "batchAddCtrl as bACtrl"
+                controller: "batchAddCtrl as bACtrl",
+                clickOutsideToClose: true,
+                escapeToClose: true
             }).then( function() {
                 $mdDialog.show({
                     templateUrl: "html/templates/batchAddSuccess.html",
@@ -310,7 +278,13 @@
                 mac.toast("Batch addition cancelled.");
             });
         }
-		
-		// addOptions();
-		// setDateTable();
+
+            // adds a leading zero to input if necessary
+        function padZero( input ) {
+            if (input < 10) {
+                return "0" + input;
+            } else {
+                return "" + input;
+            }
+        }
     }
