@@ -109,12 +109,13 @@
         	skillService.getAll(function(response) {
         		uic.availSkills = response;
         		
-        		for (var i = 0; i< uic.currentSkills.length;i++){
-            		for(var j = 0; j < uic.availSkills.length; j++ ){
-            			uic.availSkills.splice(j,1);
-            			break;
-            		}
-            	}
+        		console.log("availskills");
+        		console.log(uic.availSkills);
+        		
+        		removeFromCSkills();
+
+        		console.log("after remove");
+        		console.log(uic.availSkills);
         		
         	}, function(error) {
         	})
