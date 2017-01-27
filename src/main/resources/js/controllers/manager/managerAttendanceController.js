@@ -2,14 +2,19 @@
     angular
         .module( "sms" )
         .controller( "managerAttendanceCtrl", managerAttendanceCtrl );
-        
+     /**
+      * @description AngularJs controller for Manager attendance module (both versions of Admins)
+      */   
     function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, batchAddFactory, weekdays ) {
         var mac = this;
 
           // bindables
             // data
+        /**@prop {object} user Currently logged in user. */
         mac.user = loginService.getUser();
+        /**@prop {Date} curr Date of the currently selected week. */
         mac.curr = new Date();
+        /**@prop {Date} today Today's date. */
         mac.today = mac.curr;
         mac.minWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() - 28 ); 
         mac.maxWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() + 7 );
