@@ -331,6 +331,18 @@ public class UserController {
 			user.setTasks(userDTO.getTasks());
 		}
 		if (userDTO.getSkill() != null){
+			//remove deleted skills
+			boolean found;
+			Set<Technical_Skills> list = userDTO.getSkill();
+			System.out.println(list.size());
+			for(Technical_Skills ts: user.getSkill()){
+				if(!list.contains(ts.getID())){
+					userDTO.getSkill().remove(ts);
+					ts.getUsers().remove(user);
+				}
+			}
+			
+			//add new skills
 			Set<User> u;
 			for(Technical_Skills ts: userDTO.getSkill()){
 				u = ts.getUsers();
@@ -345,8 +357,7 @@ public class UserController {
 				ts.setUsers(u);
 			}
 			
-			//System.out.println(userDTO.getSkill());
-			user.setSkill(userDTO.getSkill());
+			user.setSkill(list);
 			
 		}
 		
