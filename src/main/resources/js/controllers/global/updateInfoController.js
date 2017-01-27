@@ -30,9 +30,10 @@
         uic.submitSkills = submitSkills;
         uic.removeFromCurrentSkills = removeFromCurrentSkills;
         uic.saveSkills = saveSkills;
-
+        uic.removeFromCSkills = removeFromCSkills;
           // initializations
         uic.getSkills();
+       // uic.removeFromCSkills();
         
           // functions
             // for notifications
@@ -107,6 +108,14 @@
         function getSkills() {
         	skillService.getAll(function(response) {
         		uic.availSkills = response;
+        		
+        		for (var i = 0; i< uic.currentSkills.length;i++){
+            		for(var j = 0; j < uic.availSkills.length; j++ ){
+            			uic.availSkills.splice(j,1);
+            			break;
+            		}
+            	}
+        		
         	}, function(error) {
         	})
         }
@@ -149,7 +158,6 @@
                 	break;
         		}
         	}
-        	
         }
         
         function saveSkills(){
@@ -158,6 +166,15 @@
         	userService.update(uic.user,function(){
         		uic.toast("Skills updated");
         	});
+        }
+        
+        function removeFromCSkills(){
+        	for (var i = 0; i< uic.currentSkills.length;i++){
+        		for(var j = 0; j < uic.availSkills.length; j++ ){
+        			uic.availSkills.splice(j,1);
+        			break;
+        		}
+        	}
         }
         
         
