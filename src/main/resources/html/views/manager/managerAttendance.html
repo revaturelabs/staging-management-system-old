@@ -4,7 +4,7 @@
 			<div id="closeIconContainer">
 				<span><md-icon id="closeIcon" ng-click="manAttCtrl.hideInfo()">compare_arrows</md-icon></span>
 			</div>
-			<md-card md-whiteframe="8dp">
+			<md-card md-whiteframe="8dp" id="userCard">
 				<md-card-title>
 					<md-card-title-text>
 						<span class="md-headline">
@@ -24,7 +24,7 @@
 						</p>
 				</md-card-content>
 			</md-card>
-			<md-card md-whiteframe="8dp" class="skillCard">
+			<md-card md-whiteframe="8dp" class="skillCard" id = "skillCard">
 				<md-card-title>
 					<md-card-title-text>
 						<span class="md-headline">Skillz</span>
@@ -34,7 +34,7 @@
 					No content to display
 				</md-card-content>
 			</md-card>
-			<md-card md-whiteframe="8dp" class="certCard">
+			<md-card md-whiteframe="8dp" class="certCard" id = "certCard">
 				<md-card-title>
 					<md-card-title-text>
 						<span class="md-headline">Certifications</span>
@@ -53,14 +53,14 @@
 	</div>
 
 	<div id="attendanceTableDiv" ng-class="{resizeAttendanceDiv : (manAttCtrl.showInformation), resizeSmallAttendanceDiv : (manAttCtrl.showInformation && manAttCtrl.smallDevice)}">
-		<md-card md-whiteframe="2dp">
+		<md-card md-whiteframe="2dp" id="infoCard">
 			<md-table-container ng-hide="manAttCtrl.showInformation && manAttCtrl.smallDevice">
 				<table md-table>
 					<tr md-row>
 						<th style="width: 32%;" colspan="2">
 							<md-input-container>
 								<div id="search" >
-									<input type="text" placeholder="Search..." ng-model="searchBox">
+									<input type="text" placeholder="Search..." ng-model="searchBox" id = "userSearch">
 								</div>
 							</md-input-container></th>
 						<th style="width: 16%;">
@@ -68,7 +68,8 @@
 								<md-icon
 									class="material-icons"
 									ng-click="manAttCtrl.goBackOneWeek()" 
-									style=" cursor: pointer;">
+									style=" cursor: pointer;"
+									id = "goBack">
 									arrow_back
 									<md-tooltip>Last week</md-tooltip>
 						</md-icon></span></th>
@@ -78,7 +79,8 @@
 								<md-icon 
 									class="material-icons"
 									ng-click="manAttCtrl.goForwardOneWeek()" 
-									style=" cursor: pointer;">
+									style=" cursor: pointer;"
+									id = "goForward">
 									arrow_forward
 									<md-tooltip>Next week</md-tooltip>
 						</md-icon></span></th>
