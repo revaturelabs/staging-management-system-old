@@ -25,17 +25,29 @@
         aac.maxWeek = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() + 7 );
 
             // functions
+        /**@var {function} calcWeek function reference variable. */
         aac.calcWeek = calcWeek;
+         /**@var {function} setToolbar function reference variable. */
         aac.setToolbar = setToolbar;
+         /**@var {function} openEvents function reference variable. */
         aac.openEvents = openEvents;
+         /**@var {function} assocCertifications function reference variable. */
         aac.assocCertifications = assocCertifications;
+         /**@var {function} getScheduledCert function reference variable. */
         aac.getScheduledCert = getScheduledCert;
+        /**@var {function} getScheduledCert function reference variable. */
         aac.days_between = days_between;
+        /**@var {function} getScheduledCert function reference variable. */
         aac.isSameDate = isSameDate;
+        /**@var {function} getScheduledCert function reference variable. */
         aac.prevWeek = prevWeek;
+        /**@var {function} getScheduledCert function reference variable. */
         aac.nextWeek = nextWeek;
+        /**@var {function} getScheduledCert function reference variable. */
         aac.toast = toast;
+        /**@var {function} getScheduledCert function reference variable. */
         aac.checkIn = checkIn;
+        //aac.udateSkills = updateSkills;
 
           // initialization
         aac.setToolbar();

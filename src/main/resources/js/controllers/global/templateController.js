@@ -15,6 +15,7 @@
         tc.user = loginService.getUser();
 
             // functions
+
         tc.checkPass = checkPass;
         tc.toast = toast;
         tc.logout = logout;

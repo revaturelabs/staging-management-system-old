@@ -14,6 +14,7 @@
             // data
             //functions
      
+
         lc.toast = toast;
         lc.login = login;
         lc.cookieCheck = cookieCheck;

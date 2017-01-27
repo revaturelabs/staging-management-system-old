@@ -9,6 +9,7 @@
           // bindables
             // data
             // functions
+         /**@var {function} okay function reference variable. */
         avec.okay = okay;
         
           // initialization

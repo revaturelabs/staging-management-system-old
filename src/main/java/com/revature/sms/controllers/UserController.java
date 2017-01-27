@@ -1,6 +1,8 @@
 package com.revature.sms.controllers;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
@@ -14,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.sms.domain.Technical_Skills;
 import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
@@ -328,7 +330,37 @@ public class UserController {
 		if (userDTO.getTasks() != null){
 			user.setTasks(userDTO.getTasks());
 		}
-
+		if (userDTO.getSkill() != null){
+			//remove deleted skills
+			boolean found;
+			Set<Technical_Skills> list = userDTO.getSkill();
+			System.out.println(list.size());
+			for(Technical_Skills ts: user.getSkill()){
+				if(!list.contains(ts.getID())){
+					userDTO.getSkill().remove(ts);
+					ts.getUsers().remove(user);
+				}
+			}
+			
+			//add new skills
+			Set<User> u;
+			for(Technical_Skills ts: userDTO.getSkill()){
+				u = ts.getUsers();
+				if(u !=null){
+					u.add(user);
+					
+				}
+				else{
+					u = new HashSet<User>();
+					u.add(user);
+				}
+				ts.setUsers(u);
+			}
+			
+			user.setSkill(list);
+			
+		}
+		
 		return user;
 
 	}

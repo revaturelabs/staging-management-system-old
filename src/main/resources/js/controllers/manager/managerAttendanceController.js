@@ -25,29 +25,17 @@
         mac.infoOpen = false;
 
             // functions
-        /**@var {function} findDevice function reference variable. */
         mac.findDevice = findDevice;
-        /**@var {function} getUsers function reference variable. */
         mac.getUsers = getUsers;
-        /**@var {function} calcWeek function reference variable. */
         mac.calcWeek = calcWeek;
-        /**@var {function} filterWeek function reference variable. */
         mac.filterWeek = filterWeek;
-        /**@var {function} toggleInfo function reference variable. */
         mac.toggleInfo = toggleInfo;
-        /**@var {function} closeInfo function reference variable. */
         mac.closeInfo = closeInfo;
-        /**@var {function} verify function reference variable. */
         mac.verify = verify;
-        /**@var {function} setToolbar function reference variable. */
         mac.setToolbar = setToolbar;
-        /**@var {function} prevWeek function reference variable. */
         mac.prevWeek = prevWeek;
-        /**@var {function} nextWeek function reference variable. */
         mac.nextWeek = nextWeek;
-        /**@var {function} toast function reference variable. */
         mac.toast = toast;
-        /**@var {function} newAssociates function reference variable. */
         mac.newAssociates = newAssociates;
 
           // initialization
@@ -120,6 +108,7 @@
             }
             user.weekAttendance = weekAttendance;
         }
+
 
             /**
              * @description Opens/closes the info panel and sets the selected user to display the relevant info.
