@@ -126,9 +126,7 @@
         }
         function submitSkills() {
         	var add = removeFromAvailSkill();
-        	if(add != null || add != undefined){
-        		uic.currentSkills.push(add);
-        	}
+        	uic.currentSkills.push(add);
         	
         	uic.user.skill = uic.currentSkills;
         	$scope.skillToAdd="";
