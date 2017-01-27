@@ -9,19 +9,29 @@
           // bindables
             // data
             // functions
+		/**@var {function} showName function reference variable. */
         aic.showName = showName;
+		/**@var {function} showTaskPanel function reference variable. */
         aic.showTaskPanel = showTaskPanel;
+		/**@var {function} showTaskCertification function reference variable. */
         aic.showTaskCertification = showTaskCertification;
+		/**@var {function} cancel function reference variable. */
         aic.cancel = cancel;
 
           // initilization
           // functions
-    	    // show associate full name
+    	    
+		/**
+		 * @description Shows the associate's full name.
+		 */
     	function showName() {
     		return aic.user.firstName + " " + aic.user.lastName;
     	}
     	
-    	    // show the associate panel info
+
+		/**
+		 * @description Shows the associate's panel information.
+		 */
     	function showTaskPanel() {
     		if ((aic.user.tasks != null) && (aic.user.tasks.length > 0)) {
     			for (var i = 0; i < aic.user.tasks.length; i++) {
@@ -33,6 +43,9 @@
     	}
     	
     	    // show the associate certification info
+			/**
+			 * @description Shows the associate's certification information.
+			 */
     	function showTaskCertification() {
     		if ((aic.user.tasks != null) && (aic.user.tasks.length > 0)) {
     			for (var i = 0; i < aic.user.tasks.length; i++) {
@@ -43,7 +56,9 @@
     		}
     	}
     	
-    	    // cancel dialog 
+    /**
+	 * @description Closes the certification dialog window.
+	 */
     	function cancel() {
     		$mdDialog.cancel();
     	}
