@@ -183,8 +183,11 @@
         function removeFromCSkills(){
         	for (var i = 0; i< uic.currentSkills.length;i++){
         		for(var j = 0; j < uic.availSkills.length; j++ ){
-        			uic.availSkills.splice(j,1);
-        			break;
+        			if(uic.currentSkills[i].skill == uic.availSkills[j].skill){
+        				console.log(uic.availSkills[j].skill);
+        				uic.availSkills.splice(j,1);
+        				break;
+        			}
         		}
         	}
         }
