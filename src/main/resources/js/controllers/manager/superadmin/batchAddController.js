@@ -48,7 +48,7 @@
 			$scope.newAssociate.$setPristine();
 			angular.element("#firstName").focus();
 		}
-	};
+	}
 
 
 	
@@ -60,7 +60,7 @@
 	function onlyFridays(date) {
 		var day = date.getDay();
 		return day === 5;
-	};
+	}
 	
  
     /**
@@ -72,7 +72,7 @@
             var list = bac.associates;
             bac.saveHelper(list);
         }
-    };
+    }
 
     /**
      * @description Helpter function for save.
