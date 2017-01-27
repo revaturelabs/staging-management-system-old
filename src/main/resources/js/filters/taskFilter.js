@@ -1,5 +1,11 @@
 var sms = angular.module("sms");
+/**@description AngularJs filter for tasks. */
 sms.filter("taskFilter", function($filter){
+	/**
+	 * @description Filters the tasks based on user and date.
+	 * @param {array} users Array of users.
+	 * @param {Date} now Date provided for the filter.
+	 */
 	return function(users, now){
 		//based on current day see what tasks are coming up and what tasks are past
 		//start by getting the future date and past date

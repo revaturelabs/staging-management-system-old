@@ -1,5 +1,13 @@
 var sms = angular.module("sms");
+/**
+ * @description AngularJs filter for the Week.
+ */
 sms.filter("weekFilter", function($filter){
+	/**
+	 * @description Filters associate attendence for the week.
+	 * @param {array} users Array containing all the associates.
+	 * @param {date} monday The monday that specifies the week being filtered.
+	 */
 	return function(users, monday){
 		//filter associate attendance by current viewing monday
 		var thisWeek = {};
