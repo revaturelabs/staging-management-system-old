@@ -10,7 +10,7 @@ public class LoginPage extends SMSPage {
 	@FindBy(xpath="/html/head/title")
 	public WebElement title;
 	
-	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/div/md-card/md-toolbar/div/span")
+	@FindBy(tagName="span")
 	public WebElement header;
 	
 	@FindBy(xpath="//*[@ng-model=\"logCtrl.username\"]")

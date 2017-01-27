@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
@@ -23,8 +24,7 @@ public abstract class SMSPage {
 	//Verifies that the web driver is currently on the page specified by this page object
 	@SuppressWarnings("unchecked")
 	public boolean verify() {
-		Class<? extends SMSPage> thisClass = null;
-		thisClass = this.getClass();
+		Class<? extends SMSPage> thisClass = this.getClass();
 		Field[] fields = thisClass.getDeclaredFields();
 		WebElement fieldValue = null;
 		List<WebElement> fieldValues = null;
@@ -63,7 +63,34 @@ public abstract class SMSPage {
 		return true;
 	}
 		
+	public void carefulClick(String fieldName) {
+		Class<? extends SMSPage> thisClass = this.getClass();
+		Field field = null;
+		WebElement fieldValue = null;
+		try {
+			field = thisClass.getField(fieldName);
+			fieldValue = (WebElement) field.get(this);	
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
 		
+		try {
+			try {
+				fieldValue.click();
+			} catch (WebDriverException e) {
+				System.out.println("I caught a WebDriverException");
+				Thread.sleep(500);
+				fieldValue.click();
+			}
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+	
 	public Select makeSelection(String fieldName, String selection) {
 		Class<? extends SMSPage> thisClass = null;
 		thisClass = this.getClass();

@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,16 +89,53 @@ public class AdminT implements InstanceTestClassListener {
 	}
 	
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
+
 	@Test
 	public void testLoginHeaderLogout() {
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
 		Assert.assertTrue(adp.verify());
 		Assert.assertEquals(expected.getProperty("adminPg"), adp.header.getText());
-		adp.logout.click();
+		adp.carefulClick("logout");
 		Assert.assertTrue(lp.verify());
 	}
 	
+
+	@Test
+	public void testPasswordChange() {
+		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
+		adp.carefulClick("settings");
+		Assert.assertTrue(cpw.verify());
+		cpw.oldPass.sendKeys(inputs.getProperty("adminPW"));
+		cpw.newPass.sendKeys(inputs.getProperty("adminPW2"));
+		cpw.confirmPass.sendKeys(inputs.getProperty("adminPW2"));
+		cpw.carefulClick("submit");
+		adp.carefulClick("logout");
+		
+		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW2"));
+		adp.carefulClick("settings");
+		Assert.assertTrue(cpw.verify());
+		cpw.oldPass.sendKeys(inputs.getProperty("adminPW2"));
+		cpw.newPass.sendKeys(inputs.getProperty("adminPW"));
+		cpw.confirmPass.sendKeys(inputs.getProperty("adminPW"));
+		cpw.carefulClick("submit");
+		adp.carefulClick("logout");
+						
+	}
+	
+	
+	@Test
+	public void testCancelButtons() {
+		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
+		adp.carefulClick("settings");
+		cpw.carefulClick("cancel");
+		adp.carefulClick("logout");
+	}
+	
+	
+	
+	// This test is temporarily unusable and irrelevant while the search bar is being fixed
 	// Test to enter username in search box and verify correct associate name is returned
+	/*
 	@Test
 	public void testSearchBar() {
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
@@ -116,40 +154,10 @@ public class AdminT implements InstanceTestClassListener {
 		Assert.assertEquals(expected.getProperty("sdet"), adp.searchResult.getText());
 		adp.searchBox.clear();
 		
-		adp.logout.click();
+		adp.carefulClick("logout");
 		Assert.assertTrue(lp.verify());
 	}
-	
-	@Test
-	public void testPasswordChange() {
-		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
-		adp.settings.click();
-		Assert.assertTrue(cpw.verify());
-		cpw.oldPass.sendKeys(inputs.getProperty("adminPW"));
-		cpw.newPass.sendKeys(inputs.getProperty("adminPW2"));
-		cpw.confirmPass.sendKeys(inputs.getProperty("adminPW2"));
-		cpw.submit.click();
-		adp.logout.click();
-		
-		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW2"));
-		adp.settings.click();
-		Assert.assertTrue(cpw.verify());
-		cpw.oldPass.sendKeys(inputs.getProperty("adminPW2"));
-		cpw.newPass.sendKeys(inputs.getProperty("adminPW"));
-		cpw.confirmPass.sendKeys(inputs.getProperty("adminPW"));
-		cpw.submit.click();
-		adp.logout.click();
-						
-	}
-	
-
-	@Test
-	public void testCancelButtons() {
-		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
-		adp.settings.click();
-		cpw.cancel.click();
-		adp.logout.click();
-	}
+	*/
 	
 	
 	

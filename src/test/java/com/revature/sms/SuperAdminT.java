@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -83,7 +84,7 @@ public class SuperAdminT implements InstanceTestClassListener {
 	
 	
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
-	@Ignore
+	
 	@Test
 	public void testLoginHeaderLogout() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
@@ -93,30 +94,7 @@ public class SuperAdminT implements InstanceTestClassListener {
 		Assert.assertTrue(lp.verify());
 	}
 	
-	@Ignore
-	@Test
-	public void testSearchBar() {
-		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
-		Assert.assertTrue(sap.verify());
-		Assert.assertEquals(expected.getProperty("adminPg"), sap.header.getText());
-		
-		sap.searchBox.sendKeys("Java");
-		Assert.assertEquals(expected.getProperty("java"), sap.searchResult.getText());
-		sap.searchBox.clear();
-		
-		sap.searchBox.sendKeys("DotNet");
-		Assert.assertEquals(expected.getProperty("dotnet"), sap.searchResult.getText());
-		sap.searchBox.clear();
-		
-		sap.searchBox.sendKeys("SDET");
-		Assert.assertEquals(expected.getProperty("sdet"), sap.searchResult.getText());
-		sap.searchBox.clear();
-		
-		sap.logout.click();
-		Assert.assertTrue(lp.verify());
-	}
 	
-	@Ignore
 	@Test
 	public void testPasswordChange() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
@@ -126,7 +104,7 @@ public class SuperAdminT implements InstanceTestClassListener {
 		cpw.newPass.sendKeys(inputs.getProperty("superAdminPW2"));
 		cpw.confirmPass.sendKeys(inputs.getProperty("superAdminPW2"));
 		cpw.submit.click();
-		sap.logout.click();
+		sap.carefulClick("logout");
 		
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW2"));
 		sap.settings.click();
@@ -135,10 +113,10 @@ public class SuperAdminT implements InstanceTestClassListener {
 		cpw.newPass.sendKeys(inputs.getProperty("superAdminPW"));
 		cpw.confirmPass.sendKeys(inputs.getProperty("superAdminPW"));
 		cpw.submit.click();
-		sap.logout.click();
+		sap.carefulClick("logout");
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testCancelButtons() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
@@ -175,7 +153,7 @@ public class SuperAdminT implements InstanceTestClassListener {
 		cbw.enterDate.clear();
 		cbw.enterDate.sendKeys(inputs.getProperty("batchStartDate"));
 		cbw.submit.click();
-		driver.findElement(By.xpath("//*[@id=\"dialogContent_13\"]/div/div/button")).click();
+		driver.findElement(By.xpath("//*[@id=\"dialogContent_12\"]/div/div/button")).click();
 		sap.logout.click();
 	}
 	

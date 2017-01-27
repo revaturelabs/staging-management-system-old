@@ -12,26 +12,32 @@ public class AdminPage extends SMSPage {
 	@FindBy(css="[class=\"ng-binding flex\"]")
 	public WebElement header;
 	
-	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/md-card/md-toolbar/div/button[1]/md-icon")
+	@FindBy(xpath="//*[@id=\"Settings\"]/md-icon")
 	public WebElement settings;
 	
-	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/md-card/md-toolbar/div/button[2]/md-icon")
+	@FindBy(xpath="//*[@id=\"Logout\"]/md-icon")
 	public WebElement logout;
 	
-	@FindBy(css="[ng-model=\"searchBox\"]")
-	public WebElement searchBox;
+	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/div[1]/div[2]/button[1]/md-icon")
+	public WebElement prevWeekTop;
 	
-	@FindBy(xpath="//*[@ng-click=\"manAttCtrl.goBackOneWeek()\"]")
-	public WebElement prevWeek;
+	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/div[1]/div[2]/button[2]/md-icon")
+	public WebElement nextWeekTop;
 	
-	@FindBy(xpath="//*[@ng-click=\"manAttCtrl.goForwardOneWeek()\"]")
-	public WebElement nextWeek;
+	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/div[1]/div[2]/div")
+	public WebElement weekOfTop;
 	
-	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/md-table-container[2]/table")
+	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/div[2]/div[2]/button[1]/md-icon")
+	public WebElement prevWeekBottom;
+	
+	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/div[2]/div[2]/button[2]/md-icon")
+	public WebElement nextWeekBottom;
+	
+	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/div[2]/div[2]/div")
+	public WebElement weekOfBottom;
+	
+	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/md-table-container/table")
 	public WebElement attendanceTable;
-	
-	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/md-table-container[2]/table/tbody/tr/td[1]")
-	public WebElement searchResult;
 	
 	
 	public AdminPage(WebDriver driver) {

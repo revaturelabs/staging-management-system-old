@@ -8,8 +8,11 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.After;
 import org.junit.Assert;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
@@ -49,13 +52,18 @@ public class AssociateT implements InstanceTestClassListener {
 	
 	@Override
 	public void beforeClassSetup() {
-	    	if (browser.equals("Chrome")) {
-	    		webDriver = TestSetup.getChrome();
-	    	}
-	    	if (browser.equals("Internet Explorer")) {
-	    		webDriver = TestSetup.getIE();
-	    	}
-	    	
+	    if (browser.equals("Chrome")) {
+	    	webDriver = TestSetup.getChrome();
+	    }
+	    if (browser.equals("Internet Explorer")) {
+	    	webDriver = TestSetup.getIE();
+	    }
+	    if (browser.equals("Firefox")) {
+	    	webDriver = new FirefoxDriver();
+	    }
+	    
+	    
+	    
 		//Allows the driver to take advantage of an event listener
 		driver = new EventFiringWebDriver(webDriver);
 		eventListener = new EventListener();
@@ -83,25 +91,26 @@ public class AssociateT implements InstanceTestClassListener {
 		Assert.assertEquals(expected.getProperty("loginPg"), lp.header.getText());
 	}
 	
+
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
 	@Test
 	public void testLoginHeaderLogout() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
 		Assert.assertTrue(asp.verify());
 		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  //Asserts that the title given in the blue bar towards the top of the page is the same as expected.
-		asp.logout.click();
+		asp.carefulClick("logout");
 		Assert.assertTrue(lp.verify());
 		
 		lp.login(inputs.getProperty("sdetUN"), inputs.getProperty("sdetPW"));
 		Assert.assertTrue(asp.verify());
 		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
-		asp.logout.click();
+		asp.carefulClick("logout");
 		Assert.assertTrue(lp.verify());
 		
 		lp.login(inputs.getProperty("dotnetUN"), inputs.getProperty("dotnetPW"));
 		Assert.assertTrue(asp.verify());
 		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
-		asp.logout.click();
+		asp.carefulClick("logout");
 		Assert.assertTrue(lp.verify());
 		
 	}
@@ -122,18 +131,14 @@ public class AssociateT implements InstanceTestClassListener {
 		
 		ArrayList<String> actualMonthDays = asp.goThroughWeek();
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
-		asp.logout.click();
 	}
 	
-	
-
 	@Test
 	public void testCertificationCancelling() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
-		asp.certification.click();
+		asp.carefulClick("certification");
 		Assert.assertTrue(scw.verify());
-		scw.cancel.click();
-		asp.logout.click();
+		scw.carefulClick("cancel");
 	}
 	
 	
@@ -184,7 +189,7 @@ public class AssociateT implements InstanceTestClassListener {
 			String week;
 			String weekBefore;
 			//This do-while loop iterates through each available week on the associate page by 
-			//clicking the arrow icons
+			//carefulClicking the arrow icons
 			do {
 				week = asp.weekOf.getText();
 				ArrayList<String> actualMonthDays = asp.goThroughWeek();
@@ -215,13 +220,10 @@ public class AssociateT implements InstanceTestClassListener {
 					aCount++;
 					//These count variables ensure that this test compares the data from the excel sheet with the appropriate data from the web page.
 				}
-				asp.prevWeek.click();
+				asp.carefulClick("prevWeek");
 				weekBefore = asp.weekOf.getText();
 			} while (!week.equals(weekBefore));
 		} catch (FilloException e) {}
-		finally {
-			asp.logout.click();
-		}
 	}
 	
 	
@@ -248,7 +250,13 @@ public class AssociateT implements InstanceTestClassListener {
 	}
 	
 	
-	//Close webdriver and clear database
+	@After
+	public void after() {
+		try {
+			asp.carefulClick("logout");
+		} catch (NoSuchElementException e) {}
+	}
+	
 	@Override
 	public void afterClassSetup() {
 		driver.close();

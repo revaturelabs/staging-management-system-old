@@ -19,13 +19,13 @@ public class AssociatePage extends SMSPage {
 	public WebElement header;
 	
 	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/md-card/md-toolbar/div/button[1]/md-icon")
-	public WebElement events;
+	public WebElement checkincheckout;
 	
 	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/md-card/md-toolbar/div/button[2]/md-icon")
-	public WebElement certification;
+	public WebElement events;
 	
 	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/md-card/md-toolbar/div/button[3]/md-icon")
-	public WebElement absent;
+	public WebElement certification;
 	
 	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/md-card/md-toolbar/div/button[4]/md-icon")
 	public WebElement settings;
@@ -36,16 +36,16 @@ public class AssociatePage extends SMSPage {
 	@FindBy(tagName="tbody")
 	public WebElement weekTable;
 	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/div/div/div[2]/button[1]/md-icon")
+	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/ui-view/div/div/div[2]/button[1]/md-icon")
 	public WebElement prevWeek;
 	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/div/div/div[2]/button[2]/md-icon")
+	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/ui-view/div/div/div[2]/button[2]/md-icon")
 	public WebElement nextWeek;
 	
-	@FindBy(xpath="/html/body/div/div/ui-view[2]/md-card/ui-view/div/div/div[2]/div")
+	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/ui-view/div/div/div[2]/div")
 	public WebElement weekOf;
 	
-	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/md-card/ui-view/div/md-table-container/table/thead/tr/th")
+	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/ui-view/div/md-table-container/table/thead/tr/th")
 	public List<WebElement> attendanceCells;
 	
 	
