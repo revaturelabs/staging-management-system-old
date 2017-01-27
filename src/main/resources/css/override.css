@@ -1,88 +1,233 @@
-md-dialog {
-	max-width: 60%;
-}
 
-.md-top {
-	position: fixed;
-	top: 66px;
-}
+    md-dialog {
+        max-width: 60%;
+    }
+    
+    .changePassword{
+    	width:500px;
+    }
+    
+    .InputContainer{
+    	padding-bottom:0px;
+    }
+    
+    /* attendance table css */
+    .attendanceTable tbody tr:hover {
+		background-color: #E8EAF6;
+	}
+	
+	.highlightToday {
+		background: #E8EAF6;
+	}
+	
+	
+	/* search bar css */
+	#search input[type="text"] {
+		background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
+		padding: 6px 15px 6px 35px;
+	}
+	
+	.mainCard
+	{
+     	margin-bottom: 0px !important;
+	}
 
-.md-right {
-	position: fixed;
-	right: 16px;
-}
+    .md-top {
+        position: fixed;
+        top: 66px;
+    }
 
-.menu-icon {
-	color: white;
-	size: 24px;
-}
+    .md-right {
+        position: fixed;
+        right: 16px;
+    }
 
-.page-icon {
-	color: dimgrey;
-	size: 24px;
-}
+    .menu-icon {
+        color: white;
+        size: 24px;
+    }
 
-.associateAttendanceTable h3, .associateAttendanceTable p {
-	margin: 0px 0px 0px 0px;
-	text-align: center;
-}
+    .page-icon {
+        color: dimgrey;
+        size: 24px;
+    }
 
-.associateAttendanceTable p {
-	font-weight: normal;
-}
+    .attendanceTable tbody h3 {
+        margin: 2px 0px 0px 0px;
+    } 
+    
+    .attendanceTable tbody p {
+        margin: 0px 0px 2px 0px;
+    }
 
-.tableData {
-	text-align: center;
-}
+    .attendanceTable thead h3, .attendanceTable thead p {
+        margin: 0px 0px 0px 0px;
+        text-align: center;
+    }
 
-table[md-data-table]>tbody>tr>td:nth-child(2) {
-	max-width: 20%;
-	word-wrap: break-word;
-}
+    .attendanceTable p {
+        font-weight: normal;
+    }
 
-.associateAttendanceTable th {
-	width: 20%;
-}
+    .tableData {
+        text-align: center;
+    }
 
-.attendanceCell {
-	padding: 0px !important;
-}
+    table[md-data-table] > tbody > tr > td:nth-child(2) {
+        max-width: 20%;
+        word-wrap: break-word;
+    }
 
-.changePassword {
-	width: 500px;
-}
+    .attendanceTable th {
+        width: 20%;
+    }
 
-.InputContainer {
-	padding-bottom: 0px;
-}
+    .attendanceTable .attendanceCell {
+        width: 15% !important;
+    }
 
-/* attendance table css */
-.attendanceTable tbody tr:hover {
-	background-color: #E8EAF6;
-}
+    .attendanceCell {
+        padding: 0px !important;
+    }
 
-.highlightToday {
-	background: #E8EAF6;
-}
+    .rowIndex {
+        position: relative;
+        top: 7px;
+        left: -25px;
 
-/* search bar css */
-#search input[type="text"] {
-	background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
-	padding: 6px 15px 6px 35px;
-}
+        width: 23px;
+        margin: 0px;
 
-.mainCard {
-	margin-bottom: 0px !important;
-}
+        color: rgba(0,0,0,0.54);
 
-.eventListRight {
-	text-align: right;
-}
+        text-align: right;
+    }
 
-.h3Top {
-	font-weight: bold !important;
-}
+    .rowName {
+        position: relative;
+        left: -10px;
+    }
+    
+    .changePassword{
+    	width:500px;
+    }
+    
+    .InputContainer{
+    	padding-bottom:0px;
+    }
+    
+    /* attendance table css */
+    .attendanceTable tbody tr:hover {
+		background-color: #E8EAF6;
+	}
+	
+	.highlightToday {
+		background: #E8EAF6;
+	}
+	
+	/* search bar css */
+	#search input[type="text"] {
+		background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
+		padding: 6px 15px 6px 35px;
+	}
 
-.eventDialog {
-	min-width: 500px;
-}
+    .eventListRight {
+        text-align: right;
+    }
+
+    .h3Top {
+        font-weight: bold !important;
+    }
+
+    .eventDialog {
+        min-width: 500px;
+    }
+        
+    .md-top {
+        position: fixed;
+        top: 66px;
+    }
+
+    .md-right {
+        position: fixed;
+        right: 16px;
+    }
+
+    .menu-icon {
+        color: white;
+        size: 24px;
+    }
+
+    .page-icon {
+        color: dimgrey;
+        size: 24px;
+    }
+
+    .associateAttendanceTable h3, .associateAttendanceTable p {
+        margin: 0px 0px 0px 0px;
+        text-align: center;
+    }
+
+    .associateAttendanceTable p {
+        font-weight: normal;
+    }
+
+    .tableData {
+        text-align: center;
+    }
+
+    table[md-data-table]>tbody>tr>td:nth-child(2) {
+        max-width: 20%;
+        word-wrap: break-word;
+    }
+
+    .associateAttendanceTable th {
+        width: 20%;
+    }
+
+    .attendanceCell {
+        padding: 0px !important;
+    }
+
+    .changePassword {
+        width: 500px;
+    }
+
+    .InputContainer {
+        padding-bottom: 0px;
+    }
+
+    /* attendance table css */
+    .attendanceTable tbody tr:hover {
+        background-color: #E8EAF6;
+    }
+
+    .highlightToday {
+        background: #E8EAF6;
+    }
+
+    /* search bar css */
+    #search input[type="text"] {
+        background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
+        padding: 6px 15px 6px 35px;
+    }
+
+    .mainCard {
+        margin-bottom: 0px !important;
+    }
+
+    .eventListRight {
+        text-align: right;
+    }
+
+    .h3Top {
+        font-weight: bold !important;
+    }
+
+    .eventDialog {
+        min-width: 500px;
+    }
+
+    .highlightSelected {
+        background-color: #9fa8da;
+    }

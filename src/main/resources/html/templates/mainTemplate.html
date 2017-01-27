@@ -1,7 +1,6 @@
 
     <md-card md-whiteframe="8">
-
-        <md-toolbar>
+        <md-toolbar md-whiteframe="8">
             <div class="md-toolbar-tools">
 
                 <div flex> {{ tempCtrl.title }} </div>
@@ -23,7 +22,6 @@
 
             </div>
         </md-toolbar>
-
-        <ui-view name="mainView"> </ui-view>
-
     </md-card>
+
+    <ui-view name="mainView"> </ui-view>
