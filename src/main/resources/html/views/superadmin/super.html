@@ -1,5 +1,5 @@
 
-    <md-card md-whitframe="8">
+    <md-card class="mainCard" md-whiteframe="8dp">
 
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -20,12 +20,13 @@
                 
             </div>
         </md-toolbar>
+	</md-card>
+	
+	<div>
+	    <ui-view name="mainSuperView"> </ui-view>
+	</div>
 
-        <div>
-            <ui-view name="mainSuperView"> </ui-view>
-        </div>
-
-    </md-card>
+    
 
     <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
         <md-toolbar>

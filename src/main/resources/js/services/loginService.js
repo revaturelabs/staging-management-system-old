@@ -1,16 +1,18 @@
 
-    var sms = angular.module( "sms" );
-
-    sms.service( "loginService", function( $resource, $cookies, $state ) {
+    angular
+        .module( "sms" )
+        .service( "loginService", loginService );
+        
+    function loginService( $resource, $state, $cookies ) {
         var ls = this;
 
         var loginResource = $resource("api/v1/login", 
             {},
             { 
-                save  : { 
+                save      : { 
                     method: "POST",
                     url: "api/v1/login" }, 
-                cookie: { 
+                cookie    : { 
                     method: "POST",
                     url: "api/v1/login/cookieLogin",
                     headers: { 
@@ -18,7 +20,7 @@
                         "Authorization": function() { return ls.token; }
                     } 
                 },
-                checkPass: { 
+                checkPass : { 
                   	method: "POST",  
                 	url: "/api/v1/login/checkpass",
                 	headers: {
@@ -35,38 +37,45 @@
                 	}
                 }
             }
-        );
+        )
+
         ls.changePass = function(data,success,error){
         	loginResource.changePass(data,success,error);
         }
 
         ls.checkPass = function(username, success,error){
         	loginResource.checkPass(username, success,error);
-        };
+        }
         
         ls.login = function( loginCred, success, error ) {
             loginResource.save( loginCred, success, error );
-        };
+        }
         
         ls.cookieLogin = function( username, success, error ) {
             loginResource.cookie( username, success, error );
-            // username.$cookie( success, error );
         }
 
-          // COOKIES BAD, MKAY
+        ls.checkPass = function(username, success, error){
+        	loginResource.checkPass(username, success, error);
+        }
+
+        ls.changePass = function(data, success, error){
+        	loginResource.changePass(data, success, error);
+        }
+        
         ls.logout = function() {
             ls.user = {};
             ls.token = "";
             $cookies.remove("RevatureSMSUseraname");
             $cookies.remove("RevatureSMSToken");
-        };
+        }
 
         ls.user = {};
         ls.token = "";
 
         ls.addUser = function(user) {
             ls.user = user;
-        };
+        }
      
         ls.getUser = function() {
         	if (ls.user.username == undefined) {
@@ -76,11 +85,11 @@
         	else{
         		return ls.user;
         	}
-        };
+        }
 
         ls.addToken = function(token) {
             ls.token = token;
-        };
+        }
 
         ls.getToken = function() {
         	if(ls.token){
@@ -92,22 +101,17 @@
         			return cookieToken;
         		}
         	}
-            
-        };
+        }
         
-       
-
         return {
-
             login       : ls.login,
             cookieLogin : ls.cookieLogin,
+            checkPass   : ls.checkPass,
+            changePass  : ls.changePass,
             logout      : ls.logout,
             addUser     : ls.addUser,
             getUser     : ls.getUser,
             addToken    : ls.addToken,
-            getToken    : ls.getToken,
-            checkPass : ls.checkPass,
-            changePass : ls.changePass
-        };
-        
-    });
+            getToken    : ls.getToken
+        }
+    }

@@ -23,15 +23,13 @@
 
     </head>
 
-    <body ng-app="sms" ng-controller="masterCtrl as mastCtrl" layout-fill>
+    <body ng-app="sms" ng-controller="rootCtrl as rootCtrl" layout-fill>
 
         <div class="toastContainer">
-
             <div>
                 <ui-view name="topBarView"> </ui-view>
-                <ui-view name="mainView"> </ui-view>
+                <ui-view name="contentView"> </ui-view>
             </div>
-        
         </div>
         
             <!-- jQuery -->
@@ -41,7 +39,7 @@
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"> </script>
 
             <!-- Angular modules -->
-        <script type="text/javascript" src="//unpkg.com/angular-ui-router/release/angular-ui-router.min.js"> </script>
+        <script type="text/javascript" src="//unpkg.com/angular-ui-router/release/angular-ui-router.js"> </script>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-cookies.js"> </script>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"> </script>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.js"> </script>
@@ -53,22 +51,29 @@
         <script type="text/javascript" src="js/sms.js"></script>
 
             <!-- Controllers -->
-        <script type="text/javascript" src="js/controllers/loginController.js"></script>
-        <script type="text/javascript" src="js/controllers/masterController.js"></script>
-        <script type="text/javascript" src="js/controllers/superController.js"></script>
-        <script type="text/javascript" src="js/controllers/adminController.js"></script>
-        <script type="text/javascript" src="js/controllers/adminAttendanceController.js"></script>
-        <script type="text/javascript" src="js/controllers/associateController.js"></script>
-        <script type="text/javascript" src="js/controllers/superAttendanceController.js"></script>
-        <script type="text/javascript" src="js/controllers/associateWeeklyAttendence.js"></script>
-        <script type="text/javascript" src="js/controllers/updateInfoController.js"></script> 
-        <script type="text/javascript" src="js/controllers/batchAddController.js"></script>
-        <script type="text/javascript" src="js/controllers/batchAddSuccessController.js"></script>
+              <!-- Global -->
+        <script type="text/javascript" src="js/controllers/global/rootController.js"></script>
+        <script type="text/javascript" src="js/controllers/global/loginController.js"></script>
+        <script type="text/javascript" src="js/controllers/global/templateController.js"></script>
+        <script type="text/javascript" src="js/controllers/global/updateInfoController.js"></script> 
+
+              <!-- Associate -->
+        <script type="text/javascript" src="js/controllers/associate/associateAttendenceController.js"></script>
+        <script type="text/javascript" src="js/controllers/associate/associateCertificationsController.js"></script>
+        <script type="text/javascript" src="js/controllers/associate/associateViewEventsController.js"></script>
+
+              <!-- Manager -->
+        <script type="text/javascript" src="js/controllers/manager/managerAttendanceController.js"></script>
+        <script type="text/javascript" src="js/controllers/manager/superadmin/batchAddController.js"></script>
+        <script type="text/javascript" src="js/controllers/manager/superadmin/batchAddSuccessController.js"></script>
+        
+              <!-- Misc -->
         
             <!-- Services -->
         <script type="text/javascript" src="js/services/loginService.js"></script>
         <script type="text/javascript" src="js/services/userService.js"></script>
         <script type="text/javascript" src="js/services/batchTypeService.js"></script>
+        <script type="text/javascript" src="js/services/taskTypeService.js"></script>
             
             <!-- Factories -->
         <script type="text/javascript" src="js/factories/batchAddFactory.js"></script>
@@ -76,6 +81,7 @@
             <!-- Filters -->
 		<script type="text/javascript" src="js/filters/associateFilter.js"></script>
 		<script type="text/javascript" src="js/filters/weekFilter.js"></script>
+		<script type="text/javascript" src="js/filters/taskFilter.js"></script>
 		<script type="text/javascript" src="js/filters/iconFilter.js"></script>
 	
             <!-- Directives -->
@@ -83,6 +89,9 @@
         <script type="text/javascript" src="js/directives/sha1.js"> </script>
         
             <!-- Misc -->
+        <script 
+            type="text/javascript" src="https://revaturetraining.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-ia48y4/100025/c/1000.695.3/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-US&collectorId=4917792b">
+        </script>
         <script>
             try {
                 Typekit.load({
