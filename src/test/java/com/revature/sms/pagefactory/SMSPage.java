@@ -71,6 +71,7 @@ public abstract class SMSPage {
 			field = thisClass.getField(fieldName);
 			fieldValue = (WebElement) field.get(this);	
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			System.out.println("Why would I get one of these exceptions?");
 			e.printStackTrace();
 		}
 		
@@ -78,13 +79,13 @@ public abstract class SMSPage {
 			try {
 				fieldValue.click();
 			} catch (WebDriverException e) {
-				System.out.println("I caught a WebDriverException");
+				System.out.println(e.getMessage());
 				Thread.sleep(500);
 				fieldValue.click();
 			}
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
-		}
+		} 
 	}
 	
 	

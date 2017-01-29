@@ -18,7 +18,6 @@ public class CreateBatchWindow extends SMSPage {
 	@FindBy(xpath="//*[@class=\"md-datepicker-input md-input\"]")
 	public WebElement enterDate;
 	
-	
 	@FindBy(xpath="//div/div[2]/form/div/button")
 	public WebElement addToList;
 	

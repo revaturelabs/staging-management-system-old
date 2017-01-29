@@ -89,7 +89,6 @@ public class AdminT implements InstanceTestClassListener {
 	}
 	
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
-
 	@Test
 	public void testLoginHeaderLogout() {
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
