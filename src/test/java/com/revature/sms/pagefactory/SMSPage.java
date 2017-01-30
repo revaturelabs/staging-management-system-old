@@ -1,6 +1,7 @@
 package com.revature.sms.pagefactory;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -40,31 +41,33 @@ public abstract class SMSPage {
 		Field[] fields = thisClass.getDeclaredFields();
 		//System.out.println(thisClass.getName());
 		WebElement fieldValue;
-		List<WebElement> fieldValues;
+		List<WebElement> fieldValues = new ArrayList<WebElement>();
 		boolean result = true;
 		int i=0;
 		while (i<fields.length) {
-			try {	
+			try {
+				//System.out.println(fields[i].getName());
+				fieldValue = (WebElement) fields[i].get(this);
+				result = verifyField(fieldValue);
+				if (!result) {
+					return result;
+				}
+			} catch (ClassCastException e) {
 				try {
-					//System.out.println(fields[i].getName());
-					fieldValue = (WebElement) fields[i].get(this);
-					result = verifyField(fieldValue);
-					if (!result) {
-						return result;
-					}
-				} catch (ClassCastException e) {
 					fieldValues = (List<WebElement>) fields[i].get(this);
 					for (WebElement f:fieldValues) {
 						result = verifyField(f);
 						if (!result) {
 							return result;
 						}
-					}	
-					Logger.getRootLogger().debug(e);
+					}
+				} catch (IllegalArgumentException | IllegalAccessException e1) {
+					Logger.getRootLogger().debug(e1);
 				}
-			} catch (IllegalAccessException e) {
 				Logger.getRootLogger().debug(e);
-			}
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				Logger.getRootLogger().debug(e);
+			} 
 			i++;
 		}
 		return result;
@@ -93,21 +96,22 @@ public abstract class SMSPage {
 		}
 		
 		try {
-			try {
-				if (fieldValue != null) {
-					fieldValue.click();
-				}
-			} catch (WebDriverException e) {
-				Logger.getRootLogger().debug(e);
-				Thread.sleep(500);
-				if (fieldValue != null) {
-					fieldValue.click();
-				}
+			if (fieldValue != null) {
+				fieldValue.click();
 			}
-		} catch (InterruptedException e1) {
-			Logger.getRootLogger().debug(e1);
-			Thread.currentThread().interrupt();
-		} 
+		} catch (WebDriverException e) {
+			Logger.getRootLogger().debug(e);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				Logger.getRootLogger().debug(e);
+				Thread.currentThread().interrupt();
+			}
+			if (fieldValue != null) {
+				fieldValue.click();
+			}
+		}
+		
 	}
 	
 	public String getHeader() {
