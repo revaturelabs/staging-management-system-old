@@ -5,7 +5,7 @@ import java.util.List;
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
-import com.revature.sms.domain.Technical_Skills;
+import com.revature.sms.domain.TechnicalSkills;
 
 public class NewAssociateDTO {
 
@@ -16,7 +16,7 @@ public class NewAssociateDTO {
 	private BatchType batchType;
 	private List<AssociateAttendance> attendance;
 	private List<AssociateTask> tasks;
-	private List<Technical_Skills> skill;
+	private List<TechnicalSkills> skill;
 	
 	public NewAssociateDTO() {
 		super();
@@ -36,7 +36,7 @@ public class NewAssociateDTO {
 	
 	public NewAssociateDTO(String username, String firstName, String lastName, String hashedPassword,
 			BatchType batchType, List<AssociateAttendance> attendance, List<AssociateTask> tasks,
-			List<Technical_Skills> skill) {
+			List<TechnicalSkills> skill) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -104,11 +104,11 @@ public class NewAssociateDTO {
 		this.tasks = tasks;
 	}
 
-	public List<Technical_Skills> getSkill() {
+	public List<TechnicalSkills> getSkill() {
 		return skill;
 	}
 
-	public void setSkill(List<Technical_Skills> skill) {
+	public void setSkill(List<TechnicalSkills> skill) {
 		this.skill = skill;
 	}
 	

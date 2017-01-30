@@ -114,11 +114,7 @@ public class User {
 	 * List of skills that a user has
 	 */
 	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private Set<Technical_Skills> skill;
-	
-	@ManyToOne
-	@JoinColumn(name = "marketing_status")
-	private MarketingStatus marketingStatus;
+	private Set<TechnicalSkills> skill;
 	
 	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
@@ -127,8 +123,6 @@ public class User {
 		super();
 	}
 
-
-	// constructor for non-associate
 	/**
 	 * Constructor for User object. This constructor is specifically designed to
 	 * be used for creating a User who is an associate. Initializes all instance variables except for ID, as that is
@@ -143,11 +137,10 @@ public class User {
 	 * @param userRole UserRole object that keeps track of the user's specific role.
 	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
 	 * @param skills gets a list of technical skills that an associate has
-	 * @param events Tracks the list of Job Events for a given user
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate, 
-			Set<Technical_Skills> skills, MarketingStatus marketingStatus, List<JobEvent> events) {
+			Set<TechnicalSkills> skills, List<JobEvent> events) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -158,7 +151,6 @@ public class User {
 		this.tasks = tasks;
 		this.userRole = userRole;
 		this.graduationDate = graduationDate;
-		this.marketingStatus = marketingStatus;
 		this.skill = skills;
 		this.events = events;
 	}
@@ -381,31 +373,17 @@ public class User {
 	/**
 	 * Method that retrieves the list of skills of the user
 	 */
-	public Set<Technical_Skills> getSkill() {
+	public Set<TechnicalSkills> getSkill() {
 		return skill;
 	}
 
 	/**
 	 * Method that manually sets the skills of the user object
 	 */
-	public void setSkill(Set<Technical_Skills> skill) {
+	public void setSkill(Set<TechnicalSkills> skill) {
 		this.skill = skill;
 	}
 	
-	
-	
-	public MarketingStatus getMarketingStatus() {
-		return marketingStatus;
-	}
-
-
-
-	public void setMarketingStatus(MarketingStatus marketingStatus) {
-		this.marketingStatus = marketingStatus;
-	}
-
-
-
 	/**
 	 * Method that returns a string representation of the current User object.
 	 */

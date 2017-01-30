@@ -1,39 +1,38 @@
-<div>
-    <md-card-title>
-        <md-card-title-text style="text-align: center">
-            <h3>Associate Info</h3>
-        </md-card-title-text>
-    </md-card-title>
-
+   
     <div>
-        <div layout="column" layout-align="center center">
-            <md-input-container style="width:75%;">
-                <label style="text-align: left">Name</label>
-                <span id="assocName" style="text-align: right">{{aInfoCtrl.showName()}}</span>
-            </md-input-container>
-        </div>
-        <div layout="column" layout-align="center center">
-            <md-input-container style="width:75%;">
-                <label style="text-align: left">username</label>
-                <span id="assocUsername" style="text-align: right">{{aInfoCtrl.user.username}}</span>
-            </md-input-container>
-        </div>
+        <md-card-title> 
+            <md-card-title-text style="text-align: center"><h3>Associate Info</h3></md-card-title-text> 
+        </md-card-title>
 
-        <div layout="column" layout-align="center center">
-            <md-input-container style="width:75%;">
-                <label style="text-align: left">Panel</label>
-                <span id="assocTasks" style="text-align: right">{{aInfoCtrl.showTaskPanel()}}</span>
-            </md-input-container>
-        </div>
+        <div>
+            <div layout="column" layout-align="center center">
+                <md-input-container style="width:75%;"> 
+                    <label style="text-align: left">Name</label> 
+                    <span style="text-align: right">{{aInfoCtrl.showName()}}</span>
+                </md-input-container>
+            </div>
+            <div layout="column" layout-align="center center">
+                <md-input-container style="width:75%;"> 
+                    <label style="text-align: left">username</label> 
+                    <span style="text-align: right">{{aInfoCtrl.user.username}}</span>
+                </md-input-container>
+            </div>
+            
+            <div layout="column" layout-align="center center">
+                <md-input-container style="width:75%;"> 
+                    <label style="text-align: left">Panel</label> 
+                    <span style="text-align: right">{{aInfoCtrl.showTaskPanel()}}</span>
+                </md-input-container>
+            </div>
+            
+            <div layout="column" layout-align="center center">
+                <md-input-container style="width:75%;"> 
+                    <label style="text-align: left">Certification</label> 
+                    <span style="text-align: right">{{aInfoCtrl.showTaskCertification()}}</span>
+                </md-input-container>
+            </div>
 
-        <div layout="column" layout-align="center center">
-            <md-input-container style="width:75%;">
-                <label style="text-align: left">Certification</label>
-                <span id="assocCertifications" style="text-align: right">{{aInfoCtrl.showTaskCertification()}}</span>
-            </md-input-container>
+            <div layout="row" layout-align="center center">
+                <md-button type="button" id="aInfoCancel" class="md-raised md-warn" style="width:10%; align: center" ng-click="aInfoCtrl.cancel()"> Cancel </md-button>
+            </div>
         </div>
-
-        <div layout="row" layout-align="center center">
-            <md-button id="assocCancel" type="button" id="aInfoCancel" class="md-raised md-warn" style="width:10%; align: center" ng-click="aInfoCtrl.cancel()"> Cancel </md-button>
-        </div>
-    </div>
