@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.sms.domain.Technical_Skills;
+import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
@@ -333,9 +333,9 @@ public class UserController {
 		if (userDTO.getSkill() != null){
 			//remove deleted skills
 			boolean found;
-			Set<Technical_Skills> list = userDTO.getSkill();
+			Set<TechnicalSkills> list = userDTO.getSkill();
 			System.out.println(list.size());
-			for(Technical_Skills ts: user.getSkill()){
+			for(TechnicalSkills ts: user.getSkill()){
 				if(!list.contains(ts.getID())){
 					userDTO.getSkill().remove(ts);
 					ts.getUsers().remove(user);
@@ -344,7 +344,7 @@ public class UserController {
 			
 			//add new skills
 			Set<User> u;
-			for(Technical_Skills ts: userDTO.getSkill()){
+			for(TechnicalSkills ts: userDTO.getSkill()){
 				u = ts.getUsers();
 				if(u !=null){
 					u.add(user);
