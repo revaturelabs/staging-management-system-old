@@ -87,31 +87,6 @@ public class StagingManagementSystemApplicationTests {
 	 * @return The hashed password
 	 */
 
-	@Test
-	public void makeData(){
-		urr.save(new UserRole("associate"));
-		urr.save(new UserRole("admin"));
-		urr.save(new UserRole("superAdmin"));
-		btr.save(new BatchType("SDET"));
-		btr.save(new BatchType("Java"));
-		btr.save(new BatchType(".NET"));
-		jetr.save(new JobEventType("Selected"));
-		jetr.save(new JobEventType("Interviewed"));
-		msr.save(new MarketingStatus("Staging"));
-		msr.save(new MarketingStatus("Placed"));
-		tsr.save(new TechnicalSkills(""));
-		ur.save(new User("admin","Admin","Admin",hashPassword("password"),urr.findByName("admin")));
-		ur.save(new User("superadmin","Super","Admin",hashPassword("password"),urr.findByName("superAdmin")));
-		ur.save(new User("java","Java","Johnny",hashPassword("password"),btr.findByType("Java"),new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(),urr.findByName("associate"), new Timestamp(2017, 1, 1, 0, 0, 0, 0), new HashSet<TechnicalSkills>(), new ArrayList<JobEvent>(), msr.findByStatus("")));
-		ur.save(new User("dotnet","DotNet","Dave",hashPassword("password"),btr.findByType(".NET"),new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(),urr.findByName("associate"), new Timestamp(2017, 1, 1, 0, 0, 0, 0), new HashSet<TechnicalSkills>(), new ArrayList<JobEvent>(), msr.findByStatus("")));
-		ur.save(new User("sdet","SDET","Sally",hashPassword("password"),btr.findByType("SDET"),new ArrayList<AssociateAttendance>(), new ArrayList<AssociateTask>(),urr.findByName("associate"), new Timestamp(2017, 1, 1, 0, 0, 0, 0), new HashSet<TechnicalSkills>(), new ArrayList<JobEvent>(), msr.findByStatus("")));
-		jetr.save(new JobEventType("Selected"));
-		jetr.save(new JobEventType("Interviewed"));
-		jetr.save(new JobEventType("On Location"));
-		attr.save(new AssociateTaskType("Certification"));
-		attr.save(new AssociateTaskType("Panel"));		
-	}
-	
 	public static String hashPassword(String inputPassword) {
 		try {
 			MessageDigest md;
