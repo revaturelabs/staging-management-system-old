@@ -1,7 +1,7 @@
 package com.revature.sms.util;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.*;
 
@@ -13,7 +13,8 @@ public class EventListener extends AbstractWebDriverEventListener {
 		try {
 			Thread.sleep(400);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			Logger.getRootLogger().debug(e);
+			Thread.currentThread().interrupt();
 		}
 	}
 	
@@ -23,7 +24,8 @@ public class EventListener extends AbstractWebDriverEventListener {
 		try {
 			Thread.sleep(400);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			Logger.getRootLogger().debug(e);
+			Thread.currentThread().interrupt();
 		}
 	}
 	
@@ -33,7 +35,8 @@ public class EventListener extends AbstractWebDriverEventListener {
 		try {
 			Thread.sleep(400);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			Logger.getRootLogger().debug(e);
+			Thread.currentThread().interrupt();
 		}
 	}
 	
@@ -43,7 +46,8 @@ public class EventListener extends AbstractWebDriverEventListener {
 		try {
 			Thread.sleep(400);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			Logger.getRootLogger().debug(e);
+			Thread.currentThread().interrupt();
 		}
 	}
 	

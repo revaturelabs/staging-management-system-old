@@ -2,14 +2,13 @@ package com.revature.sms.util;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 
 //This class contains convenience methods for creating connections to properties files and web driver files.
@@ -18,7 +17,6 @@ public class TestSetup {
 	//List of paths to browser drivers
 	private final static String windowsChromeDriverPath = "src/test/resources/testBrowserDrivers/chromedriver.exe";
 	private final static String ieDriverPath = "src/test/resources/testBrowserDrivers/IEDriverServer.exe";
-	private final static String phantomJSDriverPath = "src/test/resources/testBrowserDrivers/phantomjs-2.1.1-windows/bin/phantomjs.exe";
 	
 	public static Properties getProperties(String pathname) {
 		Properties prop = null;
@@ -30,15 +28,12 @@ public class TestSetup {
 			file = new File(pathname);
 			fis = new FileInputStream(file);
 			prop.load(fis);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
+		} catch (IOException e) {} 
+		finally {
 			try {
 				fis.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (IOException | NullPointerException e) {
+				Logger.getRootLogger().debug(e);
 			}
 		}		
 		return prop;

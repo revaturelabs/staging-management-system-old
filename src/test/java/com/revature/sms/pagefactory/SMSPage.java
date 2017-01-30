@@ -1,9 +1,9 @@
 package com.revature.sms.pagefactory;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -60,7 +60,7 @@ public abstract class SMSPage {
 					}	
 				}
 			} catch (IllegalAccessException e) {
-				e.printStackTrace();
+				Logger.getRootLogger().debug(e);
 			}
 			i++;
 		}
@@ -71,7 +71,7 @@ public abstract class SMSPage {
 		try {
 			fieldValue.isDisplayed();
 		} catch (NoSuchElementException e) {
-			System.out.println(e.getMessage());
+			Logger.getRootLogger().debug(e);
 			return false;
 		}
 		return true;
@@ -85,20 +85,21 @@ public abstract class SMSPage {
 			field = thisClass.getField(fieldName);
 			fieldValue = (WebElement) field.get(this);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-			System.out.println("Why would I get one of these exceptions?");
-			e.printStackTrace();
+			//System.out.println("Why would I get one of these exceptions?");
+			Logger.getRootLogger().debug(e);
 		}
 		
 		try {
 			try {
 				fieldValue.click();
 			} catch (WebDriverException e) {
-				System.out.println(e.getMessage());
+				Logger.getRootLogger().debug(e);
 				Thread.sleep(500);
 				fieldValue.click();
 			}
-		} catch (InterruptedException e1) {
+		} catch (InterruptedException | NullPointerException e1) {
 			e1.printStackTrace();
+			Thread.currentThread().interrupt();
 		} 
 	}
 	
@@ -118,7 +119,7 @@ public abstract class SMSPage {
 			select = new Select(fieldValue);
 			select.selectByVisibleText(selection);
 		} catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
-			e.printStackTrace();
+			Logger.getRootLogger().debug(e);
 		}
 		return select;
 	}

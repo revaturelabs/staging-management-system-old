@@ -2,15 +2,9 @@ package com.revature.sms;
 
 import java.util.ArrayList;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-
-import com.codoid.products.exception.FilloException;
-import com.revature.sms.pagefactory.AssociatePage;
-import com.revature.sms.util.ExcelHelper;
 
 public class AssociateT extends AbstractT {
 	//Tests that when different types of users login and logout, they are navigated to the correct pages

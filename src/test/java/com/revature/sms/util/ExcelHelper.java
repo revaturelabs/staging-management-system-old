@@ -48,7 +48,7 @@ public class ExcelHelper {
 				int i  = 1;
 				while (flag) {
 					String value = rs.getField(String.valueOf(i));
-					if (!value.equals("STOP")) {
+					if (!"STOP".equals(value)) {
 						values.add(value);
 						i++;
 					} else {

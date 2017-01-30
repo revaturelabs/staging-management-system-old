@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,6 @@ import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.AssociateTaskTypeRepo;
 import com.revature.sms.domain.dao.BatchTypeRepo;
-import com.revature.sms.domain.dao.JobAssignmentRepo;
-import com.revature.sms.domain.dao.JobEventTypeRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
 import com.revature.sms.util.ExcelHelper;
 import com.revature.sms.util.Utils;
@@ -40,12 +39,6 @@ public class DBInitializationController {
 	
 	@Autowired
 	private AssociateTaskTypeRepo attr;
-	
-	@Autowired
-	private JobAssignmentRepo jar;
-	
-	@Autowired
-	private JobEventTypeRepo jetr;
 	
 	
 	DBInitializationController() {
@@ -79,7 +72,7 @@ public class DBInitializationController {
 				udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, events, userRole, gts);
 				i++;
 			}
-		} catch (FilloException e) {}
+		} catch (FilloException e) {Logger.getRootLogger().debug(e);}
 	}
 	
 
@@ -88,7 +81,7 @@ public class DBInitializationController {
 	public void initializeUserObjects() {
 		//This createdUsers array must be copied to avoid a ConcurrentModificationException
 		ArrayList<User> arrayCopy = new ArrayList<User>();
-		for (User user: udm.createdUsers) {
+		for (User user: udm.getCreatedUsers()) {
 			arrayCopy.add(user);
 		}
 		
@@ -115,7 +108,7 @@ public class DBInitializationController {
 				taskDates = eh.getValues("taskDate");
 				taskNotes = eh.getValues("taskNote");
 				
-			} catch (FilloException e) {}
+			} catch (FilloException e) {Logger.getRootLogger().debug(e);}
 		
 			//The inner loops create each user's attendance records, tasks, or job events 
 			//(when they exist) and save them to the database.

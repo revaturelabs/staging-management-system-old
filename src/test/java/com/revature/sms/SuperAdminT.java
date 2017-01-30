@@ -1,16 +1,7 @@
 package com.revature.sms;
 
-import java.util.ArrayList;
-
 import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import com.revature.sms.pagefactory.SuperAdminPage;
 
 public class SuperAdminT extends AbstractT  {	
 	

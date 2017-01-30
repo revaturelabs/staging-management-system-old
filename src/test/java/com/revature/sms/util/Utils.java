@@ -36,9 +36,7 @@ public class Utils {
 			Date date = null;
 			try {
 				date = sdf.parse(dateString);
-			} catch (ParseException e) {
-				System.out.println("You got a ParseException");
-				System.out.println(e.getMessage());
+			} catch (ParseException | NullPointerException e) {
 				Logger.getRootLogger().debug("You got a ParseException", e);
 			}
 			

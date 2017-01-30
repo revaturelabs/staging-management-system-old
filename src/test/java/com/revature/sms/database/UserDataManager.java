@@ -40,7 +40,7 @@ public class UserDataManager {
 	 * Each element of createdUsers is removed from the database when removeAllTestUsers is called.
 	 */
 	
-	public List<User> createdUsers = new ArrayList<>();
+	private List<User> createdUsers = new ArrayList<>();
 	
 	@Autowired
 	private UserRepo ur;
@@ -182,6 +182,10 @@ public class UserDataManager {
 			ur.delete(currentUser);
 		}
 		createdUsers.clear();
+	}
+	
+	public List<User> getCreatedUsers() {
+		return createdUsers;
 	}
 
 }
