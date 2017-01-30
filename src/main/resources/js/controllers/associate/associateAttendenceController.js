@@ -280,6 +280,7 @@
           * week already.
           */
         function prevWeek() {
+        	console.log("in prevWeek");
             var newDate = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() - 7 );
             if ( newDate.getTime() < aac.minWeek.getTime() ) {
                 aac.toast( "Cannot view attendance older than four weeks." );

@@ -297,6 +297,7 @@
          * @returns {number} Number of days between the graduation date and today
          */
         function calcMarketingDays(){
+        	console.log(mac.selectedUser.graduationDate);
         	return " " + mac.days_between(mac.curr, ((new Date(mac.selectedUser.graduationDate)))) + " days";
         	
         	
