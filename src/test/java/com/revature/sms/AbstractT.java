@@ -35,7 +35,7 @@ import com.revature.sms.util.ExcelHelper;
 @Service
 @RunWith(SpringInstanceTestClassRunner.class)
 @SpringBootTest
-public class AbstractT implements InstanceTestClassListener {
+public abstract class AbstractT implements InstanceTestClassListener {
 	protected final String browser = "Chrome"; 
 	protected final String inputsPath = "src/test/resources/PropertiesFiles/inputs.properties";
 	protected final String expectedPath = "src/test/resources/PropertiesFiles/expected.properties";
@@ -102,6 +102,38 @@ public class AbstractT implements InstanceTestClassListener {
 	@Override
 	public void afterClassSetup() {
 		driver.close();
+	}
+	
+	
+	
+	public void LoginHeaderLogoutTemplate(SMSPage mp, String un, String pw, String ev) {
+		lp.login(un, pw);
+		Assert.assertTrue(mp.verify());
+		Assert.assertEquals(ev, mp.header.getText());
+		mp.carefulClick("logout");
+		Assert.assertTrue(lp.verify());
+	}
+	
+	
+	
+	public void PasswordChangeTemplate(SMSPage mp, String un, String pw, String pw2) {
+		lp.login(un, pw);
+		adp.carefulClick("settings");
+		Assert.assertTrue(cpw.verify());
+		cpw.oldPass.sendKeys(pw);
+		cpw.newPass.sendKeys(pw2);
+		cpw.confirmPass.sendKeys(pw2);
+		cpw.carefulClick("submit");
+		adp.carefulClick("logout");
+		
+		lp.login(un, pw2);
+		adp.carefulClick("settings");
+		Assert.assertTrue(cpw.verify());
+		cpw.oldPass.sendKeys(pw2);
+		cpw.newPass.sendKeys(pw);
+		cpw.confirmPass.sendKeys(pw);
+		cpw.carefulClick("submit");
+		adp.carefulClick("logout");
 	}
 	
 	

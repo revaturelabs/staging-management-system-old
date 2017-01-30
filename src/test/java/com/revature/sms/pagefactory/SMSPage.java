@@ -8,13 +8,25 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 //Defines a constructor and methods that should be implemented by all page objects in the testing framework
 public abstract class SMSPage {
-
 	protected WebDriver driver;
+	
+	@FindBy(tagName="title")
+	public WebElement title;
+	
+	@FindBy(css="[class=\"ng-binding flex\"]")
+	public WebElement header;
+	
+	@FindBy(xpath="//*[@aria-label=\"Account settings\"]")
+	public WebElement settings;
+	
+	@FindBy(xpath="//*[@aria-label=\"Logout\"]")
+	public WebElement logout;
 	
 	public SMSPage(WebDriver driver) {
 		this.driver = driver;
@@ -26,6 +38,7 @@ public abstract class SMSPage {
 	public boolean verify() {
 		Class<? extends SMSPage> thisClass = this.getClass();
 		Field[] fields = thisClass.getDeclaredFields();
+		//System.out.println(thisClass.getName());
 		WebElement fieldValue = null;
 		List<WebElement> fieldValues = null;
 		boolean result = true;
@@ -33,6 +46,7 @@ public abstract class SMSPage {
 		while (i<fields.length && result) {
 			try {	
 				try {
+					//System.out.println(fields[i].getName());
 					fieldValue = (WebElement) fields[i].get(this);
 					if (verifyField(fieldValue) == false) {
 						result = false;
@@ -64,15 +78,12 @@ public abstract class SMSPage {
 	}
 		
 	public void carefulClick(String fieldName) {
-		System.out.println("Here1");
 		Class<? extends SMSPage> thisClass = this.getClass();
 		Field field = null;
 		WebElement fieldValue = null;
 		try {
-			System.out.println("Here2");
 			field = thisClass.getField(fieldName);
 			fieldValue = (WebElement) field.get(this);
-			System.out.println("Here3");
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 			System.out.println("Why would I get one of these exceptions?");
 			e.printStackTrace();
@@ -80,25 +91,20 @@ public abstract class SMSPage {
 		
 		try {
 			try {
-				System.out.println("Here4");
 				fieldValue.click();
-				System.out.println("Here5");
 			} catch (WebDriverException e) {
-				System.out.println("Here6");
 				System.out.println(e.getMessage());
-				System.out.println("Here7");
 				Thread.sleep(500);
-				System.out.println();
-				System.out.println("Field Value is: "+fieldValue);
 				fieldValue.click();
-				System.out.println("Here8");
 			}
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		} 
 	}
 	
-	
+	public String getHeader() {
+		return header.getText();
+	}
 	
 	
 	

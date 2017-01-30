@@ -14,6 +14,28 @@ import com.revature.sms.pagefactory.SuperAdminPage;
 
 public class SuperAdminT2 extends AbstractT  {	
 	
+	@Test
+	public void testLoginHeaderLogout() {
+		String expectedValue = expected.getProperty("superAdminPg");
+		LoginHeaderLogoutTemplate(sap, inputs.getProperty("superAdminUN"), inputs.getProperty("PW"), expectedValue);	
+	}
+	
+	@Test
+	public void testPasswordChange() {
+		PasswordChangeTemplate(adp, inputs.getProperty("adminUN"), inputs.getProperty("PW"), inputs.getProperty("PW2"));
+	}
+	
+	@Test
+	public void testCancelButtons() {
+		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("PW"));
+		sap.carefulClick("addBatch");
+		cbw.carefulClick("cancel");
+		sap.carefulClick("settings");
+		cpw.carefulClick("cancel");
+	}
+	
+	
+	
 	//The submit button in the batch creation window seems to be disabled. Until it works again, this
 	//test is out of commission.
 	/*

@@ -11,12 +11,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class AssociatePage extends SMSPage {
-
-	@FindBy(tagName="title")
-	public WebElement title;
-	
-	@FindBy(css="[class=\"ng-binding flex\"]")
-	public WebElement header;
 	
 	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/md-card/md-toolbar/div/button[1]/md-icon")
 	public WebElement checkincheckout;
@@ -26,12 +20,6 @@ public class AssociatePage extends SMSPage {
 	
 	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/md-card/md-toolbar/div/button[3]/md-icon")
 	public WebElement certification;
-	
-	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/md-card/md-toolbar/div/button[4]/md-icon")
-	public WebElement settings;
-	
-	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/md-card/md-toolbar/div/button[5]/md-icon")
-	public WebElement logout;
 	
 	@FindBy(tagName="tbody")
 	public WebElement weekTable;

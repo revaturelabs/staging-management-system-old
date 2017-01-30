@@ -14,43 +14,24 @@ public class AdminT2 extends AbstractT {
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
 	@Test
 	public void testLoginHeaderLogout() {
-		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
-		Assert.assertTrue(adp.verify());
-		Assert.assertEquals(expected.getProperty("adminPg"), adp.header.getText());
-		adp.carefulClick("logout");
-		Assert.assertTrue(lp.verify());
+		String expectedValue = expected.getProperty("adminPg");
+		LoginHeaderLogoutTemplate(adp, inputs.getProperty("adminUN"), inputs.getProperty("PW"), expectedValue);
 	}
 	
 	@Test
 	public void testPasswordChange() {
-		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
-		adp.carefulClick("settings");
-		Assert.assertTrue(cpw.verify());
-		cpw.oldPass.sendKeys(inputs.getProperty("adminPW"));
-		cpw.newPass.sendKeys(inputs.getProperty("adminPW2"));
-		cpw.confirmPass.sendKeys(inputs.getProperty("adminPW2"));
-		cpw.carefulClick("submit");
-		adp.carefulClick("logout");
-		
-		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW2"));
-		adp.carefulClick("settings");
-		Assert.assertTrue(cpw.verify());
-		cpw.oldPass.sendKeys(inputs.getProperty("adminPW2"));
-		cpw.newPass.sendKeys(inputs.getProperty("adminPW"));
-		cpw.confirmPass.sendKeys(inputs.getProperty("adminPW"));
-		cpw.carefulClick("submit");
-		adp.carefulClick("logout");
-						
+		PasswordChangeTemplate(adp, inputs.getProperty("adminUN"), inputs.getProperty("PW"), inputs.getProperty("PW2"));
 	}
-	
 	
 	@Test
 	public void testCancelButtons() {
-		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
+		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
 		adp.carefulClick("settings");
 		cpw.carefulClick("cancel");
-		adp.carefulClick("logout");
 	}
+	
+	
+	
 	
 	
 	

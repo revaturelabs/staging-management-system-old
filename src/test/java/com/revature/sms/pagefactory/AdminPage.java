@@ -5,18 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class AdminPage extends SMSPage {
-
-	@FindBy(tagName="title")
-	public WebElement title;
-	
-	@FindBy(css="[class=\"ng-binding flex\"]")
-	public WebElement header;
-	
-	@FindBy(xpath="//*[@aria-label=\"Account settings\"]")
-	public WebElement settings;
-	
-	@FindBy(xpath="//*[@aria-label=\"Logout\"]")
-	public WebElement logout;
 	
 	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/div[1]/div[2]/button[1]/md-icon")
 	public WebElement prevWeekTop;

@@ -14,33 +14,36 @@ import com.revature.sms.util.ExcelHelper;
 
 public class AssociateT2 extends AbstractT {
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
+	
 	@Test
 	public void testLoginHeaderLogout() {
-		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
-		Assert.assertTrue(asp.verify());
-		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  //Asserts that the title given in the blue bar towards the top of the page is the same as expected.
-		asp.carefulClick("logout");
-		Assert.assertTrue(lp.verify());
-		
-		lp.login(inputs.getProperty("sdetUN"), inputs.getProperty("sdetPW"));
-		Assert.assertTrue(asp.verify());
-		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
-		asp.carefulClick("logout");
-		Assert.assertTrue(lp.verify());
-		
-		lp.login(inputs.getProperty("dotnetUN"), inputs.getProperty("dotnetPW"));
-		Assert.assertTrue(asp.verify());
-		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
-		asp.carefulClick("logout");
-		Assert.assertTrue(lp.verify());
-		
+		String expectedValue = expected.getProperty("associatePg");
+		LoginHeaderLogoutTemplate(asp, inputs.getProperty("javaUN"), inputs.getProperty("PW"), expectedValue);
+		LoginHeaderLogoutTemplate(asp, inputs.getProperty("sdetUN"), inputs.getProperty("PW"), expectedValue);
+		LoginHeaderLogoutTemplate(asp, inputs.getProperty("dotnetUN"), inputs.getProperty("PW"), expectedValue);
 	}
+	
+	@Test
+	public void testPasswordChange() {
+		PasswordChangeTemplate(adp, inputs.getProperty("javaUN"), inputs.getProperty("PW"), inputs.getProperty("PW2"));
+	}
+	
+	@Test
+	public void testCancelButtons() {
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
+		asp.carefulClick("certification");
+		Assert.assertTrue(scw.verify());
+		scw.carefulClick("cancel");
+		asp.carefulClick("settings");
+		cpw.carefulClick("cancel");
+	}
+	
 	
 	
 	//Makes sure the current week is shown on the associate page when you log in.
 	@Test
 	public void testDefaultWeek() {
-		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
 		Assert.assertTrue(asp.verify());
 		
 		ArrayList<String> expectedMonthDays = new ArrayList<String>();
@@ -54,14 +57,6 @@ public class AssociateT2 extends AbstractT {
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
 	}
 	
-	@Test
-	public void testCertificationCancelling() {
-		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
-		asp.carefulClick("certification");
-		Assert.assertTrue(scw.verify());
-		scw.carefulClick("cancel");
-	}
-	
 	
 	
 	//ERROR??? When I run this test, and an associate is set as checked in and not verified for a 
@@ -71,6 +66,7 @@ public class AssociateT2 extends AbstractT {
 	//incorrectly displayed on the website.
 	
 	//This is Corey's work on issue SMS-85.
+	/*
 	@Ignore
 	@Test
 	public void testAssociateAttendanceView() {
@@ -146,7 +142,7 @@ public class AssociateT2 extends AbstractT {
 			} while (!week.equals(weekBefore));
 		} catch (FilloException e) {}
 	}
-	
+	*/
 	
 	
 	//Corey's Test ideas
