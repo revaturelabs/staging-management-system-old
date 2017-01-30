@@ -56,6 +56,7 @@ public class Technical_Skills {
 	 */
 	public Technical_Skills() {
 		super();
+		//this.users = new ArrayList<User>();
 		System.out.println("tech_skills no arg");
 	}
 
@@ -66,6 +67,7 @@ public class Technical_Skills {
 	public Technical_Skills(String skill) {
 		super();
 		this.skill = skill;
+		System.out.println("tech skills skill construct");
 	}
 
 	/**
@@ -77,6 +79,7 @@ public class Technical_Skills {
 		super();
 		this.skill = skill;
 		this.users = users;
+		System.out.println("tech skills all construct");
 	}
 
 	/**
