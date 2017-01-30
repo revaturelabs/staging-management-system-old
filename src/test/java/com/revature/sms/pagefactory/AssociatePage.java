@@ -36,7 +36,6 @@ public class AssociatePage extends SMSPage {
 	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/ui-view/div/md-table-container/table/thead/tr/th")
 	public List<WebElement> attendanceCells;
 	
-	
 	public AssociatePage(WebDriver driver) {
 		super(driver);
 	}

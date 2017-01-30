@@ -27,7 +27,21 @@ public class AdminPage extends SMSPage {
 	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/md-table-container/table")
 	public WebElement attendanceTable;
 	
+	@FindBy(xpath="//*[@id='attendanceTableDiv']/md-card/div/md-table-container/table/tbody/tr[1]/td[1]")
+	public WebElement javaAssocClick;
 	
+	@FindBy(xpath="//*[@id='attendanceTableDiv']/md-card/div/md-table-container/table/tbody/tr[2]/td[1]")
+	public WebElement dotNetAssocClick;
+	
+	@FindBy(xpath="//*[@id='attendanceTableDiv']/md-card/div/md-table-container/table/tbody/tr[3]/td[1]")
+	public WebElement sdetAssocClick;
+	
+	@FindBy(xpath="//*[@id='closeIcon']")
+	public WebElement closeIcon;
+	
+	@FindBy(xpath="//*[@id='attendanceTableDiv']/md-card/div/md-table-container/table/tbody/tr[1]/td[2]")
+	public WebElement verifyAssoc;
+		
 	public AdminPage(WebDriver driver) {
 		super(driver);
 	}
