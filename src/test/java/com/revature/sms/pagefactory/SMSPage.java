@@ -17,7 +17,6 @@ import org.openqa.selenium.support.ui.Select;
 public abstract class SMSPage {
 	protected WebDriver driver;
 	
-	//as;lkdfja;lkdsf
 	@FindBy(tagName="title")
 	public WebElement title;
 	
@@ -42,7 +41,7 @@ public abstract class SMSPage {
 		Field[] fields = thisClass.getDeclaredFields();
 		//System.out.println(thisClass.getName());
 		WebElement fieldValue;
-		List<WebElement> fieldValues = new ArrayList<WebElement>();
+		List<WebElement> fieldValues;
 		boolean result = true;
 		int i=0;
 		while (i<fields.length) {

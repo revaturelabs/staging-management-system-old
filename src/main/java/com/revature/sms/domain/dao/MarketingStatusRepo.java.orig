@@ -4,6 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.revature.sms.domain.MarketingStatus;
+<<<<<<< HEAD
+import com.revature.sms.domain.UserRole;
+=======
+>>>>>>> 0edbf846bcb3a51d44da4f1ce1010c5a4684cebf
 /**
  * DAO Repo for UserRole
  *
@@ -11,6 +15,9 @@ import com.revature.sms.domain.MarketingStatus;
 @Repository
 public interface MarketingStatusRepo extends JpaRepository<MarketingStatus, Integer> {
 
+<<<<<<< HEAD
+	MarketingStatus findByName(String name);
+=======
 	
 	/**
 	 * Method to retrieve MarketingStatus by supplied String representing the name.
@@ -18,4 +25,5 @@ public interface MarketingStatusRepo extends JpaRepository<MarketingStatus, Inte
 	 * @return MarketingStatus object matching supplied String.
 	 */
 		MarketingStatus findByStatus(String status);
+>>>>>>> 0edbf846bcb3a51d44da4f1ce1010c5a4684cebf
 }
