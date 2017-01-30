@@ -78,8 +78,6 @@
                 clickOutsideToClose: !needChange
             }).then( function() {
                 tc.toast( "Password changed successfully." );
-            }, function() {
-                tc.toast( "Password change cancelled." );
             });
         }
 
