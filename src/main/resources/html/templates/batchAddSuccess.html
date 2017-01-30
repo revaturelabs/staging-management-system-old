@@ -1,31 +1,30 @@
+<div role="dialog">
 
-    <div role="dialog">
-
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                Associates added
-            </div>
-        </md-toolbar>
-
-        <md-content layout="columns">
-            <div>
-                <md-list flex>
-                    <md-list-item class="md-2-line" ng-repeat="associate in bASCtrl.newAssociates" ng-click="null">
-                        
-                        <div class="md-list-item-text">
-                            <h3> {{ associate.firstName }} {{ associate.lastName }} </h3>
-                            <p> {{ associate.username }} </p>
-                        </div>
-
-                    </md-list-item>
-                </md-list>
-            </div>
-        </md-content>
-
-        <div>
-            <div flex> </div>
-            <md-button class="md-raised md-primary" ng-click="bASCtrl.okay()"> OKAY </md-button>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            Associates added
         </div>
+    </md-toolbar>
 
+    <md-content layout="columns">
+        <div>
+            <md-list flex>
+                <md-list-item id="newAssoc" class="md-2-line" ng-repeat="associate in bASCtrl.newAssociates" ng-click="null">
 
+                    <div id="assocInformation" class="md-list-item-text">
+                        <h3> {{ associate.firstName }} {{ associate.lastName }} </h3>
+                        <p> {{ associate.username }} </p>
+                    </div>
+
+                </md-list-item>
+            </md-list>
+        </div>
+    </md-content>
+
+    <div>
+        <div flex> </div>
+        <md-button id="confirmationButton" class="md-raised md-primary" ng-click="bASCtrl.okay()"> OKAY </md-button>
     </div>
+
+
+</div>
