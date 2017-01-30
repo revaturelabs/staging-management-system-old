@@ -49,7 +49,11 @@
         mac.toast = toast;
         /**@var {function} newAssociates function reference variable. */
         mac.newAssociates = newAssociates;
-
+        /**@var {function} calcMarketingDays function reference variable. */
+        mac.calcMarketingDays = calcMarketingDays;
+        /**@var {function} days_between function reference variable. */
+        mac.days_between = days_between;
+        
           // initialization
         mac.findDevice();
         mac.getUsers();
@@ -286,5 +290,38 @@
             } else {
                 return "" + input;
             }
+        }
+        
+        /**
+         * @description calls a function that Determines the difference between the two supplied dates.
+         * @returns {number} Number of days between the graduation date and today
+         */
+        function calcMarketingDays(){
+        	return " " + mac.days_between(mac.curr, ((new Date(mac.selectedUser.graduationDate)))) + " days";
+        	
+        	
+        }
+        
+        /**
+         * @description Determines the difference betwen the two supplied dates.
+         * @param {date} date1 First supplied date.
+         * @param {date} date2 Second supplied date.
+         * @returns {number} Number of days between the two dates
+         */
+        function days_between(date1, date2) {
+
+            // The number of milliseconds in one day
+            var ONE_DAY = 1000 * 60 * 60 * 24
+
+            // Convert both dates to milliseconds
+            var date1_ms = date1.getTime()
+            var date2_ms = date2.getTime()
+
+            // Calculate the difference in milliseconds
+            var difference_ms = Math.abs(date1_ms - date2_ms)
+
+            // Convert back to days and return
+            return Math.round(difference_ms/ONE_DAY)
+
         }
     }
