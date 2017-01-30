@@ -1,16 +1,20 @@
 var sms = angular.module("sms")
 				 .controller( "updateCertification", updateCertification );
 
-function updateCertification( $scope, $state, $filter, $mdDialog, userService, cert, user) {
+function updateCertification( $scope, $mdDialog, userService, cert, user) {
 	var ucc = this;
 	
 	//bindables
 	ucc.user = user;
 	ucc.cert = cert;
 	
-	ucc.oldDate = cert.dateDisplay;
+	ucc.oldDate = new Date(cert.date);
 	ucc.oldNote = cert.note;
 	ucc.oldPassed = cert.passed;
+	
+	ucc.newDate = new Date(cert.date);
+	ucc.newNote = cert.note;
+	ucc.newPassed = cert.passed;
 	
 	//functions
 	ucc.submit = submit;
@@ -20,14 +24,35 @@ function updateCertification( $scope, $state, $filter, $mdDialog, userService, c
      * @description Called when user clicks submit button. Saves updated information and updates it in the database and closes the dialog.
      */
 	function submit() {
-		$mdDialog.hide();
+		for(var i = 0; i < ucc.user.tasks.length;i++){
+			if(ucc.user.tasks[i].id == cert.id){
+				
+				if(ucc.newDate != null && ucc.newDate && ucc.newDate != ""){
+					cert.date = ucc.newDate.getTime();
+					ucc.user.tasks[i].date = ucc.newDate.getTime();
+					cert.dateDisplay = (ucc.newDate.getMonth()+1)+"/"+ucc.newDate.getDate();
+
+				}
+				
+				ucc.user.tasks[i].note = ucc.newNote;
+				ucc.user.tasks[i].passed = ucc.newPassed;
+				
+				cert.note = ucc.newNote;
+				cert.passed = ucc.newPassed
+			}
+		}
+		
+		userService.update(ucc.user,function(){
+			$mdDialog.hide();
+		});
+		
 	}
 	
     /**
      * @description Called when user clicks cancel button. Resets values to their original values and closes the dialog.
      */
 	function cancel(){
-		ucc.cert.dateDisplay = ucc.oldDate;
+		ucc.cert.dateDisplay = (ucc.oldDate.getMonth()+1)+"/"+ucc.oldDate.getDate();
 		ucc.cert.note = ucc.oldNote;
 		ucc.cert.passed = ucc.oldPassed;
 		$mdDialog.hide();

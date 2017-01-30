@@ -285,8 +285,6 @@
          * @description Called when admin clicks on update cert button, opens a diaog.
          */
 		function updateCert(cert, user){
-			console.log(user)
-			console.log(cert);
 			$mdDialog.show({
                 templateUrl: "html/templates/updateCert.html",
                 controller: "updateCertification as uc",
@@ -294,12 +292,9 @@
                 	cert,
                 	user
                 },
-                clickOutsideToClose: true,
-                escapeToClose: true
-            }).then( function() {
-               
-            }, function() {});
-			
+                clickOutsideToClose: false,
+                escapeToClose: false
+            });
 		}
 
             // adds a leading zero to input if necessary

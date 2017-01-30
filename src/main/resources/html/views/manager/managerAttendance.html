@@ -44,10 +44,6 @@
                     <md-card-title>
                         <md-card-title-text>
                             <span class="md-headline">Certifications</span>
-                            
-                            <!-- button that brings up a dialog to update certificaton status ng-click="supAttCtrl.updateCert()" -->
-							<span><md-icon class="material-icons" ">settings</md-icon></span>
-                        
                         </md-card-title-text>
                     </md-card-title>
                     <md-card-content>
@@ -55,8 +51,9 @@
                         <div ng-show="manAttCtrl.selectedUser.certs[0].date">
                             <div ng-repeat="cert in manAttCtrl.selectedUser.certs | orderBy:'-date'" class="certList">
                             	<md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48" ng-click="manAttCtrl.updateCert(cert,manAttCtrl.selectedUser)">{{ cert.icon.name }}</md-icon>
+                            	{{ cert.dateDisplay }} |
                             	{{cert.note}}
-                            	{{ cert.dateDisplay }}
+                            	
                             	<hr>
                             </div>
                         </div>
