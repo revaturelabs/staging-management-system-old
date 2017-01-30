@@ -1,6 +1,7 @@
- var sms = angular.module("sms");
+angular.module("sms").
+controller("skillEditCtrl", editSkillController);
 
-    sms.controller("skillEditCtrl", function($scope, skillService){
+function editSkillController($scope, skillService){
 
         var sec = this;
 
@@ -9,18 +10,27 @@
 
         //functions
         sec.getSkills = getSkills;
-
+        
+        //initialization
+        
         sec.getSkills();
+        
 
         
 
         function getSkills() {
         	skillService.getAll(function(response) {
         		sec.currentSkills = response;
+               
+               
                 
 
-        	});
+        	}, function(){
+                console.log("Just here to make work");
+            });
         }
 
-        console.log(sec.currentSkills);
-    });
+   
+
+        
+    }
