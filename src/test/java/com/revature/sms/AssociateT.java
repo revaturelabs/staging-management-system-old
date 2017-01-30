@@ -91,17 +91,17 @@ public class AssociateT extends AbstractT {
 	@Test
 	public void testAssociateAttendanceView() {
 		//Login as a test associate.
-		String username = inputs.getProperty("javaUN");
-		String password = inputs.getProperty("PW");
-		lp.login(username, password);
+		//String username = inputs.getProperty("javaUN");
+		//String password = inputs.getProperty("PW");
+		//lp.login(username, password);
 		
 		//Determine what that associate's attendance is supposed to be using the Excel sheet
 		//as a reference.
-		User user = ur.findByUsername(username);
-		System.out.println(user.getUsername());
-		System.out.println(user.getFirstName());
-		System.out.println(user.getAttendance().size());
-		ArrayList<Timestamp> expectedDates = new ArrayList<Timestamp>();
+		//User user = ur.findByUsername(username);
+		//System.out.println(user.getUsername());
+		//System.out.println(user.getFirstName());
+		//System.out.println(user.getAttendance().size());
+		//ArrayList<Timestamp> expectedDates = new ArrayList<Timestamp>();
 		//for (AssociateAttendance a:attendanceList) {
 			//Timestamp ts = a.getDate();
 			//System.out.println(ts);
