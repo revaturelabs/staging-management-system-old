@@ -1,44 +1,37 @@
+<div role="dialog">
 
-    <div role="dialog">
-        
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                Schedule Certification
-            </div>
-        </md-toolbar>
-        
-        <form name="projectForm" ng-submit="assCertCtrl.submit()">
-        	
-        	<div class="md-padding" layout="columns">
-        		<p>Initial certification must be scheduled <br>
-        		within 30 days of graduation. </p>
-        	</div>
-        	
-        	<div class="md-padding" layout="columns">
-        	<md-input-container class="md-block"> <label>Date</label>
-		        <md-datepicker  md-hide-icons="calendar",
-	               ng-model="assCertCtrl.myDate" 
-	               md-placeholder= "assCertCtrl.myDate"
-	               md-min-date="assCertCtrl.minDate" 
-	               md-max-date="assCertCtrl.maxDate">
-               </md-datepicker>
-               </md-input-container>
-			</div>
-				
-			<div class="md-padding" layout="columns">
-				<md-input-container class="md-block"> <label>Note</label>
-					<input id = "note" ng-bind="acc.note" md-maxlength="50" required name="comments"
-						ng-model="assCertCtrl.note">
-					<div ng-messages="projectForm.comments.$error">
-						<!-- <div ng-message="required">Required</div> -->
-					</div>
-				</md-input-container>
-			</div>
-				
-			<div class="md-padding" layout="columns">
-				<md-button type="submit" class="md-primary md-raised" aria-label="Submit All"> SUBMIT </md-button>
-		        <md-button type="button" class="md-primary md-raised " ng-click="assCertCtrl.cancel()" aria-label="Cancel"> CANCEL </md-button>
-			</div>
-		
-		</form>
-    </div>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            Schedule Certification
+        </div>
+    </md-toolbar>
+
+    <form id="formProject" name="projectForm" ng-submit="assCertCtrl.submit()">
+
+        <div class="md-padding" layout="columns">
+            <p>Initial certification must be scheduled <br> within 30 days of graduation. </p>
+        </div>
+
+        <div class="md-padding" layout="columns">
+            <md-input-container class="md-block"> <label>Date</label>
+                <md-datepicker id="datePicker" md-hide-icons="calendar" , ng-model="assCertCtrl.myDate" md-placeholder="assCertCtrl.myDate" md-min-date="assCertCtrl.minDate" md-max-date="assCertCtrl.maxDate">
+                </md-datepicker>
+            </md-input-container>
+        </div>
+
+        <div class="md-padding" layout="columns">
+            <md-input-container class="md-block"> <label>Note</label>
+                <input id="note" ng-bind="acc.note" md-maxlength="50" required name="comments" ng-model="assCertCtrl.note">
+                <div ng-messages="projectForm.comments.$error">
+                    <!-- <div ng-message="required">Required</div> -->
+                </div>
+            </md-input-container>
+        </div>
+
+        <div class="md-padding" layout="columns">
+            <md-button id="buttonSubmit" type="submit" class="md-primary md-raised" aria-label="Submit All"> SUBMIT </md-button>
+            <md-button id "buttonCancel" type="button" class="md-primary md-raised " ng-click="assCertCtrl.cancel()" aria-label="Cancel"> CANCEL </md-button>
+        </div>
+
+    </form>
+</div>
