@@ -1,0 +1,30 @@
+<md-toolbar>
+	<div class="md-toolbar-tools">
+    	<h2>Update certification status</h2>
+    </div>
+</md-toolbar>
+
+<div class="md-padding" layout="column" layout-align="center space-around">
+		
+		<md-input-container class="InputContainer">
+        	<label>{{uc.oldDate }}</label>
+        	<input  type="date" "uc.cert.date">
+      	</md-input-container>
+      
+      	<md-input-container class="InputContainer">
+        	<label>{{uc.oldNote}}</label>
+        	<input ng-model="uc.cert.note">
+      	</md-input-container>
+		
+		<md-checkbox ng-model="uc.cert.passed">Passed</md-checkbox>
+	</div>
+	
+	<div layout="row" layout-align="end end">
+		<div flex> </div>
+		<md-button type="button" id="updateSubmit" class="md-primary"ng-click="uc.submit()"> Submit </md-button>
+		<md-button type="button" id="updateCancel" class="md-accent" ng-click="uc.cancel()"> Cancel </md-button>
+	</div>
+     
+	
+	{{ uc.cert }}
+</div>

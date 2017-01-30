@@ -49,6 +49,8 @@
         mac.toast = toast;
         /**@var {function} newAssociates function reference variable. */
         mac.newAssociates = newAssociates;
+        /**@var {function} editCert function reference variable. */
+        mac.updateCert = updateCert;
 
           // initialization
         mac.findDevice();
@@ -255,7 +257,7 @@
             $scope.$emit( "toastMessage", message );
         }
         
-            // adds associates by batch
+        // adds associates by batch
 		function newAssociates() {
             
               // opens a dialog to allows addition of a new batch of associates
@@ -278,6 +280,27 @@
                 mac.toast("Batch addition cancelled.");
             });
         }
+		
+		/**
+         * @description Called when admin clicks on update cert button, opens a diaog.
+         */
+		function updateCert(cert, user){
+			console.log(user)
+			console.log(cert);
+			$mdDialog.show({
+                templateUrl: "html/templates/updateCert.html",
+                controller: "updateCertification as uc",
+                locals:{
+                	cert,
+                	user
+                },
+                clickOutsideToClose: true,
+                escapeToClose: true
+            }).then( function() {
+               
+            }, function() {});
+			
+		}
 
             // adds a leading zero to input if necessary
         function padZero( input ) {
