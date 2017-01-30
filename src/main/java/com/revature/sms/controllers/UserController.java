@@ -327,6 +327,9 @@ public class UserController {
 			user.setGraduationDate(userDTO.getGraduationDate());
 
 		}
+		if (userDTO.getMarketingStatus() != null){
+			user.setMarketingStatus(userDTO.getMarketingStatus());
+		}
 		if (userDTO.getTasks() != null){
 			user.setTasks(userDTO.getTasks());
 		}

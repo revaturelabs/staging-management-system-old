@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name="Marketing_Status")
 public class MarketingStatus {
 	/**
-	 * tryign to get it together int value that represents the primary key of the table, ID is used to
+	 * int value that represents the primary key of the table, ID is used to
 	 * identify a specific UserRole object by the unique int value. Set up to
 	 * automatically generate a value so that it doesn't have to be specified in
 	 * a constructor or set manually.
