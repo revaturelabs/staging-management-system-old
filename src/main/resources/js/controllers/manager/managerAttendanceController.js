@@ -25,29 +25,17 @@
         mac.infoOpen = false;
 
             // functions
-        /**@var {function} findDevice function reference variable. */
         mac.findDevice = findDevice;
-        /**@var {function} getUsers function reference variable. */
         mac.getUsers = getUsers;
-        /**@var {function} calcWeek function reference variable. */
         mac.calcWeek = calcWeek;
-        /**@var {function} filterWeek function reference variable. */
         mac.filterWeek = filterWeek;
-        /**@var {function} toggleInfo function reference variable. */
         mac.toggleInfo = toggleInfo;
-        /**@var {function} closeInfo function reference variable. */
         mac.closeInfo = closeInfo;
-        /**@var {function} verify function reference variable. */
         mac.verify = verify;
-        /**@var {function} setToolbar function reference variable. */
         mac.setToolbar = setToolbar;
-        /**@var {function} prevWeek function reference variable. */
         mac.prevWeek = prevWeek;
-        /**@var {function} nextWeek function reference variable. */
         mac.nextWeek = nextWeek;
-        /**@var {function} toast function reference variable. */
         mac.toast = toast;
-        /**@var {function} newAssociates function reference variable. */
         mac.newAssociates = newAssociates;
 
           // initialization
@@ -121,7 +109,7 @@
             user.weekAttendance = weekAttendance;
         }
 
-            // sets selected user and opens/closes info panel
+
             /**
              * @description Opens/closes the info panel and sets the selected user to display the relevant info.
              */
@@ -149,7 +137,7 @@
 
         /**
          * @description Verifies and unverifies the clicked users attendance. Opens a confirmation dialog
-         * if unverifing an already verified associate. 
+         * if unverifing an already verified associate (or will once it's implemented again). 
          */
         function verify( user, index ) {
             var selectedDay = mac.week[index].date;
@@ -255,7 +243,10 @@
             $scope.$emit( "toastMessage", message );
         }
         
-            // adds associates by batch
+            
+            /**
+             * @description Creates a new batch of associates based on entered in input.
+             */
 		function newAssociates() {
             
               // opens a dialog to allows addition of a new batch of associates
@@ -279,7 +270,11 @@
             });
         }
 
-            // adds a leading zero to input if necessary
+           
+            /**
+             * @description Adds a leading zero to input if the input is a number and less than 10.
+             * @param {number} input The input to check.
+             */
         function padZero( input ) {
             if (input < 10) {
                 return "0" + input;

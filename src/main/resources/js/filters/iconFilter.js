@@ -2,8 +2,15 @@
     angular
         .module("sms")
         .filter("iconFilter", iconFilter);
-        
+   /**
+    * @description AngularJs filter for icons.
+    */     
     function iconFilter() {
+        /**
+         * @description Filters the icons based on expresions.
+         * @param {object} thisObject The object getting the filter.
+         * @param {string} expr The string used to determine what type of icons need to be filtered for.
+         */
 	    return function(thisObject, expr){
 		
             // a list of all usable icons

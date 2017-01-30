@@ -2,31 +2,34 @@
     angular
         .module( "sms" )
         .controller( "updateInfoCrtl", updateInfoCtrl );
-        
+
         /**
          * @description AngularJS controller for updating a password (and eventually other info)
          */
     function updateInfoCtrl ( $scope, $state, $mdToast, $mdDialog, loginService, skillService, userService ) {
+
         var uic = this;
 
-        function populateSkills(){
-        	var skills = [];
-
-        	skills.push({"id": 1, "skill": "Java"});
-            skills.push({"id": 2, "skill": "html"});
-            return skills;
-        }
         
           // bindables
+
+            // functions
+       
+        /**
+         * @var {object} user The currently logged in user.
+         */
         uic.user = loginService.getUser();
+        /**
+         * @var {array} currentSkills The logged in user's current list of skills.
+         */
         uic.currentSkills = uic.user.skill;
         
         // functions
-        /**@var {function} toast function reference variable. */
+
         uic.toast = toast;
-        /**@var {function} cancel function reference variable. */
+
         uic.cancel = cancel;
-        /**@var {function} submit function reference variable. */
+
         uic.submit = submit;
         uic.getSkills = getSkills;
         uic.submitSkills = submitSkills;
@@ -35,7 +38,7 @@
         uic.removeFromCSkills = removeFromCSkills;
           // initializations
         uic.getSkills();
-       // uic.removeFromCSkills();
+     
         
           // functions
              /**
@@ -116,14 +119,19 @@
             }
         }
         
+        /**
+         * @description Retrieves all the skills of the current user.
+         */
         function getSkills() {
         	skillService.getAll(function(response) {
         		uic.availSkills = response;
         		
         		removeFromCSkills();
-        	}, function(error) {
         	})
         }
+        /**
+         * @description Adds new skills to the users list of skills.
+         */
         function submitSkills() {
             if($scope.skillToAdd == undefined || $scope.skillToAdd == "" ){
                 uic.toast("Please Select a Skill");
@@ -134,7 +142,9 @@
         	uic.user.skill = uic.currentSkills;
         	$scope.skillToAdd="";
         }
-        
+        /**
+         * @description Removes skills from the list of available skills.
+         */
         function removeFromAvailSkill(){
         	for(var i =0; i < uic.availSkills.length; i++){
         		if($scope.skillToAdd == uic.availSkills[i].id){

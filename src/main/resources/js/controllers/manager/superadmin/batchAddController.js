@@ -1,13 +1,42 @@
   
     var sms = angular.module("sms");
-
+/**
+ * @description AngularJs controller for adding associates in a batch.
+ */
     sms.controller( "batchAddCtrl", function( $scope, $mdDialog, userService, batchTypeService, batchAddFactory ) {
-	var bac = this;
+	/**
+     * @prop {function} Reference variable for this controller.
+     */
+    var bac = this;
+    //bindables
+    /**@prop {Date} Date to use for the batch's graduation date */
+    bac.selectedDate = new Date();
+    /** @prop {object} UserRole object. As we can only create associates, we have no need for anything else.     */
+	var userRole = {name : "associate",
+                    id : 1};
+    /**@prop {array} Associates array, holds the created users */
+    bac.associates = [];
+    /**@prop {array} batchTypes array, holds all the types of batches that are available */
+	bac.batchTypes = batchTypeService.getAll(function(response) {
+		bac.batchTypes = response;
+	}, function(error) {
+		$mdDialog.cancel();
+	});
+
 
 	  // functions
-	    // adds new associate to list
+	    bac.addNew = addNew;
+        bac.onlyFridays = onlyFridays;
+        bac.save = save;
+        bac.saveHelper = saveHelper;
+        bac.cancel = cancel;
+        
 
-	bac.addNew = function(isValid) {
+    /**
+     * @description Adds a new user to the batch array
+     * @param {boolean} isValid Reference to the form's $valid.
+     */
+	function addNew(isValid) {
 		if (isValid) {
 			bac.associates.push({
 				firstName : bac.firstName,
@@ -19,37 +48,37 @@
 			$scope.newAssociate.$setPristine();
 			angular.element("#firstName").focus();
 		}
-	};
+	}
 
-	  // date settings
-	bac.selectedDate = new Date();
+
 	
-	bac.onlyFridays = function(date) {
+	/**
+     * @description Checks to see if the date given is a friday, as batches can only 
+     * graduate on a friday.
+     * @param {Date} date The date of graduation.
+     */
+	function onlyFridays(date) {
 		var day = date.getDay();
 		return day === 5;
-	};
+	}
 	
-	// data
-	bac.associates = [];
-	bac.batchTypes = batchTypeService.getAll(function(response) {
-		bac.batchTypes = response;
-	}, function(error) {
-		$mdDialog.cancel();
-	});
-	
-	    // hard coded value for userRole object of associate
-	var userRole = {};
-	userRole.name = "associate";
-	userRole.id = 1;
-
-    bac.save = function(isValid) {
+ 
+    /**
+     * @description Saves the new associates into the database.
+     * @param {boolean} isValid 
+     */
+    function save(isValid) {
         if ( isValid && bac.associates.length != 0 ) {
             var list = bac.associates;
             bac.saveHelper(list);
         }
-    };
+    }
 
-	bac.saveHelper = function(list) {
+    /**
+     * @description Helpter function for save.
+     * @param {array} list the list of associates 
+     */
+	function saveHelper(list) {
 
         if (list.length != 0) {
             var addUser = list.shift();
@@ -86,9 +115,12 @@
         }
 	}
 
-	bac.cancel = function() {
+     /**
+      * @description Cancel the currently opened dialog window.
+      */
+	function cancel() {
 		$mdDialog.cancel();
 	}
 
-    bac.recursion = 0;
+    //bac.recursion = 0;
 });

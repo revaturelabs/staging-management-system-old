@@ -14,15 +14,11 @@
             // data
             //functions
      
-        /**@var {function} toast function reference variable. */
+
         lc.toast = toast;
-        /**@var {function} login function reference variable. */
         lc.login = login;
-        /**@var {function} cookieCheck function reference variable. */
         lc.cookieCheck = cookieCheck;
-        /**@var {function} loginSuccess function reference variable. */
         lc.loginSuccess = loginSuccess;
-        /**@var {function} associateCertToast function reference variable. */
         lc.associateCertToast = associateCertToast;
 
           // initialization

@@ -24,11 +24,9 @@ sms.controller("associateCertificationsCtrl", function($scope, $state, $mdDialog
 
 
 	//functions
-	 /**@var {function} getMaxDate function reference variable. */
+
 	acc.getMaxDate = getMaxDate;
-	 /**@var {function} cancel function reference variable. */
 	acc.cancel = cancel;
-	 /**@var {function} submit function reference variable. */
 	acc.submit = submit;
 	
 
