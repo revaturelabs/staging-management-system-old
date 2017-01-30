@@ -221,10 +221,10 @@
             // The number of milliseconds in one day
             var ONE_DAY = 1000 * 60 * 60 * 24;
             
-            var date1_ms = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+            var newDate = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
 
             // Convert both dates to milliseconds
-            date1_ms = date1.getTime();
+            date1_ms = newDate.getTime();
             var date2_ms = date2.getTime();
 
             // Calculate the difference in milliseconds
