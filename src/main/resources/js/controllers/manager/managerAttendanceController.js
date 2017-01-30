@@ -280,11 +280,13 @@
                 mac.toast("Batch addition cancelled.");
             });
         }
-		
 		/**
-         * @description Called when admin clicks on update cert button, opens a diaog.
+         * @description Called when a superAdmin clicks on update certification button, opens a dialog.
          */
 		function updateCert(cert, user){
+			if(mac.user.userRole.name != "superAdmin"){
+				return;
+			}
 			$mdDialog.show({
                 templateUrl: "html/templates/updateCert.html",
                 controller: "updateCertification as uc",
