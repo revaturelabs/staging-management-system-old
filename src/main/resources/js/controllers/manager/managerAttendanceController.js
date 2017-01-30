@@ -50,6 +50,8 @@
         /**@var {function} newAssociates function reference variable. */
         mac.newAssociates = newAssociates;
 
+        mac.editSkills = editSkills;
+
           // initialization
         mac.findDevice();
         mac.getUsers();
@@ -214,7 +216,11 @@
                     actions: [{ 
                         "function": mac.newAssociates, 
                         "icon"    : "add", 
-                        "tooltip" : "Add batch of new associates"}] } );
+                        "tooltip" : "Add batch of new associates"},
+                        {
+                            "function": mac.editSkills, 
+                            "icon"    : "add", 
+                            "tooltip" : "Edit available skills"}] } );
             }
         }
 
@@ -276,6 +282,17 @@
                 });
             }, function() {
                 mac.toast("Batch addition cancelled.");
+            });
+        }
+
+        //Function for adding skills, document properly after it's fully created.
+        function editSkills(){
+
+            $mdDialog.show({
+                templateUrl: "html/templates/skillsEdit.html",
+                controller: "skillEditCtrl as sECtrl",
+                clickOutsideToClose: true,
+                escapeToClose: true
             });
         }
 
