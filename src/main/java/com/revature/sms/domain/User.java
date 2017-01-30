@@ -116,48 +116,20 @@ public class User {
 	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<Technical_Skills> skill;
 	
+	@ManyToOne
+	@JoinColumn(name = "marketing_status")
+	private MarketingStatus marketingStatus;
+	
 	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
 	 */
 	public User() {
 		super();
-		//this.skill = new ArrayList<Technical_Skills>();
-		System.out.println("user no arg constructor");
 	}
 
-	/**
-	 * Constructor for User object. This constructor is specifically designed to
-	 * be used for creating a User who is an associate. Initializes all instance variables except for ID, as that is
-	 * automatically generated on creation. 
-	 * @param username String that represents the username of the User object.
-	 * @param firstName String that represents the first name of the User object.
-	 * @param lastName String that represents the last name of the User object.
-	 * @param hashedPassword String that represents the hashedPassword of the User object.
-	 * @param batchType BatchType object that represents the specific BatchType that the User belongs to.
-	 * @param attendance List containing AssociateAttendence objects that keeps track of the user's attendance.
-	 * @param tasks List containing AssociateTask objects that keeps track of the user's tasks.
-	 * @param events List containing JobEvent objects that keeps track of the user's events.
-	 * @param userRole UserRole object that keeps track of the user's specific role.
-	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
-	 */
-	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
-			List<AssociateAttendance> attendance, List<AssociateTask> tasks, List<JobEvent> events, UserRole userRole, Timestamp graduationDate) {
-		super();
-		this.username = username;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.hashedPassword = hashedPassword;
-		this.batchType = batchType;
-		this.attendance = attendance;
-		this.tasks = tasks;
-		this.events = events;
-		this.userRole = userRole;
-		this.graduationDate = graduationDate;
-		System.out.println("user original construct");
-	}
 
+	// constructor for non-associate
 	/**
-	 * skills implemented
 	 * Constructor for User object. This constructor is specifically designed to
 	 * be used for creating a User who is an associate. Initializes all instance variables except for ID, as that is
 	 * automatically generated on creation. 
@@ -171,10 +143,11 @@ public class User {
 	 * @param userRole UserRole object that keeps track of the user's specific role.
 	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
 	 * @param skills gets a list of technical skills that an associate has
+	 * @param events Tracks the list of Job Events for a given user
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate, 
-			Set<Technical_Skills> skills) {
+			Set<Technical_Skills> skills, MarketingStatus marketingStatus, List<JobEvent> events) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -185,8 +158,9 @@ public class User {
 		this.tasks = tasks;
 		this.userRole = userRole;
 		this.graduationDate = graduationDate;
+		this.marketingStatus = marketingStatus;
 		this.skill = skills;
-		System.out.println("user construct all");
+		this.events = events;
 	}
 	// constructor for non-associate
 	/**
@@ -418,6 +392,20 @@ public class User {
 		this.skill = skill;
 	}
 	
+	
+	
+	public MarketingStatus getMarketingStatus() {
+		return marketingStatus;
+	}
+
+
+
+	public void setMarketingStatus(MarketingStatus marketingStatus) {
+		this.marketingStatus = marketingStatus;
+	}
+
+
+
 	/**
 	 * Method that returns a string representation of the current User object.
 	 */

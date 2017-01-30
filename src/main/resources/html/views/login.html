@@ -1,39 +1,38 @@
+<div layout="columns" ng-if="logCtrl.cookieLoad == false">
 
-    <div layout="columns" ng-if="logCtrl.cookieLoad == false">
+    <div flex="30"> </div>
 
-        <div flex="30"> </div>
-        
-        <md-card flex="40" md-whiteframe="8">
+    <md-card flex="40" md-whiteframe="8">
 
-            <md-toolbar>
-                <div class="md-toolbar-tools">
-                    <span> Welcome! </span>
-                </div>
-            </md-toolbar>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <span> Welcome! </span>
+            </div>
+        </md-toolbar>
 
-            <form name="loginForm" ng-submit="logCtrl.login(loginForm.$valid)" novalidate>
-                <div layout="columns" layout-align="space-around center">
+        <form id="logForm" name="loginForm" ng-submit="logCtrl.login(loginForm.$valid)" novalidate>
+            <div layout="columns" layout-align="space-around center">
 
-                    <md-input-container>
-                        <label> Username </label>
-                        <input type="text" ng-model="logCtrl.username" required>
-                    </md-input-container>
+                <md-input-container>
+                    <label> Username </label>
+                    <input id="usernameInput" type="text" ng-model="logCtrl.username" required>
+                </md-input-container>
 
-                    <md-input-container>
-                        <label> Password </label>
-                        <input type="password" ng-model="logCtrl.inputPass" required>
-                    </md-input-container>
-                    
-                </div>
+                <md-input-container>
+                    <label> Password </label>
+                    <input id="passwordInput" type="password" ng-model="logCtrl.inputPass" required>
+                </md-input-container>
 
-                <div layout="columns">
-                    <div flex> </div>
-                    <md-button type="submit" class="md-primary md-raised">
-                        Login
-                    </md-button>
-                </div>
-            </form>
-            
-        </md-card>
+            </div>
 
-    </div>
+            <div layout="columns">
+                <div flex> </div>
+                <md-button id="loginSubmitButton" type="submit" class="md-primary md-raised">
+                    Login
+                </md-button>
+            </div>
+        </form>
+
+    </md-card>
+
+</div>

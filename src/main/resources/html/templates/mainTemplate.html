@@ -1,27 +1,28 @@
+<md-card md-whiteframe="8">
+    <md-toolbar md-whiteframe="8">
+        <div class="md-toolbar-tools">
 
-    <md-card md-whiteframe="8">
-        <md-toolbar md-whiteframe="8">
-            <div class="md-toolbar-tools">
+            <div flex id="mTempTitle"> {{ tempCtrl.title }} </div>
 
-                <div flex> {{ tempCtrl.title }} </div>
+            <md-button id="mainActions" ng-repeat="action in tempCtrl.actions" class="md-icon-button" aria-label="action.tooltip" ng-click="action.function()">
+                <md-tooltip id="populatedToolTip"> {{ action.tooltip }} </md-tooltip>
+                <md-icon id="menuIcon" class="md-material-icon menu-icon"> {{ action.icon }} </md-icon>
+            </md-button>
 
-                <md-button ng-repeat="action in tempCtrl.actions" class="md-icon-button" aria-label="action.tooltip" ng-click="action.function()">
-                    <md-tooltip> {{ action.tooltip }} </md-tooltip>
-                    <md-icon class="md-material-icon menu-icon"> {{ action.icon }} </md-icon>
-                </md-button>
+            <md-button id="accountSettings" class="md-icon-button" aria-label="Account settings" ng-click="tempCtrl.settings(false)">
+                <md-tooltip> Account settings </md-tooltip>
+                <md-icon class="md-material-icon menu-icon"> settings </md-icon>
+            </md-button>
 
-                <md-button class="md-icon-button" aria-label="Account settings" ng-click="tempCtrl.settings(false)">
-                    <md-tooltip> Account settings </md-tooltip>
-                    <md-icon class="md-material-icon menu-icon"> settings </md-icon>
-                </md-button>           
-                
-                <md-button id="Logout" class="md-icon-button" aria-label="Logout" ng-click="tempCtrl.logout()">
-                    <md-tooltip> Logout </md-tooltip>
-                    <md-icon class="md-material-icon menu-icon"> exit_to_app </md-icon>
-                </md-button>
 
-            </div>
-        </md-toolbar>
-    </md-card>
+            <md-button id="logoutButton" class="md-icon-button" aria-label="Logout" ng-click="tempCtrl.logout()">
+                <md-tooltip> Logout </md-tooltip>
+                <md-icon class="md-material-icon menu-icon"> exit_to_app </md-icon>
+            </md-button>
 
-    <ui-view name="mainView"> </ui-view>
+        </div>
+    </md-toolbar>
+</md-card>
+
+
+<ui-view name="mainView"> </ui-view>
