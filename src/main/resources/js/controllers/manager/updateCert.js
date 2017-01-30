@@ -9,7 +9,6 @@ function updateCertification( $scope, $mdDialog, userService, cert, user) {
 	ucc.user = user;
 	/**@prop {obkect} cert Variable holding certification object */
 	ucc.cert = cert;
-	
 	/**@prop {Date} oldDate Variable holding date of task for reference. */
 	ucc.oldDate = new Date(cert.date);
 	/**@prop {string} oldNote Variable holding note of task for reference. */
