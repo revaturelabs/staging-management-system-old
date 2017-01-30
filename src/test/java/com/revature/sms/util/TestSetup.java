@@ -19,8 +19,8 @@ public class TestSetup {
 	private final static String ieDriverPath = "src/test/resources/testBrowserDrivers/IEDriverServer.exe";
 	
 	public static Properties getProperties(String pathname) {
-		Properties prop = null;
-		File file = null;
+		Properties prop;
+		File file;
 		FileInputStream fis = null;
 		
 		try {
@@ -28,15 +28,18 @@ public class TestSetup {
 			file = new File(pathname);
 			fis = new FileInputStream(file);
 			prop.load(fis);
-		} catch (IOException e) {} 
+			return prop;
+		} catch (IOException e) {Logger.getRootLogger().debug(e);} 
 		finally {
 			try {
-				fis.close();
-			} catch (IOException | NullPointerException e) {
+				if (fis != null) {
+					fis.close();
+				}
+			} catch (IOException e) {
 				Logger.getRootLogger().debug(e);
 			}
 		}		
-		return prop;
+		return null;
 	}
 	
 	public static WebDriver getChrome() {

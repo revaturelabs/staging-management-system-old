@@ -39,8 +39,8 @@ public abstract class SMSPage {
 		Class<? extends SMSPage> thisClass = this.getClass();
 		Field[] fields = thisClass.getDeclaredFields();
 		//System.out.println(thisClass.getName());
-		WebElement fieldValue = null;
-		List<WebElement> fieldValues = null;
+		WebElement fieldValue;
+		List<WebElement> fieldValues;
 		boolean result = true;
 		int i=0;
 		while (i<fields.length && result) {
@@ -58,6 +58,7 @@ public abstract class SMSPage {
 							result = false;
 						}
 					}	
+					Logger.getRootLogger().debug(e);
 				}
 			} catch (IllegalAccessException e) {
 				Logger.getRootLogger().debug(e);
@@ -97,8 +98,8 @@ public abstract class SMSPage {
 				Thread.sleep(500);
 				fieldValue.click();
 			}
-		} catch (InterruptedException | NullPointerException e1) {
-			e1.printStackTrace();
+		} catch (InterruptedException e1) {
+			Logger.getRootLogger().debug(e1);
 			Thread.currentThread().interrupt();
 		} 
 	}
@@ -110,7 +111,7 @@ public abstract class SMSPage {
 	
 	
 	public Select makeSelection(String fieldName, String selection) {
-		Class<? extends SMSPage> thisClass = null;
+		Class<? extends SMSPage> thisClass;
 		thisClass = this.getClass();
 		Select select = null;
 		try {

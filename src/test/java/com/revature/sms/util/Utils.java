@@ -33,16 +33,18 @@ public class Utils {
 		//Because Timestamps are a pain to initialize
 		public static Timestamp convertDate(String dateString) {
 			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-			Date date = null;
+			Date date;
+			long millis;
+			Timestamp ts;
 			try {
 				date = sdf.parse(dateString);
-			} catch (ParseException | NullPointerException e) {
+				millis = date.getTime();
+				ts = new Timestamp(millis);
+				return ts;
+			} catch (ParseException e) {
 				Logger.getRootLogger().debug("You got a ParseException", e);
 			}
-			
-			long millis = date.getTime();
-			Timestamp ts = new Timestamp(millis);
-			return ts;
+			return null;
 		}
 		
 		
