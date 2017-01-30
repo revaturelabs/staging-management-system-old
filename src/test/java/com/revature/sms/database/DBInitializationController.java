@@ -2,7 +2,9 @@ package com.revature.sms.database;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,13 @@ import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.AssociateTaskType;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.JobEvent;
+import com.revature.sms.domain.MarketingStatus;
+import com.revature.sms.domain.Technical_Skills;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.AssociateTaskTypeRepo;
 import com.revature.sms.domain.dao.BatchTypeRepo;
+import com.revature.sms.domain.dao.MarketingStatusRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
 import com.revature.sms.util.ExcelHelper;
 import com.revature.sms.util.Utils;
@@ -40,6 +45,9 @@ public class DBInitializationController {
 	@Autowired
 	private AssociateTaskTypeRepo attr;
 	
+	@Autowired
+	private MarketingStatusRepo msr;
+	
 	
 	DBInitializationController() {
 		super();
@@ -53,11 +61,15 @@ public class DBInitializationController {
 			ArrayList<String> lastNames = eh.getValues("lastName");
 			ArrayList<String> unhashedPasswords = eh.getValues("unhashedPassword");
 			ArrayList<String> batchTypes = eh.getValues("batchType");
-			List<AssociateAttendance> attendance = new ArrayList<AssociateAttendance>();
-			List<AssociateTask> tasks = new ArrayList<AssociateTask>();
-			List<JobEvent> events = new ArrayList<JobEvent>();
 			ArrayList<String> userRoles = eh.getValues("userRole");
 			ArrayList<String> graduationDates = eh.getValues("graduationDate");
+			ArrayList<String> marketingStatuses = eh.getValues("marketingStatus");
+			
+			
+			List<AssociateAttendance> attendance = new ArrayList<AssociateAttendance>();
+			List<AssociateTask> tasks = new ArrayList<AssociateTask>();
+			//List<JobEvent> events = new ArrayList<JobEvent>();
+			Set<Technical_Skills> skills = new HashSet<Technical_Skills>();
 			
 			//Each iteration of the loop corresponds to a new user that is added
 			int i = 0;
@@ -68,8 +80,9 @@ public class DBInitializationController {
 				UserRole userRole = urr.findByName(userRoles.get(i));
 				String graduationDate = graduationDates.get(i);
 				Timestamp gts = Utils.convertDate(graduationDate);
+				MarketingStatus marketingStatus = msr.findByName(marketingStatuses.get(i));
 				
-				udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, events, userRole, gts);
+				udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole, gts, skills, marketingStatus);
 				i++;
 			}
 		} catch (FilloException e) {Logger.getRootLogger().debug(e);}
