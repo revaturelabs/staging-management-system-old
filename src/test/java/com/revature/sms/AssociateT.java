@@ -25,8 +25,8 @@ public class AssociateT extends AbstractT {
 	@Test
 	public void testCancelButtons() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
-		asp.carefulClick("certification");
-		scw.carefulClick("cancel");
+		//asp.carefulClick("certification");
+		//scw.carefulClick("cancel");
 		asp.carefulClick("settings");
 		cpw.carefulClick("cancel");
 	}
@@ -50,6 +50,10 @@ public class AssociateT extends AbstractT {
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
 	}
 	
+	
+	//Maybe we should wait until there is a way to unschedule certifications on the website 
+	//before completing this test.
+	/*
 	@Test
 	public void testCertificationScheduling() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
@@ -59,7 +63,7 @@ public class AssociateT extends AbstractT {
 		scw.enterNote.sendKeys(inputs.getProperty("certNote"));
 		scw.carefulClick("submit");
 	}
-	
+	*/
 	
 	
 	//ERROR??? When I run this test, and an associate is set as checked in and not verified for a 

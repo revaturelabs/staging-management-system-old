@@ -38,7 +38,7 @@ public abstract class SMSPage {
 	public boolean verify() {
 		Class<? extends SMSPage> thisClass = this.getClass();
 		Field[] fields = thisClass.getDeclaredFields();
-		System.out.println(thisClass.getName());
+		//System.out.println(thisClass.getName());
 		WebElement fieldValue;
 		List<WebElement> fieldValues;
 		boolean result = true;
@@ -46,7 +46,7 @@ public abstract class SMSPage {
 		while (i<fields.length) {
 			try {	
 				try {
-					System.out.println(fields[i].getName());
+					//System.out.println(fields[i].getName());
 					fieldValue = (WebElement) fields[i].get(this);
 					result = verifyField(fieldValue);
 					if (!result) {
@@ -75,10 +75,8 @@ public abstract class SMSPage {
 			fieldValue.isDisplayed();
 		} catch (NoSuchElementException e) {
 			Logger.getRootLogger().debug(e);
-			System.out.println("Here it is FALSE");
 			return false;
 		}
-		System.out.println("Here it is TRUE");
 		return true;
 	}
 		
