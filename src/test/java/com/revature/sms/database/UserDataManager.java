@@ -13,7 +13,7 @@ import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.JobEvent;
 import com.revature.sms.domain.MarketingStatus;
-import com.revature.sms.domain.Technical_Skills;
+import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
@@ -105,8 +105,8 @@ public class UserDataManager {
 	
 	public User createTestUser(String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate,
-			Set<Technical_Skills> skills, MarketingStatus marketingStatus, List<JobEvent> events){
-		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole, graduationDate, skills, marketingStatus, events);
+			Set<TechnicalSkills> skills, MarketingStatus marketingStatus, List<JobEvent> events){
+		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole, graduationDate, skills, events, marketingStatus);
 		return createTestUser(newUser);
 	}
 	

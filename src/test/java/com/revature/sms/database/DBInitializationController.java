@@ -18,7 +18,7 @@ import com.revature.sms.domain.AssociateTaskType;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.JobEvent;
 import com.revature.sms.domain.MarketingStatus;
-import com.revature.sms.domain.Technical_Skills;
+import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.AssociateTaskTypeRepo;
@@ -69,7 +69,7 @@ public class DBInitializationController {
 			List<AssociateAttendance> attendance = new ArrayList<AssociateAttendance>();
 			List<AssociateTask> tasks = new ArrayList<AssociateTask>();
 			List<JobEvent> events = new ArrayList<JobEvent>();
-			Set<Technical_Skills> skills = new HashSet<Technical_Skills>();
+			Set<TechnicalSkills> skills = new HashSet<TechnicalSkills>();
 			
 			//Each iteration of the loop corresponds to a new user that is added
 			int i = 0;
@@ -80,7 +80,7 @@ public class DBInitializationController {
 				UserRole userRole = urr.findByName(userRoles.get(i));
 				String graduationDate = graduationDates.get(i);
 				Timestamp gts = Utils.convertDate(graduationDate);
-				MarketingStatus marketingStatus = msr.findByName(marketingStatuses.get(i));
+				MarketingStatus marketingStatus = msr.findByStatus(marketingStatuses.get(i));
 				
 				udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole, gts, skills, marketingStatus, events);
 				i++;
