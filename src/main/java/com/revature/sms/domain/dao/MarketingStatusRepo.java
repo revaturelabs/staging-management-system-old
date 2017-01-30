@@ -1,18 +1,21 @@
 package com.revature.sms.domain.dao;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.revature.sms.domain.MarketingStatus;
-import com.revature.sms.domain.UserRole;
 /**
  * DAO Repo for UserRole
  *
  */
 @Repository
-public interface MarketingStatusRepo extends JpaRepository<UserRole, Integer> {
+public interface MarketingStatusRepo extends JpaRepository<MarketingStatus, Integer> {
 
-	MarketingStatus findByName(String name);
+	
+	/**
+	 * Method to retrieve MarketingStatus by supplied String representing the name.
+	 * @param type String value of the JobEventType to retrieve
+	 * @return MarketingStatus object matching supplied String.
+	 */
+		MarketingStatus findByStatus(String status);
 }
