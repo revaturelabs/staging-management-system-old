@@ -43,18 +43,18 @@ public abstract class SMSPage {
 		List<WebElement> fieldValues;
 		boolean result = true;
 		int i=0;
-		while (i<fields.length && result) {
+		while (i<fields.length) {
 			try {	
 				try {
 					//System.out.println(fields[i].getName());
 					fieldValue = (WebElement) fields[i].get(this);
-					if (verifyField(fieldValue) == false) {
+					if (!verifyField(fieldValue)) {
 						result = false;
 					}
 				} catch (ClassCastException e) {
 					fieldValues = (List<WebElement>) fields[i].get(this);
 					for (WebElement f:fieldValues) {
-						if (verifyField(f) == false) {
+						if (!verifyField(f)) {
 							result = false;
 						}
 					}	
@@ -80,7 +80,7 @@ public abstract class SMSPage {
 		
 	public void carefulClick(String fieldName) {
 		Class<? extends SMSPage> thisClass = this.getClass();
-		Field field = null;
+		Field field;
 		WebElement fieldValue = null;
 		try {
 			field = thisClass.getField(fieldName);
@@ -92,11 +92,15 @@ public abstract class SMSPage {
 		
 		try {
 			try {
-				fieldValue.click();
+				if (fieldValue != null) {
+					fieldValue.click();
+				}
 			} catch (WebDriverException e) {
 				Logger.getRootLogger().debug(e);
 				Thread.sleep(500);
-				fieldValue.click();
+				if (fieldValue != null) {
+					fieldValue.click();
+				}
 			}
 		} catch (InterruptedException e1) {
 			Logger.getRootLogger().debug(e1);
