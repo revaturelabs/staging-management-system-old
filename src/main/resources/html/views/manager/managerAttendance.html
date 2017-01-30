@@ -23,6 +23,17 @@
                             </span>
                             <p>
                                 Panel Status: 
+								<md-menu>
+									<!-- Trigger element is a md-button with an icon -->
+									<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+										<md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == true">check_circle</md-icon>
+										<md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == false">not_interested</md-icon>
+									</md-button>
+									<md-menu-content>
+										<md-menu-item><md-button ng-click="doSomething()"><md-icon>check_circle</md-icon> Passed</md-button></md-menu-item>
+										<md-menu-item><md-button ng-click="doSomething()"><md-icon>not_interested</md-icon> Not Passed</md-button></md-menu-item>
+									</md-menu-content>
+								</md-menu>
                                 <span ng-show="manAttCtrl.selectedUser.panels[0].passed == true">Complete</span>
                                 <span ng-show="manAttCtrl.selectedUser.panels[0].passed == false">Scheduled for {{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
                                 <span ng-hide="manAttCtrl.selectedUser.panels[0]">No Status to note</span>
@@ -195,16 +206,6 @@
             position: fixed;
             width: 32%;
         }
-        /*#associateInformationDiv .skillCard{
-            width:46%;
-            height: 23em;
-            display: inline-block;
-        }
-        #associateInformationDiv .certCard{
-            width:46%;
-            height: 23em;
-            display: inline-block;
-        }*/
         #associateInformationDiv ul{
             list-style: none;
         }
@@ -229,69 +230,11 @@
             font-size: 44px;
             color: white !important;
         }
-        .showInformationDiv{
-            width:33%;
-        }
-        .showBigInformationDiv{
-            width:50%;
-        }
-        
-        .resizeAttendanceDiv{
-            width:67% !important;
-        }
-        .resizeSmallAttendanceDiv{
-            width:50%;
-        }
-        .activeUser{
-            background: #5C6BC0;
-            color: white !important;
-        }
-        #attendanceTableDiv{
-            width: 100%;
-        }
-        #associateInformationDiv md-card{
-            background-color: #5C6BC0;
-            color: white !important;
-            width: 100%;
-            overflow-y: auto;
-        }
-        #fixedContainer{
-            position: fixed;
-            width: 32%;
-        }
-        /*#associateInformationDiv .skillCard{
-            width:46%;
-            height: 23em;
-            display: inline-block;
-        }
-        #associateInformationDiv .certCard{
-            width:46%;
-            height: 23em;
-            display: inline-block;
-        }*/
-        #associateInformationDiv ul{
-            list-style: none;
-        }
-        .notificationContainer{
-            position:relative;
-        }
         .certIcon{
             background: white;
             float: left;
             position: relative;
             top: -3px;
             left: -.5em;
-        }
-        #closeIconContainer{
-            position:fixed;
-            width: 32%;
-        }
-        #closeIcon{
-            cursor: pointer;
-            position: relative;
-            left: 87%;
-            margin-top: 5%;
-            font-size: 44px;
-            color: white !important;
         }
     </style>
