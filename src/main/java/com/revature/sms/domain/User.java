@@ -114,50 +114,24 @@ public class User {
 	 * List of skills that a user has
 	 */
 	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private Set<Technical_Skills> skill;
+	private Set<TechnicalSkills> skill;
+	
+	/**
+	 * MarketingStatus object that keeps track of the user's marketing status
+	 */
+	@ManyToOne
+	@JoinColumn(name = "marketing_status")
+	private MarketingStatus marketingStatus;
 	
 	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
 	 */
 	public User() {
 		super();
-		//this.skill = new ArrayList<Technical_Skills>();
-		System.out.println("user no arg constructor");
 	}
 
+	// constructor for associate
 	/**
-	 * Constructor for User object. This constructor is specifically designed to
-	 * be used for creating a User who is an associate. Initializes all instance variables except for ID, as that is
-	 * automatically generated on creation. 
-	 * @param username String that represents the username of the User object.
-	 * @param firstName String that represents the first name of the User object.
-	 * @param lastName String that represents the last name of the User object.
-	 * @param hashedPassword String that represents the hashedPassword of the User object.
-	 * @param batchType BatchType object that represents the specific BatchType that the User belongs to.
-	 * @param attendance List containing AssociateAttendence objects that keeps track of the user's attendance.
-	 * @param tasks List containing AssociateTask objects that keeps track of the user's tasks.
-	 * @param events List containing JobEvent objects that keeps track of the user's events.
-	 * @param userRole UserRole object that keeps track of the user's specific role.
-	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
-	 */
-	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
-			List<AssociateAttendance> attendance, List<AssociateTask> tasks, List<JobEvent> events, UserRole userRole, Timestamp graduationDate) {
-		super();
-		this.username = username;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.hashedPassword = hashedPassword;
-		this.batchType = batchType;
-		this.attendance = attendance;
-		this.tasks = tasks;
-		this.events = events;
-		this.userRole = userRole;
-		this.graduationDate = graduationDate;
-		System.out.println("user original construct");
-	}
-
-	/**
-	 * skills implemented
 	 * Constructor for User object. This constructor is specifically designed to
 	 * be used for creating a User who is an associate. Initializes all instance variables except for ID, as that is
 	 * automatically generated on creation. 
@@ -174,7 +148,7 @@ public class User {
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate, 
-			Set<Technical_Skills> skills) {
+			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -186,7 +160,8 @@ public class User {
 		this.userRole = userRole;
 		this.graduationDate = graduationDate;
 		this.skill = skills;
-		System.out.println("user construct all");
+		this.events = events;
+		this.marketingStatus = marketingStatus;
 	}
 	// constructor for non-associate
 	/**
@@ -407,27 +382,41 @@ public class User {
 	/**
 	 * Method that retrieves the list of skills of the user
 	 */
-	public Set<Technical_Skills> getSkill() {
+	public Set<TechnicalSkills> getSkill() {
 		return skill;
 	}
 
 	/**
 	 * Method that manually sets the skills of the user object
 	 */
-	public void setSkill(Set<Technical_Skills> skill) {
+	public void setSkill(Set<TechnicalSkills> skill) {
 		this.skill = skill;
 	}
 	
 	/**
+	 * Method that retrieves the marketing status of the user
+	 */
+	public MarketingStatus getMarketingStatus() {
+		return marketingStatus;
+	}
+
+	/**
+	 * Method that manually sets the marketing status of the user object
+	 */
+	public void setMarketingStatus(MarketingStatus marketingStatus) {
+		this.marketingStatus = marketingStatus;
+	}
+
+	/**
 	 * Method that returns a string representation of the current User object.
 	 */
-	
+
 	@Override
 	public String toString() {
 		return "User [ID=" + ID + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", hashedPassword=" + hashedPassword + ", batchType=" + batchType + ", attendance=" + attendance
-				+ ", tasks=" + tasks + ", userRole=" + userRole + ", graduationDate=" + graduationDate + ", skill="
-				+ skill + "]";
+				+ ", tasks=" + tasks + ", events=" + events + ", userRole=" + userRole + ", graduationDate="
+				+ graduationDate + ", skill=" + skill + ", marketingStatus=" + marketingStatus + "]";
 	}
 
 	/**
