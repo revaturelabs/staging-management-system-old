@@ -31,8 +31,6 @@ public class AssociateT extends AbstractT {
 		cpw.carefulClick("cancel");
 	}
 	
-	//blah
-	
 	
 	//Makes sure the current week is shown on the associate page when you log in.
 	@Test
