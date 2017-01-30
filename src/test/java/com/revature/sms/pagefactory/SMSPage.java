@@ -47,14 +47,16 @@ public abstract class SMSPage {
 			try {	
 				try {
 					//System.out.println(fields[i].getName());
-					fieldValue = (WebElement) fields[i].get(this);
+					fieldValue = ((WebElement) fields[i].get(this));
 					if (!verifyField(fieldValue)) {
+						//System.out.println("Made it here");
 						result = false;
 					}
 				} catch (ClassCastException e) {
-					fieldValues = (List<WebElement>) fields[i].get(this);
+					fieldValues = ((List<WebElement>) fields[i].get(this));
 					for (WebElement f:fieldValues) {
 						if (!verifyField(f)) {
+							//System.out.println("Made it here too");
 							result = false;
 						}
 					}	
@@ -73,8 +75,10 @@ public abstract class SMSPage {
 			fieldValue.isDisplayed();
 		} catch (NoSuchElementException e) {
 			Logger.getRootLogger().debug(e);
+			System.out.println("Here it is FALSE");
 			return false;
 		}
+		System.out.println("Here it is TRUE");
 		return true;
 	}
 		

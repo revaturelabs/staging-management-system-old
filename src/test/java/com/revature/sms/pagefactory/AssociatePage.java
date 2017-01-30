@@ -24,7 +24,7 @@ public class AssociatePage extends SMSPage {
 	@FindBy(tagName="tbody")
 	public WebElement weekTable;
 	
-	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/ui-view/div/div/div[2]/button[1]/md-icon")
+	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/ui-view/div/div/div[2]/button[1]/md-iconz")
 	public WebElement prevWeek;
 	
 	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/ui-view/div/div/div[2]/button[2]/md-icon")

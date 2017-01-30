@@ -165,9 +165,6 @@ public class AssociateT extends AbstractT {
 		//buttons should be directly tested too.
 	}
 	
-	public void testAdminCalendarNavigation() {
-		
-	}
 	
 	@After
 	public void after() {
