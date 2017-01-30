@@ -1,5 +1,6 @@
 var sms = angular.module("sms");
 
+//Associate Certifications
 sms.controller("associateCertificationsCtrl", function($scope, $state, $mdDialog,
 		loginService, userService, taskTypeService) {
 

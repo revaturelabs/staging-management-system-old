@@ -116,6 +116,8 @@ public class User {
 	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<TechnicalSkills> skill;
 	
+	
+	
 	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
 	 */
