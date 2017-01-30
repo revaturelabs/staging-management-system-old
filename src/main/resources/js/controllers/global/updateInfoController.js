@@ -101,6 +101,7 @@
                                   // password change went wrong
                                 uic.toast(response.data.errorMessage);
                             });
+ 
                     
                     uic.token = "";
                     
@@ -124,7 +125,9 @@
         	})
         }
         function submitSkills() {
-            if($scope.skillToAdd == undefined || $scope.skillToAdd == "" ){ return; } 
+            if($scope.skillToAdd == undefined || $scope.skillToAdd == "" ){
+                uic.toast("Please Select a Skill");
+                return; } 
         	var add = removeFromAvailSkill();
         	uic.currentSkills.push(add);
         	
