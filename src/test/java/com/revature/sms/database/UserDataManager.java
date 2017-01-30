@@ -103,11 +103,10 @@ public class UserDataManager {
 	 */
 	
 	
-	//List<JobEvent> events
 	public User createTestUser(String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate,
-			Set<Technical_Skills> skills, MarketingStatus marketingStatus){
-		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole, graduationDate, skills, marketingStatus);
+			Set<Technical_Skills> skills, MarketingStatus marketingStatus, List<JobEvent> events){
+		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole, graduationDate, skills, marketingStatus, events);
 		return createTestUser(newUser);
 	}
 	

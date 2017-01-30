@@ -68,7 +68,7 @@ public class DBInitializationController {
 			
 			List<AssociateAttendance> attendance = new ArrayList<AssociateAttendance>();
 			List<AssociateTask> tasks = new ArrayList<AssociateTask>();
-			//List<JobEvent> events = new ArrayList<JobEvent>();
+			List<JobEvent> events = new ArrayList<JobEvent>();
 			Set<Technical_Skills> skills = new HashSet<Technical_Skills>();
 			
 			//Each iteration of the loop corresponds to a new user that is added
@@ -82,7 +82,7 @@ public class DBInitializationController {
 				Timestamp gts = Utils.convertDate(graduationDate);
 				MarketingStatus marketingStatus = msr.findByName(marketingStatuses.get(i));
 				
-				udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole, gts, skills, marketingStatus);
+				udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole, gts, skills, marketingStatus, events);
 				i++;
 			}
 		} catch (FilloException e) {Logger.getRootLogger().debug(e);}
