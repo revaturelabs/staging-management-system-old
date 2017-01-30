@@ -1,13 +1,10 @@
 package com.revature.sms.domain.dao;
 
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.revature.sms.domain.Token;
-import com.revature.sms.domain.User;
 /**
  * DAO repo for Token objects
  *
@@ -20,6 +17,4 @@ public interface TokenRepo extends JpaRepository<Token, Integer>{
 	 * @return Token object matching supplied String.
 	 */
 	Token findByAuthToken(String token);
-
-	List<Token> getByUser(User i);
 }
