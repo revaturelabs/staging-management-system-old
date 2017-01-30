@@ -49,6 +49,8 @@
         mac.toast = toast;
         /**@var {function} newAssociates function reference variable. */
         mac.newAssociates = newAssociates;
+        /**@var {function} deleteAssociates function reference variable. */
+        mac.deleteAssociates = deleteAssociates;
 
           // initialization
         mac.findDevice();
@@ -214,7 +216,12 @@
                     actions: [{ 
                         "function": mac.newAssociates, 
                         "icon"    : "add", 
-                        "tooltip" : "Add batch of new associates"}] } );
+                        "tooltip" : "Add batch of new associates"},
+                			 {
+                        "fuction" : mac.deleteAssociates,
+                        "icon"    : "transfer_within_a_station",
+                        "tooltip" : "Delete Associates" }]   
+                } );
             }
         }
 
@@ -278,6 +285,36 @@
                 mac.toast("Batch addition cancelled.");
             });
         }
+		
+		// delete associates
+		function deleteAssociates() {
+			$mdDialog.show({
+				templateUrl: "html/templates/DeleteAssociates.html",
+				controller: "deleteAssoCtrl as assoCtrl",
+				clickOutsideToClose: true,
+				escapeToClose: true 
+			}).then( function() {
+				$mdDialog.show({
+					templateUrl: "html/templates/DeleteAssociateWarning.html",
+					controller: "deleteAssoWarningCtrl as dAssoCtrl",
+					clickOutsideToClose: true,
+					escapeToClose: true 
+				}).then(function() {
+					$mdDialog.show({
+						templateUrl: "html/templates/DeleteAssociateSuccess.html",
+						controller: "deleteAssoSuccessCtrl as dAssoSCtrl",
+						locals: { "deleteAssociates": deleteAssoFactory.deleteAssociate() },
+						bindToController: true
+					}).then(function() {
+						deleteAssoFactory.resetAssociates();
+					});
+				} , function() {
+						mac.toast("Delete Associate cancelled.");
+					});
+			} , function() {
+					mac.toast("Delete Associate cancelled.");
+				});
+		}
 
             // adds a leading zero to input if necessary
         function padZero( input ) {
