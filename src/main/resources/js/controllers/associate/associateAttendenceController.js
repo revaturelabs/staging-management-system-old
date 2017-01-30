@@ -47,7 +47,7 @@
         aac.toast = toast;
         /**@var {function} getScheduledCert function reference variable. */
         aac.checkIn = checkIn;
-        
+        //aac.udateSkills = updateSkills;
 
           // initialization
         aac.setToolbar();
@@ -143,7 +143,6 @@
         		id: null
         		});
         	
-        	// for SonarQube
         	userService.update(aac.user,function(){});
         	return {"function": aac.checkIn, "icon": "check", "tooltip": "Check in"};
         }
@@ -219,19 +218,17 @@
         function days_between(date1, date2) {
 
             // The number of milliseconds in one day
-            var ONE_DAY = 1000 * 60 * 60 * 24;
-            
-            var newDate = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+            var ONE_DAY = 1000 * 60 * 60 * 24
 
             // Convert both dates to milliseconds
-            date1_ms = newDate.getTime();
-            var date2_ms = date2.getTime();
+            var date1_ms = date1.getTime()
+            var date2_ms = date2.getTime()
 
             // Calculate the difference in milliseconds
-            var difference_ms = Math.abs(date1_ms - date2_ms);
+            var difference_ms = Math.abs(date1_ms - date2_ms)
 
             // Convert back to days and return
-            return Math.round(difference_ms/ONE_DAY);
+            return Math.round(difference_ms/ONE_DAY)
 
         }
         
@@ -260,7 +257,7 @@
         			return "Certification date is today.";
         		}
         		else if ( certDate.getTime() >= (new Date().getTime()) && (aac.user.tasks[i].taskType.type == cert) ) {
-        			var daysAway = days_between(aac.today, certDate);
+        			var daysAway = days_between(aac.today, certDate) + 1;
         			if (daysAway >= 14) {
         				return "Certification scheduled for: " +  ((certDate.getMonth()) + 1) + "/" + certDate.getDate() + "/" + certDate.getFullYear();
         			}
