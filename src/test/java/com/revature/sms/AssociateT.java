@@ -1,21 +1,19 @@
 package com.revature.sms;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Hibernate;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.codoid.products.exception.FilloException;
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
 import com.revature.sms.domain.dao.UserRepo;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Ignore;
 
 public class AssociateT extends AbstractT {
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
@@ -91,16 +89,20 @@ public class AssociateT extends AbstractT {
 	@Test
 	public void testAssociateAttendanceView() {
 		//Login as a test associate.
-		//String username = inputs.getProperty("javaUN");
-		//String password = inputs.getProperty("PW");
-		//lp.login(username, password);
+		String username = inputs.getProperty("javaUN");
+		String password = inputs.getProperty("PW");
+		lp.login(username, password);
 		
 		//Determine what that associate's attendance is supposed to be using the Excel sheet
 		//as a reference.
-		//User user = ur.findByUsername(username);
-		//System.out.println(user.getUsername());
-		//System.out.println(user.getFirstName());
-		//System.out.println(user.getAttendance().size());
+		User user = ur.findByUsername(username);
+		System.out.println(user.getUsername());
+		System.out.println(user.getFirstName());
+		user.getAttendance().size();
+		List<AssociateAttendance> attendanceList = user.getAttendance();
+		for (AssociateAttendance associateAttendance : attendanceList) {
+			System.out.println(associateAttendance);
+		}
 		//ArrayList<Timestamp> expectedDates = new ArrayList<Timestamp>();
 		//for (AssociateAttendance a:attendanceList) {
 			//Timestamp ts = a.getDate();
