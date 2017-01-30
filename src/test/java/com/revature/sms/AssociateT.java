@@ -32,7 +32,6 @@ public class AssociateT extends AbstractT {
 	public void testCancelButtons() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
 		asp.carefulClick("certification");
-		Assert.assertTrue(scw.verify());
 		scw.carefulClick("cancel");
 		asp.carefulClick("settings");
 		cpw.carefulClick("cancel");
@@ -55,6 +54,16 @@ public class AssociateT extends AbstractT {
 		
 		ArrayList<String> actualMonthDays = asp.goThroughWeek();
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
+	}
+	
+	@Test
+	public void testCertificationScheduling() {
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
+		asp.carefulClick("certification");
+		Assert.assertTrue(scw.verify());
+		scw.enterDate.sendKeys(inputs.getProperty("certDate"));
+		scw.enterNote.sendKeys(inputs.getProperty("certNote"));
+		scw.carefulClick("submit");
 	}
 	
 	
