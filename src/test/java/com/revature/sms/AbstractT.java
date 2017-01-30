@@ -47,9 +47,9 @@ public class AbstractT implements InstanceTestClassListener {
 	static EventFiringWebDriver driver;
 	static EventListener eventListener; 
 	protected LoginPage lp;
-	//protected AssociatePage asp;
-	//protected AdminPage adp;
-	//protected SuperAdminPage sap;
+	protected AssociatePage asp;
+	protected AdminPage adp;
+	protected SuperAdminPage sap;
 	protected ScheduleCertificationWindow scw;
 	protected CreateBatchWindow cbw;
 	protected ChangePasswordWindow cpw;
@@ -86,6 +86,9 @@ public class AbstractT implements InstanceTestClassListener {
 	public void before() {
 		driver.get(inputs.getProperty("url"));
 		lp = new LoginPage(driver);
+		asp = new AssociatePage(driver);
+		adp = new AdminPage(driver);
+		sap = new SuperAdminPage(driver);
 		scw = new ScheduleCertificationWindow(driver);
 		cbw = new CreateBatchWindow(driver);
 		cpw = new ChangePasswordWindow(driver);
@@ -96,10 +99,9 @@ public class AbstractT implements InstanceTestClassListener {
 	}
 	
 	
-	
 	@Override
 	public void afterClassSetup() {
-		//driver.close();
+		driver.close();
 	}
 	
 	

@@ -12,10 +12,10 @@ public class AdminPage extends SMSPage {
 	@FindBy(css="[class=\"ng-binding flex\"]")
 	public WebElement header;
 	
-	@FindBy(xpath="//*[@id=\"Settings\"]/md-icon")
+	@FindBy(xpath="//*[@aria-label=\"Account settings\"]")
 	public WebElement settings;
 	
-	@FindBy(xpath="//*[@id=\"Logout\"]/md-icon")
+	@FindBy(xpath="//*[@aria-label=\"Logout\"]")
 	public WebElement logout;
 	
 	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/div[1]/div[2]/button[1]/md-icon")

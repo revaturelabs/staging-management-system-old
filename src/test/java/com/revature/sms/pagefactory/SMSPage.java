@@ -64,12 +64,15 @@ public abstract class SMSPage {
 	}
 		
 	public void carefulClick(String fieldName) {
+		System.out.println("Here1");
 		Class<? extends SMSPage> thisClass = this.getClass();
 		Field field = null;
 		WebElement fieldValue = null;
 		try {
+			System.out.println("Here2");
 			field = thisClass.getField(fieldName);
-			fieldValue = (WebElement) field.get(this);	
+			fieldValue = (WebElement) field.get(this);
+			System.out.println("Here3");
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 			System.out.println("Why would I get one of these exceptions?");
 			e.printStackTrace();
@@ -77,11 +80,18 @@ public abstract class SMSPage {
 		
 		try {
 			try {
+				System.out.println("Here4");
 				fieldValue.click();
+				System.out.println("Here5");
 			} catch (WebDriverException e) {
+				System.out.println("Here6");
 				System.out.println(e.getMessage());
+				System.out.println("Here7");
 				Thread.sleep(500);
+				System.out.println();
+				System.out.println("Field Value is: "+fieldValue);
 				fieldValue.click();
+				System.out.println("Here8");
 			}
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();

@@ -13,32 +13,25 @@ import com.revature.sms.pagefactory.AssociatePage;
 import com.revature.sms.util.ExcelHelper;
 
 public class AssociateT2 extends AbstractT {
-	AssociatePage mp;
-	
-	@Before
-	public void setPageType() {
-		mp = new AssociatePage(driver);
-	}
-	
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
 	@Test
 	public void testLoginHeaderLogout() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
-		Assert.assertTrue(mp.verify());
-		Assert.assertEquals(expected.getProperty("associatePg"), mp.header.getText());  //Asserts that the title given in the blue bar towards the top of the page is the same as expected.
-		mp.carefulClick("logout");
+		Assert.assertTrue(asp.verify());
+		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  //Asserts that the title given in the blue bar towards the top of the page is the same as expected.
+		asp.carefulClick("logout");
 		Assert.assertTrue(lp.verify());
 		
 		lp.login(inputs.getProperty("sdetUN"), inputs.getProperty("sdetPW"));
-		Assert.assertTrue(mp.verify());
-		Assert.assertEquals(expected.getProperty("associatePg"), mp.header.getText());  
-		mp.carefulClick("logout");
+		Assert.assertTrue(asp.verify());
+		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
+		asp.carefulClick("logout");
 		Assert.assertTrue(lp.verify());
 		
 		lp.login(inputs.getProperty("dotnetUN"), inputs.getProperty("dotnetPW"));
-		Assert.assertTrue(mp.verify());
-		Assert.assertEquals(expected.getProperty("associatePg"), mp.header.getText());  
-		mp.carefulClick("logout");
+		Assert.assertTrue(asp.verify());
+		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
+		asp.carefulClick("logout");
 		Assert.assertTrue(lp.verify());
 		
 	}
@@ -48,7 +41,7 @@ public class AssociateT2 extends AbstractT {
 	@Test
 	public void testDefaultWeek() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
-		Assert.assertTrue(mp.verify());
+		Assert.assertTrue(asp.verify());
 		
 		ArrayList<String> expectedMonthDays = new ArrayList<String>();
 		expectedMonthDays.add(expected.getProperty("Mon"));
@@ -57,14 +50,14 @@ public class AssociateT2 extends AbstractT {
 		expectedMonthDays.add(expected.getProperty("Thu"));
 		expectedMonthDays.add(expected.getProperty("Fri"));
 		
-		ArrayList<String> actualMonthDays = mp.goThroughWeek();
+		ArrayList<String> actualMonthDays = asp.goThroughWeek();
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
 	}
 	
 	@Test
 	public void testCertificationCancelling() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
-		mp.carefulClick("certification");
+		asp.carefulClick("certification");
 		Assert.assertTrue(scw.verify());
 		scw.carefulClick("cancel");
 	}
@@ -89,7 +82,7 @@ public class AssociateT2 extends AbstractT {
 			String ericUN = usernames.get(1);
 			String ericPW = passwords.get(1);
 			lp.login(ericUN, ericPW);
-			Assert.assertTrue(mp.verify());
+			Assert.assertTrue(asp.verify());
 			
 			//Determine what that associate's attendance is supposed to be using the Excel sheet
 			//as a reference.
@@ -119,9 +112,9 @@ public class AssociateT2 extends AbstractT {
 			//This do-while loop iterates through each available week on the associate page by 
 			//carefulClicking the arrow icons
 			do {
-				week = mp.weekOf.getText();
-				ArrayList<String> actualMonthDays = mp.goThroughWeek();
-				ArrayList<String> icons = mp.goThroughWeekIcons();
+				week = asp.weekOf.getText();
+				ArrayList<String> actualMonthDays = asp.goThroughWeek();
+				ArrayList<String> icons = asp.goThroughWeekIcons();
 				int aCount = 0;  
 				//The outer loop goes through each day of the week.
 				for (String a:actualMonthDays) {
@@ -148,8 +141,8 @@ public class AssociateT2 extends AbstractT {
 					aCount++;
 					//These count variables ensure that this test compares the data from the excel sheet with the appropriate data from the web page.
 				}
-				mp.carefulClick("prevWeek");
-				weekBefore = mp.weekOf.getText();
+				asp.carefulClick("prevWeek");
+				weekBefore = asp.weekOf.getText();
 			} while (!week.equals(weekBefore));
 		} catch (FilloException e) {}
 	}
@@ -175,6 +168,13 @@ public class AssociateT2 extends AbstractT {
 	
 	public void testAdminCalendarNavigation() {
 		
+	}
+	
+	@After
+	public void after() {
+		if (asp.verify()) {
+			asp.carefulClick("logout");
+		} 
 	}
 	
 	

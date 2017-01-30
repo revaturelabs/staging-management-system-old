@@ -9,7 +9,7 @@ public class CreateBatchWindow extends SMSPage {
 	@FindBy(id="firstName")
 	public WebElement firstName;
 	
-	@FindBy(id="lastName")
+	@FindBy(xpath="//*[@ng-model=\"bACtrl.lastName\"]")
 	public WebElement lastName;
 	
 	@FindBy(xpath="//*[@ng-model=\"bACtrl.selectedBatchType\"]")
