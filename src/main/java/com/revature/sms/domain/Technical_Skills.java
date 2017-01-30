@@ -56,7 +56,6 @@ public class Technical_Skills {
 	 */
 	public Technical_Skills() {
 		super();
-		System.out.println("tech_skills no arg");
 	}
 
 	/**
