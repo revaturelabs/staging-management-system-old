@@ -125,14 +125,12 @@ public class User {
 	 */
 	public User() {
 		super();
-		//this.skill = new ArrayList<Technical_Skills>();
-		System.out.println("user no arg constructor");
 	}
 
 
 
+	// constructor for non-associate
 	/**
-	 * skills implemented
 	 * Constructor for User object. This constructor is specifically designed to
 	 * be used for creating a User who is an associate. Initializes all instance variables except for ID, as that is
 	 * automatically generated on creation. 
@@ -146,10 +144,11 @@ public class User {
 	 * @param userRole UserRole object that keeps track of the user's specific role.
 	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
 	 * @param skills gets a list of technical skills that an associate has
+	 * @param events Tracks the list of Job Events for a given user
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate, 
-			Set<Technical_Skills> skills, MarketingStatus marketingStatus) {
+			Set<Technical_Skills> skills, MarketingStatus marketingStatus, List<JobEvent> events) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -162,7 +161,7 @@ public class User {
 		this.graduationDate = graduationDate;
 		this.marketingStatus = marketingStatus;
 		this.skill = skills;
-	
+		this.events = events;
 	}
 	// constructor for non-associate
 	/**
