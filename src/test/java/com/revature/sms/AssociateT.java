@@ -1,125 +1,49 @@
 package com.revature.sms;
 
 import java.util.ArrayList;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.junit.After;
 import org.junit.Assert;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Service;
+import org.junit.Before;
 
-import com.revature.sms.util.InstanceTestClassListener;
-import com.revature.sms.util.SpringInstanceTestClassRunner;
-import com.revature.sms.util.TestSetup;
 import com.codoid.products.exception.FilloException;
-import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;
-import com.revature.sms.pagefactory.LoginPage;
-import com.revature.sms.pagefactory.ScheduleCertificationWindow;
-import com.revature.sms.pagefactory.SuperAdminPage;
-import com.revature.sms.util.EventListener;
 import com.revature.sms.util.ExcelHelper;
 
-@Service
-@RunWith(SpringInstanceTestClassRunner.class)
-@SpringBootTest
-public class AssociateT implements InstanceTestClassListener {
-	private final String browser = "Chrome"; 
-	private final String inputsPath = "src/test/resources/PropertiesFiles/inputs.properties";
-	private final String expectedPath = "src/test/resources/PropertiesFiles/expected.properties";
-	
-	//Allow properties files, webdrivers, and page objects to be used in the tests
-	static Properties inputs;
-	static Properties expected;
-	static WebDriver webDriver;
-	static EventFiringWebDriver driver;
-	static EventListener eventListener; 
-	private LoginPage lp;
-	private AssociatePage asp;
-	private AdminPage adp;
-	private SuperAdminPage sap;
-	private ScheduleCertificationWindow scw;
-	
-	
-	@Override
-	public void beforeClassSetup() {
-	    if (browser.equals("Chrome")) {
-	    	webDriver = TestSetup.getChrome();
-	    }
-	    if (browser.equals("Internet Explorer")) {
-	    	webDriver = TestSetup.getIE();
-	    }
-	    if (browser.equals("Firefox")) {
-	    	webDriver = new FirefoxDriver();
-	    }
-	    
-	    
-	    
-		//Allows the driver to take advantage of an event listener
-		driver = new EventFiringWebDriver(webDriver);
-		eventListener = new EventListener();
-		driver.register(eventListener);
-		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-		
-		//Initialize properties files
-		inputs = TestSetup.getProperties(inputsPath);
-		expected = TestSetup.getProperties(expectedPath);
-	}
-	
-	//More browser preparation
-	@Before
-	public void before() {
-		driver.get(inputs.getProperty("url"));
-		lp = new LoginPage(driver);
-		asp = new AssociatePage(driver);
-		adp = new AdminPage(driver);
-		sap = new SuperAdminPage(driver);
-		scw = new ScheduleCertificationWindow(driver);
-		
-		//Make sure the login page is loaded correctly 
-		Assert.assertEquals(expected.getProperty("siteName"), driver.getTitle());
-		Assert.assertTrue(lp.verify());
-		Assert.assertEquals(expected.getProperty("loginPg"), lp.header.getText());
-	}
-	
-
+public class AssociateT extends AbstractT {
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
+	
 	@Test
 	public void testLoginHeaderLogout() {
-		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
-		Assert.assertTrue(asp.verify());
-		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  //Asserts that the title given in the blue bar towards the top of the page is the same as expected.
-		asp.carefulClick("logout");
-		Assert.assertTrue(lp.verify());
-		
-		lp.login(inputs.getProperty("sdetUN"), inputs.getProperty("sdetPW"));
-		Assert.assertTrue(asp.verify());
-		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
-		asp.carefulClick("logout");
-		Assert.assertTrue(lp.verify());
-		
-		lp.login(inputs.getProperty("dotnetUN"), inputs.getProperty("dotnetPW"));
-		Assert.assertTrue(asp.verify());
-		Assert.assertEquals(expected.getProperty("associatePg"), asp.header.getText());  
-		asp.carefulClick("logout");
-		Assert.assertTrue(lp.verify());
-		
+		String expectedValue = expected.getProperty("associatePg");
+		LoginHeaderLogoutTemplate(asp, inputs.getProperty("javaUN"), inputs.getProperty("PW"), expectedValue);
+		LoginHeaderLogoutTemplate(asp, inputs.getProperty("sdetUN"), inputs.getProperty("PW"), expectedValue);
+		LoginHeaderLogoutTemplate(asp, inputs.getProperty("dotnetUN"), inputs.getProperty("PW"), expectedValue);
 	}
+	
+	@Test
+	public void testPasswordChange() {
+		PasswordChangeTemplate(adp, inputs.getProperty("javaUN"), inputs.getProperty("PW"), inputs.getProperty("PW2"));
+	}
+	
+	@Test
+	public void testCancelButtons() {
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
+		asp.carefulClick("certification");
+		Assert.assertTrue(scw.verify());
+		scw.carefulClick("cancel");
+		asp.carefulClick("settings");
+		cpw.carefulClick("cancel");
+	}
+	
 	
 	
 	//Makes sure the current week is shown on the associate page when you log in.
 	@Test
 	public void testDefaultWeek() {
-		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
 		Assert.assertTrue(asp.verify());
 		
 		ArrayList<String> expectedMonthDays = new ArrayList<String>();
@@ -133,14 +57,6 @@ public class AssociateT implements InstanceTestClassListener {
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
 	}
 	
-	@Test
-	public void testCertificationCancelling() {
-		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("javaPW"));
-		asp.carefulClick("certification");
-		Assert.assertTrue(scw.verify());
-		scw.carefulClick("cancel");
-	}
-	
 	
 	
 	//ERROR??? When I run this test, and an associate is set as checked in and not verified for a 
@@ -150,6 +66,7 @@ public class AssociateT implements InstanceTestClassListener {
 	//incorrectly displayed on the website.
 	
 	//This is Corey's work on issue SMS-85.
+	/*
 	@Ignore
 	@Test
 	public void testAssociateAttendanceView() {
@@ -225,7 +142,7 @@ public class AssociateT implements InstanceTestClassListener {
 			} while (!week.equals(weekBefore));
 		} catch (FilloException e) {}
 	}
-	
+	*/
 	
 	
 	//Corey's Test ideas
@@ -249,19 +166,12 @@ public class AssociateT implements InstanceTestClassListener {
 		
 	}
 	
-	
 	@After
 	public void after() {
-		try {
+		if (asp.verify()) {
 			asp.carefulClick("logout");
-		} catch (NoSuchElementException e) {}
-	}
-	
-	@Override
-	public void afterClassSetup() {
-		driver.close();
+		} 
 	}
 	
 	
 }
-
