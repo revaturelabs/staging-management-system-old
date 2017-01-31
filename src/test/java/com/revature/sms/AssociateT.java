@@ -4,13 +4,11 @@ import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class AssociateT extends AbstractT {
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
 	
-	@Ignore
 	@Test
 	public void testLoginHeaderLogout() {
 		String expectedValue = expected.getProperty("associatePg");
@@ -19,13 +17,11 @@ public class AssociateT extends AbstractT {
 		LoginHeaderLogoutTemplate(asp, inputs.getProperty("dotnetUN"), inputs.getProperty("PW"), expectedValue);
 	}
 	
-	@Ignore
 	@Test
 	public void testPasswordChange() {
 		PasswordChangeTemplate(adp, inputs.getProperty("javaUN"), inputs.getProperty("PW"), inputs.getProperty("PW2"));
 	}
 	
-	@Ignore
 	@Test
 	public void testCancelButtons() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
@@ -34,12 +30,12 @@ public class AssociateT extends AbstractT {
 		asp.carefulClick("settings");
 		cpw.carefulClick("cancel");
 		asp.carefulClick("reportBug");
+		driver.switchTo().frame("atlwdg-frame");
 		rbw.carefulClick("cancel");
 	}
 	
 	
 	//Makes sure the current week is shown on the associate page when you log in.
-	@Ignore
 	@Test
 	public void testDefaultWeek() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
@@ -59,6 +55,8 @@ public class AssociateT extends AbstractT {
 	public void testBugReport() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
 		asp.carefulClick("reportBug");
+		driver.switchTo().frame("atlwdg-frame");
+		
 		Assert.assertTrue(rbw.verify());
 		rbw.messageBox.sendKeys(inputs.getProperty("bugReport"));
 		rbw.enterName.sendKeys(inputs.getProperty("bugReportName"));

@@ -45,6 +45,7 @@ public abstract class SMSPage {
 				}
 			} catch (ClassCastException e) {
 				try {
+					
 					fieldValues = (List<WebElement>) fields[i].get(this);
 					for (WebElement f:fieldValues) {
 						result = verifyField(f);
@@ -68,6 +69,7 @@ public abstract class SMSPage {
 		try {
 			fieldValue.isDisplayed();
 		} catch (NoSuchElementException e) {
+			//System.out.println(fieldValue.toString());
 			Logger.getRootLogger().debug(e);
 			return false;
 		}

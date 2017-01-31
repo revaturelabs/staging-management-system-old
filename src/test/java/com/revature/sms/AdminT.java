@@ -24,6 +24,7 @@ public class AdminT extends AbstractT {
 		adp.carefulClick("settings");
 		cpw.carefulClick("cancel");
 		adp.carefulClick("reportBug");
+		driver.switchTo().frame("atlwdg-frame");
 		rbw.carefulClick("cancel");
 	}
 	

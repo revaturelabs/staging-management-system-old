@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class RaiseBugWindow extends SMSPage {
 	
-	@FindBy(xpath="//*[@class=\"dialog-title\"]")
+	@FindBy(xpath="//*[@id=\"jic-collector-form\"]/div[1]/div[1]")
 	public WebElement windowHeader;
 	
 	@FindBy(xpath="//*[@id=\"jic-collector-form\"]/div[1]/div[1]/p")
@@ -36,14 +36,12 @@ public class RaiseBugWindow extends SMSPage {
 	@FindBy(id="email")
 	public WebElement enterEmail;
 	
-	@FindBy(id="recordWebInfo")
+	@FindBy(id="recordWebInfoConsent")
 	public WebElement webInfo;
 	
 	@FindBy(xpath="//*[@id=\"jic-collector-form\"]/div[2]/input")
 	public WebElement submit;
 	
-
-	//*[@id="jic-collector-form"]/div[2]/a
 	@FindBy(xpath="//*[@class=\"cancel\"]")
 	public WebElement cancel;
 	
