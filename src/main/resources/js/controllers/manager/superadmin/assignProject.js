@@ -16,11 +16,14 @@ function assignProjectCtrl( $scope, $mdDialog, userService, user, project, hasPr
 	/**@prop {boolean} oldPassed Variable holding status of task for reference. */
 	apc.oldPassed = false;
 	/**@prop {Date} newDate Variable holding date value to be updated. */
-	apc.newDate = new Date();
+	apc.newDate;
     /**@prop {string} newNote Variable holding note value to be updated. */
 	apc.newNote = "";
     /**@prop {boolean} passed Variable with status of task*/
 	apc.newPassed = false;
+	/**@prop {string} message Variable with message to be displayed*/
+	apc.message = "";
+	
 
 	//functions
 	/**@var {function} updateSubmit function reference variable. */
@@ -81,10 +84,50 @@ function assignProjectCtrl( $scope, $mdDialog, userService, user, project, hasPr
 	}
 	
 	function assignSubmit(){
-		$mdDialog.hide();
+		//validation
+		//date inputed
+		if(apc.newDate == undefined || apc.newDate == undefined){
+			apc.message = "Please enter a date";
+		}
+		
+		//end date can't be in the past
+		if(apc.newDate.getTime() < (new Date()).getTime()){
+			apc.message = "End date can't be in the past";
+			return;
+		}
+		//project name is required
+		if("" == apc.newNote || apc.newNote == null || apc.newNote == undefined ){
+			apc.message = "project name is required";
+			return;
+		}
+		
+		//add task to user
+		var newProject = {
+				date : apc.newDate.getTime(),
+				dateDisplay: (apc.newDate.getMonth()+1)+"/"+apc.newDate.getDate(),
+				note: apc.newNote,
+				passed: apc.newPassed,
+				type:"Project",
+				taskType:{
+					id:3,
+					type:"Project"
+				}
+			};
+		
+		//update user object
+		apc.user.tasks.push(newProject);
+		apc.user.project = newProject;
+		
+		//save user
+		userService.update(apc.user,function(){
+			$mdDialog.hide();
+		});
 	}
 	
 	function assignCancel(){
+		apc.newDate = new Date();
+		apc.newNote = "";
+		apc.newPassed = false;
 		$mdDialog.hide();
 	}
 }
