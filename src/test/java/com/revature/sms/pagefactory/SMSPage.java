@@ -20,15 +20,6 @@ public abstract class SMSPage {
 	@FindBy(tagName="title")
 	public WebElement title;
 	
-	@FindBy(css="[class=\"ng-binding flex\"]")
-	public WebElement header;
-	
-	@FindBy(xpath="//*[@aria-label=\"Account settings\"]")
-	public WebElement settings;
-	
-	@FindBy(xpath="//*[@aria-label=\"Logout\"]")
-	public WebElement logout;
-	
 	public SMSPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -54,6 +45,7 @@ public abstract class SMSPage {
 				}
 			} catch (ClassCastException e) {
 				try {
+					
 					fieldValues = (List<WebElement>) fields[i].get(this);
 					for (WebElement f:fieldValues) {
 						result = verifyField(f);
@@ -77,6 +69,7 @@ public abstract class SMSPage {
 		try {
 			fieldValue.isDisplayed();
 		} catch (NoSuchElementException e) {
+			//System.out.println(fieldValue.toString());
 			Logger.getRootLogger().debug(e);
 			return false;
 		}
@@ -113,12 +106,6 @@ public abstract class SMSPage {
 		}
 		
 	}
-	
-	public String getHeader() {
-		return header.getText();
-	}
-	
-	
 	
 	public Select makeSelection(String fieldName, String selection) {
 		Class<? extends SMSPage> thisClass;

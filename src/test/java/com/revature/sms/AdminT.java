@@ -23,6 +23,9 @@ public class AdminT extends AbstractT {
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
 		adp.carefulClick("settings");
 		cpw.carefulClick("cancel");
+		adp.carefulClick("reportBug");
+		driver.switchTo().frame("atlwdg-frame");
+		rbw.carefulClick("cancel");
 	}
 	
 	

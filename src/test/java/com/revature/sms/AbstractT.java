@@ -19,8 +19,9 @@ import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;
 import com.revature.sms.pagefactory.ChangePasswordWindow;
 import com.revature.sms.pagefactory.CreateBatchWindow;
+import com.revature.sms.pagefactory.HomePage;
 import com.revature.sms.pagefactory.LoginPage;
-import com.revature.sms.pagefactory.SMSPage;
+import com.revature.sms.pagefactory.RaiseBugWindow;
 import com.revature.sms.pagefactory.ScheduleCertificationWindow;
 import com.revature.sms.pagefactory.SuperAdminPage;
 import com.revature.sms.util.EventListener;
@@ -46,6 +47,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	protected ScheduleCertificationWindow scw;
 	protected CreateBatchWindow cbw;
 	protected ChangePasswordWindow cpw;
+	protected RaiseBugWindow rbw;
 	
 	
 	@Override
@@ -85,6 +87,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		scw = new ScheduleCertificationWindow(driver);
 		cbw = new CreateBatchWindow(driver);
 		cpw = new ChangePasswordWindow(driver);
+		rbw = new RaiseBugWindow(driver);
 		//Make sure the login page is loaded correctly 
 		Assert.assertEquals(expected.getProperty("siteName"), driver.getTitle());
 		Assert.assertTrue(lp.verify());
@@ -99,34 +102,34 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	
 	
 	
-	public void LoginHeaderLogoutTemplate(SMSPage mp, String un, String pw, String ev) {
+	public void LoginHeaderLogoutTemplate(HomePage hp, String un, String pw, String ev) {
 		lp.login(un, pw);
-		Assert.assertTrue(mp.verify());
-		Assert.assertEquals(ev, mp.header.getText());
-		mp.carefulClick("logout");
+		Assert.assertTrue(hp.verify());
+		Assert.assertEquals(ev, hp.header.getText());
+		hp.carefulClick("logout");
 		Assert.assertTrue(lp.verify());
 	}
 	
 	
 	
-	public void PasswordChangeTemplate(SMSPage mp, String un, String pw, String pw2) {
+	public void PasswordChangeTemplate(HomePage hp, String un, String pw, String pw2) {
 		lp.login(un, pw);
-		adp.carefulClick("settings");
+		hp.carefulClick("settings");
 		Assert.assertTrue(cpw.verify());
 		cpw.oldPass.sendKeys(pw);
 		cpw.newPass.sendKeys(pw2);
 		cpw.confirmPass.sendKeys(pw2);
 		cpw.carefulClick("submit");
-		adp.carefulClick("logout");
+		hp.carefulClick("logout");
 		
 		lp.login(un, pw2);
-		adp.carefulClick("settings");
+		hp.carefulClick("settings");
 		Assert.assertTrue(cpw.verify());
 		cpw.oldPass.sendKeys(pw2);
 		cpw.newPass.sendKeys(pw);
 		cpw.confirmPass.sendKeys(pw);
 		cpw.carefulClick("submit");
-		adp.carefulClick("logout");
+		hp.carefulClick("logout");
 	}
 	
 	public void adminAttendenceViewTemplate(String un, String pw){

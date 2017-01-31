@@ -23,6 +23,9 @@ public class SuperAdminT extends AbstractT  {
 		cbw.carefulClick("cancel");
 		sap.carefulClick("settings");
 		cpw.carefulClick("cancel");
+		sap.carefulClick("reportBug");
+		driver.switchTo().frame("atlwdg-frame");
+		rbw.carefulClick("cancel");
 	}
 	
 	
