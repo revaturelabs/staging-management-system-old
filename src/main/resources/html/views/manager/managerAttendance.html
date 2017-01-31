@@ -30,13 +30,12 @@
 										<md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == false">not_interested</md-icon>
 									</md-button>
 									<md-menu-content>
-										<md-menu-item><md-button ng-click="doSomething()"><md-icon>check_circle</md-icon> Passed</md-button></md-menu-item>
+										<md-menu-item><md-button ng-click="setPanelPassed()"><md-icon>check_circle</md-icon> Passed</md-button></md-menu-item>
 										<md-menu-item><md-button ng-click="doSomething()"><md-icon>not_interested</md-icon> Not Passed</md-button></md-menu-item>
 									</md-menu-content>
 								</md-menu>
-                                <span ng-show="manAttCtrl.selectedUser.panels[0].passed == true">Complete</span>
                                 <span ng-show="manAttCtrl.selectedUser.panels[0].passed == false">Scheduled for {{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
-                                <span ng-hide="manAttCtrl.selectedUser.panels[0]">No Status to note</span>
+                                <span ng-hide="manAttCtrl.selectedUser.panels[0]"><md-icon ng-click="">note_add</md-icon></span>
                             </p>
                     </md-card-content>
                 </md-card>
