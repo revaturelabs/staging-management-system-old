@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.sms.domain.TechnicalSkills;
-import com.revature.sms.domain.dao.Technical_SkillsRepo;
+import com.revature.sms.domain.dao.TechnicalSkillsRepo;
 
 @RestController
 @RequestMapping("/api/v1/TechSkills")
 public class TechSkillsController {
 
 	@Autowired
-	Technical_SkillsRepo attr;
+	TechnicalSkillsRepo attr;
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Object getAll() {

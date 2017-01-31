@@ -18,6 +18,8 @@ sms.filter("taskFilter", function($filter){
 				thisTask = {};
 				thisTask.type = task.taskType.type;
 				thisTask.note = task.note;
+				thisTask.passed = task.passed;
+				thisTask.id = task.id;
 				
 				
 				//check when the task is
