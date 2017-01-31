@@ -11,6 +11,8 @@ function editSkillController($scope, skillService){
         //functions
         sec.getSkills =  getSkills;
         sec.printCurrentSkills = printCurrentSkills;
+        sec.findSkill = findSkill;
+        sec.testAddSkill = testAddSkill;
         //initialization
         
         sec.getSkills();
@@ -26,8 +28,27 @@ function editSkillController($scope, skillService){
             });
         }
 
+        function findSkill(skillName){
+            skillService.retrieve(skillName, function(response){
+                console.log(response);
+            }, function(error){
+                console.log(error);
+            });
+        }
+
         function printCurrentSkills(){
             console.log(sec.currentSkills);
+        }
+
+        function testAddSkill(){
+            
+            
+            skillService.create(newSkill, function(response){
+                console.log(response);
+                sec.getSkills();
+            }, function(error){
+                console.log(error);
+            })
         }
 
 

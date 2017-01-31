@@ -9,8 +9,9 @@
        ssr.skillResource = $resource("api/v1/TechSkills/:skillName", 
        		{id: "@skillName"},
                { 
+                save  : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "PUT", url: "api/v1/TechSkills" }, 
                 query : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, isArray: true }, 
-                get   : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } }, 
+                get   : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } } 
                } 
            )
            
@@ -20,5 +21,9 @@
 
         ssr.retrieve = function(skillName, success,error){
             ssr.skillResource.get({skillName: skillName}, success, error);
+        }
+
+        ssr.create = function(skill, success, error) {
+        	ssr.skillResource.save(skill, success, error);
         }
     }
