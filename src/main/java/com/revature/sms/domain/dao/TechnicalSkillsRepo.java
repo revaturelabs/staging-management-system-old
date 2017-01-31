@@ -11,11 +11,11 @@ import com.revature.sms.domain.User;
 
 /**
  * 
- * DAO repo for Technical_Skills
+ * DAO repo for TechnicalSkills
  *
  */
 @Repository
-public interface Technical_SkillsRepo extends JpaRepository<TechnicalSkills, Integer> { 
+public interface TechnicalSkillsRepo extends JpaRepository<TechnicalSkills, Integer> { 
 
 	/**
 	 * method to retrieve object based on skill name

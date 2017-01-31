@@ -29,7 +29,7 @@ public class MarketingStatus {
 	 * String value that represents the specific name of the UserRole object. Each UserRole must
 	 * have a unique name to be stored in the database.
 	 */
-	@Column(name = "STATUS", nullable=false)
+	@Column(name = "STATUS", unique=true, nullable=false)
 	private String status;
 /**
  * Null args constructor for the UserRole object.
