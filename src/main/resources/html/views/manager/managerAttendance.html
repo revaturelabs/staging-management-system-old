@@ -23,10 +23,13 @@
                             </span> -->
                             <p>
                             	Marketing Status:
-                            	<span ng-show="manAttCtrl.selectedUser.marketing_status">{{ manAttCtrl.selectedUser.marketing_status</span>
+                            	<label>
+                            	<span ng-show="manAttCtrl.selectedUser.marketingStatus">{{ manAttCtrl.selectedUser.marketingStatus.name }}
+                            	<span ng-hide="manAttCtrl.selectedUser.marketingStatus">None</span>
+                            	</label>
                             </p>
                             <p>
-                                Panel Status: 
+                                Panel Status:                                 
                                 <span ng-show="manAttCtrl.selectedUser.panels[0]">{{ manAttCtrl.selectedUser.panels[0].note }} {{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
                                 <span ng-hide="manAttCtrl.selectedUser.panels[0]">No Status to note</span>
                             </p>

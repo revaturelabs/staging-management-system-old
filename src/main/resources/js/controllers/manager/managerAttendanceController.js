@@ -5,7 +5,7 @@
      /**
       * @description AngularJs controller for Manager attendance module (both versions of Admins)
       */   
-    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, batchAddFactory, weekdays ) {
+    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, marketingStatusService, batchAddFactory, weekdays ) {
        /**@prop {function} Reference variable for this controller */
         var mac = this;
 
@@ -23,37 +23,28 @@
         mac.maxWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() + 7 );
          /**@prop {boolean} infoOpen Variable that tells if the info tabs are open or not. */
         mac.infoOpen = false;
+        
 
             // functions
-        /**@var {function} findDevice function reference variable. */
         mac.findDevice = findDevice;
-        /**@var {function} getUsers function reference variable. */
         mac.getUsers = getUsers;
-        /**@var {function} calcWeek function reference variable. */
         mac.calcWeek = calcWeek;
-        /**@var {function} filterWeek function reference variable. */
         mac.filterWeek = filterWeek;
-        /**@var {function} toggleInfo function reference variable. */
         mac.toggleInfo = toggleInfo;
-        /**@var {function} closeInfo function reference variable. */
         mac.closeInfo = closeInfo;
-        /**@var {function} verify function reference variable. */
         mac.verify = verify;
-        /**@var {function} setToolbar function reference variable. */
         mac.setToolbar = setToolbar;
-        /**@var {function} prevWeek function reference variable. */
         mac.prevWeek = prevWeek;
-        /**@var {function} nextWeek function reference variable. */
         mac.nextWeek = nextWeek;
-        /**@var {function} toast function reference variable. */
         mac.toast = toast;
-        /**@var {function} newAssociates function reference variable. */
         mac.newAssociates = newAssociates;
+        mac.marketingStatuses = marketingStatuses;
 
           // initialization
         mac.findDevice();
         mac.getUsers();
         mac.setToolbar();
+        mac.marketingStatuses();
         
           // functions
             /**
@@ -286,5 +277,14 @@
             } else {
                 return "" + input;
             }
+        }
+        
+        function marketingStatuses() {
+	        marketingStatusService.getAll(function(response) {
+	        	mac.mStatuses = response;
+	        	console.log("got eem", mac.batchTypes);
+	        }, function(error) {
+	        	console.log("bad");
+	        });
         }
     }
