@@ -49,21 +49,8 @@ function assignProjectCtrl( $scope, $mdDialog, userService, user, project, hasPr
      * @description Called when user clicks submit button. Saves updated information and updates it in the database and closes the dialog.
      */
 	function updateSubmit() {
-		//validation
-		//date inputed
-		if(apc.newDate == null || apc.newDate == undefined){
-			apc.message = "Please enter a date";
-			return;
-		}
 		
-		//end date can't be in the past
-		if(apc.newDate.getTime() < (new Date()).getTime()){
-			apc.message = "End date can't be in the past";
-			return;
-		}
-		//project name is required
-		if("" == apc.newNote || apc.newNote == null || apc.newNote == undefined ){
-			apc.message = "project name is required";
+		if(!isValid()){
 			return;
 		}
 		
@@ -102,21 +89,8 @@ function assignProjectCtrl( $scope, $mdDialog, userService, user, project, hasPr
 	}
 	
 	function assignSubmit(){
-		//validation
-		//date inputed
-		if("" == apc.newDate || apc.newDate == null || apc.newDate == undefined){
-			apc.message = "Please enter a date";
-			return;
-		}
 		
-		//end date can't be in the past
-		if(apc.newDate.getTime() < (new Date()).getTime()){
-			apc.message = "End date can't be in the past";
-			return;
-		}
-		//project name is required
-		if("" == apc.newNote || apc.newNote == null || apc.newNote == undefined ){
-			apc.message = "project name is required";
+		if(!isValid()){
 			return;
 		}
 		
@@ -148,5 +122,25 @@ function assignProjectCtrl( $scope, $mdDialog, userService, user, project, hasPr
 		apc.newNote = "";
 		apc.newPassed = false;
 		$mdDialog.hide();
+	}
+	
+	function isValid(){
+		//validation
+		//date inputed
+		if(apc.newDate == null || apc.newDate == undefined){
+			apc.message = "Please enter a date";
+			return;
+		}
+		
+		//end date can't be in the past
+		if(apc.newDate.getTime() < (new Date()).getTime()){
+			apc.message = "End date can't be in the past";
+			return;
+		}
+		//project name is required
+		if("" == apc.newNote || apc.newNote == null || apc.newNote == undefined ){
+			apc.message = "project name is required";
+			return;
+		}
 	}
 }
