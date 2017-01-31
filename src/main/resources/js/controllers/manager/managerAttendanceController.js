@@ -220,7 +220,7 @@
                         "icon"    : "add", 
                         "tooltip" : "Add batch of new associates"},
                 			 {
-                        "fuction" : mac.deleteAssociates,
+                        "function": mac.deleteAssociates,
                         "icon"    : "transfer_within_a_station",
                         "tooltip" : "Delete Associates" }]   
                 } );
@@ -316,6 +316,7 @@
 			} , function() {
 					mac.toast("Delete Associate cancelled.");
 				});
+		}
 
 		/**
          * @description Called when a superAdmin clicks on update certification button, opens a dialog.
@@ -345,4 +346,5 @@
                 return "" + input;
             }
         }
+        
     }
