@@ -6,11 +6,11 @@ function editSkillController($scope, skillService){
         var sec = this;
 
         //bindables
-        sec.currentSkills = undefined;
+        sec.currentSkills = undefined
 
         //functions
-        sec.getSkills = getSkills;
-        
+        sec.getSkills =  getSkills;
+        sec.printCurrentSkills = printCurrentSkills;
         //initialization
         
         sec.getSkills();
@@ -20,15 +20,17 @@ function editSkillController($scope, skillService){
 
         function getSkills() {
         	skillService.getAll(function(response) {
-        		sec.currentSkills = response;
-               
-               
-                
-
-        	}, function(){
-                console.log("Just here to make work");
+        		sec.currentSkills = response;                
+        	},function(){
+                //needed to make proper function call for some reason.
             });
         }
+
+        function printCurrentSkills(){
+            console.log(sec.currentSkills);
+        }
+
+
 
    
 

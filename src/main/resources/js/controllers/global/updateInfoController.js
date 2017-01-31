@@ -115,6 +115,7 @@
         		
         		removeFromCSkills();
         	}, function(error) {
+                //needed to make function call work for some reason
         	})
         }
         function submitSkills() {
