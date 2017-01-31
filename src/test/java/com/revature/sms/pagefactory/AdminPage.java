@@ -41,6 +41,13 @@ public class AdminPage extends HomePage {
 	
 	@FindBy(xpath="//*[@id='attendanceTableDiv']/md-card/div/md-table-container/table/tbody/tr[1]/td[2]")
 	public WebElement verifyAssoc;
+	
+	@FindBy(id="associateInformationDiv")
+	public WebElement verifyInfoDiv;
+	
+	public boolean infoDisplayed(){
+		return verifyInfoDiv.isDisplayed();
+	}
 		
 	public AdminPage(WebDriver driver) {
 		super(driver);

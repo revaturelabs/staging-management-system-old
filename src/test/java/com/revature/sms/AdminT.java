@@ -60,8 +60,7 @@ public class AdminT extends AbstractT {
 	}
 	*/
 	
-	
-	
+	@Test
 	public void testAdminAttendanceView() {
 		adminAttendenceViewTemplate(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
 	}
@@ -70,6 +69,7 @@ public class AdminT extends AbstractT {
 		
 	}
 	
+	@Test
 	public void testAdminCalendarNavigation() {
 		adminCalenderNavigation(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
 	}
