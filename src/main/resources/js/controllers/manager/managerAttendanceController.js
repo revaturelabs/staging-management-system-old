@@ -312,9 +312,6 @@
          * @description Called when a superAdmin clicks on assign project, opens a dialog.
          */
 		function assignProject(user, project, hasProject){
-			console.log(project);
-			console.log("");
-			console.log(user);
 			//only superadmins can do this
 			if(mac.user.userRole.name != "superAdmin"){
 				return;

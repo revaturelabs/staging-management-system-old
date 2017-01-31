@@ -18,7 +18,7 @@
                     </md-card-title>
                     <md-card-content>
                             <span>{{ manAttCtrl.selectedUser.username }}
-	                                <div style="float: right;;" ng-show="manAttCtrl.selectedUser.project" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.project, true)"> Current project :{{ manAttCtrl.selectedUser.project.note }}</div>
+	                                <div style="float: right;;" ng-show="manAttCtrl.selectedUser.project" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.project, true)"> Current project : {{ manAttCtrl.selectedUser.project.note }}</div>
 	                                <div style="float: right;;" ng-hide="manAttCtrl.selectedUser.project" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.project, false)">This associate is not currently on a project</div>
                             </span>
                             
