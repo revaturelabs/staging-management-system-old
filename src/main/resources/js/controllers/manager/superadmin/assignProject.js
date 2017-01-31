@@ -10,28 +10,42 @@ function assignProjectCtrl( $scope, $mdDialog, userService, user, project, hasPr
 	/**@prop {object} project Variable holding current project object */
 	apc.project = project;
 	/**@prop {Date} oldDate Variable holding date of task for reference. */
-	apc.oldDate = new Date(project.date);
+	apc.oldDate = new Date();
 	/**@prop {string} oldNote Variable holding note of task for reference. */
-	apc.oldNote = project.note;
+	apc.oldNote = "";
 	/**@prop {boolean} oldPassed Variable holding status of task for reference. */
-	apc.oldPassed = project.passed;
+	apc.oldPassed = false;
 	/**@prop {Date} newDate Variable holding date value to be updated. */
-	apc.newDate = new Date(project.date);
+	apc.newDate = new Date();
     /**@prop {string} newNote Variable holding note value to be updated. */
-	apc.newNote = project.note;
+	apc.newNote = "";
     /**@prop {boolean} passed Variable with status of task*/
-	apc.newPassed = project.passed;
-	
+	apc.newPassed = false;
+
 	//functions
-	/**@var {function} submit function reference variable. */
-	apc.submit = submit;
-	/**@var {function} cancel function reference variable. */
-	apc.cancel = cancel;
+	/**@var {function} updateSubmit function reference variable. */
+	apc.updateSubmit = updateSubmit;
+	/**@var {function} updateCancel function reference variable. */
+	apc.updateCancel = updateCancel;
+	/**@var {function} assignSubmit function reference variable. */
+	apc.assignSubmit = assignSubmit;
+	/**@var {function} assignCancel function reference variable. */
+	apc.assignCancel = assignCancel;
+	
+	//initialization
+	if(hasProject){
+		apc.oldDate = new Date(project.date);
+		apc.oldNote = project.note;
+		apc.oldPassed = project.passed;
+		apc.newDate = new Date(project.date);
+		apc.newNote = project.note;
+		apc.newPassed = project.passed;
+	}
 	
     /**
      * @description Called when user clicks submit button. Saves updated information and updates it in the database and closes the dialog.
      */
-	function submit() {
+	function updateSubmit() {
 		for(var i = 0; i < apc.user.tasks.length;i++){
 			if(apc.user.tasks[i].id == project.id){
 				
@@ -59,10 +73,18 @@ function assignProjectCtrl( $scope, $mdDialog, userService, user, project, hasPr
     /**
      * @description Called when user clicks cancel button. Resets values to their original values and closes the dialog.
      */
-	function cancel(){
+	function updateCancel(){
 		apc.project.dateDisplay = (apc.oldDate.getMonth()+1)+"/"+apc.oldDate.getDate();
 		apc.project.note = apc.oldNote;
 		apc.project.passed = apc.oldPassed;
+		$mdDialog.hide();
+	}
+	
+	function assignSubmit(){
+		$mdDialog.hide();
+	}
+	
+	function assignCancel(){
 		$mdDialog.hide();
 	}
 }

@@ -14,6 +14,7 @@ sms.filter("taskFilter", function($filter){
 			user.notification.number = 0;
 			user.panels = [];
 			user.certs = [];
+			user.projects = [];
 			user.tasks.forEach(function(task){
 				thisTask = {};
 				thisTask.type = task.taskType.type;
@@ -43,7 +44,7 @@ sms.filter("taskFilter", function($filter){
 				}
 				if(thisTask.type == "Certification"){
 					user.certs.push(thisTask);
-				}else if(thisTask.type == "Project"){
+				}else if(thisTask.type == "Project" && thisTask.date > now.getTime()){
 					user.project = thisTask;
 				}else{
 					user.panels.push(thisTask);
