@@ -23,6 +23,7 @@
         mac.maxWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() + 7 );
          /**@prop {boolean} infoOpen Variable that tells if the info tabs are open or not. */
         mac.infoOpen = false;
+        mac.markBind = "some";
         
 
             // functions
@@ -39,12 +40,27 @@
         mac.toast = toast;
         mac.newAssociates = newAssociates;
         mac.marketingStatuses = marketingStatuses;
+        mac.changeStatus = changeStatus;
 
           // initialization
         mac.findDevice();
         mac.getUsers();
         mac.setToolbar();
         mac.marketingStatuses();
+        
+        
+        function changeStatus() {
+        	console.log("made it" + mac.markBind);
+            if(mac.markBind == undefined || mac.markBind == "" ){
+                uic.toast("Please Select a Skill");
+                return; } 
+        
+        	console.log("made it" + mac.markBind);
+        	
+        	
+        	mac.markBind="";
+        }
+        
         
           // functions
             /**
@@ -123,10 +139,12 @@
                     mac.selectedUser = null;
                 } else {
                     mac.selectedUser = user;
+                
                 }
             } else {
                 mac.infoOpen = true;
                 mac.selectedUser = user;
+               
             }
         }
 
@@ -282,7 +300,7 @@
         function marketingStatuses() {
 	        marketingStatusService.getAll(function(response) {
 	        	mac.mStatuses = response;
-	        	console.log("got eem", mac.batchTypes);
+	        	console.log("got eem", mac.mStatuses);
 	        }, function(error) {
 	        	console.log("bad");
 	        });

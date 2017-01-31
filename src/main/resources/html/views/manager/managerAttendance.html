@@ -23,8 +23,13 @@
                             </span> -->
                             <p>
                             	Marketing Status:
+                            			<md-input-container>
+				  							<md-select ng-model="markBind" >
+				    							<md-option  ng-click="changeStatus()" ng-value="x.id" ng-repeat="x in manAttCtrl.mStatuses | orderBy: 'name'">{{ x.name }}</md-option>
+				 							 </md-select>
+										</md-input-container>
                             	<label>
-                            	<span ng-show="manAttCtrl.selectedUser.marketingStatus">{{ manAttCtrl.selectedUser.marketingStatus.name }}
+                            	<span ng-show="manAttCtrl.selectedUser.marketingStatus">{{ manAttCtrl.selectedUser.marketingStatus.name }}</span>
                             	<span ng-hide="manAttCtrl.selectedUser.marketingStatus">None</span>
                             	</label>
                             </p>
