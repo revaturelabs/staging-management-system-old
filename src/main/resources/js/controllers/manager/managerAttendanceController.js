@@ -51,6 +51,8 @@
         mac.newAssociates = newAssociates;
         /**@var {function} deleteAssociates function reference variable. */
         mac.deleteAssociates = deleteAssociates;
+        /**@var {function} editCert function reference variable. */
+        mac.updateCert = updateCert;
 
           // initialization
         mac.findDevice();
@@ -262,7 +264,7 @@
             $scope.$emit( "toastMessage", message );
         }
         
-            // adds associates by batch
+        // adds associates by batch
 		function newAssociates() {
             
               // opens a dialog to allows addition of a new batch of associates
@@ -314,6 +316,25 @@
 			} , function() {
 					mac.toast("Delete Associate cancelled.");
 				});
+
+		/**
+         * @description Called when a superAdmin clicks on update certification button, opens a dialog.
+         */
+		function updateCert(cert, user){
+			if(mac.user.userRole.name != "superAdmin"){
+				return;
+			}
+			$mdDialog.show({
+                templateUrl: "html/templates/updateCert.html",
+                controller: "updateCertification as uc",
+                locals:{
+                	cert,
+                	user
+                },
+                clickOutsideToClose: false,
+                escapeToClose: false
+            });
+
 		}
 
             // adds a leading zero to input if necessary

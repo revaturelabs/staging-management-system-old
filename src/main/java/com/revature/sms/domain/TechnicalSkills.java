@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.JoinColumn;
 
 /**
- * Object that represents the technical_skills for users.
+ * Object that represents the technical skills for users.
  *
  */
 @Entity
