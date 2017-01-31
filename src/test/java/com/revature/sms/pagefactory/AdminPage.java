@@ -1,5 +1,8 @@
 package com.revature.sms.pagefactory;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,7 +30,10 @@ public class AdminPage extends HomePage {
 	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/md-table-container/table")
 	public WebElement attendanceTable;
 	
-	@FindBy(xpath="//*[@id='attendanceTableDiv']/md-card/div/md-table-container/table/tbody/tr[1]/td[1]")
+	@FindBy(className="md-table ng-isolate-scope")
+	public WebElement attendenceTable;
+	
+	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/md-table-container/table/tbody/tr[1]/td[1]")
 	public WebElement javaAssocClick;
 	
 	@FindBy(xpath="//*[@id='attendanceTableDiv']/md-card/div/md-table-container/table/tbody/tr[2]/td[1]")
@@ -36,7 +42,7 @@ public class AdminPage extends HomePage {
 	@FindBy(xpath="//*[@id='attendanceTableDiv']/md-card/div/md-table-container/table/tbody/tr[3]/td[1]")
 	public WebElement sdetAssocClick;
 	
-	@FindBy(xpath="//*[@id='closeIcon']")
+	@FindBy(id="closeIcon")
 	public WebElement closeIcon;
 	
 	@FindBy(xpath="//*[@id='attendanceTableDiv']/md-card/div/md-table-container/table/tbody/tr[1]/td[2]")

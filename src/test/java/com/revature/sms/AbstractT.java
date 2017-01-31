@@ -1,12 +1,15 @@
 package com.revature.sms;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -134,7 +137,25 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	
 	public void adminAttendenceViewTemplate(String un, String pw){
 		lp.login(un, pw);
-		adp.carefulClick("javaAssocClick");
+		List<WebElement> allRows = adp.attendanceTable.findElements(By.tagName("tr"));
+		int count = 0;
+		for(WebElement row : allRows){
+			List<WebElement> cells = row.findElements(By.tagName("td"));
+			 for (WebElement cell : cells) {
+					if(count % 6 == 0){
+						cell.click();
+						adp.carefulClick("closeIcon");
+					}
+					else{
+						cell.click();
+						cell.click();
+					}
+					count++;
+			 }
+
+		}
+		
+/*		adp.carefulClick("javaAssocClick");
 		Assert.assertTrue(adp.infoDisplayed());
 		adp.carefulClick("closeIcon");
 		adp.carefulClick("dotNetAssocClick");
@@ -145,7 +166,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		adp.carefulClick("closeIcon");
 		adp.carefulClick("verifyAssoc");
 		adp.carefulClick("verifyAssoc");
-		adp.carefulClick("logout");
+		adp.carefulClick("logout");*/
 	}
 	
 	public void adminCalenderNavigation(String un, String pw){
