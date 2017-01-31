@@ -28,13 +28,13 @@ function editSkillController($scope, skillService){
             });
         }
 
-        function findSkill(skillName){
-            skillService.retrieve(skillName, function(response){
+        // function findSkill(skillName){
+        //     skillService.retrieve(skillName, function(response){
                 
-            }, function(){
+        //     }, function(){
                 
-            });
-        }
+        //     });
+        // }
 
         function printCurrentSkills(){
             console.log(sec.currentSkills);
@@ -46,11 +46,11 @@ function editSkillController($scope, skillService){
                 var newSkill = {skill: sec.newSkillAdd};
                 
                 
-                skillService.create(newSkill, function(response){
+                skillService.create(newSkill, function(){
                     sec.newSkillAdd = '';
                     sec.getSkills();
-                }, function(error){
-
+                }, function(){
+                    //for some reason, this second function has to exist even if it's empty
                     
                 });
             }

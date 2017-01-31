@@ -51,7 +51,7 @@ public class TechSkillsController {
 	}
 
 	@RequestMapping(value = "/{skillName}", method = { RequestMethod.GET }, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object retrieveSkill(@RequestHeader(value = "Authorization") String token,
+	@ResponseBody public Object retrieveSkill(@RequestHeader(value = "Authorization") String token,
 			@PathVariable String skillName) {
 		try {
 			Token userToken = tokenRepo.findByAuthToken(token);
@@ -64,7 +64,6 @@ public class TechSkillsController {
 			}
 
 		} catch (Exception e) {
-			System.out.println("in exception");
 			Logger.getRootLogger().debug("Exception while retrieving " + skillName + " skill.", e);
 			return new ResponseEntity<ResponseErrorEntity>(
 					new ResponseErrorEntity("Problem occurred while retrieving " + skillName + " skill."),
@@ -82,13 +81,13 @@ public class TechSkillsController {
 	 * @return ResponseEntity giving result of the create operation.
 	 */
 	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object createSkill(@RequestHeader(value = "Authorization") String token,
+	@ResponseBody public Object createSkill(@RequestHeader(value = "Authorization") String token,
 			@RequestBody TechnicalSkillsDTO skillDTO) {
 		Token userToken = tokenRepo.findByAuthToken(token);
 		if (userToken == null) {
 			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("AuthToken invalid."),
 					HttpStatus.NOT_FOUND);
-		} else if (("superAdmin".equalsIgnoreCase(userToken.getUser().getUserRole().getName()))) {
+		} else if ("superAdmin".equalsIgnoreCase(userToken.getUser().getUserRole().getName())) {
 			try {
 				TechnicalSkills skill = getSkill(skillDTO);
 				skill = attr.save(skill);
