@@ -8,12 +8,13 @@
         <md-button type="button" class="md-accent" ng-click="sECtrl.printCurrentSkills()">Print Skills</md-button>
         <!--<md-button type="button" class="md-accent" ng-click=""></md-button>-->
         <div class="md-padding">
-            <form name="newSkillForm" ng-submit="sEctrl.submit" novalidate>
+            <form name="newSkillForm" ng-submit="sECtrl.addSkill(newSkillForm.$valid)" novalidate>
                 <md-input-container class="InputContainer">
                     <label>New Skill</label>
-                    <input>
+                    <input id="skillname" ng-model="sECtrl.newSkillAdd" required/>
 
                 </md-input-container>
+                <md-button type="submit" class="md-accent">Add Skill</md-button>
             </form>
         </div>
 
