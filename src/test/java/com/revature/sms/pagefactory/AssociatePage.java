@@ -1,5 +1,6 @@
 package com.revature.sms.pagefactory;
 
+import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -40,24 +41,36 @@ public class AssociatePage extends HomePage {
 		super(driver);
 	}
 	
-	public ArrayList<String> goThroughWeek() {
-		ArrayList<String> monthDayStrings = new ArrayList<String>();
+	public ArrayList<MonthDay> goThroughWeek() {
+		ArrayList<MonthDay> monthDays = new ArrayList<MonthDay>();
 		for (WebElement e:attendanceCells) {
 			String text = e.getText();
-			String mawd = text.replace("\n", "");
+			text = text.replace("\n", "");
+			text = text.replace("/", "-");
 			String pattern;
-			if (mawd.contains("10/") || mawd.contains("11/") || mawd.contains("12/")) {
-				pattern = "\\d\\d/\\d\\d";
+			boolean addZero = false;
+			
+			if (text.contains("10-") || text.contains("11-") || text.contains("12-")) {
+				pattern = "\\d\\d-\\d\\d";
 			} else {
-				pattern = "\\d/\\d\\d";
-			}	
-			Pattern r = Pattern.compile(pattern);
-			Matcher m = r.matcher(mawd);
-			if (m.find()) {
-				monthDayStrings.add(m.group());
+				pattern = "\\d-\\d\\d";
+				addZero = true;
 			}
+			
+			Pattern r = Pattern.compile(pattern);
+			Matcher m = r.matcher(text);
+			if (m.find()) {
+				text = m.group();
+				if (addZero) {
+					text = "0"+text;
+				}
+				text = "--"+text;
+				MonthDay md = MonthDay.parse(text);
+				monthDays.add(md);
+			}
+			
 		}
-		return monthDayStrings;
+		return monthDays;
 	}
 	
 	
@@ -66,13 +79,11 @@ public class AssociatePage extends HomePage {
 	//double checkmark = "done_all"
 	//x = "close"
 	
-	//ERROR??? The icons are colored in the list but not in the table
 	public ArrayList<String> goThroughWeekIcons() {
 		ArrayList<String> icons = new ArrayList<String>();
-		for (int i=2; i<=6; i++) {
-			WebElement e = driver.findElement(By.xpath("//tbody/tr[2]/td["+i+"]/div/md-icon"));
+		for (int i=1; i<=5; i++) {
+			WebElement e = driver.findElement(By.xpath("//tbody/tr/td["+i+"]/div/md-icon"));
 			String text = e.getText();
-			//System.out.println(text.trim());
 			icons.add(text.trim());
 		}
 		return icons;	
