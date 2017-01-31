@@ -1,10 +1,20 @@
 package com.revature.sms;
 
+import java.sql.Timestamp;
+import java.time.MonthDay;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
+
+import com.revature.sms.domain.AssociateAttendance;
+import com.revature.sms.domain.User;
+import com.revature.sms.util.Utils;
 
 public class AssociateT extends AbstractT {
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
@@ -40,14 +50,14 @@ public class AssociateT extends AbstractT {
 	public void testDefaultWeek() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
 		
-		ArrayList<String> expectedMonthDays = new ArrayList<String>();
-		expectedMonthDays.add(expected.getProperty("Mon"));
-		expectedMonthDays.add(expected.getProperty("Tue"));
-		expectedMonthDays.add(expected.getProperty("Wed"));
-		expectedMonthDays.add(expected.getProperty("Thu"));
-		expectedMonthDays.add(expected.getProperty("Fri"));
+		ArrayList<MonthDay> expectedMonthDays = new ArrayList<MonthDay>();
+		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Mon")));
+		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Tue")));
+		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Wed")));
+		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Thu")));
+		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Fri")));
 		
-		ArrayList<String> actualMonthDays = asp.goThroughWeek();
+		ArrayList<MonthDay> actualMonthDays = asp.goThroughWeek();
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
 	}
 	
@@ -81,76 +91,70 @@ public class AssociateT extends AbstractT {
 	*/
 	
 	
-	/*
+	
+	
 	//This is Corey's work on issue SMS-85.
-	@Ignore
 	@Test
 	public void testAssociateAttendanceView() {
 		String username = inputs.getProperty("javaUN");
 		String password = inputs.getProperty("PW");
 		lp.login(username, password);
+		asp.verify();
 		
-		ArrayList<Timestamp> expectedDates = new ArrayList<Timestamp>();
+		User user = ur.findByUsername(inputs.getProperty("javaUN"));
+		List<AssociateAttendance> attendanceList = user.getAttendance();
+		HashMap<MonthDay, String> expectedStatuses = new HashMap<MonthDay, String>();
 		for (AssociateAttendance a:attendanceList) {
 			Timestamp ts = a.getDate();
-			System.out.println(ts);
-			expectedDates.add(a.getDate());
-		}
-		
-		
-		//Convert the associate's dates of attendance to the same format that is used
-		//by the web application.
-		ArrayList<String> expectedMonthDays = new ArrayList<String>();
-		for (String s:expectedDates) {
-			String monthDay;
-			if (s.charAt(0) == '0') {
-				monthDay = s.substring(1, 5);
+			String fullTime = ts.toString();
+			String monthDay = fullTime.substring(5,10);
+			String formattedMonthDay = "--"+monthDay;
+			MonthDay md = MonthDay.parse(formattedMonthDay);
+			
+			String status;
+			boolean ci = a.isCheckedIn();
+			boolean v = a.isVerified();
+			if (v) { //If the associate is checked in and verified, the double check icon should be displayed, which is represented by the string done_all in the html.
+				status = "done_all";
+			} else if (ci && !v) {
+				status = "done";
+			} else if (!ci && !v) {
+				status = "close";
 			} else {
-				monthDay = s.substring(0, 5);
+				status = "???";
 			}
-			expectedMonthDays.add(monthDay);
+			expectedStatuses.put(md, status);
 		}
 		
 		
 		String week;
 		String weekBefore;
-		//This do-while loop iterates through each available week on the associate page by 
-		//carefulClicking the arrow icons
 		do {
 			week = asp.weekOf.getText();
-			ArrayList<String> actualMonthDays = asp.goThroughWeek();
+			ArrayList<MonthDay> monthDays = asp.goThroughWeek();
 			ArrayList<String> icons = asp.goThroughWeekIcons();
-			int aCount = 0;  
-			//The outer loop goes through each day of the week.
-			for (String a:actualMonthDays) {
-				int eCount = 0;
-				//The inner loop compares the date on the website with the attendance date from the excel file.
-				for (String e:expectedMonthDays) {
-					//If the two dates are equal, then we check whether the website displays the attendance information correctly.
-					if (a.equals(e)) {
-						Boolean ci = Boolean.parseBoolean(checkIns.get(eCount));
-						Boolean v = Boolean.parseBoolean(verifications.get(eCount));
-						String icon = icons.get(aCount);
-						if (ci && v) { //If the associate is checked in and verified, the double check icon should be displayed, which is represented by the string done_all in the html.
-							Assert.assertEquals("done_all", icon);
-						} else if (ci && !v) {
-							Assert.assertEquals("done", icon);
-						} else if (!ci && !v) {
-							Assert.assertEquals("close", icon);
-						} else {
-							System.out.println("You did not fill out the associate attendance spreadsheet correctly.");
-						}						
-					} 
-					eCount++;
-				}
-				aCount++;
-				//These count variables ensure that this test compares the data from the excel sheet with the appropriate data from the web page.
+			HashMap<MonthDay, String> actualStatuses = new HashMap<MonthDay, String>();
+			int i=0;
+			while (i<5) {
+				actualStatuses.put(monthDays.get(i), icons.get(i));
+				i++;
 			}
+			
+			for (MonthDay md:monthDays) {
+				String es = expectedStatuses.get(md);
+				String as = actualStatuses.get(md);
+				if (es == null) {
+					es = "close";
+				}
+				Assert.assertEquals(es, as);
+			}
+		
 			asp.carefulClick("prevWeek");
 			weekBefore = asp.weekOf.getText();
 		} while (!week.equals(weekBefore));
+
 	}
-	*/
+	
 		
 	public void testAssociatePageToastContainer() {
 		

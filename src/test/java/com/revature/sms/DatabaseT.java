@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.User;
@@ -28,6 +29,7 @@ import com.revature.sms.domain.dao.UserRoleRepo;
  *
  */
 
+@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DatabaseT {
@@ -74,6 +76,13 @@ public class DatabaseT {
 		System.out.println(user.getUsername());
 		System.out.println(user.getFirstName());
 		System.out.println(user.getLastName());
+		System.out.println(user.getUserRole());
+		System.out.println(user.getBatchType());
+		System.out.println(user.getMarketingStatus());
+		System.out.println(user);
+		
+		user.getEvents().size();
+		user.getSkill().size();
 		user.getAttendance().size();
 		List<AssociateAttendance> attendanceList = user.getAttendance();
 		for (AssociateAttendance associateAttendance : attendanceList) {

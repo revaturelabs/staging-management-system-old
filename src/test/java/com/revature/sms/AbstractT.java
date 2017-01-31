@@ -9,12 +9,15 @@ import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.sms.util.InstanceTestClassListener;
 import com.revature.sms.util.SpringInstanceTestClassRunner;
 import com.revature.sms.util.TestSetup;
+import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;
 import com.revature.sms.pagefactory.ChangePasswordWindow;
@@ -26,6 +29,7 @@ import com.revature.sms.pagefactory.ScheduleCertificationWindow;
 import com.revature.sms.pagefactory.SuperAdminPage;
 import com.revature.sms.util.EventListener;
 
+@Transactional
 @Service
 @RunWith(SpringInstanceTestClassRunner.class)
 @SpringBootTest
@@ -48,6 +52,9 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	protected CreateBatchWindow cbw;
 	protected ChangePasswordWindow cpw;
 	protected RaiseBugWindow rbw;
+	
+	@Autowired
+	UserRepo ur;
 	
 	
 	@Override
