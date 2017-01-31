@@ -1,23 +1,16 @@
 package com.revature.sms;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import org.hibernate.Hibernate;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.revature.sms.domain.AssociateAttendance;
-import com.revature.sms.domain.User;
-import com.revature.sms.domain.dao.AssociateAttendanceRepo;
-import com.revature.sms.domain.dao.UserRepo;
 
 public class AssociateT extends AbstractT {
 	//Tests that when different types of users login and logout, they are navigated to the correct pages
 	
+	@Ignore
 	@Test
 	public void testLoginHeaderLogout() {
 		String expectedValue = expected.getProperty("associatePg");
@@ -26,11 +19,13 @@ public class AssociateT extends AbstractT {
 		LoginHeaderLogoutTemplate(asp, inputs.getProperty("dotnetUN"), inputs.getProperty("PW"), expectedValue);
 	}
 	
+	@Ignore
 	@Test
 	public void testPasswordChange() {
 		PasswordChangeTemplate(adp, inputs.getProperty("javaUN"), inputs.getProperty("PW"), inputs.getProperty("PW2"));
 	}
 	
+	@Ignore
 	@Test
 	public void testCancelButtons() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
@@ -44,6 +39,7 @@ public class AssociateT extends AbstractT {
 	
 	
 	//Makes sure the current week is shown on the associate page when you log in.
+	@Ignore
 	@Test
 	public void testDefaultWeek() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
@@ -86,10 +82,8 @@ public class AssociateT extends AbstractT {
 	}
 	*/
 	
-	@Autowired
-	protected UserRepo ur;
-	protected AssociateAttendanceRepo aar;
 	
+	/*
 	//This is Corey's work on issue SMS-85.
 	@Ignore
 	@Test
@@ -98,25 +92,16 @@ public class AssociateT extends AbstractT {
 		String password = inputs.getProperty("PW");
 		lp.login(username, password);
 		
-		User user = ur.findByUsername(username);
-		System.out.println(user.getUsername());
-		System.out.println(user.getFirstName());
-		user.getAttendance().size();
-		List<AssociateAttendance> attendanceList = user.getAttendance();
-		for (AssociateAttendance associateAttendance : attendanceList) {
-			System.out.println(associateAttendance);
+		ArrayList<Timestamp> expectedDates = new ArrayList<Timestamp>();
+		for (AssociateAttendance a:attendanceList) {
+			Timestamp ts = a.getDate();
+			System.out.println(ts);
+			expectedDates.add(a.getDate());
 		}
-		//ArrayList<Timestamp> expectedDates = new ArrayList<Timestamp>();
-		//for (AssociateAttendance a:attendanceList) {
-			//Timestamp ts = a.getDate();
-			//System.out.println(ts);
-			//expectedDates.add(a.getDate());
-		//}
 		
 		
 		//Convert the associate's dates of attendance to the same format that is used
 		//by the web application.
-		/*
 		ArrayList<String> expectedMonthDays = new ArrayList<String>();
 		for (String s:expectedDates) {
 			String monthDay;
@@ -127,9 +112,8 @@ public class AssociateT extends AbstractT {
 			}
 			expectedMonthDays.add(monthDay);
 		}
-		*/
 		
-		/*
+		
 		String week;
 		String weekBefore;
 		//This do-while loop iterates through each available week on the associate page by 
@@ -167,9 +151,8 @@ public class AssociateT extends AbstractT {
 			asp.carefulClick("prevWeek");
 			weekBefore = asp.weekOf.getText();
 		} while (!week.equals(weekBefore));
-		*/
 	}
-
+	*/
 		
 	public void testAssociatePageToastContainer() {
 		

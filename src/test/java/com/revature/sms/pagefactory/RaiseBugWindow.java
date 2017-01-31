@@ -42,7 +42,9 @@ public class RaiseBugWindow extends SMSPage {
 	@FindBy(xpath="//*[@id=\"jic-collector-form\"]/div[2]/input")
 	public WebElement submit;
 	
-	@FindBy(xpath="//*[@id=\"jic-collector-form\"]/div[2]/a")
+
+	//*[@id="jic-collector-form"]/div[2]/a
+	@FindBy(xpath="//*[@class=\"cancel\"]")
 	public WebElement cancel;
 	
 	public RaiseBugWindow(WebDriver driver) {
