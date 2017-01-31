@@ -43,6 +43,8 @@ sms.filter("taskFilter", function($filter){
 				}
 				if(thisTask.type == "Certification"){
 					user.certs.push(thisTask);
+				}else if(thisTask.type == "Project"){
+					user.project = thisTask;
 				}else{
 					user.panels.push(thisTask);
 				}
