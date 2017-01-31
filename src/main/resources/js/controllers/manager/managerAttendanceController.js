@@ -23,7 +23,7 @@
         mac.maxWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() + 7 );
          /**@prop {boolean} infoOpen Variable that tells if the info tabs are open or not. */
         mac.infoOpen = false;
-        mac.markBind = "some";
+        mac.markBind = "";
         
 
             // functions
@@ -50,15 +50,20 @@
         
         
         function changeStatus() {
+        	
         	console.log("made it" + mac.markBind);
-            if(mac.markBind == undefined || mac.markBind == "" ){
-                uic.toast("Please Select a Skill");
-                return; } 
+        	
+        	mac.selectedUser.marketingStatus.name
+        	= mac.markBind;
+        	
+        	console.log(mac.selectedUser);
+        	userService.update(mac.selectedUser,function(){
+	    		mac.toast("Marketing Status Updated");
+	    
+	    	});
         
-        	console.log("made it" + mac.markBind);
         	
-        	
-        	mac.markBind="";
+        	mac.markBind = "";
         }
         
         
