@@ -51,6 +51,8 @@
         mac.newAssociates = newAssociates;
         /**@var {function} editCert function reference variable. */
         mac.updateCert = updateCert;
+        /**@var {function} assignProject function reference variable. */
+        mac.assignProject = assignProject;
 
           // initialization
         mac.findDevice();
@@ -280,10 +282,12 @@
                 mac.toast("Batch addition cancelled.");
             });
         }
+		
 		/**
          * @description Called when a superAdmin clicks on update certification button, opens a dialog.
          */
 		function updateCert(cert, user){
+			//only superadmins can do this
 			if(mac.user.userRole.name != "superAdmin"){
 				return;
 			}
@@ -298,6 +302,32 @@
                 escapeToClose: false
             });
 		}
+		
+		/**
+         * @description Called when a superAdmin clicks on assign project, opens a dialog.
+         */
+		function assignProject(user, project, hasProject){
+			console.log(project);
+			console.log("");
+			console.log(user);
+			//only superadmins can do this
+			if(mac.user.userRole.name != "superAdmin"){
+				return;
+			}
+			
+			$mdDialog.show({
+                templateUrl: "html/templates/assignProject.html",
+                controller: "assignProjectCtrl as ap",
+                locals:{
+                	user,
+                	project,
+                	hasProject
+                },
+                clickOutsideToClose: false,
+                escapeToClose: false
+            });
+		}
+		
 
             // adds a leading zero to input if necessary
         function padZero( input ) {

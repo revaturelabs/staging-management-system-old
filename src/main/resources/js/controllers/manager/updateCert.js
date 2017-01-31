@@ -7,7 +7,7 @@ function updateCertification( $scope, $mdDialog, userService, cert, user) {
 	//bindables
 	/**@prop {object} user Variable holding user object of user to be updated. */
 	ucc.user = user;
-	/**@prop {obkect} cert Variable holding certification object */
+	/**@prop {object} cert Variable holding certification object */
 	ucc.cert = cert;
 	/**@prop {Date} oldDate Variable holding date of task for reference. */
 	ucc.oldDate = new Date(cert.date);
