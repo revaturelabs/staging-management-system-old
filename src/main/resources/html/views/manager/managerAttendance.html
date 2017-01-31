@@ -21,6 +21,12 @@
                                 <div style="float: right;;" ng-show="manAttCtrl.selectedUser.project"> Current project :{{ manAttCtrl.selectedUser.project }}</div>
                                 <div style="float: right;;" ng-hide="manAttCtrl.selectedUser.project">This associate is not currently on a project</div>
                             </span>
+                            
+                            <p>
+                                Days in marketing:  
+                                <span>{{manAttCtrl.calcMarketingDays()}}</span>
+                            </p>
+                            
                             <p>
                                 Panel Status: 
                                 <span ng-show="manAttCtrl.selectedUser.panels[0]">{{ manAttCtrl.selectedUser.panels[0].note }} {{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
