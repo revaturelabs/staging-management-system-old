@@ -20,12 +20,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.JoinColumn;
 
 /**
- * Object that represents the technical_skills for users.
+ * Object that represents the technical skills for users.
  *
  */
 @Entity
 @Table(name = "TECHNICAL_SKILLS")
-public class Technical_Skills {
+public class TechnicalSkills {
 	/**
 	 * int value that represents the primary key of the table
 	 */
@@ -54,20 +54,18 @@ public class Technical_Skills {
 	/**
 	 * Null args constructor. Doesn't initialize any of the technical_skills instance variables.
 	 */
-	public Technical_Skills() {
+	public TechnicalSkills() {
 		super();
 		//this.users = new ArrayList<User>();
-		System.out.println("tech_skills no arg");
 	}
 
 	/**
 	 * Parameterized constructor for technicalSkills.
 	 * @param skill represents the unique skill that an associate has
 	 */
-	public Technical_Skills(String skill) {
+	public TechnicalSkills(String skill) {
 		super();
 		this.skill = skill;
-		System.out.println("tech skills skill construct");
 	}
 
 	/**
@@ -75,11 +73,10 @@ public class Technical_Skills {
 	 * @param skill represents the unique skill that an associate has
 	 * @param users gives a list of users for that specific skill
 	 */
-	public Technical_Skills(String skill, Set<User> users) {
+	public TechnicalSkills(String skill, Set<User> users) {
 		super();
 		this.skill = skill;
 		this.users = users;
-		System.out.println("tech skills all construct");
 	}
 
 	/**

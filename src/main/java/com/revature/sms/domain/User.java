@@ -114,8 +114,11 @@ public class User {
 	 * List of skills that a user has
 	 */
 	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private Set<Technical_Skills> skill;
+	private Set<TechnicalSkills> skill;
 	
+	/**
+	 * MarketingStatus object that keeps track of the user's marketing status
+	 */
 	@ManyToOne
 	@JoinColumn(name = "marketing_status")
 	private MarketingStatus marketingStatus;
@@ -127,8 +130,7 @@ public class User {
 		super();
 	}
 
-
-	// constructor for non-associate
+	// constructor for associate
 	/**
 	 * Constructor for User object. This constructor is specifically designed to
 	 * be used for creating a User who is an associate. Initializes all instance variables except for ID, as that is
@@ -143,11 +145,10 @@ public class User {
 	 * @param userRole UserRole object that keeps track of the user's specific role.
 	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
 	 * @param skills gets a list of technical skills that an associate has
-	 * @param events Tracks the list of Job Events for a given user
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate, 
-			Set<Technical_Skills> skills, MarketingStatus marketingStatus, List<JobEvent> events) {
+			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -158,9 +159,9 @@ public class User {
 		this.tasks = tasks;
 		this.userRole = userRole;
 		this.graduationDate = graduationDate;
-		this.marketingStatus = marketingStatus;
 		this.skill = skills;
 		this.events = events;
+		this.marketingStatus = marketingStatus;
 	}
 	// constructor for non-associate
 	/**
@@ -381,41 +382,41 @@ public class User {
 	/**
 	 * Method that retrieves the list of skills of the user
 	 */
-	public Set<Technical_Skills> getSkill() {
+	public Set<TechnicalSkills> getSkill() {
 		return skill;
 	}
 
 	/**
 	 * Method that manually sets the skills of the user object
 	 */
-	public void setSkill(Set<Technical_Skills> skill) {
+	public void setSkill(Set<TechnicalSkills> skill) {
 		this.skill = skill;
 	}
 	
-	
-	
+	/**
+	 * Method that retrieves the marketing status of the user
+	 */
 	public MarketingStatus getMarketingStatus() {
 		return marketingStatus;
 	}
 
-
-
+	/**
+	 * Method that manually sets the marketing status of the user object
+	 */
 	public void setMarketingStatus(MarketingStatus marketingStatus) {
 		this.marketingStatus = marketingStatus;
 	}
 
-
-
 	/**
 	 * Method that returns a string representation of the current User object.
 	 */
-	
+
 	@Override
 	public String toString() {
 		return "User [ID=" + ID + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", hashedPassword=" + hashedPassword + ", batchType=" + batchType + ", attendance=" + attendance
-				+ ", tasks=" + tasks + ", userRole=" + userRole + ", graduationDate=" + graduationDate + ", skill="
-				+ skill + "]";
+				+ ", tasks=" + tasks + ", events=" + events + ", userRole=" + userRole + ", graduationDate="
+				+ graduationDate + ", skill=" + skill + ", marketingStatus=" + marketingStatus + "]";
 	}
 
 	/**
