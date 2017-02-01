@@ -89,7 +89,6 @@ function assignProjectCtrl( $scope, $mdDialog, userService, user, project, hasPr
 	}
 	
 	function assignSubmit(){
-		console.log(isValid());
 		if(!isValid()){
 			return;
 		}
