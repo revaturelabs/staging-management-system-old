@@ -144,7 +144,9 @@ public abstract class AbstractT implements InstanceTestClassListener {
 			for (WebElement cell : cells) {
 				if (count % 6 == 0) {
 					cell.click();
+					Assert.assertTrue(adp.verifyAssoc.isDisplayed());
 					adp.carefulClick("closeIcon");
+					
 				} else {
 					cell.click();
 					cell.click();
