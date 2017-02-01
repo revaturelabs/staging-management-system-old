@@ -38,7 +38,27 @@
                 <md-card md-whiteframe="8dp" class="skillCard">
                     <md-card-title>
                         <md-card-title-text>
-                            <span class="md-headline">Job Events</span>
+                            <span class="md-headline">Job Events
+                            
+                            <!-- add a delete button when a job is selected -->
+                            <md-button ng-click ="">
+                            		<!-- description of button -->
+                            		<md-tooltip> add job event </md-tooltip>
+                            <!-- show the delete if there is a selected job being displayed -->
+                            	<md-icon ng-style="{color: 'lightgrey'}" class="material-icons step md-material-icon page-icon" ng-class="md-48">library_add</md-icon>                          	
+                            	</md-button>
+                            
+                            <!-- add a delete button when a job is selected -->
+                            <md-button ng-if="manAttCtrl.selectedjob != null" ng-click ="">
+                            		<!-- description of button -->
+                            		<md-tooltip> delete selected job </md-tooltip>
+                            <!-- show the delete if there is a selected job being displayed -->
+                            	<md-icon ng-style="{color: 'lightpink'}" class="material-icons step md-material-icon page-icon" ng-class="md-48">delete_forever</md-icon>                          	
+                            	</md-button>
+                            </span>
+                            
+                            
+                            
                         </md-card-title-text>
                     </md-card-title>
                     <md-card-content>
