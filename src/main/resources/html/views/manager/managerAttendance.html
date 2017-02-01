@@ -24,7 +24,7 @@
                             
                             <p>
                                 Days in marketing:  
-                                <span>{{manAttCtrl.calcMarketingDays()}}</span>
+                                <span ng-if="manAttCtrl.selectedUser">{{manAttCtrl.calcMarketingDays()}}</span>
                             </p>
                             
                             <p>

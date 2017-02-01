@@ -89,7 +89,7 @@ function assignProjectCtrl( $scope, $mdDialog, userService, user, project, hasPr
 	}
 	
 	function assignSubmit(){
-		
+		console.log(isValid());
 		if(!isValid()){
 			return;
 		}
@@ -129,18 +129,20 @@ function assignProjectCtrl( $scope, $mdDialog, userService, user, project, hasPr
 		//date inputed
 		if(apc.newDate == null || apc.newDate == undefined){
 			apc.message = "Please enter a date";
-			return;
+			return false;
 		}
 		
 		//end date can't be in the past
 		if(apc.newDate.getTime() < (new Date()).getTime()){
 			apc.message = "End date can't be in the past";
-			return;
+			return false;
 		}
 		//project name is required
 		if("" == apc.newNote || apc.newNote == null || apc.newNote == undefined ){
 			apc.message = "project name is required";
-			return;
+			return false;
 		}
+		
+		return true;
 	}
 }
