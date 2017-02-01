@@ -30,21 +30,6 @@ public class AdminPage extends HomePage {
 	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/md-table-container/table")
 	public WebElement attendanceTable;
 	
-	/*
-	//*[@id="attendanceTableDiv"]/md-card/div/md-table-container/table
-	@FindBy(className="md-table ng-isolate-scope")
-	public WebElement attendenceTable;
-	*/
-	
-	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/md-table-container/table/tbody/tr[1]/td[1]")
-	public WebElement javaAssocClick;
-	
-	@FindBy(xpath="//*[@id='attendanceTableDiv']/md-card/div/md-table-container/table/tbody/tr[2]/td[1]")
-	public WebElement dotNetAssocClick;
-	
-	@FindBy(xpath="//*[@id='attendanceTableDiv']/md-card/div/md-table-container/table/tbody/tr[3]/td[1]")
-	public WebElement sdetAssocClick;
-	
 	@FindBy(id="closeIcon")
 	public WebElement closeIcon;
 	

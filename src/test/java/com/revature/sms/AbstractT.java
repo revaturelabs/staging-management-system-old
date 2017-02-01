@@ -159,21 +159,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 					}
 					count++;
 			 }
-
 		}
-		
-/*		adp.carefulClick("javaAssocClick");
-		Assert.assertTrue(adp.infoDisplayed());
-		adp.carefulClick("closeIcon");
-		adp.carefulClick("dotNetAssocClick");
-		Assert.assertTrue(adp.infoDisplayed());
-		adp.carefulClick("closeIcon");
-		adp.carefulClick("sdetAssocClick");
-		Assert.assertTrue(adp.infoDisplayed());
-		adp.carefulClick("closeIcon");
-		adp.carefulClick("verifyAssoc");
-		adp.carefulClick("verifyAssoc");
-		adp.carefulClick("logout");*/
 	}
 	
 	public void adminCalenderNavigation(String un, String pw){
