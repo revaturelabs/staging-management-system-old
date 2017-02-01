@@ -74,13 +74,11 @@ public class AdminT extends AbstractT {
 				List<WebElement> cells = row.findElements(By.tagName("td"));
 				for (WebElement cell : cells) {
 					if (count == 0) {
-						System.out.println("In count == 0");
 						cell.click();
 						Assert.assertTrue(adp.verifyAssoc.isDisplayed());
 						adp.carefulClick("closeIcon");
 
 					} else if (count == 1) {
-						System.out.println("In count == 1");
 						cell.click();
 					} else {
 						List<WebElement> allRows1 = adp.attendanceTable.findElements(By.tagName("tr"));
@@ -88,14 +86,11 @@ public class AdminT extends AbstractT {
 							List<WebElement> cells1 = row1.findElements(By.tagName("td"));
 							for (WebElement cell1 : cells1) {
 								if (count == cellCount) {
-									System.out.println("In cellCount == count");
 									if (cellCount % 6 == 0) {
-										System.out.println("In cellCount % 6 == 0");
 										cell1.click();
 										Assert.assertTrue(adp.verifyAssoc.isDisplayed());
 										adp.carefulClick("closeIcon");
 									} else {
-										System.out.println("In else");
 										cell1.click();
 									}
 									cellCount = 0;
