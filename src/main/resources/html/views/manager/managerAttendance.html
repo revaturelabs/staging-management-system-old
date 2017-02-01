@@ -51,13 +51,19 @@
                         <!-- for each of the users selected events list and order it by date -->
                             <div ng-repeat="event in manAttCtrl.selectedUser.events | orderBy:'-date'" class="certList">
                             	
+                            	<md-button ng-click ="manAttCtrl.showFullJobInfo(event)">
                             	
-                            	<span ng-click ="manAttCtrl.showFullJobInfo(event)">{{manAttCtrl.convertToDateObject(event.date)}} |
-                            	{{event.type.type}}</span>
+                            		<!-- description of button -->
+                            		<md-tooltip> more info </md-tooltip>
+                            	
+                            	<!-- text to display in button -->
+                            	{{manAttCtrl.convertToDateObject(event.date)}} |
+                            	{{event.type.type}}
                             	
                             	<!-- show the eject icon to notify user there is more info to  be displayed -->
-                            	<md-icon ng-if="manAttCtrl.selectedjob != event" ng-style="{color: 'lightgrey'}" class="material-icons step" ng-class="md-48" ng-click="manAttCtrl.showFullJobInfo(event)">eject</md-icon>
-                            	
+                            	<md-icon ng-if="manAttCtrl.selectedjob != event" ng-style="{color: 'lightgrey'}" class="material-icons step md-material-icon page-icon" ng-class="md-48">eject</md-icon>                          	
+                            	</md-button>
+                    	
                             	<!-- show this div if we have selected to see more info on this particular job -->
                             	<div ng-if="manAttCtrl.selectedjob == event">
                             	<ul>
