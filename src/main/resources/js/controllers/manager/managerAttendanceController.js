@@ -22,33 +22,25 @@
          /**@prop {Date} maxWeek The latest week that can be looked at. */
         mac.maxWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() + 7 );
          /**@prop {boolean} infoOpen Variable that tells if the info tabs are open or not. */
-    
-        /**@var {function} calcMarketingDays function reference variable. */
-        mac.calcMarketingDays = calcMarketingDays;
-        /**@var {function} days_between function reference variable. */
-        mac.days_between = days_between;
-        /**@var {function} editCert function reference variable. */
-        mac.updateCert = updateCert;
-        
         mac.infoOpen = false;
         mac.markBind = "";
         
-        // functions
-    mac.findDevice = findDevice;
-    mac.getUsers = getUsers;
-    mac.calcWeek = calcWeek;
-    mac.filterWeek = filterWeek;
-    mac.toggleInfo = toggleInfo;
-    mac.closeInfo = closeInfo;
-    mac.verify = verify;
-    mac.setToolbar = setToolbar;
-    mac.prevWeek = prevWeek;
-    mac.nextWeek = nextWeek;
-    mac.toast = toast;
-    mac.newAssociates = newAssociates;
-    mac.marketingStatuses = marketingStatuses;
-    mac.changeStatus = changeStatus;
 
+            // functions
+        mac.findDevice = findDevice;
+        mac.getUsers = getUsers;
+        mac.calcWeek = calcWeek;
+        mac.filterWeek = filterWeek;
+        mac.toggleInfo = toggleInfo;
+        mac.closeInfo = closeInfo;
+        mac.verify = verify;
+        mac.setToolbar = setToolbar;
+        mac.prevWeek = prevWeek;
+        mac.nextWeek = nextWeek;
+        mac.toast = toast;
+        mac.newAssociates = newAssociates;
+        mac.marketingStatuses = marketingStatuses;
+        mac.changeStatus = changeStatus;
 
           // initialization
         mac.findDevice();
@@ -56,7 +48,24 @@
         mac.setToolbar();
         mac.marketingStatuses();
         
-
+        // function
+        /**
+         * @description Updates user Marketing Status.
+         */
+        function changeStatus() {
+        	     	
+        	
+        	mac.selectedUser.marketingStatus
+        	= mac.markBind;
+        
+        	var sentData = mac.selectedUser.toJSON();
+                	
+        	userService.update(sentData,function(){
+	    		mac.toast("Marketing Status Updated");
+	    	    	});
+        	
+        
+        }
         
         
           // functions
@@ -261,7 +270,7 @@
             $scope.$emit( "toastMessage", message );
         }
         
-        // adds associates by batch
+            // adds associates by batch
 		function newAssociates() {
             
               // opens a dialog to allows addition of a new batch of associates
@@ -284,24 +293,6 @@
                 mac.toast("Batch addition cancelled.");
             });
         }
-		/**
-         * @description Called when a superAdmin clicks on update certification button, opens a dialog.
-         */
-		function updateCert(cert, user){
-			if(mac.user.userRole.name != "superAdmin"){
-				return;
-			}
-			$mdDialog.show({
-                templateUrl: "html/templates/updateCert.html",
-                controller: "updateCertification as uc",
-                locals:{
-                	cert,
-                	user
-                },
-                clickOutsideToClose: false,
-                escapeToClose: false
-            });
-		}
 
             // adds a leading zero to input if necessary
         function padZero( input ) {
@@ -312,7 +303,6 @@
             }
         }
         
-
         function marketingStatuses() {
 	        marketingStatusService.getAll(function(response) {
 	        	mac.mStatuses = response;
@@ -320,58 +310,5 @@
 	        }, function(error) {
 	       
 	        });
-	        
-	        // function
-	        /**
-	         * @description Updates user Marketing Status.
-	         */
-	        function changeStatus() {
-	        	     	
-	        	
-	        	mac.selectedUser.marketingStatus
-	        	= mac.markBind;
-	        
-	        	var sentData = mac.selectedUser.toJSON();
-	                	
-	        	userService.update(sentData,function(){
-		    		mac.toast("Marketing Status Updated");
-		    	    	});
-	        	
-	        
-	        }
-
-        /**
-         * @description calls a function that Determines the difference between the two supplied dates.
-         * @returns {number} Number of days between the graduation date and today
-         */
-        function calcMarketingDays(){
-        	return " " + mac.days_between(mac.curr, ((new Date(mac.selectedUser.graduationDate)))) + " days";
-        	
-        	
         }
-        
-        /**
-         * @description Determines the difference betwen the two supplied dates.
-         * @param {date} date1 First supplied date.
-         * @param {date} date2 Second supplied date.
-         * @returns {number} Number of days between the two dates
-         */
-        function days_between(date1, date2) {
-
-            // The number of milliseconds in one day
-            var ONE_DAY = 1000 * 60 * 60 * 24
-
-            // Convert both dates to milliseconds
-            var date1_ms = date1.getTime()
-            var date2_ms = date2.getTime()
-
-            // Calculate the difference in milliseconds
-            var difference_ms = Math.abs(date1_ms - date2_ms)
-
-            // Convert back to days and return
-            return Math.round(difference_ms/ONE_DAY)
-
-
-        }
-        
     }
