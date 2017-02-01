@@ -56,6 +56,8 @@
 
         mac.showFullJobInfo = showFullJobInfo;
 
+        mac.deleteSelectedJob = deleteSelectedJob;
+        
           // initialization
         mac.findDevice();
         mac.getUsers();
@@ -397,4 +399,37 @@
         /*mac.closeJobInfo = function(){
             mac.selectedjob =null;
         }*/
+        function deleteSelectedJob(){
+        	
+        	// if we have a selected job and user
+        	if(mac.selectedjob != null && mac.selectedUser != null){
+        		
+        		// loop through the selected users object length
+        		for(var i = 0; i < mac.selectedUser.events.length;i++){
+        			
+        			// if we found the selected object
+        			if(mac.selectedjob == mac.selectedUser.events[i]){
+        				
+        				// set the last element to  the current position
+        				mac.selectedUser.events[i] = mac.selectedUser.events[mac.selectedUser.events.length-1]; 
+        				
+        				//pop the last element as to delete the job
+        				mac.selectedUser.events.pop();
+        				
+        				//create a json object of the new user object
+        				var sentData = mac.selectedUser.toJSON();
+                    	
+        				//update user object
+        	        	userService.update(sentData,function(){
+        	        		
+        	        		// prompt user
+            				mac.toast("Job deleted");
+        		    	});
+        				
+        				// we can end the loop if we finished early
+        				break;
+        			}
+        		}
+        	}
+        }
     }

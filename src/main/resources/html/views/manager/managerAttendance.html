@@ -64,7 +64,7 @@
                             	</md-button>
                             
                             <!-- add a delete button when a job is selected -->
-                            <md-button ng-if="manAttCtrl.selectedjob != null" ng-click ="">
+                            <md-button ng-if="manAttCtrl.selectedjob != null" ng-click ="manAttCtrl.deleteSelectedJob()">
                             		<!-- description of button -->
                             		<md-tooltip> delete selected job </md-tooltip>
                             <!-- show the delete if there is a selected job being displayed -->
