@@ -184,16 +184,7 @@
                     var attDate = new Date(attendance.date);
                     if ( (attDate.getFullYear() == selectedDay.getFullYear() && attDate.getMonth() == selectedDay.getMonth() && attDate.getDate() == selectedDay.getDate() ) ) {
                         if (attendance.verified) {
-                                // issue with this not showing the updated attendance until another update is made
-                                  // will work out later
-                            // var confirm = $mdDialog.confirm()
-                            //     .title("Are you sure you want to retract attendance verification?")
-                            //     .ok("YES")
-                            //     .cancel("CANCEL");
-                            // $mdDialog.show(confirm).then(function() {
-                            //     attendance.verified = false;
-                            //     attendance.note = "Unverified";
-                            // });
+                  
                             attendance.verified = false;
                         } else {
                             attendance.verified = true;
@@ -219,7 +210,7 @@
                 }
                 userService.update( user, function() {
                     mac.toast("Attendance updated.");
-                    // mac.calcWeek( mac.curr );
+                   
                     mac.getUsers();
                 }, function() {
                     mac.toast("Could not udpdate attendance.")
@@ -336,8 +327,6 @@
 	        marketingStatusService.getAll(function(response) {
 	        	mac.mStatuses = response;
 	        	
-	        }, function(error) {
-	       
 	        });}
 
         /**
