@@ -55,8 +55,11 @@
         mac.days_between = days_between;
         /**@var {function} editCert function reference variable. */
         mac.updateCert = updateCert;
+        
+        mac.convertToDateObject = convertToDateObject;
 
-
+        mac.showFullJobInfo = showFullJobInfo;
+        
           // initialization
         mac.findDevice();
         mac.getUsers();
@@ -345,4 +348,32 @@
             return Math.round(difference_ms/ONE_DAY)
 
         }
+        
+        function convertToDateObject(adate){
+        	 var condate =  new Date(adate);
+        	return (condate.getMonth()+1)+ "/" + condate.getDate() + "/"+ condate.getFullYear();
+        }
+        
+        function showFullJobInfo(event){
+            
+            // if the info boxes are open for a particular user
+            if (mac.infoOpen) {
+            	// if the selected job is already the open job of information 
+                if (mac.selectedjob == event) {
+                    
+                	//set the selected to null
+                	mac.selectedjob = null;
+                }
+                // if the selected is not == to the new job
+                else {
+                	
+                	// set a new selected
+                	mac.selectedjob = event;
+                }
+            }
+        }
+        
+        /*mac.closeJobInfo = function(){
+            mac.selectedjob =null;
+        }*/
     }

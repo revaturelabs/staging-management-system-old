@@ -35,6 +35,47 @@
                     </md-card-content>
                 </md-card>
                 <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
+                <md-card md-whiteframe="8dp" class="skillCard">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Job Events</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                    	<!-- if the user has No events display this text -->
+                        <span ng-hide="manAttCtrl.selectedUser.events[0].date">There is no data to display</span>
+                        
+                        <!-- if the user has events display this div -->
+                        <div ng-show="manAttCtrl.selectedUser.events[0].date">
+                        
+                        <!-- for each of the users selected events list and order it by date -->
+                            <div ng-repeat="event in manAttCtrl.selectedUser.events | orderBy:'-date'" class="certList">
+                            	
+                            	
+                            	<span ng-click ="manAttCtrl.showFullJobInfo(event)">{{manAttCtrl.convertToDateObject(event.date)}} |
+                            	{{event.type.type}}</span>
+                            	
+                            	<!-- show the eject icon to notify user there is more info to  be displayed -->
+                            	<md-icon ng-if="manAttCtrl.selectedjob != event" ng-style="{color: 'lightgrey'}" class="material-icons step" ng-class="md-48" ng-click="manAttCtrl.showFullJobInfo(event)">eject</md-icon>
+                            	
+                            	<!-- show this div if we have selected to see more info on this particular job -->
+                            	<div ng-if="manAttCtrl.selectedjob == event">
+                            	<ul>
+                            	<li>Company Name: {{event.assignment.companyName}}</li>
+                            	<li>Type: {{event.type.type}}</li>
+                            	<li>Event Location: {{event.location}}</li> 
+                            	<li>Assignment Location: {{event.assignment.location}}</li>
+                            	<li>Job Title: {{event.assignment.jobTitle}}</li>
+                            	<li>Note: {{event.note}}</li>
+                            	</ul>
+                            	</div>
+                            	
+                            	<!-- horizontal line -->
+                            	<hr>
+                            </div>
+                        </div>
+                    </md-card-content>
+                </md-card>
                 <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
                 <md-card md-whiteframe="8dp" class="skillCard">
                     <md-card-title>
