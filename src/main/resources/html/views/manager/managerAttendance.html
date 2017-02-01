@@ -24,24 +24,29 @@
                             
                             <p>
                                 Days in marketing:  
-                                <span>{{manAttCtrl.calcMarketingDays()}}</span>
+                                <span ng-if="manAttCtrl.selectedUser">{{ manAttCtrl.calcMarketingDays() }}</span>
                             </p>
                             
                             <p>
-                                Panel Status: 
-								<md-menu>
+                                Panel Status:
+								<md-menu ng-show="manAttCtrl.selectedUser.panels[0]">
 									<!-- Trigger element is a md-button with an icon -->
 									<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-										<md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == true">check_circle</md-icon>
-										<md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == false">not_interested</md-icon>
+										<md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == true" style="color:#59E2A8;">check_circle</md-icon>
+										<md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == false" style="color:#A00;">not_interested</md-icon>
 									</md-button>
 									<md-menu-content>
-										<md-menu-item><md-button ng-click="setPanelPassed()"><md-icon>check_circle</md-icon> Passed</md-button></md-menu-item>
-										<md-menu-item><md-button ng-click="doSomething()"><md-icon>not_interested</md-icon> Not Passed</md-button></md-menu-item>
+										<md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0], true)"><md-icon>check_circle</md-icon> Passed</md-button></md-menu-item>
+										<md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0], false)"><md-icon>not_interested</md-icon> Not Passed</md-button></md-menu-item>
 									</md-menu-content>
 								</md-menu>
-                                <span ng-show="manAttCtrl.selectedUser.panels[0].passed == false">Scheduled for {{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
-                                <span ng-hide="manAttCtrl.selectedUser.panels[0]"><md-icon ng-click="">note_add</md-icon></span>
+                                <span ng-show="manAttCtrl.selectedUser.panels[0].passed == false" ng-click="manAttCtrl.togglePanelDatePicker()" style="cursor: pointer;">Scheduled for:
+                                	 <span ng-show="manAttCtrl.selectedUser.panels[0]">{{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
+                                	 <span ng-hide="manAttCtrl.selectedUser.panels[0].dateDisplay">no date selected</span>
+                               	</span>
+                               	<md-card md-whiteframe="4dp" style="max-width:30vh;">
+	                               	<md-datepicker ng-show="manAttCtrl.panelDatePickerIsOpen" ng-model="manAttCtrl.panelDate" md-placeholder="Enter date" ng-change="manAttCtrl.updatePanelDate(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0])"></md-datepicker>
+                                <span ng-hide="manAttCtrl.selectedUser.panels[0]"><md-icon ng-click="manAttCtrl.createPanel(manAttCtrl.selectedUser)" style="color:white !important;cursor: pointer;">note_add</md-icon></span>
                             </p>
                     </md-card-content>
                 </md-card>
@@ -205,7 +210,7 @@
         #attendanceTableDiv{
             width: 100%;
         }
-        #associateInformationDiv md-card{
+        #fixedContainer>md-card{
             background-color: #5C6BC0;
             color: white !important;
             width: 100%;
