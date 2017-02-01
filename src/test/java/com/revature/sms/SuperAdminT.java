@@ -26,11 +26,7 @@ public class SuperAdminT extends AbstractT  {
 		sap.carefulClick("reportBug");
 		driver.switchTo().frame("atlwdg-frame");
 		rbw.carefulClick("cancel");
-	}
-	
-	
-	
-	
+	}	
 	
 	//The submit button in the batch creation window seems to be disabled. Until it works again, this
 	//test is out of commission.
@@ -69,6 +65,5 @@ public class SuperAdminT extends AbstractT  {
 		if (sap.verify()) {
 			sap.carefulClick("logout");
 		} 
-	}
-	
+	}	
 }
