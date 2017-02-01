@@ -36,7 +36,7 @@
             </form>
         </div>
         <hr>
-        <div class="md-padding">
+        <div class="md-padding" ng-if="uInfoCtrl.user.userRole.name=='associate'">
 	        <form name="updateSkillsForm" ng-submit="uInfoCtrl.submitSkills()" novalidate>
 			<md-input-container>
 				  <md-select ng-model="skillToAdd" placeholder="Skill">

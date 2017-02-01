@@ -109,6 +109,43 @@ public class TechSkillsController {
 		}
 
 	}
+	/**
+	 * Method to delete the supplied skill from the database.
+	 * @param token String authentication token to make sure the user has the right permissions.
+	 * @param skillName String the skill to be deleted from the database.
+	 * @return ResponseEntity containing the results of the operation.
+	 */
+	@RequestMapping(value = "/{skillName}", method = {
+			RequestMethod.DELETE, }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody public Object deleteSkill(@RequestHeader(value = "Authorization") String token,
+			@PathVariable String skillName){
+		Token userToken = tokenRepo.findByAuthToken(token);
+		if (userToken == null) {
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("AuthToken invalid."),
+					HttpStatus.NOT_FOUND);
+		}
+		else if ("superAdmin".equalsIgnoreCase(userToken.getUser().getUserRole().getName())) {
+			try {
+				long result = attr.deleteBySkill(skillName);
+				if (result == 0){
+					return new ResponseEntity<ResponseErrorEntity>(
+							new ResponseErrorEntity("Skill does not exist."), HttpStatus.NOT_FOUND);
+				}
+				return new ResponseEntity<Long>(result, HttpStatus.OK);
+			}
+			catch (Exception e){
+				Logger.getRootLogger().debug("Problem occurred while deleting skill.", e);
+				return new ResponseEntity<ResponseErrorEntity>(
+						new ResponseErrorEntity("Problem occurred while deleting skill."), HttpStatus.BAD_REQUEST);
+			}
+		}
+		else {
+			// if the user isn't a SuperAdmin
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
+					HttpStatus.UNAUTHORIZED);
+		}
+		
+	}
 
 	/**
 	 * Transforms TechnicalSkillsDTO object to TechnicalSkills object.

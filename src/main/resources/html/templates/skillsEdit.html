@@ -8,14 +8,44 @@
         <md-button type="button" class="md-accent" ng-click="sECtrl.printCurrentSkills()">Print Skills</md-button>
         <!--<md-button type="button" class="md-accent" ng-click=""></md-button>-->
         <div class="md-padding">
-            <form name="newSkillForm" ng-submit="sECtrl.addSkill(newSkillForm.$valid)" novalidate>
+            <form name="newSkillForm" ng-submit="sECtrl.addSkill(newSkillForm.$valid, sECtrl.newSkillAdd)" novalidate>
                 <md-input-container class="InputContainer">
                     <label>New Skill</label>
                     <input id="skillname" ng-model="sECtrl.newSkillAdd" required/>
 
                 </md-input-container>
-                <md-button type="submit" class="md-accent">Add Skill</md-button>
+                <md-button type="submit">Add Skill</md-button>
             </form>
+        </div>
+        <div class="md-padding">
+            Skills to Add:
+            <ul>
+                <li ng-repeat="add in sECtrl.skillsToAdd">
+                    {{add.skill}}
+                    <md-button class="md-icon-button" ng-click="sECtrl.removeFromAddArray(add)">
+		              	<md-icon class="md-material-icon menu-icon" Style="color:red"> clear </md-icon>
+		          	</md-button>
+                </li>
+            </ul>
+        <div class="md-padding">
+            <form name="removeSkillForm" ng-submit="sECtrl.removeSkill(removeSkillForm.$valid, sECtrl.selected)" novalidate>
+                <md-input-container>
+                
+				  <md-select ng-model="sECtrl.selected" placeholder="Skill" required>
+				    	<md-option ng-value="x.skill" ng-repeat="x in sECtrl.currentSkills | orderBy: 'skill'">{{ x.skill }}</md-option>
+				  </md-select>
+                   <md-button type="submit">Remove Skill</md-button>
+               
+			    </md-input-container>
+             </form>
+
+             <md-input-container>
+                 <md-button type="button" class="md-accent" ng-click="sECtrl.cancel()">Cancel</md-button>
+             </md-input-container>
+
+                
+                
+            
         </div>
 
 </div>
