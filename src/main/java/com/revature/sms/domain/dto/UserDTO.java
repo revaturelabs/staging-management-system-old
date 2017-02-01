@@ -8,6 +8,7 @@ import java.util.Set;
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.MarketingStatus;
 import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.UserRole;
 
@@ -24,6 +25,7 @@ public class UserDTO {
 	private List<AssociateAttendance> attendance;
 	private Timestamp graduationDate;
 	private List<AssociateTask> tasks;
+	private MarketingStatus marketingStatus;
 	private Set<TechnicalSkills> skill;
 	
 	public UserDTO() {
@@ -54,7 +56,7 @@ public class UserDTO {
 	
 	public UserDTO(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			UserRole userRole, Timestamp graduationDate, List<AssociateTask> tasks, 
-			Set<TechnicalSkills> skill) {
+			Set<TechnicalSkills> skill, MarketingStatus marketingStatus) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -64,6 +66,7 @@ public class UserDTO {
 		this.userRole = userRole;
 		this.graduationDate = graduationDate;
 		this.tasks = tasks;
+		this.marketingStatus = marketingStatus;
 		this.skill = skill;
 	}
 
@@ -101,6 +104,14 @@ public class UserDTO {
 	
 	public String getHashedPassword() {
 		return hashedPassword;
+	}
+
+	public MarketingStatus getMarketingStatus() {
+		return marketingStatus;
+	}
+
+	public void setMarketingStatus(MarketingStatus marketingStatus) {
+		this.marketingStatus = marketingStatus;
 	}
 
 	public void setHashedPassword(String hashedPassword) {

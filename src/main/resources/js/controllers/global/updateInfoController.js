@@ -159,6 +159,7 @@
         function saveSkills(){
         	userService.update(uic.user,function(){
         		uic.toast("Skills updated");
+        		 
         	});
         }
         
