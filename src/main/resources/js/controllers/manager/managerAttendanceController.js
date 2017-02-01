@@ -348,8 +348,9 @@
          * @returns {number} Number of days between the graduation date and today
          */
         function calcMarketingDays(){
-        	return " " + mac.days_between(mac.curr, ((new Date(mac.selectedUser.graduationDate)))) + " days";
-        	
+            if (mac.selectedUser != undefined){
+        	    return " " + mac.days_between(mac.curr, ((new Date(mac.selectedUser.graduationDate)))) + " days";
+        	}
         	
         }
         

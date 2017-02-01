@@ -22,11 +22,12 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
 
         //functions
         sec.getSkills =  getSkills;
-        sec.printCurrentSkills = printCurrentSkills;
         sec.addSkill = addSkill;
         sec.removeFromAddArray = removeFromAddArray;
         sec.addSkillToDB= addSkillToDB;
         sec.removeSkillFromDB = removeSkillFromDB;
+        sec.addToRemoveList = addToRemoveList;
+        sec.updateAll = updateAll;
         sec.toast = toast;
         sec.cancel = cancel;
        
@@ -46,12 +47,6 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
         	},function(){
                 //needed to make proper function call for some reason.
             });
-        }
-
-      
-
-        function printCurrentSkills(){
-            console.log(sec.currentSkills);
         }
 
 
@@ -97,16 +92,20 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
          * @description Function that adds the skill into the database.
          * @param {boolean} isValid boolean value of the form's $valid property.
          */
-        function addSkillToDB(isValid){
-            if (isValid){
-                var newSkill = {skill: sec.newSkillAdd};
-                skillService.create(newSkill, function(){
-                   
-                    sec.getSkills();
+        function addSkillToDB(skill){
+                skillService.create(skill, function(){
+                   //empty function needed to make this work
                 }, function(){
                     //for some reason, this second function has to exist even if it's empty
                     
                 });
+            }
+
+        function addSkillsToDB(){
+            if (sec.skillsToAdd.length >0){
+                var skill = sec.skillsToAdd.pop();
+                addSkillToDB(skill);
+                addSkillsToDB();
             }
         }
 
@@ -115,6 +114,27 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
             var index = sec.skillsToAdd.indexOf(skill);
             sec.skillsToAdd.splice(index, 1);
             
+        }
+
+        function addToRemoveList(isValid, skill){
+            if (isValid){
+                sec.skillsToRemove.push(skill);
+            }
+        }
+
+         function updateAll(){
+            
+            if (sec.skillsToAdd.length>0 || sec.skillsToRemove > 0){
+                addSkillsToDB();
+                removeSkillsFromDB();
+                sec.getSkills();
+                
+                sec.toast("Skill updates successful.");
+                $mdDialog.hide();
+            }
+            else {
+                //stuff
+            }
         }
 
         /**
@@ -136,6 +156,14 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
             
         }
 
+        function removeSkillsFromDB(){
+            if (sec.skillsToRemove.length >0 ){
+                var skill = sec.skillsToRemove.pop();
+                removeSkillFromDB(skill);
+                removeSkillsFromDB();
+            }
+        }
+
              /**
              * @description Displays a toast notification.
              * @param {string} message The value of the message to be shown.
@@ -154,11 +182,4 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
             $mdDialog.cancel();
         }
 
-       
-
-
-
-   
-
-        
-    }
+       }

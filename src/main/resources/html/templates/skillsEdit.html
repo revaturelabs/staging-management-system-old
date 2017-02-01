@@ -5,7 +5,7 @@
             </div>
         </md-toolbar>
 
-        <md-button type="button" class="md-accent" ng-click="sECtrl.printCurrentSkills()">Print Skills</md-button>
+       
         <!--<md-button type="button" class="md-accent" ng-click=""></md-button>-->
         <div class="md-padding">
             <form name="newSkillForm" ng-submit="sECtrl.addSkill(newSkillForm.$valid, sECtrl.newSkillAdd)" novalidate>
@@ -28,21 +28,29 @@
                 </li>
             </ul>
         <div class="md-padding">
-            <form name="removeSkillForm" ng-submit="sECtrl.removeSkill(removeSkillForm.$valid, sECtrl.selected)" novalidate>
-                <md-input-container>
+            <form name="removeSkillForm" ng-submit="sECtrl.addToRemoveList(removeSkillForm.$valid, sECtrl.selected)" novalidate>
+                <md-input-container class="InputContainer">
                 
-				  <md-select ng-model="sECtrl.selected" placeholder="Skill" required>
-				    	<md-option ng-value="x.skill" ng-repeat="x in sECtrl.currentSkills | orderBy: 'skill'">{{ x.skill }}</md-option>
+				  <md-select ng-model="sECtrl.selected" placeholder="Skill">
+				    	<md-option ng-value="x" ng-repeat="x in sECtrl.currentSkills | orderBy: 'skill'">{{ x.skill }}</md-option>
 				  </md-select>
                    <md-button type="submit">Remove Skill</md-button>
                
 			    </md-input-container>
+                <ul>
+                    <li ng-repeat="remove in sECtrl.skillsToRemove">
+                        {{remove.skill}}
+                    </li>
+                </ul>
              </form>
 
+            <form name="updateAll" ng-submit="sECtrl.updateAll()" novalidate>
              <md-input-container>
+                 
+                 <md-button type="submit" class="md-primary">Update Database</md-button>
                  <md-button type="button" class="md-accent" ng-click="sECtrl.cancel()">Cancel</md-button>
              </md-input-container>
-
+            </form>
                 
                 
             
