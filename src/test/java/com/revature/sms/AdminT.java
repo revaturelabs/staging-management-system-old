@@ -1,26 +1,31 @@
 package com.revature.sms;
 
+import java.util.List;
+
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class AdminT extends AbstractT {
 
-	// Tests that when different types of users login and logout, they are
-	// navigated to the correct pages
+	//Tests that when different types of users login and logout, they are
+	//navigated to the correct pages
 	@Test
 	public void testLoginHeaderLogout() {
-		String expectedValue = expected.getProperty("adminPg");
-		LoginHeaderLogoutTemplate(adp, inputs.getProperty("adminUN"), inputs.getProperty("PW"), expectedValue);
+		String pageType = hp.getClass().getName();
+		String expectedValue;
+		if (pageType.contains(".Admin")) {
+			expectedValue = expected.getProperty("adminPg");
+		} else {
+			expectedValue = expected.getProperty("superAdminPg");
+		}
+		LoginHeaderLogoutTemplate(un, pw, expectedValue);
 	}
+	
 
-	@Ignore
-	@Test
-	public void testPasswordChange() {
-		PasswordChangeTemplate(adp, inputs.getProperty("adminUN"), inputs.getProperty("PW"), inputs.getProperty("PW2"));
-	}
-
-	@Ignore
 	@Test
 	public void testCancelButtons() {
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
@@ -60,24 +65,35 @@ public class AdminT extends AbstractT {
 
 	@Ignore
 	@Test
-	public void testAdminAttendanceView() {
-		adminAttendenceViewTemplate(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
+	public void testAdminAttendenceView() {
+		lp.login(un, pw);
+		List<WebElement> allRows = adp.attendanceTable.findElements(By.tagName("tr"));
+		int count = 0;
+		for (WebElement row : allRows) {
+			List<WebElement> cells = row.findElements(By.tagName("td"));
+			for (WebElement cell : cells) {
+				if (count % 6 == 0) {
+					cell.click();
+					Assert.assertTrue(adp.verifyAssoc.isDisplayed());
+					adp.carefulClick("closeIcon");
+					
+				} else {
+					cell.click();
+					cell.click();
+				}
+				count++;
+			}
+		}
 	}
-
-	public void testAdminPageToastContainer() {
-
-	}
-
+	
 	@Ignore
 	@Test
 	public void testAdminCalendarNavigation() {
-		adminCalenderNavigation(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
+		lp.login(un, pw);
+		adp.carefulClick("prevWeekTop");
+		adp.carefulClick("nextWeekTop");
+		adp.carefulClick("prevWeekBottom");
+		adp.carefulClick("nextWeekBottom");
 	}
 
-	@After
-	public void after() {
-		if (adp.verify()) {
-			adp.carefulClick("logout");
-		}
-	}
 }

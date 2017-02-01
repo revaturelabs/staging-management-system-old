@@ -1,11 +1,16 @@
 package com.revature.sms;
 
+import static org.assertj.core.api.Assertions.withPrecision;
+
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.After;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -57,6 +62,11 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	protected ChangePasswordWindow cpw;
 	protected RaiseBugWindow rbw;
 
+	protected HomePage hp;
+	protected String un;
+	protected String pw;
+	
+	
 	@Autowired
 	UserRepo ur;
 
@@ -96,26 +106,33 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		cbw = new CreateBatchWindow(driver);
 		cpw = new ChangePasswordWindow(driver);
 		rbw = new RaiseBugWindow(driver);
+		
+		Class<? extends AbstractT> currentClass = this.getClass();
+		String className = currentClass.getName();
+		if (className.contains(".AssociateT")) {
+			hp = asp;
+			un = inputs.getProperty("javaUN");
+		} else if (className.contains(".AdminT")) {
+			hp = adp;
+			un = inputs.getProperty("adminUN");
+		} else {
+			hp = sap;
+			un = inputs.getProperty("superAdminUN");
+		}
+		pw = inputs.getProperty("PW");
+		
+		
 		// Make sure the login page is loaded correctly
 		Assert.assertEquals(expected.getProperty("siteName"), driver.getTitle());
 		Assert.assertTrue(lp.verify());
 		Assert.assertEquals(expected.getProperty("loginPg"), lp.header.getText());
 	}
 
-	@Override
-	public void afterClassSetup() {
-		driver.close();
-	}
-
-	public void LoginHeaderLogoutTemplate(HomePage hp, String un, String pw, String ev) {
-		lp.login(un, pw);
-		Assert.assertTrue(hp.verify());
-		Assert.assertEquals(ev, hp.header.getText());
-		hp.carefulClick("logout");
-		Assert.assertTrue(lp.verify());
-	}
-
-	public void PasswordChangeTemplate(HomePage hp, String un, String pw, String pw2) {
+	
+	@Test
+	public void testPasswordChange() {
+		String pw2 = inputs.getProperty("PW2");
+		
 		lp.login(un, pw);
 		hp.carefulClick("settings");
 		Assert.assertTrue(cpw.verify());
@@ -134,33 +151,43 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		cpw.carefulClick("submit");
 		hp.carefulClick("logout");
 	}
-
-	public void adminAttendenceViewTemplate(String un, String pw) {
+	
+	
+	@Test
+	public void testBugReport() {
 		lp.login(un, pw);
-		List<WebElement> allRows = adp.attendanceTable.findElements(By.tagName("tr"));
-		int count = 0;
-		for (WebElement row : allRows) {
-			List<WebElement> cells = row.findElements(By.tagName("td"));
-			for (WebElement cell : cells) {
-				if (count % 6 == 0) {
-					cell.click();
-					Assert.assertTrue(adp.verifyAssoc.isDisplayed());
-					adp.carefulClick("closeIcon");
-					
-				} else {
-					cell.click();
-					cell.click();
-				}
-				count++;
-			}
+		hp.carefulClick("reportBug");
+		driver.switchTo().frame("atlwdg-frame");
+
+		Assert.assertTrue(rbw.verify());
+		rbw.messageBox.sendKeys(inputs.getProperty("bugReport"));
+		rbw.enterName.sendKeys(inputs.getProperty("bugReportName"));
+		rbw.enterEmail.sendKeys(inputs.getProperty("bugReportEmail"));
+		rbw.webInfo.click();
+		rbw.cancel.click();
+		Assert.assertTrue(hp.verify());
+	}
+	
+	
+	public void LoginHeaderLogoutTemplate(String username, String password, String ev) {
+		lp.login(un, pw);
+		Assert.assertTrue(hp.verify());
+		Assert.assertEquals(ev, hp.header.getText());
+		hp.carefulClick("logout");
+		Assert.assertTrue(lp.verify());
+	}
+	
+	
+	@After
+	public void after() {
+		if (hp.verify()) {
+			hp.carefulClick("logout");
 		}
 	}
-
-	public void adminCalenderNavigation(String un, String pw) {
-		lp.login(un, pw);
-		adp.carefulClick("prevWeekTop");
-		adp.carefulClick("nextWeekTop");
-		adp.carefulClick("prevWeekBottom");
-		adp.carefulClick("nextWeekBottom");
+	
+	@Override
+	public void afterClassSetup() {
+		driver.close();
 	}
+	
 }

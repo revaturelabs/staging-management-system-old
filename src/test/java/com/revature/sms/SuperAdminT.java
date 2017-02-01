@@ -1,20 +1,10 @@
 package com.revature.sms;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 
-public class SuperAdminT extends AbstractT  {	
-	
-	@Test
-	public void testLoginHeaderLogout() {
-		String expectedValue = expected.getProperty("superAdminPg");
-		LoginHeaderLogoutTemplate(sap, inputs.getProperty("superAdminUN"), inputs.getProperty("PW"), expectedValue);	
-	}
-	
-	@Test
-	public void testPasswordChange() {
-		PasswordChangeTemplate(adp, inputs.getProperty("adminUN"), inputs.getProperty("PW"), inputs.getProperty("PW2"));
-	}
+public class SuperAdminT extends AdminT  {	
 	
 	@Test
 	public void testCancelButtons() {
@@ -59,11 +49,5 @@ public class SuperAdminT extends AbstractT  {
 		//driver.findElement(By.xpath("//*[@id=\"dialogContent_12\"]/div/div/button")).click();
 	}
 	*/
-	
-	@After
-	public void after() {
-		if (sap.verify()) {
-			sap.carefulClick("logout");
-		} 
-	}	
+		
 }

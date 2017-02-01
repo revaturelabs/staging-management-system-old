@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
@@ -21,16 +22,11 @@ public class AssociateT extends AbstractT {
 	@Test
 	public void testLoginHeaderLogout() {
 		String expectedValue = expected.getProperty("associatePg");
-		LoginHeaderLogoutTemplate(asp, inputs.getProperty("javaUN"), inputs.getProperty("PW"), expectedValue);
-		LoginHeaderLogoutTemplate(asp, inputs.getProperty("sdetUN"), inputs.getProperty("PW"), expectedValue);
-		LoginHeaderLogoutTemplate(asp, inputs.getProperty("dotnetUN"), inputs.getProperty("PW"), expectedValue);
+		LoginHeaderLogoutTemplate(inputs.getProperty("javaUN"), pw, expectedValue);
+		LoginHeaderLogoutTemplate(inputs.getProperty("sdetUN"), pw, expectedValue);
+		LoginHeaderLogoutTemplate(inputs.getProperty("dotnetUN"), pw, expectedValue);
 	}
-
-	@Test
-	public void testPasswordChange() {
-		PasswordChangeTemplate(adp, inputs.getProperty("javaUN"), inputs.getProperty("PW"), inputs.getProperty("PW2"));
-	}
-
+	
 	@Test
 	public void testCancelButtons() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
@@ -59,32 +55,6 @@ public class AssociateT extends AbstractT {
 		ArrayList<MonthDay> actualMonthDays = asp.goThroughWeek();
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
 	}
-
-	@Test
-	public void testBugReport() {
-		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
-		asp.carefulClick("reportBug");
-		driver.switchTo().frame("atlwdg-frame");
-
-		Assert.assertTrue(rbw.verify());
-		rbw.messageBox.sendKeys(inputs.getProperty("bugReport"));
-		rbw.enterName.sendKeys(inputs.getProperty("bugReportName"));
-		rbw.enterEmail.sendKeys(inputs.getProperty("bugReportEmail"));
-		rbw.webInfo.click();
-		rbw.cancel.click();
-	}
-
-	// Maybe we should wait until there is a way to unschedule certifications on
-	// the website
-	// before completing this test.
-	/*
-	 * @Test public void testCertificationScheduling() {
-	 * lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
-	 * asp.carefulClick("certification"); Assert.assertTrue(scw.verify());
-	 * scw.enterDate.sendKeys(inputs.getProperty("certDate"));
-	 * scw.enterNote.sendKeys(inputs.getProperty("certNote"));
-	 * scw.carefulClick("submit"); }
-	 */
 
 	@Test
 	public void testCheckInCheckOut() {
@@ -167,15 +137,23 @@ public class AssociateT extends AbstractT {
 			weekBefore = asp.weekOf.getText();
 		} while (!week.equals(weekBefore));
 	}
+	
+		// Maybe we should wait until there is a way to unschedule certifications on
+		// the website
+		// before completing this test.
+		/*
+		 * @Test
+		 * public void testCertificationScheduling() {
+		 * lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
+		 * asp.carefulClick("certification"); Assert.assertTrue(scw.verify());
+		 * scw.enterDate.sendKeys(inputs.getProperty("certDate"));
+		 * scw.enterNote.sendKeys(inputs.getProperty("certNote"));
+		 * scw.carefulClick("submit"); }
+		 */
+	
 
 	public void testAssociatePageToastContainer() {
 
 	}
 
-	@After
-	public void after() {
-		if (asp.verify()) {
-			asp.carefulClick("logout");
-		}
-	}
 }
