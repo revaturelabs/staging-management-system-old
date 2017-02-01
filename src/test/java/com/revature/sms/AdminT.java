@@ -5,21 +5,21 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class AdminT extends AbstractT {
-	
 
-	//Tests that when different types of users login and logout, they are navigated to the correct pages
+	// Tests that when different types of users login and logout, they are
+	// navigated to the correct pages
 	@Test
 	public void testLoginHeaderLogout() {
 		String expectedValue = expected.getProperty("adminPg");
 		LoginHeaderLogoutTemplate(adp, inputs.getProperty("adminUN"), inputs.getProperty("PW"), expectedValue);
 	}
-	
+
 	@Ignore
 	@Test
 	public void testPasswordChange() {
 		PasswordChangeTemplate(adp, inputs.getProperty("adminUN"), inputs.getProperty("PW"), inputs.getProperty("PW2"));
 	}
-	
+
 	@Ignore
 	@Test
 	public void testCancelButtons() {
@@ -30,8 +30,6 @@ public class AdminT extends AbstractT {
 		driver.switchTo().frame("atlwdg-frame");
 		rbw.carefulClick("cancel");
 	}
-	
-	
 	
 	
 	// This test is temporarily unusable and irrelevant while the search bar is being fixed
@@ -59,28 +57,27 @@ public class AdminT extends AbstractT {
 		Assert.assertTrue(lp.verify());
 	}
 	*/
-	
+
 	@Ignore
 	@Test
 	public void testAdminAttendanceView() {
 		adminAttendenceViewTemplate(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
 	}
-	
+
 	public void testAdminPageToastContainer() {
-		
+
 	}
-	
+
 	@Ignore
 	@Test
 	public void testAdminCalendarNavigation() {
 		adminCalenderNavigation(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
 	}
-	
+
 	@After
 	public void after() {
 		if (adp.verify()) {
 			adp.carefulClick("logout");
-		} 
+		}
 	}
-	
 }
