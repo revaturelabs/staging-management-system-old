@@ -20,6 +20,7 @@
                             <!-- <span>{{ manAttCtrl.selectedUser.username }}
                                 <div style="float: right;;" ng-show="manAttCtrl.selectedUser.project"> Current project :{{ manAttCtrl.selectedUser.project }}</div>
                                 <div style="float: right;;" ng-hide="manAttCtrl.selectedUser.project">This associate is not currently on a project</div>
+<<<<<<< HEAD
                             </span> -->
                             <p>
                             	Marketing Status:
@@ -32,6 +33,15 @@
 										</md-input-container>
                             
                             </p>
+=======
+                            </span>
+                            
+                            <p>
+                                Days in marketing:  
+                                <span>{{manAttCtrl.calcMarketingDays()}}</span>
+                            </p>
+                            
+>>>>>>> 0af509ce4f36f4999c1809def6e8be2331cca183
                             <p>
                                 Panel Status:                                 
                                 <span ng-show="manAttCtrl.selectedUser.panels[0]">{{ manAttCtrl.selectedUser.panels[0].note }} {{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
@@ -61,8 +71,12 @@
                         <span ng-hide="manAttCtrl.selectedUser.certs[0].date">There is no data to display</span>
                         <div ng-show="manAttCtrl.selectedUser.certs[0].date">
                             <div ng-repeat="cert in manAttCtrl.selectedUser.certs | orderBy:'-date'" class="certList">
-                            <md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48">{{ cert.icon.name }}</md-icon>
-                            {{cert.note}} {{ cert.dateDisplay }}</div>
+                            	<md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48" ng-click="manAttCtrl.updateCert(cert,manAttCtrl.selectedUser)">{{ cert.icon.name }}</md-icon>
+                            	{{ cert.dateDisplay }} |
+                            	{{cert.note}}
+                            	
+                            	<hr>
+                            </div>
                         </div>
                     </md-card-content>
                 </md-card>

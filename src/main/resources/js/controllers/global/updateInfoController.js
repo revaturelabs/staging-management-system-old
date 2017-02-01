@@ -8,14 +8,6 @@
          */
     function updateInfoCtrl ( $scope, $state, $mdToast, $mdDialog, loginService, skillService, userService ) {
         var uic = this;
-
-        function populateSkills(){
-        	var skills = [];
-
-        	skills.push({"id": 1, "skill": "Java"});
-            skills.push({"id": 2, "skill": "html"});
-            return skills;
-        }
         
           // bindables
         uic.user = loginService.getUser();
