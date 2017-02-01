@@ -39,8 +39,18 @@
         mac.nextWeek = nextWeek;
         mac.toast = toast;
         mac.newAssociates = newAssociates;
+
         mac.marketingStatuses = marketingStatuses;
         mac.changeStatus = changeStatus;
+
+        /**@var {function} calcMarketingDays function reference variable. */
+        mac.calcMarketingDays = calcMarketingDays;
+        /**@var {function} days_between function reference variable. */
+        mac.days_between = days_between;
+        /**@var {function} editCert function reference variable. */
+        mac.updateCert = updateCert;
+
+
 
           // initialization
         mac.findDevice();
@@ -270,7 +280,7 @@
             $scope.$emit( "toastMessage", message );
         }
         
-            // adds associates by batch
+        // adds associates by batch
 		function newAssociates() {
             
               // opens a dialog to allows addition of a new batch of associates
@@ -293,6 +303,24 @@
                 mac.toast("Batch addition cancelled.");
             });
         }
+		/**
+         * @description Called when a superAdmin clicks on update certification button, opens a dialog.
+         */
+		function updateCert(cert, user){
+			if(mac.user.userRole.name != "superAdmin"){
+				return;
+			}
+			$mdDialog.show({
+                templateUrl: "html/templates/updateCert.html",
+                controller: "updateCertification as uc",
+                locals:{
+                	cert,
+                	user
+                },
+                clickOutsideToClose: false,
+                escapeToClose: false
+            });
+		}
 
             // adds a leading zero to input if necessary
         function padZero( input ) {
@@ -303,12 +331,46 @@
             }
         }
         
+
         function marketingStatuses() {
 	        marketingStatusService.getAll(function(response) {
 	        	mac.mStatuses = response;
 	        	
 	        }, function(error) {
 	       
-	        });
+	        });}
+
+        /**
+         * @description calls a function that Determines the difference between the two supplied dates.
+         * @returns {number} Number of days between the graduation date and today
+         */
+        function calcMarketingDays(){
+        	return " " + mac.days_between(mac.curr, ((new Date(mac.selectedUser.graduationDate)))) + " days";
+        	
+        	
+        }
+        
+        /**
+         * @description Determines the difference betwen the two supplied dates.
+         * @param {date} date1 First supplied date.
+         * @param {date} date2 Second supplied date.
+         * @returns {number} Number of days between the two dates
+         */
+        function days_between(date1, date2) {
+
+            // The number of milliseconds in one day
+            var ONE_DAY = 1000 * 60 * 60 * 24
+
+            // Convert both dates to milliseconds
+            var date1_ms = date1.getTime()
+            var date2_ms = date2.getTime()
+
+            // Calculate the difference in milliseconds
+            var difference_ms = Math.abs(date1_ms - date2_ms)
+
+            // Convert back to days and return
+            return Math.round(difference_ms/ONE_DAY)
+
+
         }
     }
