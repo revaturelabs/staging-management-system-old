@@ -23,10 +23,11 @@
                             </span> -->
                             <p>
                             	Marketing Status:
-                            			<md-input-container>
-				  							<md-select   
+                            			<md-input-container id="marketingStatus">
+                            			
+				  							<md-select style="color:white;"  placeholder="{{manAttCtrl.selectedUser.marketingStatus.name}}"
 				    							  ng-model="manAttCtrl.markBind" ng-change="manAttCtrl.changeStatus()">
-				    							<md-option ng-repeat="x in manAttCtrl.mStatuses | orderBy: 'name'" ng-value="x.id">{{ x.name }}</md-option>
+				    							<md-option ng-repeat="x in manAttCtrl.mStatuses | orderBy: 'name'" ng-value="x">{{ x.name }}</md-option>
 				 							 </md-select>
 										</md-input-container>
                             
@@ -303,4 +304,13 @@
             font-size: 44px;
             color: white !important;
         }
+        #marketingStatus{
+         postion: relative; 
+         top: -3px;
+         }
+  md-select-value.md-select-placeholder {
+  color: white !important;
+}
+
+        
     </style>

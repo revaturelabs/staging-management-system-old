@@ -48,29 +48,22 @@
         mac.setToolbar();
         mac.marketingStatuses();
         
-        
+        // function
+        /**
+         * @description Updates user Marketing Status.
+         */
         function changeStatus() {
+        	     	
         	
-        	console.log("made it " + mac.markBind);
-        	
-        	mac.selectedUser.id
-        	= 0;
-        	mac.selectedUser.marketingStatus.id
+        	mac.selectedUser.marketingStatus
         	= mac.markBind;
-        	mac.selectedUser.marketingStatus.name
-        	= "";
+        
         	var sentData = mac.selectedUser.toJSON();
-        	delete sentData.certs;
-        	delete sentData.notification;
-        	delete sentData.panels;
-        	delete sentData.weekAttendance;
-        	console.log(mac.selectedUser);
-        	console.log(sentData);
+                	
         	userService.update(sentData,function(){
 	    		mac.toast("Marketing Status Updated");
-	    
-	    	});
-        	mac.markBind = "";
+	    	    	});
+        	
         
         }
         
@@ -313,9 +306,9 @@
         function marketingStatuses() {
 	        marketingStatusService.getAll(function(response) {
 	        	mac.mStatuses = response;
-	        	console.log("got eem", mac.mStatuses);
+	        	
 	        }, function(error) {
-	        	console.log("bad");
+	       
 	        });
         }
     }
