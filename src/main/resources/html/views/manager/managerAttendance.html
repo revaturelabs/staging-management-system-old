@@ -4,9 +4,9 @@
           <!-- Associate info card -->
         <div ng-show="manAttCtrl.infoOpen" id="associateInformationDiv" ng-class="{showInformationDiv : (manAttCtrl.infoOpen), showBigInformationDiv : (manAttCtrl.infoOpen && manAttCtrl.smallDevice)}">
             <div id="fixedContainer">
-                <div id="closeIconContainer">
+                <span id="closeIconContainer">
                     <span><md-icon id="closeIcon" ng-click="manAttCtrl.closeInfo()">compare_arrows</md-icon></span>
-                </div>
+                </span>
                 <md-card md-whiteframe="8dp">
                     <md-card-title>
                         <md-card-title-text>
@@ -18,13 +18,13 @@
                     </md-card-title>
                     <md-card-content>
                             <span>{{ manAttCtrl.selectedUser.username }}
-                                <div style="float: right;;" ng-show="manAttCtrl.selectedUser.project"> Current project :{{ manAttCtrl.selectedUser.project }}</div>
-                                <div style="float: right;;" ng-hide="manAttCtrl.selectedUser.project">This associate is not currently on a project</div>
+	                                <div style="float: right;;" ng-show="manAttCtrl.selectedUser.project" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.project, true)"> Current project : {{ manAttCtrl.selectedUser.project.note }}</div>
+	                                <div style="float: right;;" ng-hide="manAttCtrl.selectedUser.project" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.project, false)">This associate is not currently on a project</div>
                             </span>
                             
                             <p>
                                 Days in marketing:  
-                                <span>{{manAttCtrl.calcMarketingDays()}}</span>
+                                <span ng-if="manAttCtrl.selectedUser">{{manAttCtrl.calcMarketingDays()}}</span>
                             </p>
                             
                             <p>
@@ -56,10 +56,11 @@
                         <span ng-hide="manAttCtrl.selectedUser.certs[0].date">There is no data to display</span>
                         <div ng-show="manAttCtrl.selectedUser.certs[0].date">
                             <div ng-repeat="cert in manAttCtrl.selectedUser.certs | orderBy:'-date'" class="certList">
-                            	<md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48" ng-click="manAttCtrl.updateCert(cert,manAttCtrl.selectedUser)">{{ cert.icon.name }}</md-icon>
+                            <span ng-click="manAttCtrl.updateCert(cert,manAttCtrl.selectedUser)">
+                            	<md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48" >{{ cert.icon.name }}</md-icon>
                             	{{ cert.dateDisplay }} |
                             	{{cert.note}}
-                            	
+                            	</span>
                             	<hr>
                             </div>
                         </div>
