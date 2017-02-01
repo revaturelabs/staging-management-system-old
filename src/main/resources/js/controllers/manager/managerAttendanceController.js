@@ -327,6 +327,8 @@
 	        marketingStatusService.getAll(function(response) {
 	        	mac.mStatuses = response;
 	        	
+	        }, function() {
+	            
 	        });}
 
         /**
