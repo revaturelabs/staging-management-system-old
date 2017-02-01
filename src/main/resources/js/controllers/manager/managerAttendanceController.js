@@ -51,19 +51,27 @@
         
         function changeStatus() {
         	
-        	console.log("made it" + mac.markBind);
+        	console.log("made it " + mac.markBind);
         	
-        	mac.selectedUser.marketingStatus.name
+        	mac.selectedUser.id
+        	= 0;
+        	mac.selectedUser.marketingStatus.id
         	= mac.markBind;
-        	
+        	mac.selectedUser.marketingStatus.name
+        	= "";
+        	var sentData = mac.selectedUser.toJSON();
+        	delete sentData.certs;
+        	delete sentData.notification;
+        	delete sentData.panels;
+        	delete sentData.weekAttendance;
         	console.log(mac.selectedUser);
-        	userService.update(mac.selectedUser,function(){
+        	console.log(sentData);
+        	userService.update(sentData,function(){
 	    		mac.toast("Marketing Status Updated");
 	    
 	    	});
-        
-        	
         	mac.markBind = "";
+        
         }
         
         
