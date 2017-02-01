@@ -40,6 +40,7 @@ public abstract class SMSPage {
 				//System.out.println(fields[i].getName());
 				fieldValue = (WebElement) fields[i].get(this);
 				result = verifyField(fieldValue);
+				//System.out.println(result);
 				if (!result) {
 					return result;
 				}

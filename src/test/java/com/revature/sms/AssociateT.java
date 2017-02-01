@@ -11,6 +11,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openqa.selenium.By;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.User;
@@ -89,6 +90,26 @@ public class AssociateT extends AbstractT {
 		scw.carefulClick("submit");
 	}
 	*/
+	
+	@Test
+	public void testCheckInCheckOut() {
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
+		String checked = expected.getProperty("checkedIn");
+		String notChecked = expected.getProperty("notCheckedIn");
+		String text = asp.checkincheckout.getText();
+		Assert.assertEquals(notChecked, text);
+		asp.carefulClick("checkincheckout");
+		text = asp.checkincheckout.getText();
+		Assert.assertEquals(checked, text);
+		asp.carefulClick("checkincheckout");
+		driver.findElement(By.xpath("/html/body/div[5]/md-dialog/md-dialog-actions/button[1]")).click();
+		text = asp.checkincheckout.getText();
+		Assert.assertEquals(checked, text);
+		asp.carefulClick("checkincheckout");
+		driver.findElement(By.xpath("/html/body/div[5]/md-dialog/md-dialog-actions/button[2]")).click();
+		text = asp.checkincheckout.getText();
+		Assert.assertEquals(notChecked, text);
+	}
 	
 	
 	

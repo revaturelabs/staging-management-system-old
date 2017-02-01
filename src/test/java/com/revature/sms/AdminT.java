@@ -1,6 +1,7 @@
 package com.revature.sms;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class AdminT extends AbstractT {
@@ -13,11 +14,13 @@ public class AdminT extends AbstractT {
 		LoginHeaderLogoutTemplate(adp, inputs.getProperty("adminUN"), inputs.getProperty("PW"), expectedValue);
 	}
 	
+	@Ignore
 	@Test
 	public void testPasswordChange() {
 		PasswordChangeTemplate(adp, inputs.getProperty("adminUN"), inputs.getProperty("PW"), inputs.getProperty("PW2"));
 	}
 	
+	@Ignore
 	@Test
 	public void testCancelButtons() {
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
@@ -27,9 +30,6 @@ public class AdminT extends AbstractT {
 		driver.switchTo().frame("atlwdg-frame");
 		rbw.carefulClick("cancel");
 	}
-	
-	
-	
 	
 	
 	
@@ -60,6 +60,7 @@ public class AdminT extends AbstractT {
 	}
 	*/
 	
+	@Ignore
 	@Test
 	public void testAdminAttendanceView() {
 		adminAttendenceViewTemplate(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
@@ -69,6 +70,7 @@ public class AdminT extends AbstractT {
 		
 	}
 	
+	@Ignore
 	@Test
 	public void testAdminCalendarNavigation() {
 		adminCalenderNavigation(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
