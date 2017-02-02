@@ -127,6 +127,7 @@ public class TechSkillsController {
 		else if ("superAdmin".equalsIgnoreCase(userToken.getUser().getUserRole().getName())) {
 			try {
 				long result = attr.deleteBySkill(skillName);
+				System.out.println(result);
 				if (result == 0){
 					return new ResponseEntity<ResponseErrorEntity>(
 							new ResponseErrorEntity("Skill does not exist."), HttpStatus.NOT_FOUND);
