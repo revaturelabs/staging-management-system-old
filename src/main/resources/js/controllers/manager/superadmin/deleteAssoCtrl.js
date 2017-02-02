@@ -41,11 +41,11 @@
 	      }
 	    
 	    function searchTextChange(text) {
-	        $log.info('Text changed to ' + text);
+	       // $log.info('Text changed to ' + text);
 	      }
 	    
 	    function selectedItemChange(item) {
-	        $log.info('Item changed to ' + JSON.stringify(item));
+	        //$log.info('Item changed to ' + JSON.stringify(item));
 	      }
 	    
 	    /**
@@ -53,13 +53,18 @@
 	     */
 	    function loadAll() {
 	    	//get all users function **** need to be done
-	    	 var allUsers = ;
-	    	 return allUsers.split(/, +/g).map( function (user) {
-	    	        return {
-	    	          value: user.toLowerCase(),
-	    	          display: user
-	    	        };
-	    	      });
+	    	 var allUsers = getUsers();
+	    	 console.log(allUsers);
+	    	 if($scope.allUsers != undefined){
+	    		 for(var i =0; i < allUsers.length; i++){
+	    			 return allUsers[i].map( function (user) {
+	    				 return {
+	    					 value: allUsers[i].firstName.toLowerCase(),
+	    					 display: allUsers[i].firstName
+	    				 };
+	    			 });
+	    		 }
+	    	 }
 	    }
 	    
 	    /**
@@ -76,7 +81,8 @@
 	    
 	    function getUsers( success ) {
             userService.getAll( function(response) {
-            	dac.users = response;
+            	console.log(response);
+            	return response;
             }, function(error) {
                 dac.toast("Error retrieving all users.");
             });
