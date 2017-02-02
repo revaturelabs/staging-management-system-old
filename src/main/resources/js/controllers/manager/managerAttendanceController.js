@@ -261,7 +261,7 @@
                         "tooltip" : "Add batch of new associates"},
                         {
                             "function": mac.editSkills, 
-                            "icon"    : "add", 
+                            "icon"    : "assessment", 
                             "tooltip" : "Edit available skills"}] } );
             }
         }

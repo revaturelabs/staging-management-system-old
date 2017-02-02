@@ -13,7 +13,7 @@
                     <label>New Skill</label>
                     <input id="skillname" ng-model="sECtrl.newSkillAdd" required/>
                 </md-input-container>
-                <md-button type="submit">Add Skill</md-button>
+                <md-button type="submit" class="md-fab md-mini" aria-label="Add Skill"><md-icon md-svg-icon="img/icons/ic_add_white_24px.svg"></md-icon></md-button>
             </form>
         </div>
         
@@ -26,17 +26,6 @@
             </md-chips>
         </div>
 
-        <!--<div class="md-padding">
-            <h3>Skills To Add</h3>
-            <ul>
-                <li ng-repeat="add in sECtrl.skillsToAdd">
-                    {{add.skill}}
-                    <md-button class="md-icon-button" ng-click="sECtrl.removeFromAddArray(add)">
-		              	<md-icon class="md-material-icon menu-icon" Style="color:red"> clear </md-icon>
-		          	</md-button>
-                </li>
-            </ul>
-        </div>-->
         <div class="md-padding">
             <form name="removeSkillForm" ng-submit="sECtrl.addToRemoveList(removeSkillForm.$valid, sECtrl.selected)" novalidate>
                 <md-input-container class="InputContainer">
@@ -45,7 +34,7 @@
 				    	<md-option ng-value="x" ng-repeat="x in sECtrl.currentSkills | orderBy: 'skill'" ng-if="!sECtrl.inRemoveList(x)">{{ x.skill }}</md-option>
 				  </md-select>
                 </md-input-container>
-                <md-button type="submit">Remove Skill</md-button>
+                <md-button type="submit" class="md-fab md-mini" aria-label="Add Skill"><md-icon md-svg-icon="img/icons/ic_remove_white_24px.svg"></md-icon></md-button>
                </form>
         </div>
 

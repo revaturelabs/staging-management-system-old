@@ -50,7 +50,11 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
             });
         }
 
-
+        /**
+         * @description Adds a skill to the sec.skillsToAdd array.
+         * @param {boolean} isValid $valid attribute of the form.
+         * @param {string} skillName Name of the skill to be created and added to the array.
+         */
         function addSkill(isValid, skillName){
             
             if (isValid){
@@ -66,7 +70,8 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
             }
         }
         /**
-         * @description Check to see if a skill is in the return list
+         * @description Check to see if a skill is in the remove list
+         * @param {object} skill Skill to be checked to see if it is in the remove list (checks by the skill name).
          * @return {boolean} Value that matches if item is in the skilsToRemove list already or not.
          */
         function inRemoveList(skill){
@@ -78,6 +83,13 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
             return false;
         }
 
+        /**
+         * @description Function that checks to see if a skill to be newly created is already in the database
+         * or is already set to be added to the database. The only time it'll let a skill that's already in the
+         * database be added is if the current database version is going to be removed.
+         * @param {string} skillName The name of the skill to check.
+         * @return {number} Returns the index number of the skill if it's found in either of the arrays, otherwise returns -1.
+         */
         function findSkill(skillName){
             //checks to see if skill is already in database.
             for (var i=0; i<sec.currentSkills.length; i++){
@@ -101,7 +113,7 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
             return -1;
         }
         /**
-         * @description Function that adds the skill into the database.
+         * @description Function that adds the skill into the database. Called as part of the addSkillsToDB function.
          * @param {boolean} isValid boolean value of the form's $valid property.
          */
         function addSkillToDB(skill){
@@ -112,7 +124,9 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
                     
                 });
             }
-
+        /**
+         * @description Function that adds all the skills in the skillsToAdd array into the database.
+         */
         function addSkillsToDB(){
             if (sec.skillsToAdd.length >0){
                 var skill = sec.skillsToAdd.pop();
@@ -126,21 +140,19 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
          */
         function removeFromAddArray(skill){
             
-            //var index = sec.skillsToAdd.indexOf(skill);
-            // if(index!=-1){
-            //     sec.skillsToAdd.splice(index, 1);
-            // }
-            // else {
                 for (var i=0; i<sec.skillsToAdd.length; i++){
                     if (skill.skill.toLowerCase() == sec.skillsToAdd[i].skill.toLowerCase()){
                         //if the skills have the same skill name.
-                        sec.skillsToAdd.splice(i, 1); //remove that skill from the add array.
-                    // }
+                        sec.skillsToAdd.splice(i, 1); //remove that skill from the add array.  
                 }
             }
         }
 
-
+        /**
+         * @description Function to add a skill to the skillsToRemove list.
+         * @param {boolean} isValid The $valid property of the form used.
+         * @param {object} skill The skill object to be added to the list.
+         */
         function addToRemoveList(isValid, skill){
             if (isValid){
                 
@@ -149,6 +161,10 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
             }
         }
 
+        /**
+         * @description Function that's called to add all the new skills to the database and to remove the skills that
+         * were selected to be removed.
+         */
          function updateAll(){
             
             if (sec.skillsToAdd.length>0 || sec.skillsToRemove.length > 0){
@@ -165,14 +181,16 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
         }
 
         /**
-         * @description Function that removes the skill from the database.
-         * 
+         * @description Function that removes the specific skill from the database. Only used
+         * as part of removeSkillsFromDB.
+         * @param {string} skillName The name of the skill to be deleted.
          */
          function removeSkillFromDB(skillName){
-         
+                
                 skillService.remove(skillName, function(){
-                    sec.selected = '';
-                    sec.getSkills();
+                    
+                    //empty function needed to make sure it works
+                    
                 }, function(){
                    
                     //for some reason, this second function has to exist even if it's empty
@@ -181,6 +199,9 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
             
         }
 
+        /**
+         * @description Runs and removes all skills in the sec.skillsToRemove array from the database 
+         */
         function removeSkillsFromDB(){
             
             if (sec.skillsToRemove.length >0 ){
