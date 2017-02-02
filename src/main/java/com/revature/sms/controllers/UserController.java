@@ -119,7 +119,7 @@ public class UserController {
 		try {
 			// validate token and update user info
 			if (isValid(token)) {
-				System.out.println( "Number of events: " + userDTO.getEvents().size() );
+				
 				User oldUser = (User) updateValidation(userDTO);
 				User newUser = userRepo.save(oldUser);
 				newUser.blankPassword();
@@ -337,14 +337,13 @@ public class UserController {
 			user.setTasks(userDTO.getTasks());
 		}
 		if (userDTO.getEvents() != null){
-			System.out.println( "Stuff: " + userDTO.getEvents().size() );
+			
 			user.setEvents(userDTO.getEvents());
 		}
 		if (userDTO.getSkill() != null){
 			//remove deleted skills
 			boolean found;
 			Set<TechnicalSkills> list = userDTO.getSkill();
-//			System.out.println(list.size());
 			list.size();
 			for(TechnicalSkills ts: user.getSkill()){
 				if(!list.contains(ts.getID())){
