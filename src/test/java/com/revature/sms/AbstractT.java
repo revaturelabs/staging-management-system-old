@@ -28,7 +28,7 @@ import com.revature.sms.util.TestSetup;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;
-import com.revature.sms.pagefactory.ChangePasswordWindow;
+import com.revature.sms.pagefactory.SettingsWindow;
 import com.revature.sms.pagefactory.CreateBatchWindow;
 import com.revature.sms.pagefactory.HomePage;
 import com.revature.sms.pagefactory.LoginPage;
@@ -59,7 +59,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	protected SuperAdminPage sap;
 	protected ScheduleCertificationWindow scw;
 	protected CreateBatchWindow cbw;
-	protected ChangePasswordWindow cpw;
+	protected SettingsWindow sw;
 	protected RaiseBugWindow rbw;
 
 	protected HomePage hp;
@@ -97,14 +97,14 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	// More browser preparation
 	@Before
 	public void before() {
-		driver.get(inputs.getProperty("url"));
+		driver.get(inputs.getProperty("localurl"));
 		lp = new LoginPage(driver);
 		asp = new AssociatePage(driver);
 		adp = new AdminPage(driver);
 		sap = new SuperAdminPage(driver);
 		scw = new ScheduleCertificationWindow(driver);
 		cbw = new CreateBatchWindow(driver);
-		cpw = new ChangePasswordWindow(driver);
+		sw = new SettingsWindow(driver);
 		rbw = new RaiseBugWindow(driver);
 		
 		Class<? extends AbstractT> currentClass = this.getClass();
@@ -135,20 +135,20 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		
 		lp.login(un, pw);
 		hp.carefulClick("settings");
-		Assert.assertTrue(cpw.verify());
-		cpw.oldPass.sendKeys(pw);
-		cpw.newPass.sendKeys(pw2);
-		cpw.confirmPass.sendKeys(pw2);
-		cpw.carefulClick("submit");
+		Assert.assertTrue(sw.verify());
+		sw.oldPass.sendKeys(pw);
+		sw.newPass.sendKeys(pw2);
+		sw.confirmPass.sendKeys(pw2);
+		sw.carefulClick("submit");
 		hp.carefulClick("logout");
 
 		lp.login(un, pw2);
 		hp.carefulClick("settings");
-		Assert.assertTrue(cpw.verify());
-		cpw.oldPass.sendKeys(pw2);
-		cpw.newPass.sendKeys(pw);
-		cpw.confirmPass.sendKeys(pw);
-		cpw.carefulClick("submit");
+		Assert.assertTrue(sw.verify());
+		sw.oldPass.sendKeys(pw2);
+		sw.newPass.sendKeys(pw);
+		sw.confirmPass.sendKeys(pw);
+		sw.carefulClick("submit");
 		hp.carefulClick("logout");
 	}
 	

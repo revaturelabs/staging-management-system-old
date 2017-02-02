@@ -31,7 +31,7 @@ public class AdminT extends AbstractT {
 	public void testCancelButtons() {
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
 		adp.carefulClick("settings");
-		cpw.carefulClick("cancel");
+		sw.carefulClick("cancel");
 		adp.carefulClick("reportBug");
 		driver.switchTo().frame("atlwdg-frame");
 		rbw.carefulClick("cancel");

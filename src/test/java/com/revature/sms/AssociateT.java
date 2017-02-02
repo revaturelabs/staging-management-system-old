@@ -3,22 +3,28 @@ package com.revature.sms;
 import java.sql.Timestamp;
 import java.time.MonthDay;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import com.revature.sms.domain.AssociateAttendance;
+import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.User;
 
 public class AssociateT extends AbstractT {
 	// Tests that when different types of users login and logout, they are
 	// navigated to the correct pages
 
+	
 	@Test
 	public void testLoginHeaderLogout() {
 		String expectedValue = expected.getProperty("associatePg");
@@ -27,20 +33,21 @@ public class AssociateT extends AbstractT {
 		LoginHeaderLogoutTemplate(inputs.getProperty("dotnetUN"), pw, expectedValue);
 	}
 	
+	
 	@Test
 	public void testCancelButtons() {
-		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
+		lp.login(un, pw);
 		// asp.carefulClick("certification");
 		// scw.carefulClick("cancel");
 		asp.carefulClick("settings");
-		cpw.carefulClick("cancel");
+		sw.carefulClick("cancel");
 		asp.carefulClick("reportBug");
 		driver.switchTo().frame("atlwdg-frame");
 		rbw.carefulClick("cancel");
 	}
 
-	// Makes sure the current week is shown on the associate page when you log
-	// in.
+	//Makes sure the current week is shown on the associate page when you log in.
+	
 	@Test
 	public void testDefaultWeek() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
@@ -56,6 +63,7 @@ public class AssociateT extends AbstractT {
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
 	}
 
+	
 	@Test
 	public void testCheckInCheckOut() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
@@ -77,6 +85,7 @@ public class AssociateT extends AbstractT {
 	}
 
 	// This is Corey's work on issue SMS-85.
+	
 	@Test
 	public void testAssociateAttendanceView() {
 		String username = inputs.getProperty("javaUN");
@@ -138,22 +147,98 @@ public class AssociateT extends AbstractT {
 		} while (!week.equals(weekBefore));
 	}
 	
-		// Maybe we should wait until there is a way to unschedule certifications on
-		// the website
-		// before completing this test.
+	
+	@Test
+	public void testAddSkill() {
+		lp.login(un, pw);
+		asp.carefulClick("settings");
+		Assert.assertTrue(sw.verify());
+		
+		ArrayList<String> expectedSkills = new ArrayList<String>();
+		expectedSkills.add(inputs.getProperty("javaSkill"));
+		expectedSkills.add(inputs.getProperty("jdbcSkill"));
+		expectedSkills.add(inputs.getProperty("pythonSkill"));
+		
+		sw.chooseSkill(expectedSkills.get(0));
+		sw.carefulClick("addSkill");
+		sw.chooseSkill(expectedSkills.get(1));
+		sw.carefulClick("addSkill");
+		sw.chooseSkill(expectedSkills.get(2));
+		sw.carefulClick("addSkill");
+		
+		List<WebElement> addedSkillList = sw.getAddedSkills();
+		int i=0;
+		for (WebElement addedSkill:addedSkillList) {
+			String skill = addedSkill.getText().trim();
+			System.out.println(skill);
+			String[] skillPieces = skill.split("\n");
+			Assert.assertEquals(expectedSkills.get(i), skillPieces[0]);
+			i++;
+		}
+		
+		sw.carefulClick("saveSkills");
+		sw.carefulClick("cancel");
+		Assert.assertTrue(asp.verify());
+		
+		User user = ur.findByUsername(un);
+		ArrayList<String> actualSkills = new ArrayList<String>();
+		Set<TechnicalSkills> skillset = user.getSkill();
+		Iterator<TechnicalSkills> itr = skillset.iterator();
+		while (itr.hasNext()) {
+			TechnicalSkills ts = itr.next();
+			String actualSkill = ts.getSkill();
+			actualSkills.add(actualSkill);
+		}
+		Collections.sort(expectedSkills);
+		Collections.sort(actualSkills);
+		Assert.assertEquals(expectedSkills, actualSkills);
+		
+		asp.carefulClick("settings");
+		Assert.assertTrue(sw.verify());
+		
+		
+		List<WebElement> deletionIcons = sw.getDeletionIcons();
+		for (WebElement icon:deletionIcons) {
+			icon.click();
+		}
+		sw.carefulClick("saveSkills");
+		sw.carefulClick("cancel");
+		Assert.assertTrue(asp.verify());
+		
+		
+		//I'd like to check and make sure that the database has been emptied, but when I try to
+		//do that, I get a StackOverflowError.
 		/*
-		 * @Test
-		 * public void testCertificationScheduling() {
-		 * lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
-		 * asp.carefulClick("certification"); Assert.assertTrue(scw.verify());
-		 * scw.enterDate.sendKeys(inputs.getProperty("certDate"));
-		 * scw.enterNote.sendKeys(inputs.getProperty("certNote"));
-		 * scw.carefulClick("submit"); }
-		 */
+		System.out.println("Here1");
+		User userAgain = ur.findByUsername(un);
+		System.out.println(userAgain.getLastName());
+		System.out.println("Here2");
+		Set<TechnicalSkills> nullset = userAgain.getSkill();
+		System.out.println(nullset);
+		System.out.println("Here3");
+		Assert.assertNull(nullset);
+		System.out.println("Here4");
+		*/
+		
+	}
+	
+		
+	// Maybe we should wait until there is a way to unschedule certifications on
+	// the website
+	// before completing this test.
+	/*
+	@Test
+	public void testCertificationScheduling() {
+	 	lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
+		asp.carefulClick("certification"); Assert.assertTrue(scw.verify());
+		scw.enterDate.sendKeys(inputs.getProperty("certDate"));
+		scw.enterNote.sendKeys(inputs.getProperty("certNote"));
+		scw.carefulClick("submit"); }
+	*/
 	
 
 	public void testAssociatePageToastContainer() {
-
+		
 	}
 
 }

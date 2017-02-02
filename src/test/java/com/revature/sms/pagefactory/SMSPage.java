@@ -45,7 +45,6 @@ public abstract class SMSPage {
 				}
 			} catch (ClassCastException e) {
 				try {
-					
 					fieldValues = (List<WebElement>) fields[i].get(this);
 					for (WebElement f:fieldValues) {
 						result = verifyField(f);

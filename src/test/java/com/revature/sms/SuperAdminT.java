@@ -12,7 +12,7 @@ public class SuperAdminT extends AdminT  {
 		sap.carefulClick("addBatch");
 		cbw.carefulClick("cancel");
 		sap.carefulClick("settings");
-		cpw.carefulClick("cancel");
+		sw.carefulClick("cancel");
 		sap.carefulClick("reportBug");
 		driver.switchTo().frame("atlwdg-frame");
 		rbw.carefulClick("cancel");
