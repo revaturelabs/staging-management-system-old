@@ -40,6 +40,9 @@
                 <ul>
                     <li ng-repeat="remove in sECtrl.skillsToRemove">
                         {{remove.skill}}
+                        <md-button class="md-icon-button" ng-click="sECtrl.removeFromRemoveArray(remove)">
+		              	<md-icon class="md-material-icon menu-icon" Style="color:red"> clear </md-icon>
+		          	</md-button>
                     </li>
                 </ul>
              </form>
