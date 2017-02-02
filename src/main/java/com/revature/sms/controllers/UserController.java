@@ -333,6 +333,9 @@ public class UserController {
 		if (userDTO.getTasks() != null){
 			user.setTasks(userDTO.getTasks());
 		}
+		if(userDTO.getProject() != null){
+			user.setProject(userDTO.getProject());
+		}
 		if (userDTO.getSkill() != null){
 			//remove deleted skills
 			boolean found;
