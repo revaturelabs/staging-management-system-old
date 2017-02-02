@@ -12,13 +12,22 @@
                 <md-input-container class="InputContainer">
                     <label>New Skill</label>
                     <input id="skillname" ng-model="sECtrl.newSkillAdd" required/>
-
                 </md-input-container>
                 <md-button type="submit">Add Skill</md-button>
             </form>
         </div>
-        <div class="md-padding">
-            Skills to Add:
+        
+        <div class="md-padding batchAddChips">
+            <h3>Skills To Add</h3>
+            <md-chips ng-model="sECtrl.skillsToAdd" readonly="true" md-removable="true">
+                <md-chip-template>
+                    {{ $chip.skill }}
+                </md-chip-template>
+            </md-chips>
+        </div>
+
+        <!--<div class="md-padding">
+            <h3>Skills To Add</h3>
             <ul>
                 <li ng-repeat="add in sECtrl.skillsToAdd">
                     {{add.skill}}
@@ -27,6 +36,7 @@
 		          	</md-button>
                 </li>
             </ul>
+        </div>-->
         <div class="md-padding">
             <form name="removeSkillForm" ng-submit="sECtrl.addToRemoveList(removeSkillForm.$valid, sECtrl.selected)" novalidate>
                 <md-input-container class="InputContainer">
@@ -34,9 +44,21 @@
 				  <md-select ng-model="sECtrl.selected" placeholder="Skill" required>
 				    	<md-option ng-value="x" ng-repeat="x in sECtrl.currentSkills | orderBy: 'skill'" ng-if="!sECtrl.inRemoveList(x)">{{ x.skill }}</md-option>
 				  </md-select>
-                   <md-button type="submit">Remove Skill</md-button>
-               
-			    </md-input-container>
+                </md-input-container>
+                <md-button type="submit">Remove Skill</md-button>
+               </form>
+        </div>
+
+        <div class="md-padding batchAddChips">
+            <h3>Skills To Remove</h3>
+            <md-chips ng-model="sECtrl.skillsToRemove" readonly="true" md-removable="true" md-on-remove="sECtrl.removeFromAddArray($chip)">
+                <md-chip-template>
+                    {{ $chip.skill }}
+                </md-chip-template>
+            </md-chips>
+        </div>
+        <!--<div class="md-padding"> 
+                <h3>Skills To Remove</h3>
                 <ul>
                     <li ng-repeat="remove in sECtrl.skillsToRemove">
                         {{remove.skill}}
@@ -45,18 +67,15 @@
 		          	</md-button>
                     </li>
                 </ul>
-             </form>
-
-            <form name="updateAll" ng-submit="sECtrl.updateAll()" novalidate>
+        </div>-->
+        <form name="updateAll" ng-submit="sECtrl.updateAll()" novalidate>
              <md-input-container>
                  
                  <md-button type="submit" class="md-primary">Update Database</md-button>
                  <md-button type="button" class="md-accent" ng-click="sECtrl.cancel()">Cancel</md-button>
              </md-input-container>
             </form>
+
                 
-                
-            
-        </div>
 
 </div>

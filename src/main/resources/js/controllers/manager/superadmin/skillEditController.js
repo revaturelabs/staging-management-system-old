@@ -24,7 +24,6 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
         sec.getSkills =  getSkills;
         sec.addSkill = addSkill;
         sec.removeFromAddArray = removeFromAddArray;
-        sec.removeFromRemoveArray = removeFromRemoveArray;
         sec.addSkillToDB= addSkillToDB;
         sec.removeSkillFromDB = removeSkillFromDB;
         sec.addToRemoveList = addToRemoveList;
@@ -122,34 +121,25 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
             }
         }
 
+        /**
+         * @description Method to remove and item from the skillsToAdd array. 
+         */
         function removeFromAddArray(skill){
             
-            var index = sec.skillsToAdd.indexOf(skill);
-            if(index!=-1){
-                sec.skillsToAdd.splice(index, 1);
-            }
-            else {
+            //var index = sec.skillsToAdd.indexOf(skill);
+            // if(index!=-1){
+            //     sec.skillsToAdd.splice(index, 1);
+            // }
+            // else {
                 for (var i=0; i<sec.skillsToAdd.length; i++){
                     if (skill.skill.toLowerCase() == sec.skillsToAdd[i].skill.toLowerCase()){
                         //if the skills have the same skill name.
                         sec.skillsToAdd.splice(i, 1); //remove that skill from the add array.
-                    }
+                    // }
                 }
             }
-           
-            
-            
         }
 
-        function removeFromRemoveArray(skill){
-            
-            var index = sec.skillsToRemove.indexOf(skill);
-            if (index!=1){
-                sec.skillsToRemove.splice(index, 1);        
-                removeFromAddArray(skill);
-            }
-            
-        }
 
         function addToRemoveList(isValid, skill){
             if (isValid){
