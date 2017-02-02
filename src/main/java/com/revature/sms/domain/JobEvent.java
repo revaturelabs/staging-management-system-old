@@ -3,6 +3,7 @@ package com.revature.sms.domain;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +35,7 @@ public class JobEvent {
 	/**
 	 * JobAssignment object that represents the job that an associate has been assigned to.
 	 */
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="ASSIGNMENT")
 	private JobAssignment assignment;
 	

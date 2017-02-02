@@ -7,87 +7,94 @@
 	</md-toolbar>
 
 	<!-- list all child elements in a column -->
-	<div class="newAssociateGroup md-padding" layout="column">
+	<div class="newAssociateGroup md-padding" layout="column" ng-if="jACtrl.eventTypes != undefined">
 
-			<!-- wrap all data to be submitted -->
-			<form flex name="jobAdd" ng-submit="jACtrl.save(jobAdd.$valid)"
-				novalidate>
-				
-				<!-- make child elements in stack -->
-				<div layout="column" layout-align="space-between">
+		<!-- wrap all data to be submitted -->
+		<form flex name="jobAdd" ng-submit="jACtrl.save(jobAdd.$valid)"
+			novalidate>
+			
+			<!-- make child elements in stack -->
+			<div layout="column" layout-align="space-between">
+
+			<!-- input text for job location -->
+			<md-input-container flex> <label>
+				Company Name </label> <input id="companyName" type="text"
+				ng-model="jACtrl.companyName" required> </md-input-container>
+
+			<!-- list all child elements in a column -->
+			<div layout="row" layout-align="space-between center">
 
 				<!-- input text for job location -->
-				<md-input-container flex> <label>
-					Company Name </label> <input id="companyName" type="text"
-					ng-model="jACtrl.companyName" required> </md-input-container>
+				<md-input-container flex> <label> Company
+					Location </label> <input id="companyLocation" type="text"
+					ng-model="jACtrl.companylocation" required> </md-input-container>
 
-				<!-- list all child elements in a column -->
-				<div layout="row" layout-align="space-between center">
-
-					<!-- input text for job location -->
-					<md-input-container flex> <label> Company
-						Location </label> <input id="companyLocation" type="text"
-						ng-model="jACtrl.companylocation" required> </md-input-container>
-
-					<!-- input text for job title -->
-					<md-input-container flex> <label> Job
-						Title </label> <input id="jobTitle" type="text" ng-model="jACtrl.jobTitle"
-						required> </md-input-container>
-				</div>
+				<!-- input text for job title -->
+				<md-input-container flex> <label> Job
+					Title </label> <input id="jobTitle" type="text" ng-model="jACtrl.jobTitle"
+					required> </md-input-container>
 			</div>
-				
-				
-				
-				<div layout="row" layout-align="space-between center">
-					
-					<!-- input text for job location -->
-					<md-input-container flex> <label>
-						Event location </label> <input id="eventLocation" type="text"
-						ng-model="jACtrl.eventLocation" required> </md-input-container>
-				</div>
-
-
-				<div layout="row" layout-align="space-between center">
-
-					<!-- dropdown of type of job event -->
-					<md-input-container flex> 
-					<label>Event type </label> 
-						
-						<md-select ng-model="jACtrl.selectedEventType" required> 
-						
-						<md-option ng-value="eventType" ng-repeat="eventType in jACtrl.eventTypes"> 
-						{{eventType.type }} 
-						</md-option> 
-						
-						</md-select> 
-						</md-input-container>
-
-					<!-- enter the job event date -->
-					<md-input-container flex> 
-					<label>date</label> 
-					 <md-datepicker ng-model="jACtrl.selectedDate"
-						name="dateField" md-hide-icons="calendar" required> 
-						</md-datepicker> </md-input-container>
-
-				</div>
-
-
-				<div layout="row" layout-align="space-between center">
-
-					<!-- add a job event note -->
-					<md-input-container flex> <label> Note
-					</label> <textArea ng-model="jACtrl.note"></textArea> </md-input-container>
-
-				</div>
-
-				<!-- modal function buttons -->
-				<div layout="row" layout-align="end center">
-					<md-button type="submit" class="md-primary" aria-label="Submit All">
-					SUBMIT </md-button>
-					<md-button type="button" class="md-accent"
-						ng-click="jACtrl.cancel()" aria-label="Cancel"> CANCEL
-					</md-button>
-				</div>
-			</form>
 		</div>
+			
+			
+			
+			<div layout="row" layout-align="space-between center">
+				
+				<!-- input text for job location -->
+				<md-input-container flex> <label>
+					Event location </label> <input id="eventLocation" type="text"
+					ng-model="jACtrl.eventLocation" required> </md-input-container>
+			</div>
+
+
+			<div layout="row" layout-align="space-between center">
+
+				<!-- dropdown of type of job event -->
+				<md-input-container flex> 
+				<label>Event type </label> 
+					
+					<md-select ng-model="jACtrl.selectedEventType" required> 
+					
+					<md-option ng-value="eventType" ng-repeat="eventType in jACtrl.eventTypes"> 
+					{{eventType.type }} 
+					</md-option> 
+					
+					</md-select> 
+					</md-input-container>
+
+				<!-- enter the job event date -->
+				<md-input-container flex> 
+				<label>date</label> 
+				 <md-datepicker ng-model="jACtrl.selectedDate"
+					name="dateField" md-hide-icons="calendar" required> 
+					</md-datepicker> </md-input-container>
+
+			</div>
+
+
+			<div layout="row" layout-align="space-between center">
+
+				<!-- add a job event note -->
+				<md-input-container flex> <label> Note
+				</label> <textArea ng-model="jACtrl.note"></textArea> </md-input-container>
+
+			</div>
+
+			<!-- modal function buttons -->
+			<div layout="row" layout-align="end center">
+				<md-button type="submit" class="md-primary" aria-label="Submit All">
+				SUBMIT </md-button>
+				<md-button type="button" class="md-accent"
+					ng-click="jACtrl.cancel()" aria-label="Cancel"> CANCEL
+				</md-button>
+			</div>
+		</form>
+	</div>
+	
+	<div class="loadingContainer" ng-if="jACtrl.eventTypes == undefined" layout="column" layout-wrap layout-align="center center">
+         <div flex="100"> &nbsp; </div>
+         <md-progress-circular flex="100" class="md-accent" md-mode="indeterminate"> </md-progress-circular>
+         <div flex="100"> &nbsp; </div>
+     </div>
+                
 </div>

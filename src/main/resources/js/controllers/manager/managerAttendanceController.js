@@ -418,36 +418,6 @@
         			console.log(error);
         			console.log("Bad things.");
         		})
-        		
-//        		// loop through the selected users object length
-//        		for(var i = 0; i < mac.selectedUser.events.length;i++){
-//        			
-//        			// if we found the selected object
-//        			if(mac.selectedjob == mac.selectedUser.events[i]){
-//        				
-//        				// set the last element to  the current position
-//        				mac.selectedUser.events[i] = mac.selectedUser.events[mac.selectedUser.events.length-1]; 
-//        				
-//        				//pop the last element as to delete the job
-//        				mac.selectedUser.events.pop();
-//        				
-//        				//create a json object of the new user object
-//        				var sentData = mac.selectedUser.toJSON();
-//                    	
-//        				//update user object //TODO get to work
-//        	        	userService.update(sentData,function(){
-//        	        		
-//        	        		// set the selected job to null
-//            				mac.selectedjob = null;
-//        	        		
-//        	        		// prompt user
-//            				mac.toast("Job deleted");
-//        		    	});
-//        	        	
-//        				// we can end the loop if we finished early
-//        				break;
-//        			}
-//        		}
         	}
         }
         
@@ -460,17 +430,14 @@
             $mdDialog.show({
                 templateUrl: "html/templates/jobAdd.html",
                 controller: "jobAddCtrl as jACtrl",
+                locals: { "selectedUser": mac.selectedUser },
+                bindToController: true,
                 clickOutsideToClose: true,
                 escapeToClose: true
             }).then( function() {
-                $mdDialog.show({
-                    templateUrl: "html/templates/jobAddSuccess.html",
-                    controller: "jobAddSuccessCtrl as jASCtrl",
-                    locals: { "newAssociates": batchAddFactory.getNewAssociates() },
-                    bindToController: true
-                }).then( function(){
-                    batchAddFactory.resetAssociates();
-                });
+            	
+            	//prompt
+            	mac.toast("Job addition successful.");
             }, function() {
                 mac.toast("Job addition cancelled.");
             });
