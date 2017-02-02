@@ -537,10 +537,12 @@
         		
         		mac.selectedUser.events.splice( mac.selectedUser.events.indexOf(mac.selectedjob), 1 );
         		userService.update( mac.selectedUser, function() {
-        			console.log("Good things.");
+        			//prompt
+        			mac.toast("Job deleted.");
+        			mac.selectedjob = null;
         		}, function(error) {
-        			console.log(error);
-        			console.log("Bad things.");
+        			//prompt
+        			mac.toast("Error deleting job.");
         		})
         	}
         }
