@@ -4,6 +4,23 @@
     sms.controller( "jobAddCtrl", function( $scope, $mdDialog, userService, batchTypeService, batchAddFactory ) {
 	var jac = this;
 
+	 // functions
+	jac.getEventTypes = getEventTypes;
+	
+	
+	 // initialization
+	 jac.getEventTypes();
+	 
+	 // retrieves all Job Event Types
+	   function getEventTypes() {
+	    	jobEventTypeService.getAll(function(response) {
+	        	jac.eventType = response;
+	        	
+	        }, function() {
+	            
+	        });} 
+	 
+	 
 	  // functions
 	    // adds new associate to list
 
@@ -20,7 +37,8 @@
 			angular.element("#firstName").focus();
 		}
 	};
-
+	
+	
 	  // date settings
 	jac.selectedDate = new Date();
 	
