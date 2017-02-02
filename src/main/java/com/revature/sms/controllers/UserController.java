@@ -130,7 +130,7 @@ public class UserController {
 						HttpStatus.UNAUTHORIZED);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 			Logger.getRootLogger().debug("Exception while updating user info", e);
 			return new ResponseEntity<ResponseErrorEntity>(
 					new ResponseErrorEntity("Problem occurred while updating user info."), HttpStatus.NOT_FOUND);
