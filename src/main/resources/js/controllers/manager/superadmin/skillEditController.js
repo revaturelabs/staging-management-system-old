@@ -28,6 +28,7 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
         sec.removeSkillFromDB = removeSkillFromDB;
         sec.addToRemoveList = addToRemoveList;
         sec.updateAll = updateAll;
+        sec.inRemoveList = inRemoveList;
         sec.toast = toast;
         sec.cancel = cancel;
        
@@ -56,23 +57,32 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
          
                 var newSkill = {skill: skillName};
                 var index = findSkill(skillName);
-                console.log(index);
+                
                 if (index == -1){
                     sec.skillsToAdd.push(newSkill);
                     sec.newSkillAdd = "";
 
                 }
-               
-               
-                
-
             }
+        }
+        /**
+         * @description Check to see if a skill is in the return list
+         * @return {boolean} Value that matches if item is in the skilsToRemove list already or not.
+         */
+        function inRemoveList(skill){
+            for (var i=0; i<sec.skillsToRemove.length; i++){
+                if (sec.skillsToRemove[i].skill == skill.skill){
+                    return true;
+                }
+            }
+            return false;
         }
 
         function findSkill(skillName){
             //checks to see if skill is already in database.
             for (var i=0; i<sec.currentSkills.length; i++){
-                if (sec.currentSkills[i].skill.toLowerCase() == skillName.toLowerCase()){
+                if (sec.currentSkills[i].skill.toLowerCase() == skillName.toLowerCase()
+                && !sec.inRemoveList(sec.currentSkills[i])){
                     sec.toast("Skill is already in the database.");
                     return i;
 
@@ -81,7 +91,9 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
             }
             //checks to see if skill is already going to be added.
             for (i=0; i<sec.skillsToAdd.length; i++){
-                if (sec.skillsToAdd[i].skill.toLowerCase() == skillName.toLowerCase()){
+                if (sec.skillsToAdd[i].skill.toLowerCase() == skillName.toLowerCase() &&
+                !sec.inRemoveList(sec.skillsToAdd[i]))
+                {
                     sec.toast("Skill is already going to be added.");
                     return i;
                 }
@@ -124,16 +136,16 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
 
          function updateAll(){
             
-            if (sec.skillsToAdd.length>0 || sec.skillsToRemove > 0){
-                addSkillsToDB();
+            if (sec.skillsToAdd.length>0 || sec.skillsToRemove.length > 0){
                 removeSkillsFromDB();
+                addSkillsToDB();
                 sec.getSkills();
                 
                 sec.toast("Skill updates successful.");
                 $mdDialog.hide();
             }
             else {
-                //stuff
+                sec.toast("Either create a new skill or delete an existing skill.");
             }
         }
 
@@ -143,8 +155,6 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
          */
          function removeSkillFromDB(skillName){
          
-                        
-                
                 skillService.remove(skillName, function(){
                     sec.selected = '';
                     sec.getSkills();
@@ -157,9 +167,10 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
         }
 
         function removeSkillsFromDB(){
+            
             if (sec.skillsToRemove.length >0 ){
                 var skill = sec.skillsToRemove.pop();
-                removeSkillFromDB(skill);
+                removeSkillFromDB(skill.skill);
                 removeSkillsFromDB();
             }
         }
