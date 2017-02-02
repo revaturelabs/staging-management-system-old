@@ -14,6 +14,7 @@ sms.filter("taskFilter", function($filter){
 			user.notification.number = 0;
 			user.panels = [];
 			user.certs = [];
+			user.projects = [];
 			user.tasks.forEach(function(task){
 				thisTask = {};
 				thisTask.type = task.taskType.type;
@@ -43,8 +44,10 @@ sms.filter("taskFilter", function($filter){
 				}
 				if(thisTask.type == "Certification"){
 					user.certs.push(thisTask);
-				}else{
+				}else if(thisTask.type == "Panel"){
 					user.panels.push(thisTask);
+				}else{
+					user.projects.push(thisTask);
 				}
 			})
 			//set up notifications for upcoming events
