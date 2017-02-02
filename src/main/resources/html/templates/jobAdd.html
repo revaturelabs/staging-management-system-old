@@ -3,20 +3,17 @@
 
 	<!-- modal title -->
 	<md-toolbar>
-	<div class="md-toolbar-tools">Add Jobs to Selected associate by
-		batch</div>
+	<div class="md-toolbar-tools">New job event</div>
 	</md-toolbar>
 
-
+	<!-- list all child elements in a column -->
 	<div class="newAssociateGroup md-padding" layout="column">
 
-		<div class="md-padding" layout="column">
-
 			<!-- wrap all data to be submitted -->
-			<form flex name="batchAdd" ng-submit="jACtrl.save(batchAdd.$valid)"
+			<form flex name="jobAdd" ng-submit="jACtrl.save(jobAdd.$valid)"
 				novalidate>
 				
-				
+				<!-- make child elements in stack -->
 				<div layout="column" layout-align="space-between">
 
 				<!-- input text for job location -->
@@ -24,27 +21,28 @@
 					Company Name </label> <input id="companyName" type="text"
 					ng-model="jACtrl.companyName" required> </md-input-container>
 
+				<!-- list all child elements in a column -->
 				<div layout="row" layout-align="space-between center">
 
 					<!-- input text for job location -->
 					<md-input-container flex> <label> Company
-						Location </label> <input id="jobLocation" type="text"
-						ng-model="jACtrl.jobAssignmentlocation" required> </md-input-container>
+						Location </label> <input id="companyLocation" type="text"
+						ng-model="jACtrl.companylocation" required> </md-input-container>
 
 					<!-- input text for job title -->
 					<md-input-container flex> <label> Job
 						Title </label> <input id="jobTitle" type="text" ng-model="jACtrl.jobTitle"
 						required> </md-input-container>
-
 				</div>
 			</div>
 				
 				
-
+				
 				<div layout="row" layout-align="space-between center">
+					
 					<!-- input text for job location -->
 					<md-input-container flex> <label>
-						Event Location </label> <input id="eventLocation" type="text"
+						Event location </label> <input id="eventLocation" type="text"
 						ng-model="jACtrl.eventLocation" required> </md-input-container>
 				</div>
 
@@ -52,17 +50,24 @@
 				<div layout="row" layout-align="space-between center">
 
 					<!-- dropdown of type of job event -->
-					<md-input-container flex> <label> Job
-						event type </label> <md-select ng-model="jACtrl.selectedBatchType"
-						required> <md-option ng-value="jobType"
-						ng-repeat="jobType in jACtrl.jobEventTypes"> {{
-					jobType.type }} </md-option> </md-select> </md-input-container>
+					<md-input-container flex> 
+					<label>Event type </label> 
+						
+						<md-select ng-model="jACtrl.selectedEventType" required> 
+						
+						<md-option ng-value="eventType" ng-repeat="eventType in jACtrl.eventTypes"> 
+						{{eventType.type }} 
+						</md-option> 
+						
+						</md-select> 
+						</md-input-container>
 
 					<!-- enter the job event date -->
-					<md-input-container flex> <label>Job
-						event date</label> <md-datepicker ng-model="jACtrl.selectedDate"
-						name="dateField" md-hide-icons="calendar" md-date-filter=""
-						required> </md-datepicker> </md-input-container>
+					<md-input-container flex> 
+					<label>date</label> 
+					 <md-datepicker ng-model="jACtrl.selectedDate"
+						name="dateField" md-hide-icons="calendar" required> 
+						</md-datepicker> </md-input-container>
 
 				</div>
 
@@ -84,9 +89,5 @@
 					</md-button>
 				</div>
 			</form>
-
 		</div>
-
-	</div>
-
 </div>
