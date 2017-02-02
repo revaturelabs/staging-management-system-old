@@ -5,7 +5,8 @@
      /**
       * @description AngularJs controller for Manager attendance module (both versions of Admins)
       */   
-    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, marketingStatusService, batchAddFactory, weekdays ) {
+
+    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, taskTypeService, marketingStatusService, batchAddFactory, weekdays ) {
        /**@prop {function} Reference variable for this controller */
         var mac = this;
 
@@ -13,19 +14,25 @@
             // data
         /**@prop {object} user Currently logged in user. */
         mac.user = loginService.getUser();
+        /**@prop [Array] of {object} taskTypes Types currently used in DB. */
+        mac.taskTypes = [];
         /**@prop {Date} curr Date of the currently selected week. */
         mac.curr = new Date();
         /**@prop {Date} today Today's date. */
         mac.today = mac.curr;
-         /**@prop {Date} minWeek The earliest week that can be looked at.. */
+        /**@prop {Date} minWeek The earliest week that can be looked at.. */
         mac.minWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() - 28 ); 
-         /**@prop {Date} maxWeek The latest week that can be looked at. */
+        /**@prop {Date} maxWeek The latest week that can be looked at. */
         mac.maxWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() + 7 );
-         /**@prop {boolean} infoOpen Variable that tells if the info tabs are open or not. */
+        /**@prop {boolean} infoOpen Variable that tells if the info tabs are open or not. */
         mac.infoOpen = false;
+        /**@prop {boolean} panelDatePickerIsOpen Variable that tells if the panel calendar is open. */
+        mac.panelDatePickerIsOpen = false;
+        /**@prop {Date} panelDate The date of the panel, binded so it shows up on panel calendar */
+        mac.panelDate = new Date();
         mac.markBind = "";
         
-
+        
             // functions
         mac.findDevice = findDevice;
         mac.getUsers = getUsers;
@@ -49,12 +56,23 @@
         mac.days_between = days_between;
         /**@var {function} editCert function reference variable. */
         mac.updateCert = updateCert;
+        /**@var {function} togglePanelDatePicker function reference variable. */
+        mac.togglePanelDatePicker = togglePanelDatePicker;
+        /**@var {function} editPanel function reference variable. */
+        mac.updatePanelDate = updatePanelDate;
+        /**@var {function} togglePanelStatus function reference variable. */
+        mac.togglePanelStatus = togglePanelStatus;
+        /**@var {function} createPanel function reference variable. */
+        mac.createPanel = createPanel;
+        /**@var {function} getTaskTypes function reference variable. */
+        mac.getTaskTypes = getTaskTypes;
 
 
 
           // initialization
         mac.findDevice();
         mac.getUsers();
+        mac.getTaskTypes();
         mac.setToolbar();
         mac.marketingStatuses();
         
@@ -91,7 +109,7 @@
         }
             // gets all users' information
         /**
-         * @description Retrieves the information for all users from teh server.
+         * @description Retrieves the information for all users from the server.
          */
         function getUsers( success ) {
             userService.getAll( function(response) {
@@ -119,6 +137,10 @@
 
             mac.users.forEach( function(user) {
                 mac.filterWeek( monday, user );
+                if ( ( mac.selectedUser ) && ( user.username == mac.selectedUser.username ) ) {
+                	mac.selectedUser = user;
+                	mac.panelDate = new Date(user.panels[0].date);
+                }
             });
         }
 
@@ -155,12 +177,20 @@
                     mac.selectedUser = null;
                 } else {
                     mac.selectedUser = user;
-                
+                    mac.panelDatePickerIsOpen = false;
+                    if(user.panels[0].date){
+	                    mac.panelDate = user.panels[0].date;
+	                    mac.panelDate = new Date(user.panels[0].date);
+                    }
                 }
             } else {
                 mac.infoOpen = true;
+                mac.panelDatePickerIsOpen = false;
                 mac.selectedUser = user;
-               
+                if(user.panels[0].date){
+                    mac.panelDate = user.panels[0].date;
+                    mac.panelDate = new Date(user.panels[0].date);
+                }
             }
         }
 
@@ -212,6 +242,7 @@
                     mac.toast("Attendance updated.");
                    
                     mac.getUsers();
+                    mac.users = $filter( "taskFilter" )( mac.users, mac.today );
                 }, function() {
                     mac.toast("Could not udpdate attendance.")
                 });
@@ -349,6 +380,97 @@
             });
 
 		}
+		
+		/**
+         * @description Called when a superAdmin clicks on panel date text, opens a datePicker.
+         */
+		function togglePanelDatePicker(){
+			mac.panelDatePickerIsOpen = !mac.panelDatePickerIsOpen;
+		}
+		
+		/**
+         * @description Called when a superAdmin selects a panel date on the datePicker.
+         */
+		function updatePanelDate(user, panel){
+			user.tasks.forEach(function(task){
+				if(task.id == panel.id){
+					task.date = mac.panelDate;
+					
+					userService.update( user, function(){
+						mac.toast("Panel date is updated");
+						mac.getUsers();
+						mac.panelDatePickerIsOpen = false;
+					}, function(error){
+						mac.toast("Failed to update panel date");
+					});
+				}
+			})
+		}
+		
+		/**
+         * @description Called when a superAdmin switches between panel statuses.
+         */
+		function togglePanelStatus(user, panel, status){
+			if(status != panel.passed) {
+				user.tasks.forEach(function(task){
+					if(task.id == panel.id){
+						task.passed = status;
+						
+						if(task.passed == true){
+							task.date = new Date();
+							task.date.setDate(task.date.getDate()-1);
+						}
+						
+						userService.update( user, function(){
+							mac.toast("Panel passed updated to "+status);
+							mac.getUsers();
+						}, function(error){
+							mac.toast("Failed to update panel status");
+						});
+					}
+				})
+			}
+		}
+		
+		/**
+         * @description Called when a superAdmin clicks on the create panel icon.
+         */
+		function createPanel(user){
+			
+			panel = {};
+			panel.date = new Date();
+			panel.note = "no note";
+			panel.passed = false;
+			
+			panel.taskType = {};
+			mac.taskTypes.forEach(function(taskType){
+				if(taskType.type.toLowerCase() == "panel"){
+					panel.taskType = taskType;
+				}
+			})
+			
+			user.tasks.push(panel);
+			
+			userService.update( user, function() {
+                mac.toast("Panel created.");
+                
+                mac.getUsers();
+            }, function(response) {
+                mac.toast("Failed to create panel");
+            });
+		}
+		
+		/**
+         * @description Retrieves the taskTypes from the DB.
+         */
+        function getTaskTypes( success ) {
+            taskTypeService.getAll( function(response) {
+                mac.taskTypes = response;
+            }, function(error) {
+                mac.toast("Error retrieving all task types.");
+            });
+        }
+		
 
             // adds a leading zero to input if necessary
         function padZero( input ) {
@@ -374,8 +496,6 @@
          */
         function calcMarketingDays(){
         	return " " + mac.days_between(mac.curr, ((new Date(mac.selectedUser.graduationDate)))) + " days";
-        	
-        	
         }
         
         /**
