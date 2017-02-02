@@ -72,7 +72,7 @@ public class UserController {
 	public @ResponseBody Object createUser(@RequestHeader(value = "Authorization") String token,
 			@RequestBody UserDTO userDTO) {
 
-		// System.out.println("UserDTO username: " + userDTO.getUsername());
+		
 		try {
 			// validate token and create user
 			if (isValid(token) && isSuperAdmin(role)) {
