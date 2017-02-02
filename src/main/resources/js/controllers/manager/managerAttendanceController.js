@@ -5,7 +5,7 @@
      /**
       * @description AngularJs controller for Manager attendance module (both versions of Admins)
       */   
-    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, marketingStatusService,jobEventTypeService, batchAddFactory, weekdays ) {
+    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, marketingStatusService, batchAddFactory, weekdays ) {
        /**@prop {function} Reference variable for this controller */
         var mac = this;
 

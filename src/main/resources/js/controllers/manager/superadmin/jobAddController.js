@@ -1,7 +1,7 @@
   
     var sms = angular.module("sms");
 
-    sms.controller( "jobAddCtrl", function( $scope, $mdDialog, userService, batchTypeService, batchAddFactory ) {
+    sms.controller( "jobAddCtrl", function( $scope, $mdDialog, userService,jobEventTypeService, batchTypeService, batchAddFactory ) {
 	var jac = this;
 
 	 // functions
@@ -12,6 +12,7 @@
 	 jac.getEventTypes();
 	 
 	 // retrieves all Job Event Types
+	 // hope you get a merge conflict kid
 	   function getEventTypes() {
 	    	jobEventTypeService.getAll(function(response) {
 	        	jac.eventType = response;
