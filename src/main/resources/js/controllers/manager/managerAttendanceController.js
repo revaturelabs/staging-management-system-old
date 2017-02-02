@@ -119,12 +119,12 @@
         /**
          * @description Retrieves the information for all users from the server.
          */
-        function getUsers( success ) {
+        function getUsers() {
             userService.getAll( function(response) {
                 mac.users = $filter( "associateFilter" )( response );
                 mac.users = $filter( "taskFilter" )( mac.users, mac.today );
                 mac.calcWeek( mac.curr );
-            }, function(error) {
+            }, function() {
                 mac.toast("Error retrieving all users.");
             });
         }
@@ -371,7 +371,7 @@
 						mac.toast("Panel date is updated");
 						mac.getUsers();
 						mac.panelDatePickerIsOpen = false;
-					}, function(error){
+					}, function(){
 						mac.toast("Failed to update panel date");
 					});
 				}
@@ -395,7 +395,7 @@
 						userService.update( user, function(){
 							mac.toast("Panel passed updated to "+status);
 							mac.getUsers();
-						}, function(error){
+						}, function(){
 							mac.toast("Failed to update panel status");
 						});
 					}
@@ -426,7 +426,7 @@
                 mac.toast("Panel created.");
                 
                 mac.getUsers();
-            }, function(response) {
+            }, function() {
                 mac.toast("Failed to create panel");
             });
 		}
@@ -434,10 +434,10 @@
 		/**
          * @description Retrieves the taskTypes from the DB.
          */
-        function getTaskTypes( success ) {
+        function getTaskTypes() {
             taskTypeService.getAll( function(response) {
                 mac.taskTypes = response;
-            }, function(error) {
+            }, function() {
                 mac.toast("Error retrieving all task types.");
             });
         }
@@ -540,7 +540,7 @@
         			//prompt
         			mac.toast("Job deleted.");
         			mac.selectedjob = null;
-        		}, function(error) {
+        		}, function() {
         			//prompt
         			mac.toast("Error deleting job.");
         		})
