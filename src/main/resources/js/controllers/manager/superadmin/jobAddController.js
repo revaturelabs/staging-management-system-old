@@ -48,11 +48,8 @@
     		
     		// update the selected user
     		userService.update( jac.selectedUser, function() {
-    			console.log("super Good things.");
     			$mdDialog.hide();
     		}, function(error) {
-    			console.log(error);
-    			console.log(" super Bad things.");
     			$mdDialog.cancel();
     		})
     		
