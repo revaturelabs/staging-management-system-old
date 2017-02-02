@@ -9,9 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -37,13 +35,13 @@ public class AssociateT extends AbstractT {
 	@Test
 	public void testCancelButtons() {
 		lp.login(un, pw);
-		// asp.carefulClick("certification");
-		// scw.carefulClick("cancel");
-		asp.carefulClick("settings");
-		sw.carefulClick("cancel");
-		asp.carefulClick("reportBug");
+		// asp.click("certification");
+		// scw.click("cancel");
+		asp.settings.click();
+		sw.cancel.click();
+		asp.reportBug.click();
 		driver.switchTo().frame("atlwdg-frame");
-		rbw.carefulClick("cancel");
+		rbw.cancel.click();
 	}
 
 	//Makes sure the current week is shown on the associate page when you log in.
@@ -71,14 +69,14 @@ public class AssociateT extends AbstractT {
 		String notChecked = expected.getProperty("notCheckedIn");
 		String text = asp.checkincheckout.getText();
 		Assert.assertEquals(notChecked, text);
-		asp.carefulClick("checkincheckout");
+		asp.checkincheckout.click();
 		text = asp.checkincheckout.getText();
-		Assert.assertEquals(checked, text);
-		asp.carefulClick("checkincheckout");
+		Assert.assertEquals(checked, text);   //This line appears to fail when there is not enough wait time after a click
+		asp.checkincheckout.click();
 		driver.findElement(By.xpath("/html/body/div[5]/md-dialog/md-dialog-actions/button[1]")).click();
 		text = asp.checkincheckout.getText();
 		Assert.assertEquals(checked, text);
-		asp.carefulClick("checkincheckout");
+		asp.checkincheckout.click();
 		driver.findElement(By.xpath("/html/body/div[5]/md-dialog/md-dialog-actions/button[2]")).click();
 		text = asp.checkincheckout.getText();
 		Assert.assertEquals(notChecked, text);
@@ -142,7 +140,7 @@ public class AssociateT extends AbstractT {
 				Assert.assertEquals(es, as);
 			}
 
-			asp.carefulClick("prevWeek");
+			asp.prevWeek.click();
 			weekBefore = asp.weekOf.getText();
 		} while (!week.equals(weekBefore));
 	}
@@ -151,7 +149,7 @@ public class AssociateT extends AbstractT {
 	@Test
 	public void testAddSkill() {
 		lp.login(un, pw);
-		asp.carefulClick("settings");
+		asp.settings.click();
 		Assert.assertTrue(sw.verify());
 		
 		ArrayList<String> expectedSkills = new ArrayList<String>();
@@ -160,11 +158,11 @@ public class AssociateT extends AbstractT {
 		expectedSkills.add(inputs.getProperty("pythonSkill"));
 		
 		sw.chooseSkill(expectedSkills.get(0));
-		sw.carefulClick("addSkill");
+		sw.addSkill.click();
 		sw.chooseSkill(expectedSkills.get(1));
-		sw.carefulClick("addSkill");
+		sw.addSkill.click();
 		sw.chooseSkill(expectedSkills.get(2));
-		sw.carefulClick("addSkill");
+		sw.addSkill.click();
 		
 		List<WebElement> addedSkillList = sw.getAddedSkills();
 		int i=0;
@@ -176,8 +174,8 @@ public class AssociateT extends AbstractT {
 			i++;
 		}
 		
-		sw.carefulClick("saveSkills");
-		sw.carefulClick("cancel");
+		sw.saveSkills.click();
+		sw.cancel.click();
 		Assert.assertTrue(asp.verify());
 		
 		User user = ur.findByUsername(un);
@@ -193,7 +191,7 @@ public class AssociateT extends AbstractT {
 		Collections.sort(actualSkills);
 		Assert.assertEquals(expectedSkills, actualSkills);
 		
-		asp.carefulClick("settings");
+		asp.settings.click();
 		Assert.assertTrue(sw.verify());
 		
 		
@@ -201,8 +199,8 @@ public class AssociateT extends AbstractT {
 		for (WebElement icon:deletionIcons) {
 			icon.click();
 		}
-		sw.carefulClick("saveSkills");
-		sw.carefulClick("cancel");
+		sw.saveSkills.click();
+		sw.cancel.click();
 		Assert.assertTrue(asp.verify());
 		
 		
@@ -230,10 +228,10 @@ public class AssociateT extends AbstractT {
 	@Test
 	public void testCertificationScheduling() {
 	 	lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
-		asp.carefulClick("certification"); Assert.assertTrue(scw.verify());
+		asp.click("certification"); Assert.assertTrue(scw.verify());
 		scw.enterDate.sendKeys(inputs.getProperty("certDate"));
 		scw.enterNote.sendKeys(inputs.getProperty("certNote"));
-		scw.carefulClick("submit"); }
+		scw.click("submit"); }
 	*/
 	
 

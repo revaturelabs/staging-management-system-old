@@ -1,7 +1,5 @@
 package com.revature.sms;
 
-import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class SuperAdminT extends AdminT  {	
@@ -9,13 +7,13 @@ public class SuperAdminT extends AdminT  {
 	@Test
 	public void testCancelButtons() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("PW"));
-		sap.carefulClick("addBatch");
-		cbw.carefulClick("cancel");
-		sap.carefulClick("settings");
-		sw.carefulClick("cancel");
-		sap.carefulClick("reportBug");
+		sap.addBatch.click();
+		cbw.cancel.click();
+		sap.settings.click();
+		sw.cancel.click();
+		sap.reportBug.click();
 		driver.switchTo().frame("atlwdg-frame");
-		rbw.carefulClick("cancel");
+		rbw.cancel.click();
 	}	
 	
 	//The submit button in the batch creation window seems to be disabled. Until it works again, this
@@ -25,16 +23,16 @@ public class SuperAdminT extends AdminT  {
 	public void testBatchCreation() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
 		
-		sap.carefulClick("addBatch");
+		sap.addBatch.click();
 		Assert.assertTrue(cbw.verify());
 		cbw.firstName.sendKeys(inputs.getProperty("firstName"));
 		cbw.lastName.sendKeys(inputs.getProperty("lastName"));
-		cbw.carefulClick("addToList");
+		cbw.addToList.click();
 		cbw.firstName.sendKeys(inputs.getProperty("firstName2"));
 		cbw.lastName.sendKeys(inputs.getProperty("lastName2"));
-		cbw.carefulClick("addToList");
+		cbw.addToList.click();
 		
-		cbw.carefulClick("curriculum");
+		cbw.curriculum.click();
 		ArrayList<WebElement> elements = (ArrayList<WebElement>) driver.findElements(By.xpath("//*[@class=\"md-text ng-binding\"]"));
 		for (WebElement e:elements) {
 			String text = e.getText();
@@ -45,7 +43,7 @@ public class SuperAdminT extends AdminT  {
 		
 		cbw.enterDate.clear();
 		cbw.enterDate.sendKeys(inputs.getProperty("batchStartDate"));
-		cbw.carefulClick("submit");
+		cbw.submit.click();
 		//driver.findElement(By.xpath("//*[@id=\"dialogContent_12\"]/div/div/button")).click();
 	}
 	*/

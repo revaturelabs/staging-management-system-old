@@ -1,20 +1,14 @@
 package com.revature.sms;
 
-import static org.assertj.core.api.Assertions.withPrecision;
-
-import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.After;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,29 +128,29 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		String pw2 = inputs.getProperty("PW2");
 		
 		lp.login(un, pw);
-		hp.carefulClick("settings");
+		hp.settings.click();
 		Assert.assertTrue(sw.verify());
 		sw.oldPass.sendKeys(pw);
 		sw.newPass.sendKeys(pw2);
 		sw.confirmPass.sendKeys(pw2);
-		sw.carefulClick("submit");
-		hp.carefulClick("logout");
+		sw.submit.click();
+		hp.logout.click();
 
 		lp.login(un, pw2);
-		hp.carefulClick("settings");
+		hp.settings.click();
 		Assert.assertTrue(sw.verify());
 		sw.oldPass.sendKeys(pw2);
 		sw.newPass.sendKeys(pw);
 		sw.confirmPass.sendKeys(pw);
-		sw.carefulClick("submit");
-		hp.carefulClick("logout");
+		sw.submit.click();
+		hp.logout.click();
 	}
 	
 	
 	@Test
 	public void testBugReport() {
 		lp.login(un, pw);
-		hp.carefulClick("reportBug");
+		hp.reportBug.click();
 		driver.switchTo().frame("atlwdg-frame");
 
 		Assert.assertTrue(rbw.verify());
@@ -173,7 +167,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		lp.login(un, pw);
 		Assert.assertTrue(hp.verify());
 		Assert.assertEquals(ev, hp.header.getText());
-		hp.carefulClick("logout");
+		hp.logout.click();
 		Assert.assertTrue(lp.verify());
 	}
 	
@@ -181,7 +175,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	@After
 	public void after() {
 		if (hp.verify()) {
-			hp.carefulClick("logout");
+			hp.logout.click();
 		}
 	}
 	
