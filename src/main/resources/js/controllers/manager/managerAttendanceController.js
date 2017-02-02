@@ -58,6 +58,8 @@
 
         mac.deleteSelectedJob = deleteSelectedJob;
         
+        mac.makenewjob = makenewjob;
+        
           // initialization
         mac.findDevice();
         mac.getUsers();
@@ -343,9 +345,15 @@
          * @returns {number} Number of days between the graduation date and today
          */
         function calcMarketingDays(){
-        	return " " + mac.days_between(mac.curr, ((new Date(mac.selectedUser.graduationDate)))) + " days";
-        	
-        	
+        	if (mac.selectedUser) {
+	        	if(mac.selectedUser.graduationDate == null){
+	        		return "N/A";
+	        	}
+	        	else{
+	
+	        		return " " + mac.days_between(mac.curr, ((new Date(mac.selectedUser.graduationDate)))) + " days";	
+	        	}
+        	}
         }
         
         /**
@@ -402,34 +410,72 @@
         function deleteSelectedJob(){
         	
         	// if we have a selected job and user
-        	if(mac.selectedjob != null && mac.selectedUser != null){
+        	if( ( mac.selectedjob != undefined ) && ( mac.selectedUser != undefined ) ) {
         		
-        		// loop through the selected users object length
-        		for(var i = 0; i < mac.selectedUser.events.length;i++){
-        			
-        			// if we found the selected object
-        			if(mac.selectedjob == mac.selectedUser.events[i]){
-        				
-        				// set the last element to  the current position
-        				mac.selectedUser.events[i] = mac.selectedUser.events[mac.selectedUser.events.length-1]; 
-        				
-        				//pop the last element as to delete the job
-        				mac.selectedUser.events.pop();
-        				
-        				//create a json object of the new user object
-        				var sentData = mac.selectedUser.toJSON();
-                    	
-        				//update user object
-        	        	userService.update(sentData,function(){
-        	        		
-        	        		// prompt user
-            				mac.toast("Job deleted");
-        		    	});
-        				
-        				// we can end the loop if we finished early
-        				break;
-        			}
-        		}
+        		mac.selectedUser.events.splice( mac.selectedUser.events.indexOf(mac.selectedjob), 1 );
+        		userService.update( mac.selectedUser, function() {
+        			console.log("Good things.");
+        		}, function(error) {
+        			console.log(error);
+        			console.log("Bad things.");
+        		})
+        		
+//        		// loop through the selected users object length
+//        		for(var i = 0; i < mac.selectedUser.events.length;i++){
+//        			
+//        			// if we found the selected object
+//        			if(mac.selectedjob == mac.selectedUser.events[i]){
+//        				
+//        				// set the last element to  the current position
+//        				mac.selectedUser.events[i] = mac.selectedUser.events[mac.selectedUser.events.length-1]; 
+//        				
+//        				//pop the last element as to delete the job
+//        				mac.selectedUser.events.pop();
+//        				
+//        				//create a json object of the new user object
+//        				var sentData = mac.selectedUser.toJSON();
+//                    	
+//        				//update user object //TODO get to work
+//        	        	userService.update(sentData,function(){
+//        	        		
+//        	        		// set the selected job to null
+//            				mac.selectedjob = null;
+//        	        		
+//        	        		// prompt user
+//            				mac.toast("Job deleted");
+//        		    	});
+//        	        	
+//        				// we can end the loop if we finished early
+//        				break;
+//        			}
+//        		}
         	}
         }
+        
+        //................................
+     // adds associates by batch
+		function makenewjob() {
+            
+              // opens a dialog to allows addition of a new batch of associates
+                // opens another dialog upon success to show added associates' info
+            $mdDialog.show({
+                templateUrl: "html/templates/jobAdd.html",
+                controller: "jobAddCtrl as jACtrl",
+                clickOutsideToClose: true,
+                escapeToClose: true
+            }).then( function() {
+                $mdDialog.show({
+                    templateUrl: "html/templates/jobAddSuccess.html",
+                    controller: "jobAddSuccessCtrl as jASCtrl",
+                    locals: { "newAssociates": batchAddFactory.getNewAssociates() },
+                    bindToController: true
+                }).then( function(){
+                    batchAddFactory.resetAssociates();
+                });
+            }, function() {
+                mac.toast("Job addition cancelled.");
+            });
+        }
+        //..............................
+        
     }
