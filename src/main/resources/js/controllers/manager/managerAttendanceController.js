@@ -5,7 +5,7 @@
      /**
       * @description AngularJs controller for Manager attendance module (both versions of Admins)
       */   
-    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, batchAddFactory, weekdays ) {
+    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, marketingStatusService, batchAddFactory, weekdays ) {
        /**@prop {function} Reference variable for this controller */
         var mac = this;
 
@@ -23,32 +23,26 @@
         mac.maxWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() + 7 );
          /**@prop {boolean} infoOpen Variable that tells if the info tabs are open or not. */
         mac.infoOpen = false;
+        mac.markBind = "";
+        
 
             // functions
-        /**@var {function} findDevice function reference variable. */
         mac.findDevice = findDevice;
-        /**@var {function} getUsers function reference variable. */
         mac.getUsers = getUsers;
-        /**@var {function} calcWeek function reference variable. */
         mac.calcWeek = calcWeek;
-        /**@var {function} filterWeek function reference variable. */
         mac.filterWeek = filterWeek;
-        /**@var {function} toggleInfo function reference variable. */
         mac.toggleInfo = toggleInfo;
-        /**@var {function} closeInfo function reference variable. */
         mac.closeInfo = closeInfo;
-        /**@var {function} verify function reference variable. */
         mac.verify = verify;
-        /**@var {function} setToolbar function reference variable. */
         mac.setToolbar = setToolbar;
-        /**@var {function} prevWeek function reference variable. */
         mac.prevWeek = prevWeek;
-        /**@var {function} nextWeek function reference variable. */
         mac.nextWeek = nextWeek;
-        /**@var {function} toast function reference variable. */
         mac.toast = toast;
-        /**@var {function} newAssociates function reference variable. */
         mac.newAssociates = newAssociates;
+
+        mac.marketingStatuses = marketingStatuses;
+        mac.changeStatus = changeStatus;
+
         /**@var {function} calcMarketingDays function reference variable. */
         mac.calcMarketingDays = calcMarketingDays;
         /**@var {function} days_between function reference variable. */
@@ -57,10 +51,32 @@
         mac.updateCert = updateCert;
 
 
+
           // initialization
         mac.findDevice();
         mac.getUsers();
         mac.setToolbar();
+        mac.marketingStatuses();
+        
+        // function
+        /**
+         * @description Updates user Marketing Status.
+         */
+        function changeStatus() {
+        	     	
+        	
+        	mac.selectedUser.marketingStatus
+        	= mac.markBind;
+        
+        	var sentData = mac.selectedUser.toJSON();
+                	
+        	userService.update(sentData,function(){
+	    		mac.toast("Marketing Status Updated");
+	    	    	});
+        	
+        
+        }
+        
         
           // functions
             /**
@@ -139,10 +155,12 @@
                     mac.selectedUser = null;
                 } else {
                     mac.selectedUser = user;
+                
                 }
             } else {
                 mac.infoOpen = true;
                 mac.selectedUser = user;
+               
             }
         }
 
@@ -166,16 +184,7 @@
                     var attDate = new Date(attendance.date);
                     if ( (attDate.getFullYear() == selectedDay.getFullYear() && attDate.getMonth() == selectedDay.getMonth() && attDate.getDate() == selectedDay.getDate() ) ) {
                         if (attendance.verified) {
-                                // issue with this not showing the updated attendance until another update is made
-                                  // will work out later
-                            // var confirm = $mdDialog.confirm()
-                            //     .title("Are you sure you want to retract attendance verification?")
-                            //     .ok("YES")
-                            //     .cancel("CANCEL");
-                            // $mdDialog.show(confirm).then(function() {
-                            //     attendance.verified = false;
-                            //     attendance.note = "Unverified";
-                            // });
+                  
                             attendance.verified = false;
                         } else {
                             attendance.verified = true;
@@ -201,7 +210,7 @@
                 }
                 userService.update( user, function() {
                     mac.toast("Attendance updated.");
-                    // mac.calcWeek( mac.curr );
+                   
                     mac.getUsers();
                 }, function() {
                     mac.toast("Could not udpdate attendance.")
@@ -313,6 +322,15 @@
             }
         }
         
+
+        function marketingStatuses() {
+	        marketingStatusService.getAll(function(response) {
+	        	mac.mStatuses = response;
+	        	
+	        }, function() {
+	            
+	        });}
+
         /**
          * @description calls a function that Determines the difference between the two supplied dates.
          * @returns {number} Number of days between the graduation date and today
@@ -343,6 +361,7 @@
 
             // Convert back to days and return
             return Math.round(difference_ms/ONE_DAY)
+
 
         }
     }
