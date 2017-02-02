@@ -31,8 +31,5 @@ public class CreateBatchWindow extends SMSPage {
 	public CreateBatchWindow(WebDriver driver) {
 		super(driver);
 	}
-
-	
-	
 	
 }

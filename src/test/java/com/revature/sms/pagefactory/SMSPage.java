@@ -6,11 +6,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 
 //Defines a constructor and methods that should be implemented by all page objects in the testing framework
 public abstract class SMSPage {
@@ -45,7 +43,6 @@ public abstract class SMSPage {
 				}
 			} catch (ClassCastException e) {
 				try {
-					
 					fieldValues = (List<WebElement>) fields[i].get(this);
 					for (WebElement f:fieldValues) {
 						result = verifyField(f);
@@ -76,6 +73,8 @@ public abstract class SMSPage {
 		return true;
 	}
 		
+	
+	/*
 	public void carefulClick(String fieldName) {
 		Class<? extends SMSPage> thisClass = this.getClass();
 		Field field;
@@ -121,6 +120,6 @@ public abstract class SMSPage {
 		}
 		return select;
 	}
-	
+	*/
 	
 }

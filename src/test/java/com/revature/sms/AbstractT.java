@@ -1,20 +1,14 @@
 package com.revature.sms;
 
-import static org.assertj.core.api.Assertions.withPrecision;
-
-import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.After;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +22,7 @@ import com.revature.sms.util.TestSetup;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;
-import com.revature.sms.pagefactory.ChangePasswordWindow;
+import com.revature.sms.pagefactory.SettingsWindow;
 import com.revature.sms.pagefactory.CreateBatchWindow;
 import com.revature.sms.pagefactory.HomePage;
 import com.revature.sms.pagefactory.LoginPage;
@@ -59,7 +53,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	protected SuperAdminPage sap;
 	protected ScheduleCertificationWindow scw;
 	protected CreateBatchWindow cbw;
-	protected ChangePasswordWindow cpw;
+	protected SettingsWindow sw;
 	protected RaiseBugWindow rbw;
 
 	protected HomePage hp;
@@ -97,14 +91,14 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	// More browser preparation
 	@Before
 	public void before() {
-		driver.get(inputs.getProperty("url"));
+		driver.get(inputs.getProperty("localurl"));
 		lp = new LoginPage(driver);
 		asp = new AssociatePage(driver);
 		adp = new AdminPage(driver);
 		sap = new SuperAdminPage(driver);
 		scw = new ScheduleCertificationWindow(driver);
 		cbw = new CreateBatchWindow(driver);
-		cpw = new ChangePasswordWindow(driver);
+		sw = new SettingsWindow(driver);
 		rbw = new RaiseBugWindow(driver);
 		
 		Class<? extends AbstractT> currentClass = this.getClass();
@@ -134,29 +128,29 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		String pw2 = inputs.getProperty("PW2");
 		
 		lp.login(un, pw);
-		hp.carefulClick("settings");
-		Assert.assertTrue(cpw.verify());
-		cpw.oldPass.sendKeys(pw);
-		cpw.newPass.sendKeys(pw2);
-		cpw.confirmPass.sendKeys(pw2);
-		cpw.carefulClick("submit");
-		hp.carefulClick("logout");
+		hp.settings.click();
+		Assert.assertTrue(sw.verify());
+		sw.oldPass.sendKeys(pw);
+		sw.newPass.sendKeys(pw2);
+		sw.confirmPass.sendKeys(pw2);
+		sw.submit.click();
+		hp.logout.click();
 
 		lp.login(un, pw2);
-		hp.carefulClick("settings");
-		Assert.assertTrue(cpw.verify());
-		cpw.oldPass.sendKeys(pw2);
-		cpw.newPass.sendKeys(pw);
-		cpw.confirmPass.sendKeys(pw);
-		cpw.carefulClick("submit");
-		hp.carefulClick("logout");
+		hp.settings.click();
+		Assert.assertTrue(sw.verify());
+		sw.oldPass.sendKeys(pw2);
+		sw.newPass.sendKeys(pw);
+		sw.confirmPass.sendKeys(pw);
+		sw.submit.click();
+		hp.logout.click();
 	}
 	
 	
 	@Test
 	public void testBugReport() {
 		lp.login(un, pw);
-		hp.carefulClick("reportBug");
+		hp.reportBug.click();
 		driver.switchTo().frame("atlwdg-frame");
 
 		Assert.assertTrue(rbw.verify());
@@ -173,7 +167,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		lp.login(un, pw);
 		Assert.assertTrue(hp.verify());
 		Assert.assertEquals(ev, hp.header.getText());
-		hp.carefulClick("logout");
+		hp.logout.click();
 		Assert.assertTrue(lp.verify());
 	}
 	
@@ -181,7 +175,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	@After
 	public void after() {
 		if (hp.verify()) {
-			hp.carefulClick("logout");
+			hp.logout.click();
 		}
 	}
 	

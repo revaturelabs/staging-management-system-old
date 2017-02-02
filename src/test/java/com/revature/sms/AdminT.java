@@ -2,9 +2,7 @@ package com.revature.sms;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -13,7 +11,6 @@ public class AdminT extends AbstractT {
 
 	// Tests that when different types of users login and logout, they are
 	// navigated to the correct pages
-	@Ignore
 	@Test
 	public void testLoginHeaderLogout() {
 		String pageType = hp.getClass().getName();
@@ -26,15 +23,14 @@ public class AdminT extends AbstractT {
 		LoginHeaderLogoutTemplate(un, pw, expectedValue);
 	}
 
-	@Ignore
 	@Test
 	public void testCancelButtons() {
 		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
-		adp.carefulClick("settings");
-		cpw.carefulClick("cancel");
-		adp.carefulClick("reportBug");
+		adp.settings.click();
+		sw.cancel.click();
+		adp.reportBug.click();
 		driver.switchTo().frame("atlwdg-frame");
-		rbw.carefulClick("cancel");
+		rbw.cancel.click();
 	}
 
 	// This test is temporarily unusable and irrelevant while the search bar is
@@ -42,7 +38,8 @@ public class AdminT extends AbstractT {
 	// Test to enter username in search box and verify correct associate name is
 	// returned
 	/*
-	 * @Test public void testSearchBar() {
+	 * @Test 
+	 * public void testSearchBar() {
 	 * lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
 	 * Assert.assertTrue(adp.verify());
 	 * Assert.assertEquals(expected.getProperty("adminPg"),
@@ -60,7 +57,9 @@ public class AdminT extends AbstractT {
 	 * Assert.assertEquals(expected.getProperty("sdet"),
 	 * adp.searchResult.getText()); adp.searchBox.clear();
 	 * 
-	 * adp.carefulClick("logout"); Assert.assertTrue(lp.verify()); }
+	 * adp.logout.click(); 
+	 * Assert.assertTrue(lp.verify()); 
+	 * }
 	 */
 
 	@Test
@@ -76,7 +75,7 @@ public class AdminT extends AbstractT {
 					if (count == 0) {
 						cell.click();
 						Assert.assertTrue(adp.verifyAssoc.isDisplayed());
-						adp.carefulClick("closeIcon");
+						adp.closeIcon.click();
 
 					} else if (count == 1) {
 						cell.click();
@@ -89,7 +88,7 @@ public class AdminT extends AbstractT {
 									if (cellCount % 6 == 0) {
 										cell1.click();
 										Assert.assertTrue(adp.verifyAssoc.isDisplayed());
-										adp.carefulClick("closeIcon");
+										adp.closeIcon.click();
 									} else {
 										cell1.click();
 									}
@@ -110,14 +109,13 @@ public class AdminT extends AbstractT {
 
 	}
 
-	@Ignore
 	@Test
 	public void testAdminCalendarNavigation() {
 		lp.login(un, pw);
-		adp.carefulClick("prevWeekTop");
-		adp.carefulClick("nextWeekTop");
-		adp.carefulClick("prevWeekBottom");
-		adp.carefulClick("nextWeekBottom");
+		adp.prevWeekTop.click();
+		adp.nextWeekTop.click();
+		adp.prevWeekBottom.click();
+		adp.nextWeekBottom.click();
 	}
 
 }
