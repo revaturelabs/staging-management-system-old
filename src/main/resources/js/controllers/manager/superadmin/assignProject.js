@@ -34,27 +34,22 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
     		var today = new Date();
     		for(var i = 0; i<apc.availProjects.length;i++){
     			
-    			//remove current Project
-    			if(apc.currentProject && apc.availProjects[i].name == apc.currentProject.name){
+    			// if current project or if project has ended...
+    			if(apc.currentProject && apc.availProjects[i].name == apc.currentProject.name || apc.availProjects[i].endDate < today.getTime()){
+    				//remove project
     				apc.availProjects.splice(i,1);
     				i--;
     			}
     			
-    			//if project has ended remove from list
-    			else if(apc.availProjects[i].endDate < today.getTime()){
-    				apc.availProjects.splice(i,1);
-    				i--;
-    			}
-
     		}
     		
     		//add displayDates for end and start dates to available projects
-    		for(var i = 0; i<apc.availProjects.length;i++){
-				var endDate = new Date(apc.availProjects[i].endDate);
-				var startDate = new Date(apc.availProjects[i].startDate);
+    		for(var j = 0; j<apc.availProjects.length;i++){
+				var endDate = new Date(apc.availProjects[j].endDate);
+				var startDate = new Date(apc.availProjects[j].startDate);
 				
-    			apc.availProjects[i].endDateDisplay = (endDate.getMonth()+1)+"/"+endDate.getDate(); 
-    			apc.availProjects[i].startDateDisplay = (startDate.getMonth()+1)+"/"+startDate.getDate();
+    			apc.availProjects[j].endDateDisplay = (endDate.getMonth()+1)+"/"+endDate.getDate(); 
+    			apc.availProjects[j].startDateDisplay = (startDate.getMonth()+1)+"/"+startDate.getDate();
     		}
     		
     	}, function(error) {
@@ -101,7 +96,6 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 			apc.user.activeProject = apc.project;
 			//save User
 			userService.update(apc.user,function(){});
-			
 		}
 		
 		$mdDialog.hide();
