@@ -111,6 +111,7 @@
                 mac.smallDevice = false;
             }
         }
+
             // gets all users' information
         /**
          * @description Retrieves the information for all users from the server.
@@ -259,14 +260,19 @@
          * as superAdmin should always have all the options that admins do.
          */
         function setToolbar() {
+            var actions = [];
             if (mac.user.userRole.name == "superAdmin") {
-                $scope.$emit( "setToolbar", { 
-                    title: "Weekly attendance", 
-                    actions: [{ 
-                        "function": mac.newAssociates, 
-                        "icon"    : "add", 
-                        "tooltip" : "Add batch of new associates"}] } );
+                actions.push( {
+                    "function": mac.newAssociates,
+                    "icons"   : "add",
+                    "tooltip" : "Add batch of new associates."
+                })
             }
+
+            $scope.$emit( "setToolbar", { 
+                title: "Weekly attendance", 
+                actions }
+            );
         }
 
             
