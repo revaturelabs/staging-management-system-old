@@ -60,10 +60,13 @@ public class AssociateT extends AbstractT {
 		ArrayList<MonthDay> actualMonthDays = asp.goThroughWeek();
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
 		
-		String mondate = asp.attendanceCells.get(0).getText();
-		if (mondate.contains("/0")) {
-			mondate = mondate.replace("0", "");
+		String monday = asp.attendanceCells.get(0).getText();
+		if (monday.contains("/0")) {
+			monday = monday.replace("0", "");
 		}
+		String[] splitMonday = monday.split("\n");
+		String mondate = splitMonday[1];
+		
 		
 		String week = asp.weekOf.getText();
 		String[] splitWeek = week.split(" ");
@@ -155,8 +158,10 @@ public class AssociateT extends AbstractT {
 			}
 
 			asp.prevWeek.click();
-			if (expected.getProperty("tooFarBack").equals(asp.getToastMessage())) {
-				flag = false;
+			if (asp.getToastMessage() != null) {
+				if (expected.getProperty("tooFarBack").equals(asp.getToastMessage())) {
+					flag = false;
+				}
 			}
 		} while (flag);
 	}
@@ -191,7 +196,7 @@ public class AssociateT extends AbstractT {
 		}
 		
 		sw.saveSkills.click();
-		Assert.assertEquals(expected.getProperty("Skills updated"), asp.getToastMessage());
+		Assert.assertEquals(expected.getProperty("skillUpdate"), asp.getToastMessage());
 		sw.cancel.click();
 		Assert.assertTrue(asp.verify());
 		
@@ -217,7 +222,7 @@ public class AssociateT extends AbstractT {
 			icon.click();
 		}
 		sw.saveSkills.click();
-		Assert.assertEquals(expected.getProperty("Skills updated"), asp.getToastMessage());
+		Assert.assertEquals(expected.getProperty("skillUpdate"), asp.getToastMessage());
 		sw.cancel.click();
 		Assert.assertTrue(asp.verify());
 		

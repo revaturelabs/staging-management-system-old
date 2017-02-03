@@ -76,10 +76,21 @@ public abstract class SMSPage {
 		
 	
 	public String getToastMessage() {
-		WebElement toast = driver.findElement(By.tagName("md-toast"));
-		String text = toast.getText();
-		String[] splitText = text.split("\n");
-		return splitText[0];
+		try {
+			WebElement toast = driver.findElement(By.tagName("md-toast"));
+			String text = toast.getText();
+			text = text.trim();
+			String[] splitText = text.split("\n");
+			//System.out.println(splitText[0]);
+			//if (splitText[0].equals("Batch addition cancelled.")) {
+			//	System.out.println("WHY?");
+			//}
+			return splitText[0];
+			
+		} catch (NoSuchElementException e) {
+			System.out.println("EXCEPTION");
+			return null;
+		}
 	}
 	
 }
