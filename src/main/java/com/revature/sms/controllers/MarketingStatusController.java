@@ -10,19 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.sms.domain.MarketingStatus;
 import com.revature.sms.domain.TechnicalSkills;
-import com.revature.sms.domain.dao.TechnicalSkillsRepo;
+import com.revature.sms.domain.dao.MarketingStatusRepo;
 
 @RestController
-@RequestMapping("/api/v1/TechSkills")
-public class TechSkillsController {
+@RequestMapping("/api/v1/MarketingStatus")
+public class MarketingStatusController {
 
 	@Autowired
-	TechnicalSkillsRepo attr;
+	MarketingStatusRepo attr;
 	
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Object getAll() {
-		List<TechnicalSkills> list = attr.findAll();
-		return new ResponseEntity<List<TechnicalSkills>>(list, HttpStatus.OK);
+		List<MarketingStatus> list = attr.findAll();
+		return new ResponseEntity<List<MarketingStatus>>(list, HttpStatus.OK);
 	}
 }

@@ -5,7 +5,8 @@
      /**
       * @description AngularJs controller for Manager attendance module (both versions of Admins)
       */   
-    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, batchAddFactory, weekdays ) {
+
+    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, taskTypeService, marketingStatusService, batchAddFactory, weekdays ) {
        /**@prop {function} Reference variable for this controller */
         var mac = this;
 
@@ -13,47 +14,87 @@
             // data
         /**@prop {object} user Currently logged in user. */
         mac.user = loginService.getUser();
+        /**@prop [Array] of {object} taskTypes Types currently used in DB. */
+        mac.taskTypes = [];
         /**@prop {Date} curr Date of the currently selected week. */
         mac.curr = new Date();
         /**@prop {Date} today Today's date. */
         mac.today = mac.curr;
-         /**@prop {Date} minWeek The earliest week that can be looked at.. */
+        /**@prop {Date} minWeek The earliest week that can be looked at.. */
         mac.minWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() - 28 ); 
-         /**@prop {Date} maxWeek The latest week that can be looked at. */
+        /**@prop {Date} maxWeek The latest week that can be looked at. */
         mac.maxWeek = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() + 7 );
-         /**@prop {boolean} infoOpen Variable that tells if the info tabs are open or not. */
+        /**@prop {boolean} infoOpen Variable that tells if the info tabs are open or not. */
         mac.infoOpen = false;
-
+        /**@prop {boolean} panelDatePickerIsOpen Variable that tells if the panel calendar is open. */
+        mac.panelDatePickerIsOpen = false;
+        /**@prop {Date} panelDate The date of the panel, binded so it shows up on panel calendar */
+        mac.panelDate = new Date();
+        mac.markBind = "";
+        
+        
             // functions
-        /**@var {function} findDevice function reference variable. */
         mac.findDevice = findDevice;
-        /**@var {function} getUsers function reference variable. */
         mac.getUsers = getUsers;
-        /**@var {function} calcWeek function reference variable. */
         mac.calcWeek = calcWeek;
-        /**@var {function} filterWeek function reference variable. */
         mac.filterWeek = filterWeek;
-        /**@var {function} toggleInfo function reference variable. */
         mac.toggleInfo = toggleInfo;
-        /**@var {function} closeInfo function reference variable. */
         mac.closeInfo = closeInfo;
-        /**@var {function} verify function reference variable. */
         mac.verify = verify;
-        /**@var {function} setToolbar function reference variable. */
         mac.setToolbar = setToolbar;
-        /**@var {function} prevWeek function reference variable. */
         mac.prevWeek = prevWeek;
-        /**@var {function} nextWeek function reference variable. */
         mac.nextWeek = nextWeek;
-        /**@var {function} toast function reference variable. */
         mac.toast = toast;
-        /**@var {function} newAssociates function reference variable. */
         mac.newAssociates = newAssociates;
+
+        mac.marketingStatuses = marketingStatuses;
+        mac.changeStatus = changeStatus;
+
+        /**@var {function} calcMarketingDays function reference variable. */
+        mac.calcMarketingDays = calcMarketingDays;
+        /**@var {function} days_between function reference variable. */
+        mac.days_between = days_between;
+        /**@var {function} editCert function reference variable. */
+        mac.updateCert = updateCert;
+        /**@var {function} togglePanelDatePicker function reference variable. */
+        mac.togglePanelDatePicker = togglePanelDatePicker;
+        /**@var {function} editPanel function reference variable. */
+        mac.updatePanelDate = updatePanelDate;
+        /**@var {function} togglePanelStatus function reference variable. */
+        mac.togglePanelStatus = togglePanelStatus;
+        /**@var {function} createPanel function reference variable. */
+        mac.createPanel = createPanel;
+        /**@var {function} getTaskTypes function reference variable. */
+        mac.getTaskTypes = getTaskTypes;
+
+
 
           // initialization
         mac.findDevice();
         mac.getUsers();
+        mac.getTaskTypes();
         mac.setToolbar();
+        mac.marketingStatuses();
+        
+        // function
+        /**
+         * @description Updates user Marketing Status.
+         */
+        function changeStatus() {
+        	     	
+        	
+        	mac.selectedUser.marketingStatus
+        	= mac.markBind;
+        
+        	var sentData = mac.selectedUser.toJSON();
+                	
+        	userService.update(sentData,function(){
+	    		mac.toast("Marketing Status Updated");
+	    	    	});
+        	
+        
+        }
+        
         
           // functions
             /**
@@ -69,7 +110,7 @@
 
             // gets all users' information
         /**
-         * @description Retrieves the information for all users from teh server.
+         * @description Retrieves the information for all users from the server.
          */
         function getUsers( success ) {
             userService.getAll( function(response) {
@@ -97,6 +138,10 @@
 
             mac.users.forEach( function(user) {
                 mac.filterWeek( monday, user );
+                if ( ( mac.selectedUser ) && ( user.username == mac.selectedUser.username ) ) {
+                	mac.selectedUser = user;
+                	mac.panelDate = new Date(user.panels[0].date);
+                }
             });
         }
 
@@ -133,10 +178,20 @@
                     mac.selectedUser = null;
                 } else {
                     mac.selectedUser = user;
+                    mac.panelDatePickerIsOpen = false;
+                    if(user.panels[0].date){
+	                    mac.panelDate = user.panels[0].date;
+	                    mac.panelDate = new Date(user.panels[0].date);
+                    }
                 }
             } else {
                 mac.infoOpen = true;
+                mac.panelDatePickerIsOpen = false;
                 mac.selectedUser = user;
+                if(user.panels[0].date){
+                    mac.panelDate = user.panels[0].date;
+                    mac.panelDate = new Date(user.panels[0].date);
+                }
             }
         }
 
@@ -160,16 +215,7 @@
                     var attDate = new Date(attendance.date);
                     if ( (attDate.getFullYear() == selectedDay.getFullYear() && attDate.getMonth() == selectedDay.getMonth() && attDate.getDate() == selectedDay.getDate() ) ) {
                         if (attendance.verified) {
-                                // issue with this not showing the updated attendance until another update is made
-                                  // will work out later
-                            // var confirm = $mdDialog.confirm()
-                            //     .title("Are you sure you want to retract attendance verification?")
-                            //     .ok("YES")
-                            //     .cancel("CANCEL");
-                            // $mdDialog.show(confirm).then(function() {
-                            //     attendance.verified = false;
-                            //     attendance.note = "Unverified";
-                            // });
+                  
                             attendance.verified = false;
                         } else {
                             attendance.verified = true;
@@ -195,8 +241,9 @@
                 }
                 userService.update( user, function() {
                     mac.toast("Attendance updated.");
-                    // mac.calcWeek( mac.curr );
+                   
                     mac.getUsers();
+                    mac.users = $filter( "taskFilter" )( mac.users, mac.today );
                 }, function() {
                     mac.toast("Could not udpdate attendance.")
                 });
@@ -261,7 +308,7 @@
             $scope.$emit( "toastMessage", message );
         }
         
-            // adds associates by batch
+        // adds associates by batch
 		function newAssociates() {
             
               // opens a dialog to allows addition of a new batch of associates
@@ -284,6 +331,115 @@
                 mac.toast("Batch addition cancelled.");
             });
         }
+		/**
+         * @description Called when a superAdmin clicks on update certification button, opens a dialog.
+         */
+		function updateCert(cert, user){
+			if(mac.user.userRole.name != "superAdmin"){
+				return;
+			}
+			$mdDialog.show({
+                templateUrl: "html/templates/updateCert.html",
+                controller: "updateCertification as uc",
+                locals:{
+                	cert,
+                	user
+                },
+                clickOutsideToClose: false,
+                escapeToClose: false
+            });
+		}
+		
+		/**
+         * @description Called when a superAdmin clicks on panel date text, opens a datePicker.
+         */
+		function togglePanelDatePicker(){
+			mac.panelDatePickerIsOpen = !mac.panelDatePickerIsOpen;
+		}
+		
+		/**
+         * @description Called when a superAdmin selects a panel date on the datePicker.
+         */
+		function updatePanelDate(user, panel){
+			user.tasks.forEach(function(task){
+				if(task.id == panel.id){
+					task.date = mac.panelDate;
+					
+					userService.update( user, function(){
+						mac.toast("Panel date is updated");
+						mac.getUsers();
+						mac.panelDatePickerIsOpen = false;
+					}, function(error){
+						mac.toast("Failed to update panel date");
+					});
+				}
+			})
+		}
+		
+		/**
+         * @description Called when a superAdmin switches between panel statuses.
+         */
+		function togglePanelStatus(user, panel, status){
+			if(status != panel.passed) {
+				user.tasks.forEach(function(task){
+					if(task.id == panel.id){
+						task.passed = status;
+						
+						if(task.passed == true){
+							task.date = new Date();
+							task.date.setDate(task.date.getDate()-1);
+						}
+						
+						userService.update( user, function(){
+							mac.toast("Panel passed updated to "+status);
+							mac.getUsers();
+						}, function(error){
+							mac.toast("Failed to update panel status");
+						});
+					}
+				})
+			}
+		}
+		
+		/**
+         * @description Called when a superAdmin clicks on the create panel icon.
+         */
+		function createPanel(user){
+			
+			panel = {};
+			panel.date = new Date();
+			panel.note = "no note";
+			panel.passed = false;
+			
+			panel.taskType = {};
+			mac.taskTypes.forEach(function(taskType){
+				if(taskType.type.toLowerCase() == "panel"){
+					panel.taskType = taskType;
+				}
+			})
+			
+			user.tasks.push(panel);
+			
+			userService.update( user, function() {
+                mac.toast("Panel created.");
+                
+                mac.getUsers();
+            }, function(response) {
+                mac.toast("Failed to create panel");
+            });
+		}
+		
+		/**
+         * @description Retrieves the taskTypes from the DB.
+         */
+        function getTaskTypes( success ) {
+            taskTypeService.getAll( function(response) {
+                mac.taskTypes = response;
+            }, function(error) {
+                mac.toast("Error retrieving all task types.");
+            });
+        }
+		
 
             // adds a leading zero to input if necessary
         function padZero( input ) {
@@ -292,5 +448,46 @@
             } else {
                 return "" + input;
             }
+        }
+        
+
+        function marketingStatuses() {
+	        marketingStatusService.getAll(function(response) {
+	        	mac.mStatuses = response;
+	        	
+	        }, function() {
+	            
+	        });}
+
+        /**
+         * @description calls a function that Determines the difference between the two supplied dates.
+         * @returns {number} Number of days between the graduation date and today
+         */
+        function calcMarketingDays(){
+        	return " " + mac.days_between(mac.curr, ((new Date(mac.selectedUser.graduationDate)))) + " days";
+        }
+        
+        /**
+         * @description Determines the difference betwen the two supplied dates.
+         * @param {date} date1 First supplied date.
+         * @param {date} date2 Second supplied date.
+         * @returns {number} Number of days between the two dates
+         */
+        function days_between(date1, date2) {
+
+            // The number of milliseconds in one day
+            var ONE_DAY = 1000 * 60 * 60 * 24
+
+            // Convert both dates to milliseconds
+            var date1_ms = date1.getTime()
+            var date2_ms = date2.getTime()
+
+            // Calculate the difference in milliseconds
+            var difference_ms = Math.abs(date1_ms - date2_ms)
+
+            // Convert back to days and return
+            return Math.round(difference_ms/ONE_DAY)
+
+
         }
     }

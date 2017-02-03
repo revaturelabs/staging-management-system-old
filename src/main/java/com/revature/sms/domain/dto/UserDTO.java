@@ -8,7 +8,8 @@ import java.util.Set;
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
-import com.revature.sms.domain.Technical_Skills;
+import com.revature.sms.domain.MarketingStatus;
+import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.UserRole;
 
 public class UserDTO {
@@ -24,7 +25,8 @@ public class UserDTO {
 	private List<AssociateAttendance> attendance;
 	private Timestamp graduationDate;
 	private List<AssociateTask> tasks;
-	private Set<Technical_Skills> skill;
+	private MarketingStatus marketingStatus;
+	private Set<TechnicalSkills> skill;
 	
 	public UserDTO() {
 		super();
@@ -54,7 +56,7 @@ public class UserDTO {
 	
 	public UserDTO(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			UserRole userRole, Timestamp graduationDate, List<AssociateTask> tasks, 
-			Set<Technical_Skills> skill) {
+			Set<TechnicalSkills> skill, MarketingStatus marketingStatus) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -64,6 +66,7 @@ public class UserDTO {
 		this.userRole = userRole;
 		this.graduationDate = graduationDate;
 		this.tasks = tasks;
+		this.marketingStatus = marketingStatus;
 		this.skill = skill;
 	}
 
@@ -101,6 +104,14 @@ public class UserDTO {
 	
 	public String getHashedPassword() {
 		return hashedPassword;
+	}
+
+	public MarketingStatus getMarketingStatus() {
+		return marketingStatus;
+	}
+
+	public void setMarketingStatus(MarketingStatus marketingStatus) {
+		this.marketingStatus = marketingStatus;
 	}
 
 	public void setHashedPassword(String hashedPassword) {
@@ -153,11 +164,11 @@ public class UserDTO {
 		this.tasks = tasks;
 	}
 
-	public Set<Technical_Skills> getSkill() {
+	public Set<TechnicalSkills> getSkill() {
 		return skill;
 	}
 
-	public void setSkill(Set<Technical_Skills> skill) {
+	public void setSkill(Set<TechnicalSkills> skill) {
 		this.skill = skill;
 	}
 
