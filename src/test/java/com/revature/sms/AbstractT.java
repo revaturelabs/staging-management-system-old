@@ -8,7 +8,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.After;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,13 +87,10 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		// Initialize properties files
 		inputs = TestSetup.getProperties(inputsPath);
 		expected = TestSetup.getProperties(expectedPath);
-
 	}
 
-	// More browser preparation
 	@Before
 	public void before() {
-		driver.get(inputs.getProperty("localurl"));
 		lp = new LoginPage(driver);
 		asp = new AssociatePage(driver);
 		adp = new AdminPage(driver);
@@ -115,7 +114,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		}
 		pw = inputs.getProperty("PW");
 		
-		
+		driver.get(inputs.getProperty("url"));
 		// Make sure the login page is loaded correctly
 		Assert.assertEquals(expected.getProperty("siteName"), driver.getTitle());
 		Assert.assertTrue(lp.verify());
@@ -160,6 +159,43 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		rbw.webInfo.click();
 		rbw.cancel.click();
 		Assert.assertTrue(hp.verify());
+	}
+	
+	@Test
+	public void testLoginRejection() {
+		WebElement submission = driver.findElement(By.xpath("/html/body/div[1]/div/ui-view[2]/div/md-card/form"));
+		Assert.assertFalse(submission.getAttribute("class").contains("ng-submitted"));
+		lp.submit.click();
+		Assert.assertTrue(submission.getAttribute("class").contains("ng-submitted"));
+		
+		String fakeUN = inputs.getProperty("fakeUN");
+		String fakePW = inputs.getProperty("fakePW");
+		String usernameFail = expected.getProperty("usernameFail");
+		String passwordFail = expected.getProperty("passwordFail");
+		
+		
+		lp.login(fakeUN, fakePW);
+		String message = lp.getToastMessage();
+		Assert.assertEquals(usernameFail, message);
+		lp.unField.clear();
+		lp.pwField.clear();
+		
+		lp.login(fakeUN, pw);
+		message = lp.getToastMessage();
+		Assert.assertEquals(usernameFail, message);
+		lp.unField.clear();
+		lp.pwField.clear();
+		
+		lp.login(un, fakePW);
+		message = lp.getToastMessage();
+		Assert.assertEquals(passwordFail, message);
+		lp.unField.clear();
+		lp.pwField.clear();
+		
+		
+		
+		
+		
 	}
 	
 	

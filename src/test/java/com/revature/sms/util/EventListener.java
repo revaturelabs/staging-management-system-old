@@ -33,7 +33,7 @@ public class EventListener extends AbstractWebDriverEventListener {
 	@Override
 	public void afterClickOn(WebElement element, WebDriver driver) {
 		try {
-			Thread.sleep(900);
+			Thread.sleep(700);
 		} catch (InterruptedException e) {
 			Logger.getRootLogger().debug(e);
 			Thread.currentThread().interrupt();

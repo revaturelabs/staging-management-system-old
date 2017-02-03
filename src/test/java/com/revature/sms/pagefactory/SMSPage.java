@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -74,52 +75,11 @@ public abstract class SMSPage {
 	}
 		
 	
-	/*
-	public void carefulClick(String fieldName) {
-		Class<? extends SMSPage> thisClass = this.getClass();
-		Field field;
-		WebElement fieldValue = null;
-		try {
-			field = thisClass.getField(fieldName);
-			fieldValue = (WebElement) field.get(this);
-		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-			//System.out.println("Why would I get one of these exceptions?");
-			Logger.getRootLogger().debug(e);
-		}
-		
-		try {
-			if (fieldValue != null) {
-				fieldValue.click();
-			}
-		} catch (WebDriverException e) {
-			Logger.getRootLogger().debug(e);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e1) {
-				Logger.getRootLogger().debug(e);
-				Thread.currentThread().interrupt();
-			}
-			if (fieldValue != null) {
-				fieldValue.click();
-			}
-		}
-		
+	public String getToastMessage() {
+		WebElement toast = driver.findElement(By.tagName("md-toast"));
+		String text = toast.getText();
+		String[] splitText = text.split("\n");
+		return splitText[0];
 	}
-	
-	public Select makeSelection(String fieldName, String selection) {
-		Class<? extends SMSPage> thisClass;
-		thisClass = this.getClass();
-		Select select = null;
-		try {
-			Field field = thisClass.getDeclaredField(fieldName);
-			WebElement fieldValue = (WebElement) field.get(this);
-			select = new Select(fieldValue);
-			select.selectByVisibleText(selection);
-		} catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
-			Logger.getRootLogger().debug(e);
-		}
-		return select;
-	}
-	*/
 	
 }
