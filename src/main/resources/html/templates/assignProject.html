@@ -9,11 +9,7 @@
 	</div>
 	
 	<div class="md-padding" layout="column" layout-align="center space-around">
-	
-	      	<!-- <md-input-container class="InputContainer">
-	        	<label>Project Name</label>
-	        	<input ng-model="ap.project.name">
-	      	</md-input-container> -->
+
 	      	current Project: {{ ap.currentProject.name }}
 	      	<md-input-container>
   				<md-select ng-model="ap.project" placeholder="Select a new project.">
@@ -23,6 +19,7 @@
 			Project Name: {{ap.project.name}}<br>
 			start date: {{ap.project.startDateDisplay}}<br>
 			end date: {{ap.project.endDateDisplay}}<br>
+			description: {{ap.project.description}}
 						
 	</div>
 		

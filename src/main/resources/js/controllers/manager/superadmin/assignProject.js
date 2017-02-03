@@ -62,15 +62,53 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 	}
 	
 	function assignSubmit(){
+		//validation
+		//no project selected
+		if(!apc.project){
+			apc.message = "There is no project selected.";
+			return;
+		}
+		//end Validation
 		
-		//update user object
-		//apc.user.tasks.push(newProject);
-		//apc.user.project = newProject;
-		
-		//save user
-		/*userService.update(apc.user,function(){
+		// a new project was not selected or the selected project is the same as the current project
+		if(!apc.project && apc.project.name == apc.currentProject.name){
 			$mdDialog.hide();
-		});*/
+			return;
+		}
+		
+		//user does not have a current project a project was selected
+		else if(!apc.currentProject && apc.project){
+			//create new projectUser object entry with new project
+			apc.user.project.push({project:apc.project});
+			
+			//save User
+			userService.update(apc.user,function(){});
+		}
+		
+		//user has a current Project AND a new project was selected
+		else if(apc.project.name != apc.currentProject.name){
+			apc.user.activeProject = apc.project;
+			
+			// update old project
+			for(var i = 0; i < apc.user.project.length;i++){
+				console.log(apc.user.project[i].project.name);
+				console.log(apc.currentProject.name);
+			
+				if(apc.user.project[i].project.name == apc.currentProject.name){
+					console.log(apc.user.project[i]);
+				
+					apc.user.project[i].project = apc.project;
+					console.log(apc.user.project[i]);
+					break;
+				}
+			}
+			
+			//save User
+			console.log(apc.user);
+			userService.update(apc.user,function(){});
+			
+		}
+		
 		$mdDialog.hide();
 	}
 	
