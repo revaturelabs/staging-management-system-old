@@ -9,7 +9,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class SlackBot {
 
-	private final static String WEBHOOK_URL = "https://hooks.slack.com/services/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";
+	private final static String WEBHOOK_URL = System.getenv("SLACK_WEBHOOK_URL");
 	private final static String USER_AGENT = "Mozilla/5.0";
 
 	public void sendMessage(String message) {
@@ -27,15 +27,17 @@ public class SlackBot {
 			wr.flush();
 			wr.close();
 
-			//int responseCode = con.getResponseCode();
+			int responseCode = con.getResponseCode();
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			/*String inputLine;
+			String inputLine;
 			StringBuffer response = new StringBuffer();
 
 			while ((inputLine = in.readLine()) != null) {
 				response.append(inputLine);
-			}*/
+			}
+			System.out.println(response);
+			System.out.println(responseCode);
 			in.close();
 		} catch (Exception ex) {
 
