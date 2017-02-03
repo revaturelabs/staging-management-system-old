@@ -48,8 +48,8 @@
         /**@var {function} getScheduledCert function reference variable. */
         aac.checkIn = checkIn;
         //aac.udateSkills = updateSkills;
-console.log(aac.user);
-          // initialization
+
+        // initialization
         aac.setToolbar();
         aac.calcWeek( aac.curr );
         if (getScheduledCert() != null) {

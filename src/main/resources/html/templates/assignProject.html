@@ -10,12 +10,20 @@
 	
 	<div class="md-padding" layout="column" layout-align="center space-around">
 	
-	      	<md-input-container class="InputContainer">
+	      	<!-- <md-input-container class="InputContainer">
 	        	<label>Project Name</label>
-	        	<input ng-model="ap.newNote">
-	      	</md-input-container>
-			
-			<md-checkbox ng-model="ap.newPassed">Done?</md-checkbox>
+	        	<input ng-model="ap.project.name">
+	      	</md-input-container> -->
+	      	current Project: {{ ap.currentProject.name }}
+	      	<md-input-container>
+  				<md-select ng-model="ap.project" placeholder="Select a new project.">
+    				<md-option ng-value="proj" ng-repeat="proj in ap.availProjects">{{ proj.name }}</md-option>
+  				</md-select>
+			</md-input-container>
+			Project Name: {{ap.project.name}}<br>
+			start date: {{ap.project.startDateDisplay}}<br>
+			end date: {{ap.project.endDateDisplay}}<br>
+						
 	</div>
 		
 	<div layout="row" layout-align="end end">

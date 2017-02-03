@@ -68,6 +68,8 @@
         mac.createPanel = createPanel;
         /**@var {function} getTaskTypes function reference variable. */
         mac.getTaskTypes = getTaskTypes;
+        /**@var {function} assignProject function reference variable. */
+        mac.assignProject = assignProject;
 
 
 
@@ -173,7 +175,6 @@
              * @description Opens/closes the info panel and sets the selected user to display the relevant info.
              */
         function toggleInfo( user ) {
-        	console.log(user);
             if (mac.infoOpen) {
                 if (mac.selectedUser == user) {
                     mac.infoOpen = false;
@@ -436,6 +437,28 @@
                 mac.toast("Error retrieving all task types.");
             });
         }
+        
+    	/**
+         * @description Called when a superAdmin clicks on assign project, opens a dialog.
+         */
+		function assignProject(user, project, hasProject){
+			//only superadmins can do this
+			if(mac.user.userRole.name != "superAdmin"){
+				return;
+			}
+			
+			$mdDialog.show({
+                templateUrl: "html/templates/assignProject.html",
+                controller: "assignProjectCtrl as ap",
+                locals:{
+                	user,
+                	project,
+                	hasProject
+                },
+                clickOutsideToClose: false,
+                escapeToClose: false
+            });
+		}
 		
 
             // adds a leading zero to input if necessary

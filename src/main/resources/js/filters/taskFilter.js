@@ -58,10 +58,12 @@ sms.filter("taskFilter", function($filter){
 			
 			//set active project
 			user.project.forEach(function(proj){
-				console.log(proj.project.endDate);
-				console.log(now.getTime());
-				if(new Date(proj.project.endDate) > now ){
+				var endDate = new Date(proj.project.endDate);
+				var startDate = new Date(proj.project.startDate);
+				if(endDate > now ){
 					user.activeProject = proj.project;
+					user.activeProject.endDateDisplay = (endDate.getMonth()+1)+"/"+endDate.getDate(); 
+					user.activeProject.startDateDisplay = (startDate.getMonth()+1)+"/"+startDate.getDate();
 				}
 				
 			});
