@@ -18,7 +18,8 @@ function skillEditFac(){
         getAddSuccess: getAddSuccess,
         getAddFail : getAddFail,
         getRemoveSuccess : getRemoveSuccess,
-        getRemoveFail : getRemoveFail
+        getRemoveFail : getRemoveFail,
+        clearAll : clearAll
     }
     return service;
 

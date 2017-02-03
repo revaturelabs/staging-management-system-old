@@ -191,7 +191,7 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
          function removeSkillFromDB(skillName){
                 
                 skillService.remove(skillName, function(){
-                    skillEditFactory.addToRemoveSuccees(skillName); 
+                    skillEditFactory.addToRemoveSuccess(skillName); 
                 }, function(error){
                     skillEditFactory.addToRemoveFail(skillName, error.data.errorMessage);               
                 });

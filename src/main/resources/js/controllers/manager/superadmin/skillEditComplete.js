@@ -3,8 +3,8 @@ angular
 .controller("skillsEditSuccess", skillEditSuc);
 
 function skillEditSuc($scope, $mdDialog){
-    var sESCtrl = this;
-        sESCtrl.okay = okay;
+    var ses = this;
+        ses.okay = okay;
 
         function okay() {
             $mdDialog.hide();
