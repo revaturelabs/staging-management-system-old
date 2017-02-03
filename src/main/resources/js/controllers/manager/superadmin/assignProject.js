@@ -41,7 +41,7 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
     			}
     			
     			//if project has ended remove from list
-    			if(apc.availProjects[i].endDate < today.getTime()){
+    			else if(apc.availProjects[i].endDate < today.getTime()){
     				apc.availProjects.splice(i,1);
     				i--;
     			}
@@ -81,6 +81,8 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 			//create new projectUser object entry with new project
 			apc.user.project.push({project:apc.project});
 			
+			apc.user.activeProject = apc.project;
+			
 			//save User
 			userService.update(apc.user,function(){});
 		}
@@ -91,18 +93,12 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 			
 			// update old project
 			for(var i = 0; i < apc.user.project.length;i++){
-				console.log(apc.user.project[i].project.name);
-				console.log(apc.currentProject.name);
-			
 				if(apc.user.project[i].project.name == apc.currentProject.name){
-					console.log(apc.user.project[i]);
-				
 					apc.user.project[i].project = apc.project;
-					console.log(apc.user.project[i]);
 					break;
 				}
 			}
-			
+			apc.user.activeProject = apc.project;
 			//save User
 			console.log(apc.user);
 			userService.update(apc.user,function(){});
