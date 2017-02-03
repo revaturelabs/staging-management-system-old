@@ -100,7 +100,6 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 			}
 			apc.user.activeProject = apc.project;
 			//save User
-			console.log(apc.user);
 			userService.update(apc.user,function(){});
 			
 		}
