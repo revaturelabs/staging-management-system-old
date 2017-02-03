@@ -19,6 +19,8 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
          */
         sec.skillsToAdd = [];
 
+        
+
 
         //functions
         sec.getSkills =  getSkills;

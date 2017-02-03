@@ -6,6 +6,8 @@
         //var skillResource = $resource("/api/v1/TechSkills");
         var ssr = this;
 
+
+
        ssr.skillResource = $resource("api/v1/TechSkills/:skillName", 
        		{id: "@skillName"},
                { 
@@ -31,4 +33,6 @@
         ssr.remove = function(skillName, success, error){
             ssr.skillResource.remove({skillName: skillName}, success, error);
         }
+
+
     }
