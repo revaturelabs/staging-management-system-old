@@ -93,7 +93,7 @@ public class User {
 	/**
 	 * List containing JobEvent objects that keeps track of the user's events.
 	 */
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="ASSOCIATE")
 	private List<JobEvent> events;
 
@@ -343,7 +343,8 @@ public class User {
 	 * the User object.
 	 */
 	public void setEvents(List<JobEvent> events) {
-		this.events = events;
+		this.events.clear();
+		this.events.addAll(events);
 	}
 
 	/**
