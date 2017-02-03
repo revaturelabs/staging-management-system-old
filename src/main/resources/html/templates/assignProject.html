@@ -1,0 +1,26 @@
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+	    	<h2>Update project status</h2>
+	    </div>
+	</md-toolbar>
+	
+		<div class="md-padding" layout="column" layout-align="center space-around">
+		{{ap.message}}
+	</div>
+	
+	<div class="md-padding" layout="column" layout-align="center space-around">
+	
+	      	<md-input-container class="InputContainer">
+	        	<label>Project Name</label>
+	        	<input ng-model="ap.newNote">
+	      	</md-input-container>
+			
+			<md-checkbox ng-model="ap.newPassed">Done?</md-checkbox>
+	</div>
+		
+	<div layout="row" layout-align="end end">
+		<div flex> </div>
+		<md-button type="button" id="assignSubmit" class="md-primary"ng-click="ap.assignSubmit()"> Submit </md-button>
+		<md-button type="button" id="assignCancel" class="md-accent" ng-click="ap.assignCancel()"> Cancel </md-button>
+	</div>
+</div>

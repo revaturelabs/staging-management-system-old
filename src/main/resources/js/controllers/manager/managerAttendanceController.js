@@ -33,6 +33,8 @@
         mac.markBind = "";
         
         
+        
+        
             // functions
         mac.findDevice = findDevice;
         mac.getUsers = getUsers;
@@ -171,6 +173,7 @@
              * @description Opens/closes the info panel and sets the selected user to display the relevant info.
              */
         function toggleInfo( user ) {
+        	console.log(user);
             if (mac.infoOpen) {
                 if (mac.selectedUser == user) {
                     mac.infoOpen = false;

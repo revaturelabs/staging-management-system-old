@@ -9,4 +9,6 @@
         pr.getAll = function(success, error) {
         	projectResource.query(success, error);
         }
+        
+        
     }

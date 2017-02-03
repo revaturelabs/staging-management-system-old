@@ -14,7 +14,8 @@ sms.filter("taskFilter", function($filter){
 			user.notification.number = 0;
 			user.panels = [];
 			user.certs = [];
-			user.projects = [];
+			user.activeProject = {};
+			
 			user.tasks.forEach(function(task){
 				thisTask = {};
 				thisTask.type = task.taskType.type;
@@ -46,8 +47,6 @@ sms.filter("taskFilter", function($filter){
 					user.certs.push(thisTask);
 				}else if(thisTask.type == "Panel"){
 					user.panels.push(thisTask);
-				}else{
-					user.projects.push(thisTask);
 				}
 			})
 			//set up notifications for upcoming events
@@ -56,7 +55,17 @@ sms.filter("taskFilter", function($filter){
 				user.notification.number = upcoming;
 				user.notification = $filter("iconFilter")(user.notification, iconInput);
 			}
+			
+			//set active project
+			user.tasks.forEach(function(task){
+				if(user.activeProject == {} || user.activeProject.startDate ){
+					
+				}
+			});
 		});
+		
+		
+		
 		return users;
 	}
 });
