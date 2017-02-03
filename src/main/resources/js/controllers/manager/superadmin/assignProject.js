@@ -44,7 +44,7 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
     		}
     		
     		//add displayDates for end and start dates to available projects
-    		for(var j = 0; j<apc.availProjects.length;i++){
+    		for(var j = 0; j<apc.availProjects.length;j++){
 				var endDate = new Date(apc.availProjects[j].endDate);
 				var startDate = new Date(apc.availProjects[j].startDate);
 				
