@@ -3,8 +3,10 @@ package com.revature.sms;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
 public class AdminT extends AbstractT {
@@ -62,12 +64,13 @@ public class AdminT extends AbstractT {
 	 * }
 	 */
 
+	@Ignore
 	@Test
-	public void testAdminAttendenceView() {
+	public void testAdminAttendanceView() {
 		lp.login(un, pw);
 		int count = 0;
 		int cellCount = 0;
-		while (count < 18) {
+		while (true) {
 			List<WebElement> allRows = adp.attendanceTable.findElements(By.tagName("tr"));
 			row: for (WebElement row : allRows) {
 				List<WebElement> cells = row.findElements(By.tagName("td"));
@@ -76,10 +79,11 @@ public class AdminT extends AbstractT {
 						cell.click();
 						Assert.assertTrue(adp.verifyAssoc.isDisplayed());
 						adp.closeIcon.click();
-
 					} else if (count == 1) {
+						System.out.println("Outer: "+cell.getText());
 						cell.click();
 					} else {
+						System.out.println("Between");
 						List<WebElement> allRows1 = adp.attendanceTable.findElements(By.tagName("tr"));
 						cell: for (WebElement row1 : allRows1) {
 							List<WebElement> cells1 = row1.findElements(By.tagName("td"));
@@ -90,6 +94,7 @@ public class AdminT extends AbstractT {
 										Assert.assertTrue(adp.verifyAssoc.isDisplayed());
 										adp.closeIcon.click();
 									} else {
+										System.out.println("Inner: "+cell1.getText());
 										cell1.click();
 									}
 									cellCount = 0;
@@ -101,6 +106,7 @@ public class AdminT extends AbstractT {
 					}
 					count++;
 					if(count % 6 == 0){
+						System.out.println("Here");
 						break row;
 					}
 				}
@@ -109,6 +115,39 @@ public class AdminT extends AbstractT {
 
 	}
 
+	
+	@Test
+	public void testAdminAttendanceView2() {
+		lp.login(un, pw);
+		List<WebElement> allCells = adp.attendanceTable.findElements(By.tagName("td"));
+		int count = allCells.size();
+		
+		int i=0;
+		while (i<count) {
+			try {
+				WebElement cell = allCells.get(i);
+				String textBefore = cell.getText();
+				cell.click();
+				if (cell.getText().contains("\n")) {
+					adp.closeIcon.click();
+				} else {
+					String textAfter = cell.getText();
+					System.out.println(textBefore);
+					System.out.println(textAfter);
+					System.out.println();
+					Assert.assertNotEquals(textBefore, textAfter);
+				}
+				
+			} catch (StaleElementReferenceException e) {
+				allCells = adp.attendanceTable.findElements(By.tagName("td"));
+			}
+			i++;
+		}
+		
+	}
+	
+	
+	
 	@Test
 	public void testAdminCalendarNavigation() {
 		lp.login(un, pw);

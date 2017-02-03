@@ -133,9 +133,6 @@ public class AssociateT extends AbstractT {
 			}
 			expectedStatuses.put(md, status);
 		}
-
-		String week;
-		String weekBefore;
 		
 		boolean flag = true;
 		do {
