@@ -37,9 +37,14 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
     			// if current project or if project has ended...
     			if(apc.currentProject && apc.availProjects[i].name == apc.currentProject.name || apc.availProjects[i].endDate < today.getTime()){
     				//remove project
-    				console.log(apc.availProjects[i].name);
     				apc.availProjects.splice(i,1);
     				i--;
+    				continue;
+    			}
+    			
+    			if(apc.availProjects[i].name == "No Project"){
+    				apc.availProjects[i].startDate = undefined;
+    				apc.availProjects[i].endDate = undefined;
     			}
     			
     		}
