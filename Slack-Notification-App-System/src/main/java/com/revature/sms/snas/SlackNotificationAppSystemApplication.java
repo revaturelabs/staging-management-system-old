@@ -58,7 +58,7 @@ public class SlackNotificationAppSystemApplication {
 				text += "\nThanks!";
 				text = text.replaceAll("'", "SINGLEQUOTE");  //identify all single quotes in a name
 				SlackBot bot = new SlackBot();
-				String message = "{'attachments': [{'fallback': 'Required plain-text summary of the attachment.','color': '#36a64f ','title': 'RevaturePro','title_link': 'http://revature.pro','text': '" + text + "'}]}";
+				String message = "{'username': 'SMS Bot', 'icon_emoji': ':exclamation:','attachments': [{'fallback': 'Required plain-text summary of the attachment.','color': '#36a64f ','title': 'RevaturePro','title_link': 'http://revature.pro','text': '" + text + "'}]}";
 				message= message.replaceAll("'", "\"");   //convert single quotes to double quotes to correctly escape single quotes in name
 				message=message.replaceAll("SINGLEQUOTE", "\'");  //correctly escape single quotes in names
 				bot.sendMessage(message);
