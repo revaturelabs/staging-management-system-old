@@ -133,6 +133,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		sw.newPass.sendKeys(pw2);
 		sw.confirmPass.sendKeys(pw2);
 		sw.submit.click();
+		Assert.assertEquals(expected.getProperty("successfulPasswordSubmission"), hp.getToastMessage());
 		hp.logout.click();
 
 		lp.login(un, pw2);
@@ -142,6 +143,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		sw.newPass.sendKeys(pw);
 		sw.confirmPass.sendKeys(pw);
 		sw.submit.click();
+		Assert.assertEquals(expected.getProperty("successfulPasswordSubmission"), hp.getToastMessage());
 		hp.logout.click();
 	}
 	
@@ -190,18 +192,14 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		message = lp.getToastMessage();
 		Assert.assertEquals(passwordFail, message);
 		lp.unField.clear();
-		lp.pwField.clear();
-		
-		
-		
-		
-		
+		lp.pwField.clear();	
 	}
 	
 	
 	public void LoginHeaderLogoutTemplate(String username, String password, String ev) {
 		lp.login(un, pw);
 		Assert.assertTrue(hp.verify());
+		Assert.assertEquals(expected.getProperty("loginSuccess"), hp.getToastMessage());
 		Assert.assertEquals(ev, hp.header.getText());
 		hp.logout.click();
 		Assert.assertTrue(lp.verify());
@@ -212,6 +210,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	public void after() {
 		if (hp.verify()) {
 			hp.logout.click();
+			Assert.assertEquals(expected.getProperty("logoutSuccess"), lp.getToastMessage());
 		}
 	}
 	

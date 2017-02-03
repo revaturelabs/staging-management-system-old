@@ -1,6 +1,7 @@
 package com.revature.sms;
 
 import org.junit.Test;
+import org.junit.Assert;
 
 public class SuperAdminT extends AdminT  {	
 	
@@ -9,6 +10,7 @@ public class SuperAdminT extends AdminT  {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("PW"));
 		sap.addBatch.click();
 		cbw.cancel.click();
+		Assert.assertEquals(expected.getProperty("cancelBatchAddition"), sap.getToastMessage());
 		sap.settings.click();
 		sw.cancel.click();
 		sap.reportBug.click();

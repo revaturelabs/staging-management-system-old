@@ -49,7 +49,7 @@ public class AssociateT extends AbstractT {
 	@Test
 	public void testDefaultWeek() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
-
+		
 		ArrayList<MonthDay> expectedMonthDays = new ArrayList<MonthDay>();
 		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Mon")));
 		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Tue")));
@@ -59,6 +59,17 @@ public class AssociateT extends AbstractT {
 
 		ArrayList<MonthDay> actualMonthDays = asp.goThroughWeek();
 		Assert.assertEquals(expectedMonthDays, actualMonthDays);
+		
+		String mondate = asp.attendanceCells.get(0).getText();
+		if (mondate.contains("/0")) {
+			mondate = mondate.replace("0", "");
+		}
+		
+		String week = asp.weekOf.getText();
+		String[] splitWeek = week.split(" ");
+		String dateOfWeek = splitWeek[2];
+		
+		Assert.assertEquals(mondate, dateOfWeek);
 	}
 
 	
@@ -67,19 +78,21 @@ public class AssociateT extends AbstractT {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
 		String checked = expected.getProperty("checkedIn");
 		String notChecked = expected.getProperty("notCheckedIn");
-		String text = asp.checkincheckout.getText();
-		Assert.assertEquals(notChecked, text);
+		String icon = asp.checkincheckout.getText();
+		Assert.assertEquals(notChecked, icon);
 		asp.checkincheckout.click();
-		text = asp.checkincheckout.getText();
-		Assert.assertEquals(checked, text);   //This line appears to fail when there is not enough wait time after a click
+		Assert.assertEquals(expected.getProperty("checkInSuccess"), asp.getToastMessage());
+		icon = asp.checkincheckout.getText();
+		Assert.assertEquals(checked, icon);   //This line appears to fail when there is not enough wait time after a click
 		asp.checkincheckout.click();
 		driver.findElement(By.xpath("/html/body/div[5]/md-dialog/md-dialog-actions/button[1]")).click();
-		text = asp.checkincheckout.getText();
-		Assert.assertEquals(checked, text);
+		icon = asp.checkincheckout.getText();
+		Assert.assertEquals(checked, icon);
 		asp.checkincheckout.click();
 		driver.findElement(By.xpath("/html/body/div[5]/md-dialog/md-dialog-actions/button[2]")).click();
-		text = asp.checkincheckout.getText();
-		Assert.assertEquals(notChecked, text);
+		Assert.assertEquals(expected.getProperty("checkOutSuccess"), asp.getToastMessage());
+		icon = asp.checkincheckout.getText();
+		Assert.assertEquals(notChecked, icon);
 	}
 
 	// This is Corey's work on issue SMS-85.
@@ -120,8 +133,9 @@ public class AssociateT extends AbstractT {
 
 		String week;
 		String weekBefore;
+		
+		boolean flag = true;
 		do {
-			week = asp.weekOf.getText();
 			ArrayList<MonthDay> monthDays = asp.goThroughWeek();
 			ArrayList<String> icons = asp.goThroughWeekIcons();
 			HashMap<MonthDay, String> actualStatuses = new HashMap<MonthDay, String>();
@@ -141,8 +155,10 @@ public class AssociateT extends AbstractT {
 			}
 
 			asp.prevWeek.click();
-			weekBefore = asp.weekOf.getText();
-		} while (!week.equals(weekBefore));
+			if (expected.getProperty("tooFarBack").equals(asp.getToastMessage())) {
+				flag = false;
+			}
+		} while (flag);
 	}
 	
 	
@@ -175,6 +191,7 @@ public class AssociateT extends AbstractT {
 		}
 		
 		sw.saveSkills.click();
+		Assert.assertEquals(expected.getProperty("Skills updated"), asp.getToastMessage());
 		sw.cancel.click();
 		Assert.assertTrue(asp.verify());
 		
@@ -200,6 +217,7 @@ public class AssociateT extends AbstractT {
 			icon.click();
 		}
 		sw.saveSkills.click();
+		Assert.assertEquals(expected.getProperty("Skills updated"), asp.getToastMessage());
 		sw.cancel.click();
 		Assert.assertTrue(asp.verify());
 		
@@ -217,6 +235,11 @@ public class AssociateT extends AbstractT {
 		Assert.assertNull(nullset);
 		System.out.println("Here4");
 		*/
+	}
+	
+	
+
+	public void testAssociatePageToastContainer() {
 		
 	}
 	
@@ -234,9 +257,5 @@ public class AssociateT extends AbstractT {
 		scw.click("submit"); }
 	*/
 	
-
-	public void testAssociatePageToastContainer() {
-		
-	}
 
 }
