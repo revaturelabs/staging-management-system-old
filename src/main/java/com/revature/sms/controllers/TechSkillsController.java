@@ -153,7 +153,13 @@ public class TechSkillsController {
 		}
 		
 	}
-
+	
+	@RequestMapping(value = "/{skillName}", method = {
+			RequestMethod.PUT, }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody public Object updateSkill(@RequestHeader(value = "Authorization") String token,
+			@PathVariable String skillName){
+			return null;
+	}
 	/**
 	 * Transforms TechnicalSkillsDTO object to TechnicalSkills object.
 	 * 

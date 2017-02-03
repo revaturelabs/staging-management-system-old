@@ -16,7 +16,8 @@
                 save  : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "PUT", url: "api/v1/TechSkills" }, 
                 query : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, isArray: true }, 
                 get   : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } },
-                remove: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "DELETE" }  
+                remove: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "DELETE" },
+                update :  { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "PUT" }  
                } 
            )
            
@@ -34,6 +35,10 @@
 
         ssr.remove = function(skillName, success, error){
             ssr.skillResource.remove({skillName: skillName}, success, error);
+        }
+
+        ssr.update = function(skillName, success, error){
+            ssr.skillResource.update({skillName: skillName}, success, error);
         }
 
     }
