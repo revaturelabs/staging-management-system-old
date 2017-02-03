@@ -46,9 +46,9 @@
         mac.nextWeek = nextWeek;
         mac.toast = toast;
         mac.newAssociates = newAssociates;
-
         mac.marketingStatuses = marketingStatuses;
         mac.changeStatus = changeStatus;
+      
 
         /**@var {function} calcMarketingDays function reference variable. */
         mac.calcMarketingDays = calcMarketingDays;
@@ -56,6 +56,8 @@
         mac.days_between = days_between;
         /**@var {function} editCert function reference variable. */
         mac.updateCert = updateCert;
+        /**@var {function} convert to date object. */
+        mac.convertToDateObject = convertToDateObject;
         /**@var {function} togglePanelDatePicker function reference variable. */
         mac.togglePanelDatePicker = togglePanelDatePicker;
         /**@var {function} editPanel function reference variable. */
@@ -67,14 +69,20 @@
         /**@var {function} getTaskTypes function reference variable. */
         mac.getTaskTypes = getTaskTypes;
 
+        
+        mac.showFullJobInfo = showFullJobInfo;
 
-
+        mac.deleteSelectedJob = deleteSelectedJob;
+        
+        mac.makenewjob = makenewjob;
+        
           // initialization
         mac.findDevice();
         mac.getUsers();
         mac.getTaskTypes();
         mac.setToolbar();
         mac.marketingStatuses();
+  
         
         // function
         /**
@@ -89,7 +97,7 @@
         	var sentData = mac.selectedUser.toJSON();
                 	
         	userService.update(sentData,function(){
-	    		mac.toast("Marketing Status Updated");
+	    		mac.toast("Marketing status updated");
 	    	    	});
         	
         
@@ -112,12 +120,12 @@
         /**
          * @description Retrieves the information for all users from the server.
          */
-        function getUsers( success ) {
+        function getUsers() {
             userService.getAll( function(response) {
                 mac.users = $filter( "associateFilter" )( response );
                 mac.users = $filter( "taskFilter" )( mac.users, mac.today );
                 mac.calcWeek( mac.curr );
-            }, function(error) {
+            }, function() {
                 mac.toast("Error retrieving all users.");
             });
         }
@@ -245,7 +253,7 @@
                     mac.getUsers();
                     mac.users = $filter( "taskFilter" )( mac.users, mac.today );
                 }, function() {
-                    mac.toast("Could not udpdate attendance.")
+                    mac.toast("Could not update attendance.")
                 });
             }    
         }
@@ -369,7 +377,7 @@
 						mac.toast("Panel date is updated");
 						mac.getUsers();
 						mac.panelDatePickerIsOpen = false;
-					}, function(error){
+					}, function(){
 						mac.toast("Failed to update panel date");
 					});
 				}
@@ -393,7 +401,7 @@
 						userService.update( user, function(){
 							mac.toast("Panel passed updated to "+status);
 							mac.getUsers();
-						}, function(error){
+						}, function(){
 							mac.toast("Failed to update panel status");
 						});
 					}
@@ -424,7 +432,7 @@
                 mac.toast("Panel created.");
                 
                 mac.getUsers();
-            }, function(response) {
+            }, function() {
                 mac.toast("Failed to create panel");
             });
 		}
@@ -432,10 +440,10 @@
 		/**
          * @description Retrieves the taskTypes from the DB.
          */
-        function getTaskTypes( success ) {
+        function getTaskTypes() {
             taskTypeService.getAll( function(response) {
                 mac.taskTypes = response;
-            }, function(error) {
+            }, function() {
                 mac.toast("Error retrieving all task types.");
             });
         }
@@ -464,7 +472,17 @@
          * @returns {number} Number of days between the graduation date and today
          */
         function calcMarketingDays(){
-        	return " " + mac.days_between(mac.curr, ((new Date(mac.selectedUser.graduationDate)))) + " days";
+
+        	if (mac.selectedUser) {
+	        	if(mac.selectedUser.graduationDate == null){
+	        		return "N/A";
+	        	}
+	        	else{
+	
+	        		return " " + mac.days_between(mac.curr, ((new Date(mac.selectedUser.graduationDate)))) + " days";	
+	        	}
+        	}
+
         }
         
         /**
@@ -490,4 +508,72 @@
 
 
         }
+        
+        function convertToDateObject(adate){
+        	 var condate =  new Date(adate);
+        	return (condate.getMonth()+1)+ "/" + condate.getDate() + "/"+ condate.getFullYear();
+        }
+        
+        function showFullJobInfo(event){
+            
+            // if the info boxes are open for a particular user
+            if (mac.infoOpen) {
+            	// if the selected job is already the open job of information 
+                if (mac.selectedjob == event) {
+                    
+                	//set the selected to null
+                	mac.selectedjob = null;
+                }
+                // if the selected is not == to the new job
+                else {
+                	
+                	// set a new selected
+                	mac.selectedjob = event;
+                }
+            }
+        }
+        
+        /*mac.closeJobInfo = function(){
+            mac.selectedjob =null;
+        }*/
+        function deleteSelectedJob(){
+        	
+        	// if we have a selected job and user
+        	if( ( mac.selectedjob != undefined ) && ( mac.selectedUser != undefined ) ) {
+        		
+        		mac.selectedUser.events.splice( mac.selectedUser.events.indexOf(mac.selectedjob), 1 );
+        		userService.update( mac.selectedUser, function() {
+        			//prompt
+        			mac.toast("Job deleted.");
+        			mac.selectedjob = null;
+        		}, function() {
+        			//prompt
+        			mac.toast("Error deleting job.");
+        		})
+        	}
+        }
+        
+        //................................
+     // adds associates by batch
+		function makenewjob() {
+            
+              // opens a dialog to allows addition of a new batch of associates
+                // opens another dialog upon success to show added associates' info
+            $mdDialog.show({
+                templateUrl: "html/templates/jobAdd.html",
+                controller: "jobAddCtrl as jACtrl",
+                locals: { "selectedUser": mac.selectedUser },
+                bindToController: true,
+                clickOutsideToClose: true,
+                escapeToClose: true
+            }).then( function() {
+            	
+            	//prompt
+            	mac.toast("Job addition successful.");
+            }, function() {
+                mac.toast("Job addition cancelled.");
+            });
+        }
+        //..............................
+        
     }
