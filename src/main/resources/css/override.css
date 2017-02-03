@@ -231,3 +231,17 @@
     .highlightSelected {
         background-color: #9fa8da;
     }
+
+    /* Associate view info panels */
+    .expansionPanelList md-list-item {
+        height: 36px;
+        min-height: 36px;
+    }
+
+    .expansionPanelList p {
+        text-align: right;
+    }
+    
+    .loading {
+    	cursor: wait; 
+    }
