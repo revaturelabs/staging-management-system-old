@@ -45,13 +45,16 @@
     		
     		// add the new job to the users list of jobs
     		jac.selectedUser.events.push(newJob);
-    		
+
+    		angular.element("body").addClass("loading");
     		// update the selected user
     		userService.update( jac.selectedUser, function() {
+    			angular.element("body").removeClass("loading");
     			$mdDialog.hide();
     		}, function(error) {
+    			angular.element("body").removeClass("loading");
     			$mdDialog.cancel();
-    		})
+    		});
     		
         }
     };

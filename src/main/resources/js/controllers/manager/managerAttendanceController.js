@@ -97,7 +97,7 @@
         	var sentData = mac.selectedUser.toJSON();
                 	
         	userService.update(sentData,function(){
-	    		mac.toast("Marketing Status Updated");
+	    		mac.toast("Marketing status updated");
 	    	    	});
         	
         
@@ -253,7 +253,7 @@
                     mac.getUsers();
                     mac.users = $filter( "taskFilter" )( mac.users, mac.today );
                 }, function() {
-                    mac.toast("Could not udpdate attendance.")
+                    mac.toast("Could not update attendance.")
                 });
             }    
         }

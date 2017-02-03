@@ -19,7 +19,7 @@
                     <md-card-content>
 
                             <p>
-                            	Marketing Status:
+                            	Marketing status:
                             			<md-input-container id="marketingStatus">
                             			
 				  							<md-select style="color:white;"  placeholder="{{manAttCtrl.selectedUser.marketingStatus.name}}"
@@ -39,7 +39,7 @@
                             
 
                             <p>
-                                Panel Status:
+                                Panel status:
 								<md-menu ng-show="manAttCtrl.selectedUser.panels[0]">
 									<!-- Trigger element is a md-button with an icon -->
 									<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
@@ -53,7 +53,7 @@
 								</md-menu>
                                 <span ng-show="manAttCtrl.selectedUser.panels[0].passed == false" ng-click="manAttCtrl.togglePanelDatePicker()" style="cursor: pointer;">Scheduled for:
                                 	 <span ng-show="manAttCtrl.selectedUser.panels[0]">{{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
-                                	 <span ng-hide="manAttCtrl.selectedUser.panels[0].dateDisplay">no date selected</span>
+                                	 <span ng-hide="manAttCtrl.selectedUser.panels[0].dateDisplay">No date selected</span>
                                	</span>
                                	<md-card md-whiteframe="4dp" style="max-width:30vh;">
 	                               	<md-datepicker ng-show="manAttCtrl.panelDatePickerIsOpen" ng-model="manAttCtrl.panelDate" md-placeholder="Enter date" ng-change="manAttCtrl.updatePanelDate(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0])"></md-datepicker>
@@ -66,12 +66,12 @@
                 <md-card md-whiteframe="8dp" class="skillCard">
                     <md-card-title>
                         <md-card-title-text>
-                            <span class="md-headline">Job Events
+                            <span class="md-headline">Events
                             
                             <!-- add a delete button when a job is selected -->
                             <md-button ng-click ="manAttCtrl.makenewjob()">
                             		<!-- description of button -->
-                            		<md-tooltip> add job event </md-tooltip>
+                            		<md-tooltip> Add job event </md-tooltip>
                             <!-- show the delete if there is a selected job being displayed -->
                             	<md-icon ng-style="{color: 'lightgrey'}" class="material-icons step md-material-icon page-icon" ng-class="md-48">library_add</md-icon>                          	
                             	</md-button>
@@ -79,7 +79,7 @@
                             <!-- add a delete button when a job is selected -->
                             <md-button ng-if="manAttCtrl.selectedjob != null" ng-click ="manAttCtrl.deleteSelectedJob()">
                             		<!-- description of button -->
-                            		<md-tooltip> delete selected job </md-tooltip>
+                            		<md-tooltip> Delete selected job </md-tooltip>
                             <!-- show the delete if there is a selected job being displayed -->
                             	<md-icon ng-style="{color: 'lightpink'}" class="material-icons step md-material-icon page-icon" ng-class="md-48">delete_forever</md-icon>                          	
                             	</md-button>
@@ -102,7 +102,7 @@
                             	<md-button ng-click ="manAttCtrl.showFullJobInfo(event)">
                             	
                             		<!-- description of button -->
-                            		<md-tooltip> more info </md-tooltip>
+                            		<md-tooltip> More info </md-tooltip>
                             	
                             	<!-- text to display in button -->
                             	{{manAttCtrl.convertToDateObject(event.date)}} |
@@ -115,11 +115,11 @@
                             	<!-- show this div if we have selected to see more info on this particular job -->
                             	<div ng-if="manAttCtrl.selectedjob == event">
                             	<ul>
-                            	<li>Company Name: {{event.assignment.companyName}}</li>
+                            	<li>Company name: {{event.assignment.companyName}}</li>
                             	<li>Type: {{event.type.type}}</li>
-                            	<li>Event Location: {{event.location}}</li> 
-                            	<li>Assignment Location: {{event.assignment.location}}</li>
-                            	<li>Job Title: {{event.assignment.jobTitle}}</li>
+                            	<li>Event location: {{event.location}}</li> 
+                            	<li>Assignment location: {{event.assignment.location}}</li>
+                            	<li>Job title: {{event.assignment.jobTitle}}</li>
                             	<li>Note: {{event.note}}</li>
                             	</ul>
                             	</div>
