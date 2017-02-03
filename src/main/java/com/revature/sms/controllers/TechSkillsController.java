@@ -1,8 +1,10 @@
 package com.revature.sms.controllers;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -127,7 +129,6 @@ public class TechSkillsController {
 		else if ("superAdmin".equalsIgnoreCase(userToken.getUser().getUserRole().getName())) {
 			try {
 				long result = attr.deleteBySkill(skillName);
-				System.out.println(result);
 				if (result == 0){
 					return new ResponseEntity<ResponseErrorEntity>(
 							new ResponseErrorEntity("Skill does not exist."), HttpStatus.NOT_FOUND);
@@ -135,7 +136,12 @@ public class TechSkillsController {
 				return new ResponseEntity<Long>(result, HttpStatus.OK);
 			}
 			catch (Exception e){
-				Logger.getRootLogger().debug("Problem occurred while deleting skill.", e);
+				Logger.getRootLogger().debug(e.getMessage(), e);
+				if (e instanceof DataIntegrityViolationException){
+					return new ResponseEntity<ResponseErrorEntity>(
+							new ResponseErrorEntity("Can't delete skill that's attached to a user."), HttpStatus.BAD_REQUEST);
+				}
+				
 				return new ResponseEntity<ResponseErrorEntity>(
 						new ResponseErrorEntity("Problem occurred while deleting skill."), HttpStatus.BAD_REQUEST);
 			}

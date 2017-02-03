@@ -1,7 +1,7 @@
 angular.module("sms").
 controller("skillEditCtrl", editSkillController);
 
-function editSkillController($scope, $mdDialog, $mdToast, skillService){
+function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEditFactory){
 
         var sec = this;
 
@@ -120,9 +120,10 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
          */
         function addSkillToDB(skill){
                 skillService.create(skill, function(){
-                   //empty function needed to make this work
-                }, function(){
-                    //for some reason, this second function has to exist even if it's empty
+                   skillEditFactory.addToAddSuccees(skill.skill);
+                }, function(error){
+                    skillEditFactory.addToAddFail(skill.skill, "Issue"); //this actually shouldn't come up, but just in case here's something.
+                    console.log(error);
                     
                 });
             }
@@ -190,13 +191,9 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService){
          function removeSkillFromDB(skillName){
                 
                 skillService.remove(skillName, function(){
-                    
-                    //empty function needed to make sure it works
-                    
-                }, function(){
-                   
-                    //for some reason, this second function has to exist even if it's empty
-                    
+                    skillEditFactory.addToRemoveSuccees(skillName); 
+                }, function(error){
+                    skillEditFactory.addToRemoveFail(skillName, error.data.errorMessage);               
                 });
             
         }

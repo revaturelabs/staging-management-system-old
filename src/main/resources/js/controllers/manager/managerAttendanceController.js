@@ -258,7 +258,7 @@
 
                 actions.push( {
                     "function": mac.newAssociates,
-                    "icons"   : "add",
+                    "icon"   : "add",
                     "tooltip" : "Add batch of new associates."
                 });
                 actions.push( {
@@ -452,7 +452,18 @@
                 controller: "skillEditCtrl as sECtrl",
                 clickOutsideToClose: true,
                 escapeToClose: true
-            });
+            }).then( function() {
+                $mdDialog.show({
+                    templateUrl: "html/templates/skillEditResult.html",
+                    controller: "skillsEditSuccess as sESCtrl",
+                    locals: { "skillAddSuccess": skillEditFactory.getAddSuccess(),
+                              "skillAddFail" : skillEditFactory.getAddFail(),
+                              "skillRemoveSuccess" : skillEditFactory.getRemoveSuccess(),
+                              "skillRemoveFail" : skillEditFactory.getRemoveFail() },
+                    bindToController: true
+                }).then( function(){
+                    skillEditFactory.clearAll();
+                });;
         }
 
             // adds a leading zero to input if necessary
