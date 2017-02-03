@@ -20,8 +20,8 @@
 							
 							<!-- Current Project -->
 							<p>
-							  <div style="float: right;;" ng-show="manAttCtrl.selectedUser.activeProject" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject)"> Current project : {{ manAttCtrl.selectedUser.activeProject.name }}</div>
-	                          <div style="float: right;;" ng-hide="manAttCtrl.selectedUser.activeProject" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject)">This associate is not currently on a project</div>
+							  <div ng-show="manAttCtrl.selectedUser.activeProject" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject)"> Current project : {{ manAttCtrl.selectedUser.activeProject.name }}</div>
+	                          <div ng-hide="manAttCtrl.selectedUser.activeProject" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject)"> Current project : No project</div>
 							</p>
 							
                             <p>

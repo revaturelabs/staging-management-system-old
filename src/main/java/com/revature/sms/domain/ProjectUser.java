@@ -36,8 +36,7 @@ public class ProjectUser {
 	@JoinColumn(name="PROJECT")
 	private Project project;
 
-/*	@ManyToOne
-	@JoinColumn(name="ASSOCIATE")
+/*	@Column
 	private User associate;*/
 	
 	/**
