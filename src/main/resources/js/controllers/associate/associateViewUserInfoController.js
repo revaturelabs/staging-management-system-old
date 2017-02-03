@@ -20,8 +20,6 @@
         vic.formatTaskListItemTitle = formatTaskListItemTitle;
         vic.formatTaskListItemContent = formatTaskListItemContent;
         vic.divideEvents = divideEvents;
-        vic.formatEventListItemTitle = formatEventListItemTitle;
-        vic.formatEventListItemContent = formatEventListItemContent;
         vic.addCert = addCert;
         vic.editSkills = editSkills;
         vic.updateSkills = updateSkills;
@@ -118,33 +116,6 @@
             vic.allEvents = allEvents;
         }
 
-            // formats event list title by type
-        function formatEventListItemTitle(task) {
-            // if ( event.type.type.toLowerCase() == "panel" ) {
-            //     return (task.passed) ? "Passed" : "Failed";
-            // } else {
-            //     return task.note;
-            // }
-        }
-
-            // formates event list content by type
-        function formatEventListItemContent(task) {
-            // var today = new Date();
-            // if ( task.taskType.type.toLowerCase() == "project" ) {
-            //     return "Since " + $filter( "date" )( task.date, "MMMM dd, yyyy" );
-            // } else {
-            //     var returnString = "";
-            //     if ( today.getTime() < task.date ) {
-            //       // scheduled for the future
-            //         returnString = "Scheduled for ";
-            //     } else {
-            //       // in the past
-            //         returnString = "On ";
-            //     }
-            //     return returnString + $filter( "date" )( task.date, "MMMM dd, yyyy" ); 
-            // }
-        }
-
         function addCert() {
             // console.log( "Add cert here." );
         }
@@ -156,10 +127,10 @@
 
             // update user object with new skillset
         function updateSkills() {
-            userService.update( vic.user, function(response) {
+            userService.update( vic.user, function() {
                 vic.toast( "Skills updated." );
                 vic.showChips = false;
-            }, function(error){
+            }, function() {
                 vic.toast( "Skills failed to update." );
             });
         }
