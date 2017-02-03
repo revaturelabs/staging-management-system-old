@@ -14,7 +14,7 @@ sms.filter("taskFilter", function($filter){
 			user.notification.number = 0;
 			user.panels = [];
 			user.certs = [];
-			user.activeProject = {};
+			user.activeProject;
 			
 			user.tasks.forEach(function(task){
 				thisTask = {};
@@ -57,10 +57,13 @@ sms.filter("taskFilter", function($filter){
 			}
 			
 			//set active project
-			user.tasks.forEach(function(task){
-				if(user.activeProject == {} || user.activeProject.startDate ){
-					
+			user.project.forEach(function(proj){
+				console.log(proj.project.endDate);
+				console.log(now.getTime());
+				if(new Date(proj.project.endDate) > now ){
+					user.activeProject = proj.project;
 				}
+				
 			});
 		});
 		

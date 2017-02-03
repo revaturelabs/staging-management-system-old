@@ -17,7 +17,13 @@
                         </md-card-title-text>
                     </md-card-title>
                     <md-card-content>
-
+							
+							<!-- Current Project -->
+							<p>
+							  <div style="float: right;;" ng-show="manAttCtrl.selectedUser.activeProject" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject, true)"> Current project : {{ manAttCtrl.selectedUser.activeProject.name }}</div>
+	                          <div style="float: right;;" ng-hide="manAttCtrl.selectedUser.activeProject" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject, false)">This associate is not currently on a project</div>
+							</p>
+							
                             <p>
                             	Marketing Status:
                             			<md-input-container id="marketingStatus">
