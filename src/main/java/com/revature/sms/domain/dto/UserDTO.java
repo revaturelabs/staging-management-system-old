@@ -8,6 +8,7 @@ import java.util.Set;
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.JobEvent;
 import com.revature.sms.domain.MarketingStatus;
 import com.revature.sms.domain.Project;
 import com.revature.sms.domain.ProjectUser;
@@ -27,6 +28,7 @@ public class UserDTO {
 	private List<AssociateAttendance> attendance;
 	private Timestamp graduationDate;
 	private List<AssociateTask> tasks;
+	private List<JobEvent> events;
 	private MarketingStatus marketingStatus;
 	private Set<TechnicalSkills> skill;
 	private List<ProjectUser> project;
@@ -45,7 +47,7 @@ public class UserDTO {
 	}
 
 	public UserDTO(String username, String firstName, String lastName,String password, UserRole userRole,
-			BatchType batchType, Timestamp graduationDate, List<AssociateTask> tasks) {
+			BatchType batchType, Timestamp graduationDate, List<AssociateTask> tasks, List<JobEvent> events) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -55,6 +57,7 @@ public class UserDTO {
 		this.batchType = batchType;
 		this.graduationDate = graduationDate;
 		this.tasks = tasks;
+		this.events = events;
 	}
 	
 	public UserDTO(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
@@ -190,6 +193,14 @@ public class UserDTO {
 	
 	public void setTasks(List<AssociateTask> tasks) {
 		this.tasks = tasks;
+	}
+	
+	public List<JobEvent> getEvents() {
+		return events;
+	}
+	
+	public void setEvents(List<JobEvent> events) {
+		this.events = events;
 	}
 
 	public Set<TechnicalSkills> getSkill() {

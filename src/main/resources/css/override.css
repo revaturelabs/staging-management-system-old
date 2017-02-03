@@ -243,3 +243,7 @@
     .expansionPanelList p {
         text-align: right;
     }
+    
+    .loading {
+    	cursor: wait; 
+    }
