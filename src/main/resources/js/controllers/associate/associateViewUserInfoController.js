@@ -93,7 +93,7 @@
             if ( task.taskType.type.toLowerCase() == "project" ) {
                 return "Since " + $filter( "date" )( task.date, "MMMM dd, yyyy" );
             } else {
-                var returnString = "";
+                var returnString;
                 if ( today.getTime() < task.date ) {
                   // scheduled for the future
                     returnString = "Scheduled for ";
@@ -146,7 +146,7 @@
         }
 
         function addCert() {
-            console.log( "Add cert here." );
+            // console.log( "Add cert here." );
         }
 
             // swaps showing skill list and skill chips
@@ -167,7 +167,7 @@
             // reformats how an array of objects is joined
         function joinArrayBySkill(elem) {
             return elem.skill;
-        };
+        }
 
             // for use by chips
         function transformChip(chip) {
