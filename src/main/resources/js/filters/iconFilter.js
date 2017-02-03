@@ -75,7 +75,16 @@
                         thisObject.icon = iconData[12];
                     }
                     break;
-            
+                case "passed":
+                    if ( thisObject.taskType.type.toLowerCase() != "project" ) {
+                        if ( thisObject.passed ) {
+                            return iconData[0].name;
+                        } else {
+                            return iconData[1].name;
+                        }
+                    } else {
+                        return "";
+                    }
             default:
             }
             
