@@ -441,7 +441,7 @@
     	/**
          * @description Called when a superAdmin clicks on assign project, opens a dialog.
          */
-		function assignProject(user, project, hasProject){
+		function assignProject(user, project){
 			//only superadmins can do this
 			if(mac.user.userRole.name != "superAdmin"){
 				return;
@@ -452,8 +452,7 @@
                 controller: "assignProjectCtrl as ap",
                 locals:{
                 	user,
-                	project,
-                	hasProject
+                	project
                 },
                 clickOutsideToClose: false,
                 escapeToClose: false

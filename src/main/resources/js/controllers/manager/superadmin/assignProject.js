@@ -1,7 +1,7 @@
 var sms = angular.module("sms")
 				 .controller( "assignProjectCtrl", assignProjectCtrl );
 
-function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user, project, hasProject) {
+function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user, project) {
 	var apc = this;
 	
 	//bindables
