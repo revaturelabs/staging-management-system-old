@@ -1,4 +1,3 @@
-
     
     angular
         .module( "sms" )
@@ -60,5 +59,4 @@
     	function cancel() {
     		$mdDialog.cancel();
     	}
-
     }

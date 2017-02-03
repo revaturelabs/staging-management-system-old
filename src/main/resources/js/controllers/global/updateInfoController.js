@@ -6,7 +6,7 @@
         /**
          * @description AngularJS controller for updating a password (and eventually other info)
          */
-    function updateInfoCtrl ( $scope, $state, $mdToast, $mdDialog, loginService, skillService, userService ) {
+    function updateInfoCtrl ( $scope, $state, $mdToast, $mdDialog, loginService, userService ) {
         var uic = this;
 
         
@@ -21,14 +21,8 @@
         uic.cancel = cancel;
         /**@var {function} submit function reference variable. */
         uic.submit = submit;
-        uic.getSkills = getSkills;
-        uic.submitSkills = submitSkills;
-        uic.removeFromCurrentSkills = removeFromCurrentSkills;
-        uic.saveSkills = saveSkills;
-        uic.removeFromCSkills = removeFromCSkills;
+        
           // initializations
-        uic.getSkills();
-       // uic.removeFromCSkills();
         
           // functions
              /**
@@ -108,73 +102,4 @@
                 uic.toast("Password confirmation does not match.");
             }
         }
-        
-        function getSkills() {
-        	skillService.getAll(function(response) {
-        		uic.availSkills = response;
-        		
-        		removeFromCSkills();
-        	}, function(error) {
-                //needed to make function call work for some reason
-        	})
-        }
-        function submitSkills() {
-            if($scope.skillToAdd == undefined || $scope.skillToAdd == "" ){
-                uic.toast("Please Select a Skill");
-                return; } 
-        	var add = removeFromAvailSkill();
-        	uic.currentSkills.push(add);
-        	
-        	uic.user.skill = uic.currentSkills;
-        	$scope.skillToAdd="";
-        }
-        
-        function removeFromAvailSkill(){
-        	for(var i =0; i < uic.availSkills.length; i++){
-        		if($scope.skillToAdd == uic.availSkills[i].id){
-
-        			var toReturn = {id:uic.availSkills[i].id, skill:uic.availSkills[i].skill};
-        			
-        			//remove from avail skills
-        			uic.availSkills.splice(i,1);
-        			
-        			return toReturn;
-        		}
-        	}
-        	return null;
-        }
-        
-        function removeFromCurrentSkills(id){
-        	for(var i =0; i < uic.currentSkills.length; i++){
-        		if(id == uic.currentSkills[i].id){
-        			//remove from avail skills
-        			uic.availSkills.push({"id":uic.currentSkills[i].id, "skill":uic.currentSkills[i].skill});
-        			uic.currentSkills.splice(i,1);
-                	uic.user.skill = uic.currentSkills;
-                	break;
-        		}
-        	}
-        }
-        
-        function saveSkills(){
-        	userService.update(uic.user,function(){
-        		uic.toast("Skills updated");
-        		 
-        	});
-        }
-        
-        function removeFromCSkills(){
-        	for (var i = 0; i< uic.currentSkills.length;i++){
-        		for(var j = 0; j < uic.availSkills.length; j++ ){
-        			if(uic.currentSkills[i].skill == uic.availSkills[j].skill){
-        				uic.availSkills.splice(j,1);
-        				break;
-        			}
-        		}
-        	}
-        }
-        
-        
-        
-        
     }

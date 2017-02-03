@@ -1,7 +1,9 @@
- angular
+    
+    angular
         .module( "sms" )
         .service( "skillService", skillService );
         
+
     function skillService( $resource,loginService ) {
         //var skillResource = $resource("/api/v1/TechSkills");
         var ssr = this;
@@ -33,6 +35,5 @@
         ssr.remove = function(skillName, success, error){
             ssr.skillResource.remove({skillName: skillName}, success, error);
         }
-
 
     }
