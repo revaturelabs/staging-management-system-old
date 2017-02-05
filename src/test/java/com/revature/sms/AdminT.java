@@ -117,8 +117,13 @@ public class AdminT extends AbstractT {
 
 	
 	@Test
-	public void testAdminAttendanceView2() {
+	public void testAdminAttendanceButtons() {
 		lp.login(un, pw);
+		adp.prevWeekTop.click();
+		adp.nextWeekTop.click();
+		adp.prevWeekBottom.click();
+		adp.nextWeekBottom.click();
+		
 		List<WebElement> allCells = adp.attendanceTable.findElements(By.tagName("td"));
 		int count = allCells.size();
 		
@@ -144,17 +149,6 @@ public class AdminT extends AbstractT {
 			i++;
 		}
 		
-	}
-	
-	
-	
-	@Test
-	public void testAdminCalendarNavigation() {
-		lp.login(un, pw);
-		adp.prevWeekTop.click();
-		adp.nextWeekTop.click();
-		adp.prevWeekBottom.click();
-		adp.nextWeekBottom.click();
 	}
 
 }

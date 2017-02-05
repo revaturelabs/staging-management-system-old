@@ -97,8 +97,7 @@ public class AssociateT extends AbstractT {
 		icon = asp.checkincheckout.getText();
 		Assert.assertEquals(notChecked, icon);
 	}
-
-	// This is Corey's work on issue SMS-85.
+	
 	
 	@Test
 	public void testAssociateAttendanceView() {
@@ -237,12 +236,6 @@ public class AssociateT extends AbstractT {
 		Assert.assertNull(nullset);
 		System.out.println("Here4");
 		*/
-	}
-	
-	
-
-	public void testAssociatePageToastContainer() {
-		
 	}
 	
 		
