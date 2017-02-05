@@ -1,9 +1,8 @@
 package com.revature.sms.domain;
 
-import java.security.MessageDigest; 
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -124,6 +123,13 @@ public class User {
 	private MarketingStatus marketingStatus;
 	
 	/**
+	 * List containing Project objects that keeps track of the user's project.
+	 */
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="ASSOCIATE")
+	private List<ProjectUser> project;
+	
+	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
 	 */
 	public User() {
@@ -145,10 +151,11 @@ public class User {
 	 * @param userRole UserRole object that keeps track of the user's specific role.
 	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
 	 * @param skills gets a list of technical skills that an associate has
+	 * @param project projects that a user is currently working on.
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate, 
-			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus) {
+			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus,List<ProjectUser> project) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -162,7 +169,16 @@ public class User {
 		this.skill = skills;
 		this.events = events;
 		this.marketingStatus = marketingStatus;
+		this.project = project;
 	}
+	public List<ProjectUser> getProject() {
+		return project;
+	} 
+ 
+	public void setProject(List<ProjectUser> project) {
+		this.project = project;
+	}
+
 	// constructor for non-associate
 	/**
 	 * Constructor for User object. This constructor is meant to be used to create
@@ -417,7 +433,7 @@ public class User {
 		return "User [ID=" + ID + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", hashedPassword=" + hashedPassword + ", batchType=" + batchType + ", attendance=" + attendance
 				+ ", tasks=" + tasks + ", events=" + events + ", userRole=" + userRole + ", graduationDate="
-				+ graduationDate + ", skill=" + skill + ", marketingStatus=" + marketingStatus + "]";
+				+ graduationDate + ", skill=" + skill + ", marketingStatus=" + marketingStatus + ", Projects=" + project +"]";
 	}
 
 	/**
