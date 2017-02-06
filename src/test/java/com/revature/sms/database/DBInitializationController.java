@@ -81,7 +81,7 @@ public class DBInitializationController {
 				BatchType batchType = btr.findByType(batchTypes.get(i));
 				UserRole userRole = urr.findByName(userRoles.get(i));
 				String graduationDate = graduationDates.get(i);
-				Timestamp gts = Utils.convertDate(graduationDate);
+				Timestamp gts = Utils.convertDateToTimestamp(graduationDate);
 				MarketingStatus marketingStatus = msr.findByStatus(marketingStatuses.get(i));
 				
 				udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole, gts, skills, events, marketingStatus, projects);
@@ -132,7 +132,7 @@ public class DBInitializationController {
 			if (dates != null) {
 				while (j < dates.size()) {
 					String date = dates.get(j);
-					Timestamp dts = Utils.convertDate(date);
+					Timestamp dts = Utils.convertDateToTimestamp(date);
 					String checkedIn = checkIns.get(j);
 					boolean ci = Boolean.parseBoolean(checkedIn);
 					String verified = verifications.get(j);
@@ -151,7 +151,7 @@ public class DBInitializationController {
 					String taskType = taskTypes.get(k);
 					AssociateTaskType att = attr.findByType(taskType);
 					String taskDate = taskDates.get(k);
-					Timestamp tdts = Utils.convertDate(taskDate);
+					Timestamp tdts = Utils.convertDateToTimestamp(taskDate);
 					String taskNote = taskNotes.get(k);
 					AssociateTask at = new AssociateTask(att, tdts, taskNote);
 					taskList.add(at);	

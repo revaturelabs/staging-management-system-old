@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class Utils {
 	}
 	
 	//Because Timestamps are a pain to initialize
-	public static Timestamp convertDate(String dateString) {
+	public static Timestamp convertDateToTimestamp(String dateString) {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		Date date;
 		long millis;
@@ -47,6 +48,18 @@ public class Utils {
 			Logger.getRootLogger().debug("You got a ParseException", e);
 		}
 		return null;
+	}
+	
+	public static LocalDate convertTimestampToLocalDate(Timestamp ts) {
+		String datetime = ts.toString();
+		String[] splitDatetime = datetime.split(" ");
+		String date = splitDatetime[0];
+		String[] splitDate = date.split("-");
+		int year = Integer.parseInt(splitDate[0]);
+		int month = Integer.parseInt(splitDate[1]);
+		int day = Integer.parseInt(splitDate[2]);
+		LocalDate dateObject = LocalDate.of(year, month, day);
+		return dateObject;
 	}
 	
 	

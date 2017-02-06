@@ -131,7 +131,6 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	
 	@After
 	public void after() {
-		
 		if (hp.verify()) {
 			hp.logout.click();
 			Assert.assertEquals(expected.getProperty("logoutSuccess"), lp.getToastMessage());

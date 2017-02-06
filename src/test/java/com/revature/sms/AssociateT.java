@@ -1,23 +1,21 @@
 package com.revature.sms;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.MonthDay;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import com.revature.sms.domain.AssociateAttendance;
-import com.revature.sms.domain.TechnicalSkills;
+import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.User;
 import com.revature.sms.util.Utils;
+
 
 public class AssociateT extends AbstractT {
 	// Tests that when different types of users login and logout, they are
@@ -102,9 +100,7 @@ public class AssociateT extends AbstractT {
 	
 	@Test
 	public void testAssociateAttendanceView() {
-		String username = un;
-		String password = pw;
-		lp.login(username, password);
+		lp.login(un, pw);
 		asp.verify();
 
 		User user = ur.findByUsername(un);
@@ -120,9 +116,10 @@ public class AssociateT extends AbstractT {
 			String status;
 			boolean ci = a.isCheckedIn();
 			boolean v = a.isVerified();
-			if (v) { // If the associate is checked in and verified, the double
-						// check icon should be displayed, which is represented
-						// by the string done_all in the html.
+			if (v) { 
+				//If the associate is checked in and verified, the double
+				//check icon should be displayed, which is represented
+				//by the string done_all in the html.
 				status = "done_all";
 			} else if (ci && !v) {
 				status = "done";
@@ -155,10 +152,6 @@ public class AssociateT extends AbstractT {
 						es = "";
 					}
 				}
-				System.out.println("Month Day: "+md);
-				System.out.println("Expected: "+es);
-				System.out.println("Actual: "+as );
-				
 				Assert.assertEquals(es, as);
 			}
 
@@ -170,6 +163,40 @@ public class AssociateT extends AbstractT {
 			}
 		} while (flag);
 	}
+	
+	
+	@Test
+	public void testUserInfoPanel() {
+		lp.login(un, pw);
+		asp.userInfoPanel.click();
+		
+		ArrayList<String> expectedInfo = new ArrayList<String>();
+		User user = ur.findByUsername(un);
+		
+		String title1 = expected.getProperty("nameTitle");
+		String fname = user.getFirstName();
+		String lname = user.getLastName();
+		String nameRow = title1+": "+fname+" "+lname;
+		expectedInfo.add(nameRow);
+		String title2 = expected.getProperty("usernameTitle");
+		String usernameRow = title2+": "+un;
+		expectedInfo.add(usernameRow);
+		String title3 = expected.getProperty("batchCurriculumTitle");
+		BatchType bt = user.getBatchType();
+		String batchType = bt.getType();
+		String batchCurriculumRow = title3+": "+batchType;
+		expectedInfo.add(batchCurriculumRow);
+		String title4 = expected.getProperty("graduationDateTitle");
+		LocalDate dateObject = Utils.convertTimestampToLocalDate(user.getGraduationDate());
+		String gDateRow = title4+": "+dateObject.toString();
+		expectedInfo.add(gDateRow);
+		
+		ArrayList<String> actualInfo = asp.goThroughUserInfo();
+		Assert.assertEquals(expectedInfo, actualInfo);
+
+	}
+	
+	
 	
 	
 	/*

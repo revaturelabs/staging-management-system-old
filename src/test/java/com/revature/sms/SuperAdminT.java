@@ -1,10 +1,11 @@
 package com.revature.sms;
 
 import org.junit.Test;
-import org.junit.Assert;
+import com.revature.sms.util.Utils;
+
 
 public class SuperAdminT extends AdminT  {	
-	
+
 	@Test
 	public void testCancelButtons() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("PW"));
@@ -21,6 +22,7 @@ public class SuperAdminT extends AdminT  {
 		sap.reportBug.click();
 		driver.switchTo().frame("atlwdg-frame");
 		rbw.cancel.click();
+		Utils.attemptWait(500);
 	}	
 	
 	//The submit button in the batch creation window seems to be disabled. Until it works again, this
