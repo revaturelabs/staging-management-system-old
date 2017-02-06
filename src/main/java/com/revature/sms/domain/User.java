@@ -155,7 +155,7 @@ public class User {
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate, 
-			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus,List<ProjectUser> project) {
+			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus, List<ProjectUser> project) {
 		super();
 		this.username = username;
 		this.firstName = firstName;

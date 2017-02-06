@@ -11,6 +11,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.revature.sms.util.Utils;
+
 //Defines a constructor and methods that should be implemented by all page objects in the testing framework
 public abstract class SMSPage {
 	protected WebDriver driver;
@@ -77,18 +79,19 @@ public abstract class SMSPage {
 	
 	public String getToastMessage() {
 		try {
+			Utils.attemptWait(500);
 			WebElement toast = driver.findElement(By.tagName("md-toast"));
 			String text = toast.getText();
 			text = text.trim();
 			String[] splitText = text.split("\n");
-			//System.out.println(splitText[0]);
+			//System.out.println("Split text at 0: "+splitText[0]);
 			//if (splitText[0].equals("Batch addition cancelled.")) {
 			//	System.out.println("WHY?");
 			//}
 			return splitText[0];
 			
 		} catch (NoSuchElementException e) {
-			System.out.println("EXCEPTION");
+			//System.out.println("EXCEPTION");
 			return null;
 		}
 	}

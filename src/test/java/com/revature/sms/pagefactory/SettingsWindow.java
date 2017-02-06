@@ -24,20 +24,13 @@ public class SettingsWindow extends SMSPage {
 	@FindBy(xpath="//*[@id=\"updateCancel\"]/span")
 	public WebElement cancel;
 	
-	@FindBy(xpath="//*[@ng-model=\"skillToAdd\"]")
-	public WebElement getSkills;
-	
-	@FindBy(xpath="//*[@class=\"changePassword _md md-transition-in\"]/div[2]/form/button")
-	public WebElement addSkill;
-	
-	@FindBy(xpath="//*[@class=\"changePassword _md md-transition-in\"]/div[2]/button")
-	public WebElement saveSkills;
-	
 	
 	public SettingsWindow(WebDriver driver) {
 		super(driver);
 	}
 	
+	
+	/*
 	public void chooseSkill(String choice)  {
 		getSkills.click();
 		List<WebElement> skillList = driver.findElements(By.xpath("//*[@class=\"md-select-menu-container md-active md-clickable\"]/md-select-menu/md-content/md-option/div[1]"));
@@ -57,7 +50,7 @@ public class SettingsWindow extends SMSPage {
 		List<WebElement> deletionIcons = driver.findElements(By.xpath("//ul/li/button/md-icon"));
 		return deletionIcons;
 	}
-	
+	*/
 	
 	
 

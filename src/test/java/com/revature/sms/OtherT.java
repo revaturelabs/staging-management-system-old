@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import com.revature.sms.util.Utils;
+
 public class OtherT extends AbstractT {
 
 	@Test
@@ -18,6 +20,7 @@ public class OtherT extends AbstractT {
 		sw.newPass.sendKeys(pw2);
 		sw.confirmPass.sendKeys(pw2);
 		sw.submit.click();
+		Utils.attemptWait(500);
 		Assert.assertEquals(expected.getProperty("successfulPasswordSubmission"), hp.getToastMessage());
 		hp.logout.click();
 
@@ -28,6 +31,7 @@ public class OtherT extends AbstractT {
 		sw.newPass.sendKeys(pw);
 		sw.confirmPass.sendKeys(pw);
 		sw.submit.click();
+		Utils.attemptWait(500);
 		Assert.assertEquals(expected.getProperty("successfulPasswordSubmission"), hp.getToastMessage());
 		hp.logout.click();
 	}
@@ -69,6 +73,7 @@ public class OtherT extends AbstractT {
 		
 		lp.login(fakeUN, pw);
 		message = lp.getToastMessage();
+		
 		Assert.assertEquals(usernameFail, message);
 		lp.unField.clear();
 		lp.pwField.clear();

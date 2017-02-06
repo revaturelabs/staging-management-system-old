@@ -4,14 +4,10 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,13 +131,9 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	
 	@After
 	public void after() {
+		
 		if (hp.verify()) {
 			hp.logout.click();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				Logger.getRootLogger().debug(e);
-			}
 			Assert.assertEquals(expected.getProperty("logoutSuccess"), lp.getToastMessage());
 		}
 	}

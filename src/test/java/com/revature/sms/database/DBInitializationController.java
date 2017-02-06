@@ -18,6 +18,7 @@ import com.revature.sms.domain.AssociateTaskType;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.JobEvent;
 import com.revature.sms.domain.MarketingStatus;
+import com.revature.sms.domain.ProjectUser;
 import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
@@ -70,6 +71,7 @@ public class DBInitializationController {
 			List<AssociateTask> tasks = new ArrayList<AssociateTask>();
 			List<JobEvent> events = new ArrayList<JobEvent>();
 			Set<TechnicalSkills> skills = new HashSet<TechnicalSkills>();
+			List<ProjectUser> projects = new ArrayList<ProjectUser>();
 			
 			//Each iteration of the loop corresponds to a new user that is added
 			int i = 0;
@@ -82,7 +84,7 @@ public class DBInitializationController {
 				Timestamp gts = Utils.convertDate(graduationDate);
 				MarketingStatus marketingStatus = msr.findByStatus(marketingStatuses.get(i));
 				
-				udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole, gts, skills, marketingStatus, events);
+				udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole, gts, skills, events, marketingStatus, projects);
 				i++;
 			}
 		} catch (FilloException e) {Logger.getRootLogger().debug(e);}

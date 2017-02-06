@@ -1,6 +1,5 @@
 package com.revature.sms.util;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.*;
@@ -10,45 +9,25 @@ public class EventListener extends AbstractWebDriverEventListener {
 
 	@Override
 	public void afterNavigateTo(String url, WebDriver driver) {
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			Logger.getRootLogger().debug(e);
-			Thread.currentThread().interrupt();
-		}
+		Utils.attemptWait(500);
 	}
 	
 	
 	@Override
 	public void afterNavigateBack(WebDriver driver) {
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			Logger.getRootLogger().debug(e);
-			Thread.currentThread().interrupt();
-		}
+		Utils.attemptWait(500);
 	}
 	
 	
 	@Override
 	public void afterClickOn(WebElement element, WebDriver driver) {
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			Logger.getRootLogger().debug(e);
-			Thread.currentThread().interrupt();
-		}
+		Utils.attemptWait(500);
 	}
 	
 	
 	@Override
 	public void afterChangeValueOf(WebElement element, WebDriver driver) {
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			Logger.getRootLogger().debug(e);
-			Thread.currentThread().interrupt();
-		}
+		Utils.attemptWait(1000);
 	}
 	
 	

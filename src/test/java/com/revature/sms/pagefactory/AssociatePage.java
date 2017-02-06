@@ -25,16 +25,16 @@ public class AssociatePage extends HomePage {
 	@FindBy(tagName = "tbody")
 	public WebElement weekTable;
 
-	@FindBy(xpath = "/html/body/div[1]/div/ui-view[2]/ui-view/div/div/div[2]/button[1]/md-icon")
+	@FindBy(xpath = "//*[@name=\"mainView\"]/div/md-card/div/div[2]/button[1]/md-icon")
 	public WebElement prevWeek;
 
-	@FindBy(xpath = "/html/body/div[1]/div/ui-view[2]/ui-view/div/div/div[2]/button[2]/md-icon")
+	@FindBy(xpath = "//*[@name=\"mainView\"]/div/md-card/div/div[2]/button[2]/md-icon")
 	public WebElement nextWeek;
 
-	@FindBy(xpath = "/html/body/div[1]/div/ui-view[2]/ui-view/div/div/div[2]/div")
+	@FindBy(xpath = "//*[@name=\"mainView\"]/div/md-card/div/div[2]/div")
 	public WebElement weekOf;
 
-	@FindBy(xpath = "/html/body/div[1]/div/ui-view[2]/ui-view/div/md-table-container/table/thead/tr/th")
+	@FindBy(xpath = "//*[@name=\"mainView\"]/div/md-card/md-table-container/table/thead/tr/th")
 	public List<WebElement> attendanceCells;
 
 	public AssociatePage(WebDriver driver) {
