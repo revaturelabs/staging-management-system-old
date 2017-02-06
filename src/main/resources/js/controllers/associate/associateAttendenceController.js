@@ -49,7 +49,7 @@
         aac.checkIn = checkIn;
         //aac.udateSkills = updateSkills;
 
-          // initialization
+        // initialization
         aac.setToolbar();
         aac.calcWeek( aac.curr );
         if (getScheduledCert() != null) {

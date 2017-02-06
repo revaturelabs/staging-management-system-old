@@ -33,6 +33,8 @@
         mac.markBind = "";
         
         
+        
+        
             // functions
         mac.findDevice = findDevice;
         mac.getUsers = getUsers;
@@ -68,6 +70,8 @@
         mac.createPanel = createPanel;
         /**@var {function} getTaskTypes function reference variable. */
         mac.getTaskTypes = getTaskTypes;
+        /**@var {function} assignProject function reference variable. */
+        mac.assignProject = assignProject;
 
         
         mac.showFullJobInfo = showFullJobInfo;
@@ -447,6 +451,27 @@
                 mac.toast("Error retrieving all task types.");
             });
         }
+        
+    	/**
+         * @description Called when a superAdmin clicks on assign project, opens a dialog.
+         */
+		function assignProject(user, project){
+			//only superadmins can do this
+			if(mac.user.userRole.name != "superAdmin"){
+				return;
+			}
+			
+			$mdDialog.show({
+                templateUrl: "html/templates/assignProject.html",
+                controller: "assignProjectCtrl as ap",
+                locals:{
+                	user,
+                	project
+                },
+                clickOutsideToClose: false,
+                escapeToClose: false
+            });
+		}
 		
 
             // adds a leading zero to input if necessary

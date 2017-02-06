@@ -10,6 +10,8 @@ import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.JobEvent;
 import com.revature.sms.domain.MarketingStatus;
+import com.revature.sms.domain.Project;
+import com.revature.sms.domain.ProjectUser;
 import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.UserRole;
 
@@ -29,6 +31,7 @@ public class UserDTO {
 	private List<JobEvent> events;
 	private MarketingStatus marketingStatus;
 	private Set<TechnicalSkills> skill;
+	private List<ProjectUser> project;
 	
 	public UserDTO() {
 		super();
@@ -71,6 +74,31 @@ public class UserDTO {
 		this.tasks = tasks;
 		this.marketingStatus = marketingStatus;
 		this.skill = skill;
+	}
+	
+	public UserDTO(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
+			UserRole userRole, Timestamp graduationDate, List<AssociateTask> tasks, 
+			Set<TechnicalSkills> skill, MarketingStatus marketingStatus, List<ProjectUser> project) {
+		super();
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.hashedPassword = hashedPassword;
+		this.batchType = batchType;
+		this.userRole = userRole;
+		this.graduationDate = graduationDate;
+		this.tasks = tasks;
+		this.marketingStatus = marketingStatus;
+		this.skill = skill;
+		this.project = project;
+	}
+
+	public List<ProjectUser> getProject() {
+		return project;
+	}
+
+	public void setProject(List<ProjectUser> project) {
+		this.project = project;
 	}
 
 	public String getUsername() {
