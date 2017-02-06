@@ -158,8 +158,8 @@
                     <md-card-content>
                         <span ng-hide="manAttCtrl.selectedUser.certs[0].date">There is no data to display</span>
                         <div ng-show="manAttCtrl.selectedUser.certs[0].date">
-                            <div ng-repeat="cert in manAttCtrl.selectedUser.certs | orderBy:'-date'" class="certList">
-                            	<md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48" ng-click="manAttCtrl.updateCert(cert,manAttCtrl.selectedUser)">{{ cert.icon.name }}</md-icon>
+                            <div ng-repeat="cert in manAttCtrl.selectedUser.certs | orderBy:'-date'" class="certList" ng-click="manAttCtrl.updateCert(cert,manAttCtrl.selectedUser)"> <!-- ??????????????????????????????????????????????????????????????????????? -->
+                            	<md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48">{{ cert.icon.name }}</md-icon>
                             	{{ cert.dateDisplay }} |
                             	{{cert.note}}
                             	
