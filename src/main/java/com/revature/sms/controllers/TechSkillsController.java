@@ -1,5 +1,6 @@
 package com.revature.sms.controllers;
 
+import java.io.Console;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -154,11 +155,42 @@ public class TechSkillsController {
 		
 	}
 	
-	@RequestMapping(value = "/{skillName}", method = {
-			RequestMethod.PUT, }, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{skillName}/{newSkillName}", method = {
+			RequestMethod.PUT, },produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody public Object updateSkill(@RequestHeader(value = "Authorization") String token,
-			@PathVariable String skillName){
-			return null;
+			@PathVariable String skillName, @PathVariable String newSkillName){
+		System.out.println("skillName = " + skillName);
+		System.out.println("newSkilName = " + newSkillName);
+		return new ResponseEntity<ResponseErrorEntity>(
+				new ResponseErrorEntity("Worthless response error to test things"), HttpStatus.BAD_REQUEST);
+//		Token userToken = tokenRepo.findByAuthToken(token);
+//		if (userToken == null) {
+//			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("AuthToken invalid."),
+//					HttpStatus.NOT_FOUND);
+//		}
+//		else if ("superAdmin".equalsIgnoreCase(userToken.getUser().getUserRole().getName())) {
+//			try {
+//				TechnicalSkills skill = attr.findBySkill(skillName);
+//				System.out.println("running update method also " + skill);
+//				return new ResponseEntity<ResponseErrorEntity>(
+//						new ResponseErrorEntity("Worthless response error to test things"), HttpStatus.BAD_REQUEST);
+//			}
+//			catch (Exception e){
+//				Logger.getRootLogger().debug(e.getMessage(), e);
+//				if (e instanceof DataIntegrityViolationException){
+//					return new ResponseEntity<ResponseErrorEntity>(
+//							new ResponseErrorEntity("Can't delete skill that's attached to a user."), HttpStatus.BAD_REQUEST);
+//				}
+//				
+//				return new ResponseEntity<ResponseErrorEntity>(
+//						new ResponseErrorEntity("Problem occurred while deleting skill."), HttpStatus.BAD_REQUEST);
+//			}
+//		}		
+//		else {
+//			// if the user isn't a SuperAdmin
+//			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
+//					HttpStatus.UNAUTHORIZED);
+//		}
 	}
 	/**
 	 * Transforms TechnicalSkillsDTO object to TechnicalSkills object.

@@ -5,19 +5,18 @@
         
 
     function skillService( $resource,loginService ) {
-        //var skillResource = $resource("/api/v1/TechSkills");
         var ssr = this;
 
 
 
-       ssr.skillResource = $resource("api/v1/TechSkills/:skillName", 
-       		{id: "@skillName"},
+       ssr.skillResource = $resource('api/v1/TechSkills/:skillName/:newSkillName', 
+       		{skillName: "@skillName", newSkillName: "@newSkillName"},
                { 
                 save  : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "PUT", url: "api/v1/TechSkills" }, 
-                query : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, isArray: true }, 
-                get   : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } },
-                remove: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "DELETE" },
-                update :  { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "PUT" }  
+                query : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, isArray: true, url: "api/v1/TechSkills/:skillName" }, 
+                get   : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, url: "api/v1/TechSkills/:skillName" },
+                remove: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "DELETE", url: "api/v1/TechSkills/:skillName" },
+                update: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "PUT"}  
                } 
            )
            
@@ -37,8 +36,8 @@
             ssr.skillResource.remove({skillName: skillName}, success, error);
         }
 
-        ssr.update = function(skillName, success, error){
-            ssr.skillResource.update({skillName: skillName}, success, error);
+        ssr.update = function(skillName, newSkillName, success, error){
+            ssr.skillResource.update({skillName: skillName, newSkillName : newSkillName}, success, error);
         }
 
     }

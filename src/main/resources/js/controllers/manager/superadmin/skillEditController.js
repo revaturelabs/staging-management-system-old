@@ -33,6 +33,7 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
         sec.inRemoveList = inRemoveList;
         sec.toast = toast;
         sec.cancel = cancel;
+        sec.testingEdit = testingEdit;
        
       
         //initialization
@@ -208,6 +209,16 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
                 removeSkillFromDB(skill.skill);
                 removeSkillsFromDB();
             }
+        }
+
+        function testingEdit(skillName, newSkillName){
+            console.log("in things");
+            skillService.update(skillName, newSkillName, function(response){
+                console.log(response);
+
+            }, function(){
+
+            });
         }
 
              /**
