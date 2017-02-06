@@ -193,8 +193,10 @@ public class AssociateT extends AbstractT {
 		
 		ArrayList<String> actualInfo = asp.goThroughUserInfo();
 		Assert.assertEquals(expectedInfo, actualInfo);
-
 	}
+	
+	
+	
 	
 	
 	

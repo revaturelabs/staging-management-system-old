@@ -25,6 +25,9 @@ public class SuperAdminT extends AdminT  {
 		Utils.attemptWait(500);
 	}	
 	
+	
+	
+	
 	//The submit button in the batch creation window seems to be disabled. Until it works again, this
 	//test is out of commission.
 	/*
@@ -56,5 +59,35 @@ public class SuperAdminT extends AdminT  {
 		//driver.findElement(By.xpath("//*[@id=\"dialogContent_12\"]/div/div/button")).click();
 	}
 	*/
+	
+	
+	
+	
+	public void testPanelStatusChange() {
 		
+	}
+	
+	public void testEventCreation() {
+		
+	}
+	
+	public void testMarketingStatusChange() {
+		
+	}
+	
+	public void testProjectCreation() {
+		
+	}
+	
+	public void testProjectAssignment() {
+		
+	}
+	
+	public void testSkillCreation() {
+		
+	}
+	
+	
+	
+	
 }
