@@ -1,3 +1,4 @@
+<md-dialog flex="66">
 <md-toolbar>
 	<div class="md-toolbar-tools">
 		<h2>Update project</h2>
@@ -5,28 +6,44 @@
 </md-toolbar>
 	
 <div class="md-padding" layout="column" layout-align="center space-around">
-	{{ap.message}}
-</div>
+	{{up.message}}
 
-<div class="md-padding" layout="column" layout-align="center space-around">
-	<md-input-container>
+	<md-button ng-click="up.newProject()">Add new project</md-button>
+
+	<md-input-container class="InputContainer">
 		<md-select ng-model="up.selectedProject" placeholder="Select a project">
 			<md-option 	ng-value="proj" ng-repeat="proj in up.allProjects">{{ proj.name }}</md-option>
 		</md-select>
 	</md-input-container>
 	
-	<div layout="row" layout-align="space-between start" class="projectPopup">
-		<h3>{{up.selectedProject.name}}</h3>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-		<p>{{up.selectedProject.startDate  | date:"MMM dd, yyyy"}} - {{up.selectedProject.endDate | date:"MMM dd, yyyy"}}</p>
-	</div>
+	
+	<div layout="column" layout-align="space-between start" class="projectPopup">
+	
+		<md-input-container class="InputContainer">
+			<label>Project name</label>
+  			<input type="text" ng-model="up.selectedProject.name">
+		</md-input-container>
+	
+			<md-input-container class="InputContainer">
+				<label>Start date</label>
+	  			<md-datepicker ng-model="up.selectedProject.startDate"></md-datepicker>
+			</md-input-container>
 			
-	<div layout="column" layout-align="start start">
-		<p>{{up.selectedProject.description}}</p>
+				
+			<md-input-container class="InputContainer">
+				<label>End date</label>
+	  			<md-datepicker ng-model="up.selectedProject.endDate"></md-datepicker>
+			</md-input-container>
+	
+		
+		<md-input-container layout-fill class="InputContainer">
+			<label>Project description</label>
+  			<textarea ng-model="up.selectedProject.description" maxlength="255" rows="4" max-rows="4"></textarea>
+		</md-input-container>
 	</div>
+	
+	<div layout="row" layout-fill>
+		<md-button type="button" id="assignSubmit" class="md-primary"ng-click="up.close()" layout-fill> Done </md-button>
+	</div>		
 </div>
-
-<div class="md-padding" layout="row" layout-align="center space-around">
-	<div flex> </div>
-	<md-button type="button" id="assignSubmit" class="md-primary"ng-click="up.assignSubmit()"> Submit </md-button>
-	<md-button type="button" id="assignCancel" class="md-accent" ng-click="up.assignCancel()"> Cancel </md-button>
-</div>
+</md-dialog>
