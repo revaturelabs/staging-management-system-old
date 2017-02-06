@@ -50,7 +50,7 @@ public class AssociateTask {
 	private String note;
 	
 	/**
-	 * String value that represents if an assoicate has passed a certain task.
+	 * String value that represents if an associate has passed a certain task.
 	 */
 	@Column(name="Passed", nullable=false)
 	private boolean passed;
