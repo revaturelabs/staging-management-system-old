@@ -198,11 +198,12 @@
             if (getScheduledCert() == null) {
                 $mdDialog.show({
                     templateUrl: "html/templates/scheduleCertification.html",
-                    controller: "associateCertificationsCtrl as assCertCtrl"
+                    controller: "associateCertificationsCtrl as assCertCtrl", 
+                    clickOutsideToClose: true
                 }).then( function() {
                     aac.toast("Certification Scheduled");
                 }, function() {
-                    aac.toast("Certification Schedule Cancelled");
+                    //certification modal cancelled
                 });
             }
             else {
