@@ -124,11 +124,20 @@ public class User {
 	private MarketingStatus marketingStatus;
 	
 	/**
+	 * Trainer object that keeps track of the user's trainer
+	 */
+	@ManyToOne
+	@JoinColumn(name = "trainer")
+	private Trainer trainer;
+	
+	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
 	 */
 	public User() {
 		super();
 	}
+
+
 
 	// constructor for associate
 	/**
@@ -148,7 +157,7 @@ public class User {
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate, 
-			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus) {
+			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus, Trainer trainer) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -162,6 +171,7 @@ public class User {
 		this.skill = skills;
 		this.events = events;
 		this.marketingStatus = marketingStatus;
+		this.trainer = trainer;
 	}
 	// constructor for non-associate
 	/**
@@ -406,7 +416,13 @@ public class User {
 	public void setMarketingStatus(MarketingStatus marketingStatus) {
 		this.marketingStatus = marketingStatus;
 	}
+	public Trainer getTrainer() {
+		return trainer;
+	}
 
+	public void setTrainer(Trainer trainer) {
+		this.trainer = trainer;
+	}
 	/**
 	 * Method that returns a string representation of the current User object.
 	 */
@@ -416,7 +432,7 @@ public class User {
 		return "User [ID=" + ID + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", hashedPassword=" + hashedPassword + ", batchType=" + batchType + ", attendance=" + attendance
 				+ ", tasks=" + tasks + ", events=" + events + ", userRole=" + userRole + ", graduationDate="
-				+ graduationDate + ", skill=" + skill + ", marketingStatus=" + marketingStatus + "]";
+				+ graduationDate + ", skill=" + skill + ", marketingStatus=" + marketingStatus +", trainer=" + trainer + "]";
 	}
 
 	/**

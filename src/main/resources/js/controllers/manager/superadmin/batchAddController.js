@@ -1,12 +1,28 @@
   
     var sms = angular.module("sms");
 
-    sms.controller( "batchAddCtrl", function( $scope, $mdDialog, userService, batchTypeService, batchAddFactory ) {
+    sms.controller( "batchAddCtrl", function( $scope, $mdDialog, userService, trainerService, batchTypeService, batchAddFactory ) {
 	var bac = this;
-
+bac.trainer = "";
 	  // functions
+	bac.getTrainers = getTrainers
+	
+	// initialization
+	bac.getTrainers();
 	    // adds new associate to list
 
+	
+	function getTrainers() {
+        trainerService.getAll(function(response) {
+        	bac.trainers = response;
+        	
+        }, function() {
+            
+        });}
+	
+	
+	
+	
 	bac.addNew = function(isValid) {
 		if (isValid) {
 			bac.associates.push({
