@@ -14,7 +14,6 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 	
 	/**@prop {string} message Variable with message to be displayed*/
 	apc.message = "";
-	
 
 	//functions
 	apc.getProjects = getProjects;
