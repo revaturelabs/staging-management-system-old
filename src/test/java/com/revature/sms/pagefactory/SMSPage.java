@@ -53,6 +53,7 @@ public abstract class SMSPage {
 							return result;
 						}
 					}
+				} catch (ClassCastException e1) {
 				} catch (IllegalArgumentException | IllegalAccessException e1) {
 					Logger.getRootLogger().debug(e1);
 				}
@@ -79,7 +80,7 @@ public abstract class SMSPage {
 	
 	public String getToastMessage() {
 		try {
-			Utils.attemptWait(500);
+			Utils.attemptWait(300);
 			WebElement toast = driver.findElement(By.tagName("md-toast"));
 			String text = toast.getText();
 			text = text.trim();

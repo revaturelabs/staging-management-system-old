@@ -64,57 +64,6 @@ public class AdminT extends AbstractT {
 	 * }
 	 */
 
-	@Ignore
-	@Test
-	public void testAdminAttendanceView() {
-		lp.login(un, pw);
-		int count = 0;
-		int cellCount = 0;
-		while (true) {
-			List<WebElement> allRows = adp.attendanceTable.findElements(By.tagName("tr"));
-			row: for (WebElement row : allRows) {
-				List<WebElement> cells = row.findElements(By.tagName("td"));
-				for (WebElement cell : cells) {
-					if (count == 0) {
-						cell.click();
-						Assert.assertTrue(adp.verifyAssoc.isDisplayed());
-						adp.closeIcon.click();
-					} else if (count == 1) {
-						System.out.println("Outer: "+cell.getText());
-						cell.click();
-					} else {
-						System.out.println("Between");
-						List<WebElement> allRows1 = adp.attendanceTable.findElements(By.tagName("tr"));
-						cell: for (WebElement row1 : allRows1) {
-							List<WebElement> cells1 = row1.findElements(By.tagName("td"));
-							for (WebElement cell1 : cells1) {
-								if (count == cellCount) {
-									if (cellCount % 6 == 0) {
-										cell1.click();
-										Assert.assertTrue(adp.verifyAssoc.isDisplayed());
-										adp.closeIcon.click();
-									} else {
-										System.out.println("Inner: "+cell1.getText());
-										cell1.click();
-									}
-									cellCount = 0;
-									break cell;
-								}
-								cellCount++;
-							}
-						}
-					}
-					count++;
-					if(count % 6 == 0){
-						System.out.println("Here");
-						break row;
-					}
-				}
-			}
-		}
-
-	}
-
 	
 	@Test
 	public void testAdminAttendanceButtons() {

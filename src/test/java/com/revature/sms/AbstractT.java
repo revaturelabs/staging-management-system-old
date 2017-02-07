@@ -122,7 +122,6 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	public void LoginHeaderLogoutTemplate(String username, String password, String ev) {
 		lp.login(username, password);
 		Assert.assertTrue(hp.verify());
-		Assert.assertEquals(expected.getProperty("loginSuccess"), hp.getToastMessage());
 		Assert.assertEquals(ev, hp.header.getText());
 		hp.logout.click();
 		Assert.assertTrue(lp.verify());

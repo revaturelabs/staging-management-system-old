@@ -62,6 +62,9 @@ public class SuperAdminT extends AdminT  {
 	
 	
 	
+	public void testCertificationStatusChange() {
+		
+	}
 	
 	public void testPanelStatusChange() {
 		

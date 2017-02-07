@@ -4,15 +4,25 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.MonthDay;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import com.revature.sms.domain.AssociateAttendance;
+import com.revature.sms.domain.AssociateTask;
+import com.revature.sms.domain.AssociateTaskType;
 import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.JobAssignment;
+import com.revature.sms.domain.JobEvent;
+import com.revature.sms.domain.JobEventType;
+import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.User;
 import com.revature.sms.util.Utils;
 
@@ -168,11 +178,10 @@ public class AssociateT extends AbstractT {
 	@Test
 	public void testUserInfoPanel() {
 		lp.login(un, pw);
-		asp.userInfoPanel.click();
-		
-		ArrayList<String> expectedInfo = new ArrayList<String>();
+		asp.openPanel(asp.userInfoPanel);
 		User user = ur.findByUsername(un);
 		
+		ArrayList<String> expectedInfo = new ArrayList<String>();
 		String title1 = expected.getProperty("nameTitle");
 		String fname = user.getFirstName();
 		String lname = user.getLastName();
@@ -193,10 +202,109 @@ public class AssociateT extends AbstractT {
 		
 		ArrayList<String> actualInfo = asp.goThroughUserInfo();
 		Assert.assertEquals(expectedInfo, actualInfo);
+		asp.closePanel(asp.userInfoPanel);
 	}
 	
 	
+	@Test
+	public void testSkillsPanel() {
+		lp.login(un, pw);
+		asp.openPanel(asp.skillsPanel);
+		User user = ur.findByUsername(un);
+		
+		ArrayList<String> expectedSkills = new ArrayList<String>();
+		Set<TechnicalSkills> skillset = user.getSkill();
+		Iterator<TechnicalSkills> itr = skillset.iterator();
+		while (itr.hasNext()) {
+			TechnicalSkills ts = itr.next();
+			String skill = ts.getSkill();
+			expectedSkills.add(skill);
+		}
+		
+		ArrayList<String> actualSkills = asp.goThroughSkills();
+		System.out.println(expectedSkills);
+		System.out.println(actualSkills);
+		Collections.sort(expectedSkills);
+		Collections.sort(actualSkills);
+
+		Assert.assertEquals(expectedSkills, actualSkills);
+		asp.closePanel(asp.skillsPanel);
+	}
 	
+	
+	@Test
+	public void testEventsPanel() {
+		lp.login(un, pw);
+		asp.openPanel(asp.eventsPanel);
+		
+		User user = ur.findByUsername(un);
+		
+		List<JobEvent> eventObjects = user.getEvents();
+		int i=0;
+		while (i < eventObjects.size()) {
+			JobEvent e = eventObjects.get(i);
+			HashMap<String, String> expectedInfo = new HashMap<String, String>();
+			JobAssignment a = e.getAssignment();
+			expectedInfo.put("companyName", a.getCompanyName());
+			expectedInfo.put("companyLocation", a.getLocation());
+			expectedInfo.put("jobTitle", a.getJobTitle());
+			
+			JobEventType t = e.getType();
+			expectedInfo.put("eventType", t.getType());
+			
+			Timestamp ts = e.getDate();
+			LocalDate date = Utils.convertTimestampToLocalDate(ts);
+			expectedInfo.put("eventDate", date.toString());
+			
+			expectedInfo.put("eventNote", e.getNote());
+			expectedInfo.put("eventLocation", e.getLocation());
+			Set<String> keys = expectedInfo.keySet();
+			
+			HashMap<String, String> actualInfo = asp.goThroughEvent(i+1);
+			String subheader = asp.eventsPanel.findElement(By.xpath("md-expansion-panel-expanded/md-expansion-panel-content/md-list/div["+(i+1)+"]")).getText();  
+			Assert.assertEquals(subheader, expectedInfo.get("eventType"));
+			
+			Iterator<String> itr = keys.iterator();
+			while (itr.hasNext()) {
+				String key = itr.next();
+				Assert.assertEquals(expectedInfo.get(key), actualInfo.get(key));
+			}
+			i++;
+		}
+		
+		asp.closePanel(asp.eventsPanel);
+	}
+	
+	@Test
+	public void testTasksPanel() {
+		lp.login(un, pw);
+		asp.openPanel(asp.tasksPanel);
+		User user = ur.findByUsername(un);
+		
+		
+		HashMap<String, String> expectedInfo = new HashMap<String, String>();
+		List<AssociateTask> taskObjects = user.getTasks();
+		for (AssociateTask task:taskObjects) {
+			AssociateTaskType taskType = task.getTaskType();
+			Timestamp ts = task.getDate();
+			LocalDate date = Utils.convertTimestampToLocalDate(ts);
+			
+			expectedInfo.put("taskDate", date.toString());
+			expectedInfo.put("taskNote", task.getNote());
+			expectedInfo.put("taskType", taskType.getType());
+			expectedInfo.put("taskStatus", String.valueOf(task.getPassed()));
+		}
+		
+		Set<String> keys = expectedInfo.keySet();
+		HashMap<String, String> actualInfo = asp.goThroughTasks();
+		Iterator<String> itr = keys.iterator();
+		while (itr.hasNext()) {
+			String key = itr.next();
+			Assert.assertEquals(expectedInfo.get(key), actualInfo.get(key));
+		}
+		
+		asp.closePanel(asp.tasksPanel);
+	}
 	
 	
 	
