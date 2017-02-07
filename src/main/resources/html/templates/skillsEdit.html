@@ -1,13 +1,13 @@
 <div role="dialog">
     <md-toolbar>
             <div class="md-toolbar-tools">
-                Edit Skills
+               Technical Skills
             </div>
         </md-toolbar>
         <div class="md-padding batchAddChips">
-            <h3>Skills To Add</h3>
             <md-chips ng-model="sECtrl.newSkillList" readonly="false" md-removable="true" md-enable-chip-edit="true" 
-            md-transform-chip="sECtrl.addNewSkillId($chip)" md-on-remove="sECtrl.removeSkillId($index)">
+            md-transform-chip="sECtrl.addNewSkillId($chip)" md-on-remove="sECtrl.removeSkillId($index)" placeholder="new skill"
+            delete-hint="Delete this skill">
 
             </md-chips>
         </div>

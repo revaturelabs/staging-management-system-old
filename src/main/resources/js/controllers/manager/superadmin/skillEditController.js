@@ -49,9 +49,17 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
          * @description Function that runs when a new skill is created in the view to add an id into skillIds array.
          */
         function addNewSkillId(chip){
+          for (var i=0; i<sec.newSkillList.length; i++){
+                if (chip.toLowerCase() == sec.newSkillList[i].toLowerCase()){
+                    //if the chip and a skill is the same when converted to lowerCase.
+                    return null; //prevents chip from being added.
+                }
+            }
             if (sec.newSkillList.indexOf(chip)==-1){ //if the chip isn't already in the newSkillList
                 sec.skillIds.push(ADDSKILLDEFAULTVAL); 
             }
+        
+
         }
 
         /**
@@ -132,7 +140,7 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
 
 
         /**
-         * @description Fuction that updates a skill in the database, replacing the old name with the new one.
+         * @description Function that updates a skill in the database, replacing the old name with the new one.
          * @param {string} oldSkillName The old name of the skill.
          * @param {string} newSkillName The new name for the skill.
          */
@@ -166,8 +174,6 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
         function toast( message ) {
             $mdToast.show( $mdToast.simple().textContent( message ).action("OKAY").position("top right").highlightAction(true) );
         }
-
-       
 
         /**
          * @description Cancel the currently opened dialog window.
