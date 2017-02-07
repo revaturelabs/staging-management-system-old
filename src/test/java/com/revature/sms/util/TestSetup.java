@@ -14,7 +14,6 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 //This class contains convenience methods for creating connections to properties files and web driver files.
 public class TestSetup {
 	
-	//List of paths to browser drivers
 	private final static String windowsChromeDriverPath = "src/test/resources/testBrowserDrivers/chromedriver.exe";
 	private final static String ieDriverPath = "src/test/resources/testBrowserDrivers/IEDriverServer.exe";
 	
@@ -45,7 +44,6 @@ public class TestSetup {
 	public static WebDriver getChrome() {
 		System.setProperty("webdriver.chrome.driver", windowsChromeDriverPath);
 		return new ChromeDriver();
-		//Inconsequential change
 	}
 	
 	public static WebDriver getIE() {

@@ -10,7 +10,6 @@ import org.openqa.selenium.support.FindBy;
 import com.revature.sms.util.TestSetup;
 import com.revature.sms.util.Utils;
 
-
 public class LoginPage extends SMSPage {
 	protected final static String expectedPath = "src/test/resources/PropertiesFiles/expected.properties";
 	static Properties expected = TestSetup.getProperties(expectedPath);

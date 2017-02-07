@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+//This class should be used after you click the plus icon on the dashboard (which is only on the Super Admin page).
 public class CreateBatchWindow extends SMSPage {
 	
 	@FindBy(id="firstName")

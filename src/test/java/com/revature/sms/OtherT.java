@@ -7,8 +7,13 @@ import org.openqa.selenium.WebElement;
 
 import com.revature.sms.util.Utils;
 
+//This class tests features of the website that are not associated with a specific type of home page.
 public class OtherT extends AbstractT {
 
+	
+	//This test changes the password of a user, logs out, logs in with the new password, and changes the password
+	//back to the original password. Throughout this proccess, the test also asserts that all of the expected pages 
+	//and toast notifications are loaded appropriately.
 	@Test
 	public void testPasswordChange() {
 		String pw2 = inputs.getProperty("PW2");
@@ -37,11 +42,12 @@ public class OtherT extends AbstractT {
 	}
 	
 	
+	//Ensures that all of the web elements in the "Raise a Bug" frame can be interacted with as intended.
 	@Test
 	public void testBugReport() {
 		lp.login(un, pw);
 		hp.reportBug.click();
-		driver.switchTo().frame("atlwdg-frame");
+		driver.switchTo().frame("atlwdg-frame");  //Unlike other pop-ups on this website, this one actually opens a new frame.
 
 		Assert.assertTrue(rbw.verify());
 		rbw.messageBox.sendKeys(inputs.getProperty("bugReport"));
@@ -52,6 +58,9 @@ public class OtherT extends AbstractT {
 		Assert.assertTrue(hp.verify());
 	}
 	
+	//This test attempts to log in with different combinations of incorrect information in order to ensure that 
+	//a user can't log in when they are not authorized, and that such a user is shown a toast notification that
+	//properly identifies what they did wrong.
 	@Test
 	public void testLoginRejection() {
 		WebElement submission = driver.findElement(By.xpath("/html/body/div[1]/div/ui-view[2]/div/md-card/form"));

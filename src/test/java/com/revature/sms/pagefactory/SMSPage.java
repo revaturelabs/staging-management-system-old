@@ -13,7 +13,11 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.revature.sms.util.Utils;
 
-//Defines a constructor and methods that should be implemented by all page objects in the testing framework
+//Defines a constructor and methods that should be implemented by all page objects in the SMS testing framework.
+//NOTE: Page objects (especially windows) should only be used and verified when their WebElement fields are visible 
+//and clickable in the browser. To retrieve WebElements that only appear in very specific situations, use an 
+//additional method that belongs to the page object where the WebElement appears.
+//
 public abstract class SMSPage {
 	protected WebDriver driver;
 	
@@ -25,10 +29,10 @@ public abstract class SMSPage {
 		PageFactory.initElements(driver, this);
 	}
 	
-	//Verifies that the web driver is currently on the page specified by this page object
+	//Verifies that the web driver is currently on the page specified by this page object.
 	@SuppressWarnings("unchecked")
 	public boolean verify() {
-		Class<? extends SMSPage> thisClass = this.getClass();
+		Class<? extends SMSPage> thisClass = this.getClass();  //Isn't the reflection API neat?
 		Field[] fields = thisClass.getDeclaredFields();
 		//System.out.println(thisClass.getName());
 		WebElement fieldValue;
@@ -37,6 +41,7 @@ public abstract class SMSPage {
 		int i=0;
 		while (i<fields.length) {
 			try {
+				//When a field is a WebElement
 				//System.out.println(fields[i].getName());
 				fieldValue = (WebElement) fields[i].get(this);
 				result = verifyField(fieldValue);
@@ -46,18 +51,20 @@ public abstract class SMSPage {
 				}
 			} catch (ClassCastException e) {
 				try {
+					//When a field is a list of Webelements
 					fieldValues = (List<WebElement>) fields[i].get(this);
+					//Each WebElement must be verified individually.
 					for (WebElement f:fieldValues) {
 						result = verifyField(f);
 						if (!result) {
 							return result;
 						}
 					}
-				} catch (ClassCastException e1) {
-				} catch (IllegalArgumentException | IllegalAccessException e1) {
+				} catch (ClassCastException e1) { 
+					//When a field is not related to WebElements
+				} catch (IllegalArgumentException | IllegalAccessException e1) { //These exceptions should never happen
 					Logger.getRootLogger().debug(e1);
 				}
-				Logger.getRootLogger().debug(e);
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				Logger.getRootLogger().debug(e);
 			} 
@@ -68,7 +75,7 @@ public abstract class SMSPage {
 	
 	private boolean verifyField(WebElement fieldValue) {
 		try {
-			fieldValue.isDisplayed();
+			fieldValue.isDisplayed();  //Dummy method to test whether the WebElement exists
 		} catch (NoSuchElementException e) {
 			//System.out.println(fieldValue.toString());
 			Logger.getRootLogger().debug(e);
@@ -78,6 +85,8 @@ public abstract class SMSPage {
 	}
 		
 	
+	//This method should be able to return any toast message that appears on screen, given that all toast 
+	//notifications are laid out in a similar way.
 	public String getToastMessage() {
 		try {
 			Utils.attemptWait(100);

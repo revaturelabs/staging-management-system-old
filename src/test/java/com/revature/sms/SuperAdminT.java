@@ -31,6 +31,7 @@ public class SuperAdminT extends AdminT  {
 	//The submit button in the batch creation window seems to be disabled. Until it works again, this
 	//test is out of commission.
 	/*
+	//This test creates a new batch using the dashboard icon.
 	@Test
 	public void testBatchCreation() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));

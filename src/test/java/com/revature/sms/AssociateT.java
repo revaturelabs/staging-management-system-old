@@ -26,12 +26,11 @@ import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.User;
 import com.revature.sms.util.Utils;
 
-
+//This test class tests features that are particular to an Associate's home page.
 public class AssociateT extends AbstractT {
-	// Tests that when different types of users login and logout, they are
-	// navigated to the correct pages
-
 	
+
+	//Tests that when different types of users login and logout, they are navigated to the correct pages.
 	@Test
 	public void testLoginHeaderLogout() {
 		String expectedValue = expected.getProperty("associatePg");
@@ -41,6 +40,8 @@ public class AssociateT extends AbstractT {
 	}
 	
 	
+	//Tests that you can enter and exit all of the frames that pop up when you click icons on the dashboard or
+	//the "Found a Bug" button.
 	@Test
 	public void testCancelButtons() {
 		lp.login(un, pw);
@@ -54,11 +55,11 @@ public class AssociateT extends AbstractT {
 	}
 
 	//Makes sure the current week is shown on the associate page when you log in.
-	
 	@Test
 	public void testDefaultWeek() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
 		
+		//Gets the date of every day this week from expected.properties...
 		ArrayList<MonthDay> expectedMonthDays = new ArrayList<MonthDay>();
 		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Mon")));
 		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Tue")));
@@ -66,9 +67,15 @@ public class AssociateT extends AbstractT {
 		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Thu")));
 		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Fri")));
 
-		ArrayList<MonthDay> actualMonthDays = asp.goThroughWeek();
-		Assert.assertEquals(expectedMonthDays, actualMonthDays);
 		
+		ArrayList<MonthDay> actualMonthDays = asp.goThroughWeek();
+		//...and compares them to the dates displayed on the website
+		Assert.assertEquals(expectedMonthDays, actualMonthDays);
+	}
+	
+	//Asserts that the date displayed under the calendar is the same as the one displayed below the word Monday.
+	@Test
+	public void testWeekFooter()  {
 		String monday = asp.attendanceCells.get(0).getText();
 		if (monday.contains("/0")) {
 			monday = monday.replace("0", "");
@@ -85,29 +92,32 @@ public class AssociateT extends AbstractT {
 	}
 
 	
+	//Tests all of the check in functionality using the icon on the dashboard and asserts that the toast
+	//notifications display the correct messages in each step of the process.
 	@Test
 	public void testCheckInCheckOut() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
 		String checked = expected.getProperty("checkedIn");
 		String notChecked = expected.getProperty("notCheckedIn");
 		String icon = asp.checkincheckout.getText();
-		Assert.assertEquals(notChecked, icon);
+		Assert.assertEquals(notChecked, icon);  //The test will fail if the user being tested has already checked in beforehand.
 		asp.checkincheckout.click();
 		Assert.assertEquals(expected.getProperty("checkInSuccess"), asp.getToastMessage());
-		icon = asp.checkincheckout.getText();
-		Assert.assertEquals(checked, icon);   //This line appears to fail when there is not enough wait time after a click
+		icon = asp.checkincheckout.getText(); //The text related to the dashboard icon changes whenever its clicked on, so the reference to the WebElement must be reset in this situation.
+		Assert.assertEquals(checked, icon);   //This line appears to fail when there is not enough wait time after a click.
 		asp.checkincheckout.click();
-		driver.findElement(By.xpath("/html/body/div[5]/md-dialog/md-dialog-actions/button[1]")).click();
+		driver.findElement(By.xpath("/html/body/div[5]/md-dialog/md-dialog-actions/button[1]")).click();  //Chooses no in the pop-up that asks whether you really want to un-check in.
 		icon = asp.checkincheckout.getText();
 		Assert.assertEquals(checked, icon);
 		asp.checkincheckout.click();
-		driver.findElement(By.xpath("/html/body/div[5]/md-dialog/md-dialog-actions/button[2]")).click();
+		driver.findElement(By.xpath("/html/body/div[5]/md-dialog/md-dialog-actions/button[2]")).click();  //Chooses yses in the pop-up that asks whether you really want to un-check in.
 		Assert.assertEquals(expected.getProperty("checkOutSuccess"), asp.getToastMessage());
 		icon = asp.checkincheckout.getText();
 		Assert.assertEquals(notChecked, icon);
 	}
 	
-	
+	//Tests that the user's attendance data that is displayed on the website matches the attendance data contained
+	//in the database.
 	@Test
 	public void testAssociateAttendanceView() {
 		lp.login(un, pw);
@@ -115,7 +125,10 @@ public class AssociateT extends AbstractT {
 
 		User user = ur.findByUsername(un);
 		List<AssociateAttendance> attendanceList = user.getAttendance();
-		HashMap<MonthDay, String> expectedStatuses = new HashMap<MonthDay, String>();
+		HashMap<MonthDay, String> expectedStatuses = new HashMap<MonthDay, String>();  //Database data
+		
+		//Goes through the User's list of attendance objects and gathers information from them in a way that allows
+		//it to be compared to the website.
 		for (AssociateAttendance a : attendanceList) {
 			Timestamp ts = a.getDate();
 			String fullTime = ts.toString();
@@ -126,10 +139,9 @@ public class AssociateT extends AbstractT {
 			String status;
 			boolean ci = a.isCheckedIn();
 			boolean v = a.isVerified();
+			//Depending on whether an associate is checked in and verified, a certain icon should be displayed, 
+			//and each icon is associated with a different string in the html.
 			if (v) { 
-				//If the associate is checked in and verified, the double
-				//check icon should be displayed, which is represented
-				//by the string done_all in the html.
 				status = "done_all";
 			} else if (ci && !v) {
 				status = "done";
@@ -142,16 +154,22 @@ public class AssociateT extends AbstractT {
 		}
 		
 		boolean flag = true;
+		//This do-while loop uses the navigation buttons on the calendar to go through all of the weeks in 
+		//reverse order until it receives the toast notification that says you can't go back any further.
 		do {
 			ArrayList<MonthDay> monthDays = asp.goThroughWeek();
 			ArrayList<String> icons = asp.goThroughWeekIcons();
-			HashMap<MonthDay, String> actualStatuses = new HashMap<MonthDay, String>();
+			HashMap<MonthDay, String> actualStatuses = new HashMap<MonthDay, String>();  //Website data
+			
 			int i = 0;
+			//This while loop organizes the dates, check-ins, and verifications from the website into a HashMap.
 			while (i < 5) {
 				actualStatuses.put(monthDays.get(i), icons.get(i));
 				i++;
 			}
 
+			//This for-each loop iterates through both HashMaps using every matching monthDay key, and asserts
+			//that the values are equal.
 			for (MonthDay md : monthDays) {
 				String es = expectedStatuses.get(md);
 				String as = actualStatuses.get(md);
@@ -175,148 +193,12 @@ public class AssociateT extends AbstractT {
 	}
 	
 	
-	@Test
-	public void testUserInfoPanel() {
-		lp.login(un, pw);
-		asp.openPanel(asp.userInfoPanel);
-		User user = ur.findByUsername(un);
-		
-		ArrayList<String> expectedInfo = new ArrayList<String>();
-		String title1 = expected.getProperty("nameTitle");
-		String fname = user.getFirstName();
-		String lname = user.getLastName();
-		String nameRow = title1+": "+fname+" "+lname;
-		expectedInfo.add(nameRow);
-		String title2 = expected.getProperty("usernameTitle");
-		String usernameRow = title2+": "+un;
-		expectedInfo.add(usernameRow);
-		String title3 = expected.getProperty("batchCurriculumTitle");
-		BatchType bt = user.getBatchType();
-		String batchType = bt.getType();
-		String batchCurriculumRow = title3+": "+batchType;
-		expectedInfo.add(batchCurriculumRow);
-		String title4 = expected.getProperty("graduationDateTitle");
-		LocalDate dateObject = Utils.convertTimestampToLocalDate(user.getGraduationDate());
-		String gDateRow = title4+": "+dateObject.toString();
-		expectedInfo.add(gDateRow);
-		
-		ArrayList<String> actualInfo = asp.goThroughUserInfo();
-		Assert.assertEquals(expectedInfo, actualInfo);
-		asp.closePanel(asp.userInfoPanel);
-	}
-	
-	
-	@Test
-	public void testSkillsPanel() {
-		lp.login(un, pw);
-		asp.openPanel(asp.skillsPanel);
-		User user = ur.findByUsername(un);
-		
-		ArrayList<String> expectedSkills = new ArrayList<String>();
-		Set<TechnicalSkills> skillset = user.getSkill();
-		Iterator<TechnicalSkills> itr = skillset.iterator();
-		while (itr.hasNext()) {
-			TechnicalSkills ts = itr.next();
-			String skill = ts.getSkill();
-			expectedSkills.add(skill);
-		}
-		
-		ArrayList<String> actualSkills = asp.goThroughSkills();
-		System.out.println(expectedSkills);
-		System.out.println(actualSkills);
-		Collections.sort(expectedSkills);
-		Collections.sort(actualSkills);
-
-		Assert.assertEquals(expectedSkills, actualSkills);
-		asp.closePanel(asp.skillsPanel);
-	}
-	
-	
-	@Test
-	public void testEventsPanel() {
-		lp.login(un, pw);
-		asp.openPanel(asp.eventsPanel);
-		
-		User user = ur.findByUsername(un);
-		
-		List<JobEvent> eventObjects = user.getEvents();
-		int i=0;
-		while (i < eventObjects.size()) {
-			JobEvent e = eventObjects.get(i);
-			HashMap<String, String> expectedInfo = new HashMap<String, String>();
-			JobAssignment a = e.getAssignment();
-			expectedInfo.put("companyName", a.getCompanyName());
-			expectedInfo.put("companyLocation", a.getLocation());
-			expectedInfo.put("jobTitle", a.getJobTitle());
-			
-			JobEventType t = e.getType();
-			expectedInfo.put("eventType", t.getType());
-			
-			Timestamp ts = e.getDate();
-			LocalDate date = Utils.convertTimestampToLocalDate(ts);
-			expectedInfo.put("eventDate", date.toString());
-			
-			expectedInfo.put("eventNote", e.getNote());
-			expectedInfo.put("eventLocation", e.getLocation());
-			Set<String> keys = expectedInfo.keySet();
-			
-			HashMap<String, String> actualInfo = asp.goThroughEvent(i+1);
-			String subheader = asp.eventsPanel.findElement(By.xpath("md-expansion-panel-expanded/md-expansion-panel-content/md-list/div["+(i+1)+"]")).getText();  
-			Assert.assertEquals(subheader, expectedInfo.get("eventType"));
-			
-			Iterator<String> itr = keys.iterator();
-			while (itr.hasNext()) {
-				String key = itr.next();
-				Assert.assertEquals(expectedInfo.get(key), actualInfo.get(key));
-			}
-			i++;
-		}
-		
-		asp.closePanel(asp.eventsPanel);
-	}
-	
-	@Test
-	public void testTasksPanel() {
-		lp.login(un, pw);
-		asp.openPanel(asp.tasksPanel);
-		User user = ur.findByUsername(un);
-		
-		List<AssociateTask> taskObjects = user.getTasks();
-		for (AssociateTask task:taskObjects) {
-			HashMap<String, String> expectedInfo = new HashMap<String, String>();
-			AssociateTaskType taskType = task.getTaskType();
-			Timestamp ts = task.getDate();
-			LocalDate date = Utils.convertTimestampToLocalDate(ts);
-			
-			expectedInfo.put("taskDate", date.toString());  //The comparison will mess up if the taskDate is before 5am in the database
-			expectedInfo.put("taskNote", task.getNote());
-			expectedInfo.put("taskType", taskType.getType());
-			expectedInfo.put("taskStatus", String.valueOf(task.getPassed()));
-			
-			Set<String> keys = expectedInfo.keySet();
-			HashMap<String, String> actualInfo; 
-			
-			if ("Certification".equals(expectedInfo.get("taskType"))) {
-				actualInfo = asp.findCertification(date);
-			} else {
-				actualInfo = asp.findPanel();
-			}
-				
-			Iterator<String> itr = keys.iterator();
-			while (itr.hasNext()) {
-				String key = itr.next();
-				if (!("taskNote".equals(key) && "Panel".equals(expectedInfo.get("taskType")))) {
-					Assert.assertEquals(expectedInfo.get(key), actualInfo.get(key));
-				}
-			}
-		}
-		asp.closePanel(asp.tasksPanel);
-	}
 	
 	
 	
 	
 	/*
+	//This test adds skills and confirms that these added skills are reflected in the database.
 	@Test
 	public void testAddSkill() {
 		lp.login(un, pw);
@@ -397,6 +279,7 @@ public class AssociateT extends AbstractT {
 	// Maybe we should wait until there is a way to unschedule certifications on
 	// the website before completing this test.
 	/*
+	//This test schedules a certification.
 	@Test
 	public void testCertificationScheduling() {
 	 	lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));

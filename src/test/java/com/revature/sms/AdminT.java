@@ -9,10 +9,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
+//This test class tests features that are particular to an Admin's home page.
 public class AdminT extends AbstractT {
 
-	// Tests that when different types of users login and logout, they are
-	// navigated to the correct pages
+	//Tests that when an Admin or a Super Admin logs in and out, they are navigated to the appropriate pages.
 	@Test
 	public void testLoginHeaderLogout() {
 		String pageType = hp.getClass().getName();
@@ -41,7 +41,7 @@ public class AdminT extends AbstractT {
 	// returned
 	/*
 	 * @Test 
-	 * public void testSearchBar() {
+	 * public void testAdminSearchBar() {
 	 * lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
 	 * Assert.assertTrue(adp.verify());
 	 * Assert.assertEquals(expected.getProperty("adminPg"),
@@ -65,9 +65,12 @@ public class AdminT extends AbstractT {
 	 */
 
 	
+	//This test clicks all of the buttons on the Admin attendance table and makes sure that they work.
 	@Test
 	public void testAdminAttendanceButtons() {
 		lp.login(un, pw);
+		
+		//Navigation buttons
 		adp.prevWeekTop.click();
 		adp.nextWeekTop.click();
 		adp.prevWeekBottom.click();
@@ -76,23 +79,25 @@ public class AdminT extends AbstractT {
 		List<WebElement> allCells = adp.attendanceTable.findElements(By.tagName("td"));
 		int count = allCells.size();
 		
+		
 		int i=0;
+		//Iterates through every cell in the attendance table.
 		while (i<count) {
 			try {
 				WebElement cell = allCells.get(i);
 				String textBefore = cell.getText();
 				cell.click();
-				if (cell.getText().contains("\n")) {
+				if (cell.getText().contains("\n")) {  //When an associate name is clicked
 					adp.closeIcon.click();
-				} else {
+				} else {  //When an attendance icon is clicked
 					String textAfter = cell.getText();
 					System.out.println(textBefore);
 					System.out.println(textAfter);
 					System.out.println();
-					Assert.assertNotEquals(textBefore, textAfter);
+					Assert.assertNotEquals(textBefore, textAfter);  //Asserts that the icon changed after being clicked.
 				}
 				
-			} catch (StaleElementReferenceException e) {
+			} catch (StaleElementReferenceException e) {  //If the table changed on the web page, it must be reloaded.
 				allCells = adp.attendanceTable.findElements(By.tagName("td"));
 			}
 			i++;

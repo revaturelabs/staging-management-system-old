@@ -42,7 +42,6 @@ public class ExcelHelper {
 			
 			//Looks through columns in the row in order until an cell with 'STOP' is found. Row 1 in the excel
 			//sheet must include column numbers for this to work.
-			
 			while (rs.next()) {
 				boolean flag = true;
 				int i  = 1;

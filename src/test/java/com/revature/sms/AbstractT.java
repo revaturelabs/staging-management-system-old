@@ -30,6 +30,8 @@ import com.revature.sms.pagefactory.ScheduleCertificationWindow;
 import com.revature.sms.pagefactory.SuperAdminPage;
 import com.revature.sms.util.EventListener;
 
+//This test class can't be directly run, but it provides set up and tear down for various other tests that are
+//all prepared in similar ways using inheritance. 
 @Transactional
 @Service
 @RunWith(SpringInstanceTestClassRunner.class)
@@ -39,8 +41,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	protected final static String inputsPath = "src/test/resources/PropertiesFiles/inputs.properties";
 	protected final static String expectedPath = "src/test/resources/PropertiesFiles/expected.properties";
 
-	// Allow properties files, webdrivers, and page objects to be used in the
-	// tests
+	//Allow properties files, webdrivers, and page objects to be used in the tests
 	static Properties inputs;
 	static Properties expected;
 	static WebDriver webDriver;
@@ -65,6 +66,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 
 	@Override
 	public void beforeClassSetup() {
+		//Pick your browser
 		if ("Chrome".equals(browser)) {
 			webDriver = TestSetup.getChrome();
 		}
@@ -75,19 +77,20 @@ public abstract class AbstractT implements InstanceTestClassListener {
 			webDriver = new FirefoxDriver();
 		}
 
-		// Allows the driver to take advantage of an event listener
+		//Allows the driver to take advantage of an event listener
 		driver = new EventFiringWebDriver(webDriver);
 		eventListener = new EventListener();
 		driver.register(eventListener);
 		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 
-		// Initialize properties files
+		//Initialize properties files
 		inputs = TestSetup.getProperties(inputsPath);
 		expected = TestSetup.getProperties(expectedPath);
 	}
 
 	@Before
 	public void before() {
+		//Initialize page objects
 		lp = new LoginPage(driver);
 		asp = new AssociatePage(driver);
 		adp = new AdminPage(driver);
@@ -97,6 +100,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		sw = new SettingsWindow(driver);
 		rbw = new RaiseBugWindow(driver);
 		
+		//The home page and username variables are different depending on which test class is being used.
 		Class<? extends AbstractT> currentClass = this.getClass();
 		String className = currentClass.getName();
 		if (className.contains(".AssociateT")) {
@@ -119,6 +123,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	}
 	
 	
+	//Allows a single test class to log in multiple times, each time as a different user
 	public void LoginHeaderLogoutTemplate(String username, String password, String ev) {
 		lp.login(username, password);
 		Assert.assertTrue(hp.verify());
@@ -128,6 +133,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	}
 	
 	
+	//Logs out if the test is still on the home page when it ends
 	@After
 	public void after() {
 		if (hp.verify()) {

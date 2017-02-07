@@ -50,6 +50,9 @@ public class Utils {
 		return null;
 	}
 	
+	
+	//Takes a Timestamp (from SQL), makes it a string, isolates the  components of this string, and uses the
+	//components to create a new LocalDate object (from the Java 8 time package).
 	public static LocalDate convertTimestampToLocalDate(Timestamp ts) {
 		String datetime = ts.toString();
 		String[] splitDatetime = datetime.split(" ");
@@ -74,7 +77,7 @@ public class Utils {
 	}
 	
 	
-		
+	//Allows a thread to sleep for the given number of milliseconds.
 	public static void attemptWait(int m) {
 		try {
 			Thread.sleep(m);

@@ -4,7 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.*;
 
-//Activates thread sleeping after certain WebDriver methods so that tests are easier to follow by humans
+//Activates thread sleeping after certain WebDriver methods. This class can be utilized to make tests easier to 
+//follow by humans or to give the browser extra time to catch up in specific types of situations.
 public class EventListener extends AbstractWebDriverEventListener {
 
 	@Override
