@@ -29,18 +29,11 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 	//initialization
 	upc.getProjects();
 	
-	var noProj={};
 	function getProjects(){
     	projectService.getAll(function(response) {
     		upc.allProjects = response;
     		var today = new Date();
     		for(var i = 0; i<upc.allProjects.length;i++){
-    			if(upc.allProjects[i].name == "No Project"){
-    				noProj = upc.allProjects[i];
-    				upc.allProjects.splice(i,1);
-    				i--;
-    				continue;
-    			}
     			upc.allProjects[i].startDate = new Date(upc.allProjects[i].startDate);
     			upc.allProjects[i].endDate = new Date(upc.allProjects[i].endDate);
     			upc.allProjects[i].displayName = upc.allProjects[i].name;
@@ -120,9 +113,9 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 			}
 			
 			if(upc.toDelete.length > 0){
-				projectService.del(upc.toDelete,function(){console.log("success");});
+				projectService.del(upc.toDelete,function(){});
 			}
-			projectService.update(upc.allProjects,function(){console.log("success"); $mdDialog.cancel();});
+			projectService.update(upc.allProjects,function(){$mdDialog.cancel();});
 			
 		}
 		
