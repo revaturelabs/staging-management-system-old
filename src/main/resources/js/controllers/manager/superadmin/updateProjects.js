@@ -18,6 +18,7 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 	upc.assignSubmit = assignSubmit;
 	/**@var {function} assignCancel function reference variable. */
 	upc.assignCancel = assignCancel;
+	/**@var {function} close function reference variable. */
 	upc.close = close;
 	
 	
@@ -38,6 +39,7 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
     			}
     			upc.allProjects[i].startDate = new Date(upc.allProjects[i].startDate);
     			upc.allProjects[i].endDate = new Date(upc.allProjects[i].endDate);
+    			upc.allProjects[i].displayName = upc.allProjects[i].name;
     			
     		}
     		
@@ -46,7 +48,7 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 	}
 	
 	function newProject(){
-		upc.allProjects.push({"name":"New project"});
+		upc.allProjects.push({"name":"New project","displayName":"New project"});
 		upc.selectedProject = upc.allProjects[upc.allProjects.length-1];
 		upc.message = "Project added";
 	}
@@ -56,7 +58,7 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 			upc.message = "Select a project to delete.";
 			return;
 		}
-		console.log(upc.selectedProject);
+		
 		for(var i = 0; i < upc.allProjects.length; i++){
 			if(upc.allProjects[i].name == upc.selectedProject.name){
 				upc.allProjects[i].name ="";
