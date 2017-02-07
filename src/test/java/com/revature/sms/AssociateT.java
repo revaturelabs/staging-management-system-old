@@ -281,28 +281,35 @@ public class AssociateT extends AbstractT {
 		asp.openPanel(asp.tasksPanel);
 		User user = ur.findByUsername(un);
 		
-		
-		HashMap<String, String> expectedInfo = new HashMap<String, String>();
 		List<AssociateTask> taskObjects = user.getTasks();
 		for (AssociateTask task:taskObjects) {
+			HashMap<String, String> expectedInfo = new HashMap<String, String>();
 			AssociateTaskType taskType = task.getTaskType();
 			Timestamp ts = task.getDate();
 			LocalDate date = Utils.convertTimestampToLocalDate(ts);
 			
-			expectedInfo.put("taskDate", date.toString());
+			expectedInfo.put("taskDate", date.toString());  //The comparison will mess up if the taskDate is before 5am in the database
 			expectedInfo.put("taskNote", task.getNote());
 			expectedInfo.put("taskType", taskType.getType());
 			expectedInfo.put("taskStatus", String.valueOf(task.getPassed()));
+			
+			Set<String> keys = expectedInfo.keySet();
+			HashMap<String, String> actualInfo; 
+			
+			if ("Certification".equals(expectedInfo.get("taskType"))) {
+				actualInfo = asp.findCertification(date);
+			} else {
+				actualInfo = asp.findPanel();
+			}
+				
+			Iterator<String> itr = keys.iterator();
+			while (itr.hasNext()) {
+				String key = itr.next();
+				if (!("taskNote".equals(key) && "Panel".equals(expectedInfo.get("taskType")))) {
+					Assert.assertEquals(expectedInfo.get(key), actualInfo.get(key));
+				}
+			}
 		}
-		
-		Set<String> keys = expectedInfo.keySet();
-		HashMap<String, String> actualInfo = asp.goThroughTasks();
-		Iterator<String> itr = keys.iterator();
-		while (itr.hasNext()) {
-			String key = itr.next();
-			Assert.assertEquals(expectedInfo.get(key), actualInfo.get(key));
-		}
-		
 		asp.closePanel(asp.tasksPanel);
 	}
 	

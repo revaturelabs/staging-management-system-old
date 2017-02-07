@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.revature.sms.util.TestSetup;
+import com.revature.sms.util.Utils;
 
 
 public class LoginPage extends SMSPage {
@@ -40,7 +41,7 @@ public class LoginPage extends SMSPage {
 		unField.sendKeys(username);
 		pwField.sendKeys(password);
 		submit.click();
-		//Assert.assertEquals(expected.getProperty("loginSuccess"), getToastMessage());
+		Assert.assertEquals(expected.getProperty("loginSuccess"), getToastMessage());
 	}
 	
 	

@@ -200,34 +200,20 @@ public class AssociatePage extends HomePage {
 	}
 	
 	
-	public HashMap<String, String> goThroughTasks() {
+	public HashMap<String, String> findCertification(LocalDate expectedDate) {
 		HashMap<String, String> hm = new HashMap<String, String>();
 		try {
-			List<WebElement> allTasks = tasksPanel.findElements(By.xpath("//*[@class=\"expansionPanelList\"]/*"));
+			List<WebElement> allTasks =  tasksPanel.findElements(By.xpath("//*[@class=\"expansionPanelList\"]/*"));
 			boolean c = false;
-			boolean p = false;
-			int i=0;
 			for (WebElement task:allTasks) {
-				if ("div".equals(task.getTagName())) {
-					if ("Certifications".equals(task.getText())) {
-						c = true;
-						p = false;
-					}
-					if ("Panels".equals(task.getText())) {
-						c = false;
-						p = true;
-					}
+				if ("div".equals(task.getTagName()) && "Certifications".equals(task.getText())) {
+					c = true;
+				}
+				if ("div".equals(task.getTagName()) && !"Certifications".equals(task.getText())) {
+					c = false;
 				}
 				
-				if ("md-list-item".equals(task.getTagName()) && "listItem".equals(task.getAttribute("role"))) {
-					if (c) {
-						hm.put("taskType", "Certification");
-						hm.put("taskNote", task.findElement(By.tagName("h3")).getText().trim());
-					}
-					if (p) {
-						hm.put("taskType", "Panel");
-					}
-					
+				if ("md-list-item".equals(task.getTagName()) && "listitem".equals(task.getAttribute("role")) && c) {
 					WebElement element = task.findElement(By.tagName("p"));
 					String date = task.findElement(By.tagName("p")).getText().trim();
 					
@@ -235,17 +221,61 @@ public class AssociatePage extends HomePage {
 					date = date.replace("Scheduled for ", "");
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
 					LocalDate dateObject = LocalDate.parse(date, formatter);
-					hm.put("taskDate", dateObject.toString());
 					
-					String icon = task.findElement(By.tagName("md-icon")).getText().trim();
-					if ("done".equals(icon)) {
-						hm.put("taskStatus", "True");
+					if (expectedDate.compareTo(dateObject) == 0) {
+						hm.put("taskType", "Certification");
+						hm.put("taskNote", task.findElement(By.tagName("h3")).getText().trim());
+						hm.put("taskDate", dateObject.toString());
+						
+						String icon = task.findElement(By.tagName("md-icon")).getText().trim();
+						if ("done".equals(icon)) {
+							hm.put("taskStatus", "true");
+						}
+						if ("close".equals(icon)) {
+							hm.put("taskStatus", "false");
+						}	
 					}
-					if ("close".equals(icon)) {
-						hm.put("taskStatus", "False");
-					}	
-				}
+				}	
 			}
+		} catch (NoSuchElementException e) {}
+		return hm;
+	}
+	
+	
+	public HashMap<String, String> findPanel() {
+		HashMap<String, String> hm = new HashMap<String, String>();
+		try {
+			List<WebElement> allTasks =  tasksPanel.findElements(By.xpath("//*[@class=\"expansionPanelList\"]/*"));
+			boolean p = false;
+				for (WebElement task:allTasks) {
+					if ("div".equals(task.getTagName()) && "Panels".equals(task.getText())) {
+						p = true;
+					}
+					if ("div".equals(task.getTagName()) && !"Panels".equals(task.getText())) {
+						p = false;
+					}
+	
+					if ("md-list-item".equals(task.getTagName()) && "listitem".equals(task.getAttribute("role")) && p) {
+						hm.put("taskType", "Panel");
+						WebElement element = task.findElement(By.tagName("p"));
+						String date = task.findElement(By.tagName("p")).getText().trim();
+						
+						date = date.replace("On ", "");
+						date = date.replace("Scheduled for ", "");
+						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+						LocalDate dateObject = LocalDate.parse(date, formatter);
+						hm.put("taskDate", dateObject.toString());
+						
+						String icon = task.findElement(By.tagName("md-icon")).getText().trim();
+						if ("done".equals(icon)) {
+							hm.put("taskStatus", "true");
+						}
+						if ("close".equals(icon)) {
+							hm.put("taskStatus", "false");
+						}	
+					}
+				}
+				
 		} catch (NoSuchElementException e) {}
 		return hm;
 	}

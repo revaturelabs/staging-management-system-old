@@ -80,7 +80,7 @@ public abstract class SMSPage {
 	
 	public String getToastMessage() {
 		try {
-			Utils.attemptWait(300);
+			Utils.attemptWait(100);
 			WebElement toast = driver.findElement(By.tagName("md-toast"));
 			String text = toast.getText();
 			text = text.trim();
