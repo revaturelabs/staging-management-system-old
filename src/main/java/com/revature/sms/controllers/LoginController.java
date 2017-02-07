@@ -303,12 +303,12 @@ public class LoginController {
 	public boolean isValid(String tokenString, String usernameString) {
 		boolean valid = false;
 		Token token = tr.findByAuthToken(tokenString);
+		String superadminString = "superadmin";
+		
 		if (token != null) {
-			if (usernameString.equals(token.getUser().getUsername())) {
+			if ((usernameString.equals(token.getUser().getUsername()))  || (token.getUser().getUserRole().getName().equalsIgnoreCase(superadminString)) ) {
 				valid = true;
-			} else if (token.getUser().getUserRole().getName().equalsIgnoreCase("superadmin")) {
-				valid = true;
-			}
+			} 
 		}
 		return valid;
 	}

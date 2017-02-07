@@ -631,7 +631,7 @@
 				    			
 				    			//prompt the user
 				    			mac.toast("Password reset successful.");	
-				    		}, function(error) {
+				    		}, function() {
 				    			
 				    			// remove the loading icon
 				    			angular.element("body").removeClass("loading");
@@ -652,7 +652,7 @@
 					    });
 				//<<<<<<<<<<<
 			}
-		};
+		}
 		
         
     }
