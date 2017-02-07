@@ -52,7 +52,23 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 	}
 	
 	function deleteProject(){
-		
+		if(upc.selectedProject == {}){
+			upc.message = "Select a project to delete.";
+			return;
+		}
+		console.log(upc.selectedProject);
+		for(var i = 0; i < upc.allProjects.length; i++){
+			if(upc.allProjects[i].name == upc.selectedProject.name){
+				upc.allProjects[i].name ="";
+				upc.allProjects[i].startDate = "";
+				upc.allProjects[i].endDate = "";
+				upc.allProjects[i].description = "";
+				upc.selectedProject = {};
+				
+				upc.allProjects.splice(i,1);
+				break;
+			}
+		}
 	}
 	
 	function assignSubmit(){

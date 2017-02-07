@@ -9,21 +9,24 @@
 	{{up.message}}
 
 	<md-button ng-click="up.newProject()">Add new project</md-button>
+	<md-button ng-click="up.deleteProject()">Delete project</md-button>
+
 
 	<md-input-container class="InputContainer">
 		<md-select ng-model="up.selectedProject" placeholder="Select a project">
-			<md-option 	ng-value="proj" ng-repeat="proj in up.allProjects">{{ proj.name }}</md-option>
+			<md-option 	ng-value="proj" ng-repeat="proj in up.allProjects | orderBy : proj.name ">{{ proj.name }}</md-option>
 		</md-select>
 	</md-input-container>
 	
 	
-	<div layout="column" layout-align="space-between start" class="projectPopup">
+	<div layout="row" layout-align="space-between start" class="projectPopup">
 	
 		<md-input-container class="InputContainer">
 			<label>Project name</label>
   			<input type="text" ng-model="up.selectedProject.name">
 		</md-input-container>
 	
+		<div>
 			<md-input-container class="InputContainer">
 				<label>Start date</label>
 	  			<md-datepicker ng-model="up.selectedProject.startDate"></md-datepicker>
@@ -34,16 +37,21 @@
 				<label>End date</label>
 	  			<md-datepicker ng-model="up.selectedProject.endDate"></md-datepicker>
 			</md-input-container>
+		</div>
+		
+		
+	</div>
 	
+	<div layout="column" layout-fill>
 		
 		<md-input-container layout-fill class="InputContainer">
 			<label>Project description</label>
   			<textarea ng-model="up.selectedProject.description" maxlength="255" rows="4" max-rows="4"></textarea>
 		</md-input-container>
-	</div>
 	
-	<div layout="row" layout-fill>
-		<md-button type="button" id="assignSubmit" class="md-primary"ng-click="up.close()" layout-fill> Done </md-button>
+		<div>
+			<md-button type="button" id="assignSubmit" class="md-primary"ng-click="up.close()" layout-fill>Submit all changes</md-button>
+		</div>
 	</div>		
 </div>
 </md-dialog>
