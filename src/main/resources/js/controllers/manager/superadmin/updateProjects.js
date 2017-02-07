@@ -32,7 +32,6 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 	function getProjects(){
     	projectService.getAll(function(response) {
     		upc.allProjects = response;
-    		var today = new Date();
     		for(var i = 0; i<upc.allProjects.length;i++){
     			upc.allProjects[i].startDate = new Date(upc.allProjects[i].startDate);
     			upc.allProjects[i].endDate = new Date(upc.allProjects[i].endDate);
