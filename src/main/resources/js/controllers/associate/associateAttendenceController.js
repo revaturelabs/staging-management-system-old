@@ -222,8 +222,10 @@
             var ONE_DAY = 1000 * 60 * 60 * 24
 
             // Convert both dates to milliseconds
-            var date1_ms = date1.getTime()
-            var date2_ms = date2.getTime()
+            var date1_ms = (new Date(date1.getFullYear(), date1.getMonth(), date1.getDate())).getTime()
+            var date2_ms = (new Date(date2.getFullYear(), date2.getMonth(), date2.getDate())).getTime()
+            /*var date1_ms = date1.getTime()
+            var date2_ms = date2.getTime()*/
 
             // Calculate the difference in milliseconds
             var difference_ms = Math.abs(date1_ms - date2_ms)
@@ -258,6 +260,7 @@
         			return "Certification date is today.";
         		}
         		else if ( certDate.getTime() >= (new Date().getTime()) && (aac.user.tasks[i].taskType.type == cert) ) {
+        			console.log("cert already scheduled");
         			var daysAway = days_between(aac.today, certDate);
         			if (daysAway >= 14) {
         				return "Certification scheduled for: " +  ((certDate.getMonth()) + 1) + "/" + certDate.getDate() + "/" + certDate.getFullYear();
