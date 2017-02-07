@@ -61,8 +61,9 @@
                                 	 <span ng-show="manAttCtrl.selectedUser.panels[0]">{{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
                                 	 <span ng-hide="manAttCtrl.selectedUser.panels[0].dateDisplay">No date selected</span>
                                	</span>
-                               	<md-card md-whiteframe="4dp" style="max-width:30vh;">
-	                               	<md-datepicker ng-show="manAttCtrl.panelDatePickerIsOpen" ng-model="manAttCtrl.panelDate" md-placeholder="Enter date" ng-change="manAttCtrl.updatePanelDate(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0])"></md-datepicker>
+                               	<md-card md-whiteframe="6dp" style="max-width:30vh;" ng-show="manAttCtrl.panelDatePickerIsOpen">
+	                               	<md-datepicker ng-model="manAttCtrl.panelDate" md-placeholder="Enter date" ng-change="manAttCtrl.updatePanelDate(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0])"></md-datepicker>
+	                            </md-card>
                                 <span ng-hide="manAttCtrl.selectedUser.panels[0]"><md-icon ng-click="manAttCtrl.createPanel(manAttCtrl.selectedUser)" style="color:white !important;cursor: pointer;">note_add</md-icon></span>
 
                             </p>
