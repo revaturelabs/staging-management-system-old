@@ -28,7 +28,8 @@ public class SlackBot {
 			wr.close();
 
 			int responseCode = con.getResponseCode();
-
+			System.out.println(response);
+			
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String inputLine;
 			StringBuffer response = new StringBuffer();
@@ -36,7 +37,7 @@ public class SlackBot {
 			while ((inputLine = in.readLine()) != null) {
 				response.append(inputLine);
 			}
-			System.out.println(response);
+			
 			System.out.println(responseCode);
 			in.close();
 		} catch (Exception ex) {
