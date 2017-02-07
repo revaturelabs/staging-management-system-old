@@ -10,7 +10,21 @@
                 <md-card md-whiteframe="8dp">
                     <md-card-title>
                         <md-card-title-text>
+                        
+                       
                             <span class="md-headline">
+                            
+                            <!-- button to reset users password -->
+                        <md-button ng-click="manAttCtrl.resetSelectedUsersJob($event)" class="md-icon-button" aria-label="Open sample menu">
+										
+									<!-- description of button -->
+                            		<md-tooltip> Reset user's password </md-tooltip>
+										
+										<!-- icon to display on the button -->
+										<md-icon style="color:#59E2A8;">settings_backup_restore</md-icon>
+										
+									</md-button>
+                            
                                 {{ manAttCtrl.selectedUser.firstName }} {{ manAttCtrl.selectedUser.lastName }} - 
                                 ({{ manAttCtrl.selectedUser.batchType.type}} {{ manAttCtrl.selectedUser.graduationDate | date:"MM/dd"}})
                             </span>

@@ -80,6 +80,8 @@
         
         mac.makenewjob = makenewjob;
         
+        mac.resetSelectedUsersJob = resetSelectedUsersJob;
+        
           // initialization
         mac.findDevice();
         mac.getUsers();
@@ -600,5 +602,57 @@
             });
         }
         //..............................
+		
+		function resetSelectedUsersJob(ev){
+			// of we have selected a user
+			if( mac.selectedUser != undefined) {
+				//<<<<<<<<<<<
+				 
+					    // Appending dialog to document.body to cover sidenav in docs app
+					    var confirm = $mdDialog.confirm()
+					          .title('Reset selected users password?')
+					          .textContent('Password will be reset to '+ mac.selectedUser.firstName +' '+ mac.selectedUser.lastName+'\'s username')
+					          .ariaLabel('Lucky day')
+					          .targetEvent(ev)
+					          .ok('Please do it!')
+					          .cancel('No, thank you.');
+
+					    $mdDialog.show(confirm).then(function() {
+					    	
+					    	//MM TODO Erase mm block use login controller to update pass, make new endpoint
+					    	// add a loading icon to show something is going on
+					    	angular.element("body").addClass("loading");
+					    	
+					    	// update the selected user
+				    		loginService.resetPass( mac.selectedUser, function() {
+				    			
+				    			// remove the loading icon
+				    			angular.element("body").removeClass("loading");
+				    			
+				    			//prompt the user
+				    			mac.toast("Password reset successful.");	
+				    		}, function() {
+				    			
+				    			// remove the loading icon
+				    			angular.element("body").removeClass("loading");
+				    			
+				    			//prompt the user
+				    			mac.toast("Error resetting Password.");
+				    		});
+					    	//MM
+					    	
+					    	
+					    	
+					    }, 
+					    //on error
+					    function() {
+					    	
+					    	//prompt
+					    	mac.toast("Password reset cancelled.");
+					    });
+				//<<<<<<<<<<<
+			}
+		}
+		
         
     }
