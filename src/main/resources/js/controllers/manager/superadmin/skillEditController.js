@@ -44,9 +44,8 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
         sec.inRemoveList = inRemoveList;
         sec.toast = toast;
         sec.cancel = cancel;
-        sec.editSkill = editSkill;
+        sec.updateSkillInDB = updateSkillInDB;
         sec.newChip = newChip;
-        //sec.updateChip = updateChip;
         sec.removeChip = removeChip;
         
        
@@ -62,26 +61,10 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
 
         function newChip(chip){
             sec.skillIds.push(ADDSKILLDEFAULTVAL); //adds the default value for skill ids into the ids array. Set to be 0 currently,
-            //but can be any number as long as that number cannont actually be an idea.
-           
-            // if (angular.isObject(chip)){
-                
-            //     return chip;
-            // }
-            // return {skill: chip}
-            
+            //but can be any number as long as that number cannont actually be an idea.     
         }
 
-        // function updateChip(chip){
-
-
-        //     for (var i=0; i<sec.newSkillList.length; i++){
-        //         if (sec.newSkillList[i] === chip && !angular.isObject(chip) ){
-        //             sec.newSkillList[i] = {skill: chip};
-        //             break;
-        //         }
-        //     }
-        // }
+   
 
         function removeChip(index){
             
@@ -232,74 +215,42 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
          function updateAll(){
              //check the origin skill array and see if any skills have been removed.
             for (var i=0; i<sec.currentSkills.length; i++){
-                
+                var j = sec.skillIds.indexOf(sec.currentSkills[i].id); //gets skill id
+                if (j==-1){ // skill was marked for deletion in the view
+                    sec.removeSkillFromDB(sec.currentSkills[i].skill);
+                    continue;
+                }
+                var skillNameIn = sec.newSkillList.indexOf(sec.currentSkills[i].skill);
+                if (j==skillNameIn){//skill is in same spot, everything is fine
+                    continue;
+                }
+                else { // something got changed, need to edit the skill
+                    sec.updateSkillInDB(sec.currentSkills[i].skill, sec.newSkillList[j]);
+                    continue;
+                }
+            }
+            for (var k = 0; k<sec.skillIds.length; k++){//now we need to search through 
+                //skillIds to find any new skills.
+                if (sec.skillIds[k] != ADDSKILLDEFAULTVAL){
+                    continue;
+                }
+                var newSkill = {skill : sec.newSkillList[k]};
+                sec.addSkillToDB(newSkill);//adds skill to DB
+
             }
 
+            $mdDialog.hide();
          }
 
 
 
-         function updateAllOld(){
-           //make sure to fix this tomorrow and use indexOf
-
-           
-             var j = 0; //variable to keep track of where we are in the newer arrays, as there can be different lengths compared
-             //to the old one
-            for (var i=0; i<sec.currentSkills.length; i++){
-                if (i!= 0) j++; // if i isn't 0, then j needs to be incremented here.
-                //checks original array to see if an id still exists
-                if (j < sec.skillIds.length && sec.currentSkills[i].id == sec.skillIds[j] ){
-                    //if it's still there, then check to see if name has been changed
-                    if (sec.currentSkills[i].skill != sec.newSkillList[j]){
-                        //if the names don't match then it's been changed,so we need to update the database
-                        updateSkillInDB(sec.currentSkills[i].skill, sec.newSkillList[j]);
-                        
-                    }
-                    // either we've updated the datbase, got an error, or the skill hadn't been changed.
-                    continue; // either way, move on to next loop, as we're done here
-                } 
-                //need to check to see if the skill is one that's added, and if so break the loop entirely
-                //since that means that we won't have anything else in the database to worry about this time.
-                if (j < sec.skillIds.length && sec.skillIds[j] == ADDSKILLDEFAULTVAL){
-                    j = i; //sets j equal to i to make sure we start at the right location.
-                    break;
-                }        
-               
-                    //if the currentSkills[i].id and sec.skillIds[i] don't match, j is greater than sec.skillIds.length
-                    //then currentSkills[i] has
-                    //been marked for deletion and needs to be removed.
-                    console.log(i + " " + j);
-                    console.log(sec.currentSkills[i].skill + " " + sec.newSkillList[j]);
-                    removeSkillFromDB(sec.currentSkills[i].skill);
-                    i++;//need to increment j here
-                    continue; //we're done with this iteration, go on to the next one
-                
-                
-            }
-            //At this point, we may still have skills that need to be added, so let's go ahead and handle those.
-
-            //picking up where our old skills ended, we continue going through the newSkillList to add the remaining skills
-            //to the array
-          
-            // if (sec.skillsToAdd.length>0 || sec.skillsToRemove.length > 0){
-            //     removeSkillsFromDB();
-            //     addSkillsToDB();
-            //     sec.getSkills();
-                
-            //     sec.toast("Skill updates successful.");
-            //     $mdDialog.hide();
-            // }
-            // else {
-            //     sec.toast("Either create a new skill or delete an existing skill.");
-            // }
-            $mdDialog.hide();
-        }
+        
 
         function updateSkillInDB(oldSkillName, newSkillName){
             skillService.update(oldSkillName, newSkillName, function(success){
-                console.log(success);
+                //empty to make it work
             }, function(error){
-                console.log(error);
+               //empty to make it work
             });
         }
 
@@ -330,21 +281,7 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
             }
         }
 
-        function editSkill(isValid, skillName, newSkillName){
-                if (isValid){
-                skillService.update(skillName, newSkillName, function(){
-                    sec.oldSkill = undefined;
-                    sec.newSkillName = undefined;
-                    sec.getSkills();
 
-            }, function(error){
-                console.log(error);
-                sec.toast(error.data.errorMessage);
-               
-            });
-            }
-            
-        }
 
              /**
              * @description Displays a toast notification.
