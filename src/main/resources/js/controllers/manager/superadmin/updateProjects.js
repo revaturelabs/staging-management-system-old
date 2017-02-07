@@ -21,8 +21,8 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 	upc.deleteProject = deleteProject;
 	/**@var {function} assignSubmit function reference variable. */
 	upc.assignSubmit = assignSubmit;
-	/**@var {function} assignCancel function reference variable. */
-	upc.assignCancel = assignCancel;
+	/**@var {function} reset function reference variable. */
+	upc.reset = reset;
 	/**@var {function} close function reference variable. */
 	upc.close = close;
 	
@@ -120,7 +120,6 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 			}
 			
 			if(upc.toDelete.length > 0){
-				console.log(upc.toDelete);
 				projectService.del(upc.toDelete,function(){console.log("success");});
 			}
 			projectService.update(upc.allProjects,function(){console.log("success"); $mdDialog.cancel();});
@@ -129,8 +128,9 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 		
 	}
 	
-	function assignCancel(){
-		$mdDialog.cancel();
+	function reset(){
+		upc.selectedProject={};
+		upc.getProjects();
 	}
 	
 	function close(){
