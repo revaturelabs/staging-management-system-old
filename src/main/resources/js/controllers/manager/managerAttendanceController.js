@@ -48,8 +48,11 @@
         mac.nextWeek = nextWeek;
         mac.toast = toast;
         mac.newAssociates = newAssociates;
+        /**@var {function} deleteAssociates function reference variable. */
+        mac.deleteAssociates = deleteAssociates;
         mac.marketingStatuses = marketingStatuses;
         mac.changeStatus = changeStatus;
+  
       
 
         /**@var {function} calcMarketingDays function reference variable. */
@@ -270,7 +273,11 @@
          * as superAdmin should always have all the options that admins do.
          */
         function setToolbar() {
-            var actions = [];
+            var actions = [{
+                "function": mac.deleteAssociates,
+                "icon"    : "transfer_within_a_station",
+                "tooltip" : "Delete Associates" }];
+            
             if (mac.user.userRole.name == "superAdmin") {
                 actions.push( {
                     "function": mac.newAssociates,
@@ -345,6 +352,37 @@
                 mac.toast("Batch addition cancelled.");
             });
         }
+		
+		// delete associates
+		function deleteAssociates() {
+			$mdDialog.show({
+				templateUrl: "html/templates/DeleteAssociates.html",
+				controller: "deleteAssoCtrl as assoCtrl",
+				clickOutsideToClose: true,
+				escapeToClose: true 
+			}).then( function() {
+				$mdDialog.show({
+					templateUrl: "html/templates/DeleteAssociateWarning.html",
+					controller: "deleteAssoWarningCtrl as dAssoCtrl",
+					clickOutsideToClose: true,
+					escapeToClose: true 
+				}).then(function() {
+					$mdDialog.show({
+						templateUrl: "html/templates/DeleteAssociateSuccess.html",
+						controller: "deleteAssoSuccessCtrl as dAssoSCtrl",
+						locals: { "deleteAssociates": deleteAssoFactory.deleteAssociate() },
+						bindToController: true
+					}).then(function() {
+						deleteAssoFactory.resetAssociates();
+					});
+				} , function() {
+						mac.toast("Delete Associate cancelled.");
+					});
+			} , function() {
+					mac.toast("Delete Associate cancelled.");
+				});
+		}
+
 		/**
          * @description Called when a superAdmin clicks on update certification button, opens a dialog.
          */
@@ -362,6 +400,7 @@
                 clickOutsideToClose: false,
                 escapeToClose: false
             });
+
 		}
 		
 		/**
