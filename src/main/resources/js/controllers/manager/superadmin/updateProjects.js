@@ -72,8 +72,26 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 		for(var i = 0; i < upc.allProjects.length; i++){
 			//validation
 			
+			//no project name
+			if(!upc.allProjects[i].name || upc.allProjects[i].displayName == ""){
+				upc.errors.push({ 
+					"name" : upc.allProjects[i].name,
+					"msg": "Error in project: " + upc.allProjects[i].name +  ", no name."
+					});
+				pass = false;
+			}
+			
 			//no start date
+			try{
 			if(!upc.allProjects[i].startDate){
+				upc.errors.push({ 
+					"name" : upc.allProjects[i].name,
+					"msg": "Error in project: " + upc.allProjects[i].name +  ", no end date"
+					});
+				pass = false;
+			}
+			}
+			catch(err){
 				upc.errors.push({ 
 					"name" : upc.allProjects[i].name,
 					"msg": "Error in project: " + upc.allProjects[i].name +  ", no end date"
@@ -82,17 +100,27 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 			}
 			
 			//no end date
-			if(!upc.allProjects[i].endDate){
+			try{
+				if(!upc.allProjects[i].endDate){
+					upc.errors.push({ 
+						"name" : upc.allProjects[i].name,
+						"msg": "Error in project: " + upc.allProjects[i].name +  ", no start date"
+						});
+					pass = false;
+				
+				}
+			}
+			catch(err){
 				upc.errors.push({ 
 					"name" : upc.allProjects[i].name,
 					"msg": "Error in project: " + upc.allProjects[i].name +  ", no start date"
 					});
 				pass = false;
-					
 			}
+				
 			
 			//end dates are after start dates
-			if(upc.allProjects[i].endDate.getTime() < upc.allProjects[i].startDate.getTime()){
+			if(pass && upc.allProjects[i].endDate.getTime() < upc.allProjects[i].startDate.getTime()){
 				var string = "Error in project: " + upc.allProjects[i].name + ", end date is before start date.";
 				
 				upc.errors.push({
@@ -106,22 +134,21 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 		}
 		
 		if(pass){
-			
-			for(var s = 0; s<upc.allProjects;s++){
-				upc.allProject[s].name = upc.allProject[s].displayName;
+			for(var s = 0; s<upc.allProjects.length;s++){
+				upc.allProjects[s].name = upc.allProjects[s].displayName;
 			}
-			
+			//if there are projects to delete DELETE
 			if(upc.toDelete.length > 0){
 				projectService.del(upc.toDelete,function(){});
 			}
+			//update current projects
 			projectService.update(upc.allProjects,function(){$mdDialog.cancel();});
-			
 		}
-		
 	}
 	
 	function reset(){
 		upc.selectedProject={};
+		upc.errors=[];
 		upc.getProjects();
 	}
 	

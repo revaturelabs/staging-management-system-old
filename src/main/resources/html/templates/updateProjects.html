@@ -4,10 +4,11 @@
 		<h2>Update project</h2>
 	</div>
 </md-toolbar>
-	
-<div class="md-padding" layout="column" layout-align="center space-around">
+
+	<span style="color:red;" ng-repeat="x in up.errors | orderBy : 'x.name'">{{x.msg}}</span>	
+
+<div  layout="column"  class="md-padding" layout-align="center space-around" flex="none">
 	{{up.message}}
-	<div style="color:red;" ng-repeat="x in up.errors | orderBy : 'x.name'">{{x.msg}}</div>
 
 	<div layout="row">
 		<md-button ng-click="up.newProject()"><md-icon> add </md-icon></md-button>
@@ -19,7 +20,6 @@
 			<md-option 	ng-value="proj" ng-repeat="proj in up.allProjects | orderBy : 'proj.name' ">{{ proj.name }}</md-option>
 		</md-select>
 	</md-input-container>
-	
 	
 	<div layout="row" layout-align="space-between start" class="projectPopup">
 	
@@ -40,8 +40,6 @@
 	  			<md-datepicker ng-model="up.selectedProject.endDate"></md-datepicker>
 			</md-input-container>
 		</div>
-		
-		
 	</div>
 	
 	<div layout="column" layout-fill>
@@ -57,6 +55,7 @@
 			<md-button type="button" id="assignSubmit" class="md-primary"ng-click="up.assignSubmit()" layout-fill>Submit all changes</md-button>
 			<md-button type="button" id="cancel" class="md-primary"ng-click="up.close()" layout-fill>Cancel</md-button>
 		</div>
-	</div>		
-</div>
+	</div>
+		
+</div>	
 </md-dialog>
