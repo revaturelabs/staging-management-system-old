@@ -14,7 +14,8 @@ sms.filter("taskFilter", function($filter){
 			user.notification.number = 0;
 			user.panels = [];
 			user.certs = [];
-			user.projects = [];
+			user.activeProject;
+			
 			user.tasks.forEach(function(task){
 				thisTask = {};
 				thisTask.type = task.taskType.type;
@@ -46,8 +47,6 @@ sms.filter("taskFilter", function($filter){
 					user.certs.push(thisTask);
 				}else if(thisTask.type == "Panel"){
 					user.panels.push(thisTask);
-				}else{
-					user.projects.push(thisTask);
 				}
 			})
 			//set up notifications for upcoming events
@@ -56,7 +55,22 @@ sms.filter("taskFilter", function($filter){
 				user.notification.number = upcoming;
 				user.notification = $filter("iconFilter")(user.notification, iconInput);
 			}
+			
+			//set active project
+			user.project.forEach(function(proj){
+				var endDate = new Date(proj.project.endDate);
+				var startDate = new Date(proj.project.startDate);
+				if(endDate > now ){
+					user.activeProject = proj.project;
+					user.activeProject.endDateDisplay = (endDate.getMonth()+1)+"/"+endDate.getDate(); 
+					user.activeProject.startDateDisplay = (startDate.getMonth()+1)+"/"+startDate.getDate();
+				}
+				
+			});
 		});
+		
+		
+		
 		return users;
 	}
 });

@@ -10,14 +10,34 @@
                 <md-card md-whiteframe="8dp">
                     <md-card-title>
                         <md-card-title-text>
+                        
+                       
                             <span class="md-headline">
+                            
+                            <!-- button to reset users password -->
+                        <md-button ng-click="manAttCtrl.resetSelectedUsersJob($event)" class="md-icon-button" aria-label="Open sample menu">
+										
+									<!-- description of button -->
+                            		<md-tooltip> Reset user's password </md-tooltip>
+										
+										<!-- icon to display on the button -->
+										<md-icon style="color:#59E2A8;">settings_backup_restore</md-icon>
+										
+									</md-button>
+                            
                                 {{ manAttCtrl.selectedUser.firstName }} {{ manAttCtrl.selectedUser.lastName }} - 
                                 ({{ manAttCtrl.selectedUser.batchType.type}} {{ manAttCtrl.selectedUser.graduationDate | date:"MM/dd"}})
                             </span>
                         </md-card-title-text>
                     </md-card-title>
                     <md-card-content>
-
+							
+							<!-- Current Project -->
+							<p>
+							  <div ng-show="manAttCtrl.selectedUser.activeProject" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject)"> Current project : {{ manAttCtrl.selectedUser.activeProject.name }}</div>
+	                          <div ng-hide="manAttCtrl.selectedUser.activeProject" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject)"> Current project : No project</div>
+							</p>
+							
                             <p>
                             	Marketing status:
                             			<md-input-container id="marketingStatus">
@@ -55,8 +75,9 @@
                                 	 <span ng-show="manAttCtrl.selectedUser.panels[0]">{{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
                                 	 <span ng-hide="manAttCtrl.selectedUser.panels[0].dateDisplay">No date selected</span>
                                	</span>
-                               	<md-card md-whiteframe="4dp" style="max-width:30vh;">
-	                               	<md-datepicker ng-show="manAttCtrl.panelDatePickerIsOpen" ng-model="manAttCtrl.panelDate" md-placeholder="Enter date" ng-change="manAttCtrl.updatePanelDate(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0])"></md-datepicker>
+                               	<md-card md-whiteframe="6dp" style="max-width:30vh;" ng-show="manAttCtrl.panelDatePickerIsOpen">
+	                               	<md-datepicker ng-model="manAttCtrl.panelDate" md-placeholder="Enter date" ng-change="manAttCtrl.updatePanelDate(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0])"></md-datepicker>
+	                            </md-card>
                                 <span ng-hide="manAttCtrl.selectedUser.panels[0]"><md-icon ng-click="manAttCtrl.createPanel(manAttCtrl.selectedUser)" style="color:white !important;cursor: pointer;">note_add</md-icon></span>
 
                             </p>
@@ -152,8 +173,8 @@
                     <md-card-content>
                         <span ng-hide="manAttCtrl.selectedUser.certs[0].date">There is no data to display</span>
                         <div ng-show="manAttCtrl.selectedUser.certs[0].date">
-                            <div ng-repeat="cert in manAttCtrl.selectedUser.certs | orderBy:'-date'" class="certList">
-                            	<md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48" ng-click="manAttCtrl.updateCert(cert,manAttCtrl.selectedUser)">{{ cert.icon.name }}</md-icon>
+                            <div ng-repeat="cert in manAttCtrl.selectedUser.certs | orderBy:'-date'" class="certList" ng-click="manAttCtrl.updateCert(cert,manAttCtrl.selectedUser)">
+                            	<md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48">{{ cert.icon.name }}</md-icon>
                             	{{ cert.dateDisplay }} |
                             	{{cert.note}}
                             	

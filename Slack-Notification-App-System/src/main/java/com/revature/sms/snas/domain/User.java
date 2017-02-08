@@ -1,26 +1,19 @@
-package com.revature.sms.domain;
+package com.revature.sms.snas.domain;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.apache.log4j.Logger;
 
 //
 /**
@@ -75,27 +68,18 @@ public class User {
 	@JoinColumn(name = "BATCH_TYPE")
 	private BatchType batchType;
 
-	/**
-	 * List containing AssociateAttendence objects that keeps track of the user's attendance.
-	 */
+/**
+ * List containing AssociateAttendence objects that keeps track of the user's attendance.
+ */
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="ASSOCIATE")
 	private List<AssociateAttendance> attendance;
-
 	/**
 	 * List containing AssociateTask objects that keeps track of the user's tasks.
 	 */
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="ASSOCIATE")
 	private List<AssociateTask> tasks;
-
-	/**
-	 * List containing JobEvent objects that keeps track of the user's events.
-	 */
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name="ASSOCIATE")
-	private List<JobEvent> events;
-
 	/**
 	 * UserRole object that keeps track of the user's specific role.
 	 */
@@ -110,33 +94,12 @@ public class User {
 	private Timestamp graduationDate;
 	
 	/**
-	 * List of skills that a user has
-	 */
-	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private Set<TechnicalSkills> skill;
-	
-	/**
-	 * MarketingStatus object that keeps track of the user's marketing status
-	 */
-	@ManyToOne
-	@JoinColumn(name = "marketing_status")
-	private MarketingStatus marketingStatus;
-	
-	/**
-	 * List containing Project objects that keeps track of the user's project.
-	 */
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="ASSOCIATE")
-	private List<ProjectUser> project;
-	
-	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
 	 */
 	public User() {
 		super();
 	}
 
-	// constructor for associate
 	/**
 	 * Constructor for User object. This constructor is specifically designed to
 	 * be used for creating a User who is an associate. Initializes all instance variables except for ID, as that is
@@ -150,12 +113,9 @@ public class User {
 	 * @param tasks List containing AssociateTask objects that keeps track of the user's tasks.
 	 * @param userRole UserRole object that keeps track of the user's specific role.
 	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
-	 * @param skills gets a list of technical skills that an associate has
-	 * @param project projects that a user is currently working on.
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
-			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate, 
-			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus,List<ProjectUser> project) {
+			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -166,17 +126,6 @@ public class User {
 		this.tasks = tasks;
 		this.userRole = userRole;
 		this.graduationDate = graduationDate;
-		this.skill = skills;
-		this.events = events;
-		this.marketingStatus = marketingStatus;
-		this.project = project;
-	}
-	public List<ProjectUser> getProject() {
-		return project;
-	} 
- 
-	public void setProject(List<ProjectUser> project) {
-		this.project = project;
 	}
 
 	// constructor for non-associate
@@ -343,26 +292,7 @@ public class User {
 	public void setTasks(List<AssociateTask> tasks) {
 		this.tasks = tasks;
 	}
-
-	/**
-	 * Method that retrieves the list of JobEvent objects that represents the User's events.
-	 * @return events List containing all the JobEvent objects that belongs to
-	 * the User object.
-	 */
-	public List<JobEvent> getEvents() {
-		return events;
-	}
-
-	/**
-	 * Method that sets the list of JobEvent objects that represents the User's events.
-	 * @param events List containing all the JobEvent objects that belongs to
-	 * the User object.
-	 */
-	public void setEvents(List<JobEvent> events) {
-		this.events.clear();
-		this.events.addAll(events);
-	}
-
+	
 	/**
 	 * Method that retrieves the role of the current user.
 	 * @return userRole UserRole object that represents the current user's role.
@@ -397,66 +327,13 @@ public class User {
 	}
 
 	/**
-	 * Method that retrieves the list of skills of the user
-	 */
-	public Set<TechnicalSkills> getSkill() {
-		return skill;
-	}
-
-	/**
-	 * Method that manually sets the skills of the user object
-	 */
-	public void setSkill(Set<TechnicalSkills> skill) {
-		this.skill = skill;
-	}
-	
-	/**
-	 * Method that retrieves the marketing status of the user
-	 */
-	public MarketingStatus getMarketingStatus() {
-		return marketingStatus;
-	}
-
-	/**
-	 * Method that manually sets the marketing status of the user object
-	 */
-	public void setMarketingStatus(MarketingStatus marketingStatus) {
-		this.marketingStatus = marketingStatus;
-	}
-
-	/**
 	 * Method that returns a string representation of the current User object.
 	 */
-
 	@Override
 	public String toString() {
 		return "User [ID=" + ID + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", hashedPassword=" + hashedPassword + ", batchType=" + batchType + ", attendance=" + attendance
-				+ ", tasks=" + tasks + ", events=" + events + ", userRole=" + userRole + ", graduationDate="
-				+ graduationDate + ", skill=" + skill + ", marketingStatus=" + marketingStatus + ", Projects=" + project +"]";
+				+ ", tasks=" + tasks + ", userRole=" + userRole + "]";
 	}
 
-	/**
-	 * A password hashing algorithm used for testing.
-	 * @param inputPassword
-	 * @return The hashed password
-	 */
-
-	public static String hashPassword(String inputPassword) {
-		try {
-			MessageDigest md;
-			md = MessageDigest.getInstance("SHA");
-			md.update(inputPassword.getBytes());
-			byte[] byteData = md.digest();
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < byteData.length; i++) {
-				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-			}
-			return sb.toString();
-		} catch (NoSuchAlgorithmException e) {
-			Logger.getRootLogger().error("No such Algorithm", e);
-			return null;
-		}
-	}
-	
 }

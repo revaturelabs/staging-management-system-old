@@ -35,10 +35,15 @@
 				</md-input-container>
 			</div>
 				
-			<div class="md-padding" layout="columns">
+			<!-- <div class="md-padding" layout="columns">
 				<md-button type="submit" class="md-primary md-raised" aria-label="Submit All"> SUBMIT </md-button>
 		        <md-button type="button" class="md-primary md-raised " ng-click="assCertCtrl.cancel()" aria-label="Cancel"> CANCEL </md-button>
-			</div>
+			</div> -->
+			<div layout="row" layout-align="end end">
+                    <div flex> </div>
+                    <md-button type="submit" class="md-primary"> Submit </md-button>
+                    <md-button type="button" id="certCancel" class="md-accent" ng-click= "assCertCtrl.cancel()"> Cancel </md-button>
+            </div>
 		
 		</form>
     </div>

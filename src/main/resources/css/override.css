@@ -20,7 +20,9 @@
 		background: #E8EAF6;
 	}
 	
-	
+	.projectPopup {
+		padding: 0px;
+	}	
 	/* search bar css */
 	#search input[type="text"] {
 		background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
