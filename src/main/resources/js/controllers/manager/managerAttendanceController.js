@@ -267,19 +267,12 @@
          * as superAdmin should always have all the options that admins do.
          */
         function setToolbar() {
-            var actions = [];
+            var actions = [{
+                "function": mac.deleteAssociates,
+                "icon"    : "transfer_within_a_station",
+                "tooltip" : "Delete Associates" }];
+            
             if (mac.user.userRole.name == "superAdmin") {
-                $scope.$emit( "setToolbar", { 
-                    title: "Weekly attendance", 
-                    actions: [{ 
-                        "function": mac.newAssociates, 
-                        "icon"    : "add", 
-                        "tooltip" : "Add batch of new associates"},
-                			 {
-                        "function": mac.deleteAssociates,
-                        "icon"    : "transfer_within_a_station",
-                        "tooltip" : "Delete Associates" }]   
-                } );
                 actions.push( {
                     "function": mac.newAssociates,
                     "icons"   : "add",

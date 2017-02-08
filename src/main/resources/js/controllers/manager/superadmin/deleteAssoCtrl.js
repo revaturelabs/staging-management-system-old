@@ -82,7 +82,7 @@
 	    function getUsers( success ) {
             userService.getAll( function(response) {
             	console.log(response);
-            	return response;
+            	dac.users = response;
             }, function(error) {
                 dac.toast("Error retrieving all users.");
             });
