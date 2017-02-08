@@ -97,7 +97,7 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
                    skillEditFactory.addToAddSuccees(skill.skill);
                 }, function(error){
                     skillEditFactory.addToAddFail(skill.skill, "Issue"); //this actually shouldn't come up, but just in case here's something.
-                    console.log(error);
+                
                     
                 });
             }
@@ -134,7 +134,7 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
                 sec.addSkillToDB(newSkill);//adds skill to DB
 
             }
-
+            
             $mdDialog.hide();
          }
 

@@ -11,14 +11,11 @@
 
             </md-chips>
         </div>
-
-        <form name="updateAll" ng-submit="sECtrl.updateAll()" novalidate>
-             <md-input-container>
-                 
-                 <md-button type="submit" class="md-primary">Update Database</md-button>
-                 <md-button type="button" class="md-accent" ng-click="sECtrl.cancel()">Cancel</md-button>
-             </md-input-container>
+        <div layout="row" layout-align="end center">
+            <form name="updateAll" ng-submit="sECtrl.updateAll()" novalidate>       
+                <md-button type="submit" class="md-primary">Update Database</md-button>
+                <md-button type="button" class="md-accent" ng-click="sECtrl.cancel()">Cancel</md-button>
             </form>
-
+        </div>
             
 </div>
