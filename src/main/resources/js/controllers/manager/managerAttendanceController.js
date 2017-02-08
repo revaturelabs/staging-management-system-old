@@ -48,8 +48,11 @@
         mac.nextWeek = nextWeek;
         mac.toast = toast;
         mac.newAssociates = newAssociates;
+        /**@var {function} deleteAssociates function reference variable. */
+        mac.deleteAssociates = deleteAssociates;
         mac.marketingStatuses = marketingStatuses;
         mac.changeStatus = changeStatus;
+  
       
 
         /**@var {function} calcMarketingDays function reference variable. */
@@ -272,6 +275,17 @@
         function setToolbar() {
             var actions = [];
             if (mac.user.userRole.name == "superAdmin") {
+                $scope.$emit( "setToolbar", { 
+                    title: "Weekly attendance", 
+                    actions: [{ 
+                        "function": mac.newAssociates, 
+                        "icon"    : "add", 
+                        "tooltip" : "Add batch of new associates"},
+                			 {
+                        "function": mac.deleteAssociates,
+                        "icon"    : "transfer_within_a_station",
+                        "tooltip" : "Delete Associates" }]   
+                } );
                 actions.push( {
                     "function": mac.newAssociates,
                     "icons"   : "add",
@@ -345,6 +359,37 @@
                 mac.toast("Batch addition cancelled.");
             });
         }
+		
+		// delete associates
+		function deleteAssociates() {
+			$mdDialog.show({
+				templateUrl: "html/templates/DeleteAssociates.html",
+				controller: "deleteAssoCtrl as assoCtrl",
+				clickOutsideToClose: true,
+				escapeToClose: true 
+			}).then( function() {
+				$mdDialog.show({
+					templateUrl: "html/templates/DeleteAssociateWarning.html",
+					controller: "deleteAssoWarningCtrl as dAssoCtrl",
+					clickOutsideToClose: true,
+					escapeToClose: true 
+				}).then(function() {
+					$mdDialog.show({
+						templateUrl: "html/templates/DeleteAssociateSuccess.html",
+						controller: "deleteAssoSuccessCtrl as dAssoSCtrl",
+						locals: { "deleteAssociates": deleteAssoFactory.deleteAssociate() },
+						bindToController: true
+					}).then(function() {
+						deleteAssoFactory.resetAssociates();
+					});
+				} , function() {
+						mac.toast("Delete Associate cancelled.");
+					});
+			} , function() {
+					mac.toast("Delete Associate cancelled.");
+				});
+		}
+
 		/**
          * @description Called when a superAdmin clicks on update certification button, opens a dialog.
          */
@@ -362,6 +407,7 @@
                 clickOutsideToClose: false,
                 escapeToClose: false
             });
+
 		}
 		
 		/**
