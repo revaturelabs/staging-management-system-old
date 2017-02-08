@@ -508,7 +508,7 @@
                     bindToController: true
                 }).then( function(){
                     skillEditFactory.clearAll();
-                });;
+                });
             });
         }
         
