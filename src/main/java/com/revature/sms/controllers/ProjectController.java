@@ -126,7 +126,6 @@ public class ProjectController {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
 			Logger.getRootLogger().debug("Exception while removing Project.", e);
 			return new ResponseEntity<ResponseErrorEntity>( new ResponseErrorEntity("Exception while removing Project."), HttpStatus.SERVICE_UNAVAILABLE);
 		}
