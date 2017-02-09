@@ -1,7 +1,7 @@
 angular.module("sms").
 controller("skillEditCtrl", editSkillController);
 
-function editSkillController($scope, $mdDialog, $mdToast, $q, $timeout, skillService, skillEditFactory){
+function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skillEditFactory){
 
         var sec = this;
 
@@ -23,7 +23,7 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, $timeout, skillSer
         sec.skillIds = [];
 
 
-        sec.removeSkillPromiseList = [];
+        sec.skillPromiseList = [];
   
         /**
          * @prop {number} ADDSKILLDEFAULTVAL Constant that's the default id value for newly added skills
@@ -100,13 +100,12 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, $timeout, skillSer
          * @param {boolean} isValid boolean value of the form's $valid property.
          */
         function addSkillToDB(skill){
-                skillService.create(skill, function(){
-                   skillEditFactory.addToAddSuccees(skill.skill);
+                sec.skillPromiseList.push(skillService.create(skill, function(){
+                  //empty function
                 }, function(){
-                    skillEditFactory.addToAddFail(skill.skill, "Issue"); //this actually shouldn't come up, but just in case here's something.
-                
+                    //empty function
                     
-                });
+                }));
             }
 
         /**
@@ -115,11 +114,11 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, $timeout, skillSer
          * @param {string} newSkillName The new name for the skill.
          */
         function updateSkillInDB(oldSkillName, newSkillName){
-            skillService.update(oldSkillName, newSkillName, function(success){
+           sec.skillPromiseList.push( skillService.update(oldSkillName, newSkillName, function(success){
                 //empty to make it work
             }, function(error){
                //empty to make it work
-            });
+            }));
         }
 
         /**
@@ -128,14 +127,11 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, $timeout, skillSer
          */
          function removeSkillFromDB(skillName){
                 
-               sec.removeSkillPromiseList.push(
+               sec.skillPromiseList.push(
                    skillService.remove(skillName, function(){
-                    skillEditFactory.addToRemoveSuccess(skillName); 
-                }, function(error){
-                    // if (changesErrored == false){
-                    //     changesErrored = true;
-                    // }
-                     skillEditFactory.addToRemoveFail(skillName, error.data.errorMessage);               
+                   //empty function to make this work
+                }, function(){
+                    //empty function to make this work
                 })
                );
                 
@@ -175,14 +171,24 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, $timeout, skillSer
 
             }
 
-            
-        //   while($q.all(sec.removeSkillPromiseList).$$state.status === 0){
-        //       $timeout(1000);
-        //   }
+            // $q.all(sec.skillPromiseList).then(function(){
+            //     console.log("yay!");
+            //     $mdDialog.hide();
+            // });
 
-         
-         $mdDialog.hide();
-    }
+            $q.all(sec.skillPromiseList).then(function(){
+                sec.toast("Skill edits successful!");
+                $mdDialog.hide();
+            }, function(){
+                sec.toast("Problem occurred while editing skills.")
+                $mdDialog.hide();
+            });
+                   
+            
+        
+       
+            
+         }
 
 
       

@@ -496,22 +496,22 @@
                 controller: "skillEditCtrl as sECtrl",
                 clickOutsideToClose: true,
                 escapeToClose: true
-             })
-             .then( function() {
-              //  mac.toast("Skills successfully updated.");
-                $mdDialog.show({
-                    templateUrl: "html/templates/skillEditResult.html",
-                    controller: "skillsEditSuccess as sESCtrl",
-                    locals: { "skillAddSuccess": skillEditFactory.getAddSuccess(),
-                              "skillAddFail" : skillEditFactory.getAddFail(),
-                              "skillRemoveSuccess" : skillEditFactory.getRemoveSuccess(),
-                              "skillRemoveFail" : skillEditFactory.getRemoveFail(),
-                               },
-                    bindToController: true
-                }).then( function(){
-                    skillEditFactory.clearAll();
-                });
-            }  );
+             });
+            //  .then( function() {
+            //   //  mac.toast("Skills successfully updated.");
+            //     $mdDialog.show({
+            //         templateUrl: "html/templates/skillEditResult.html",
+            //         controller: "skillsEditSuccess as sESCtrl",
+            //         locals: { "skillAddSuccess": skillEditFactory.getAddSuccess(),
+            //                   "skillAddFail" : skillEditFactory.getAddFail(),
+            //                   "skillRemoveSuccess" : skillEditFactory.getRemoveSuccess(),
+            //                   "skillRemoveFail" : skillEditFactory.getRemoveFail(),
+            //                    },
+            //         bindToController: true
+            //     }).then( function(){
+            //         skillEditFactory.clearAll();
+            //     });
+            // }  );
         }
         
             // adds a leading zero to input if necessary
