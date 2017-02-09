@@ -42,14 +42,14 @@ public class UserDTO {
 		super();
 	}
 	
-	public UserDTO(String username, String firstName, String lastName,String password, UserRole userRole, Trainer trainer) {
+	public UserDTO(String username, String firstName, String lastName,String password, UserRole userRole) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.hashedPassword=password;
 		this.userRole = userRole;
-		this.trainer = trainer;
+	
 	}
 
 	public UserDTO(String username, String firstName, String lastName,String password, UserRole userRole,
