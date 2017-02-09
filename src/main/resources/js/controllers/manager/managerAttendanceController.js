@@ -52,6 +52,7 @@
         mac.deleteAssociates = deleteAssociates;
         mac.marketingStatuses = marketingStatuses;
         mac.changeStatus = changeStatus;
+        mac.deleteSelectedUser = deleteSelectedUser;
   
       
 
@@ -700,5 +701,48 @@
 			}
 		}
 		
+		function deleteSelectedUser(ev) {
+			if( mac.selectedUser != undefined) {
+				var confirm = $mdDialog.confirm()
+		          .title('Delete selected user?')
+		          .textContent(mac.selectedUser.firstName +' '+ mac.selectedUser.lastName+ ' will be removed.' )
+		          .ariaLabel('Lucky day')
+		          .targetEvent(ev)
+		          .ok('Please do it!')
+		          .cancel('No, thank you.');
+				
+				 $mdDialog.show(confirm).then(function() {
+				    	
+				    	//MM TODO Erase mm block use login controller to update pass, make new endpoint
+				    	// add a loading icon to show something is going on
+				    	angular.element("body").addClass("loading");
+				    	
+				    	console.log(mac.selectedUser);
+				    	// update the selected user
+			    		userService.remove( mac.selectedUser, function() {
+			    			
+			    			// remove the loading icon
+			    			angular.element("body").removeClass("loading");
+			    			
+			    			//prompt the user
+			    			mac.toast("User deleted.");	
+			    		}, function(error) {
+			    			console.log(error);
+			    			// remove the loading icon
+			    			angular.element("body").removeClass("loading");
+			    			
+			    			//prompt the user
+			    			mac.toast("Error deleting user.");
+			    		});
+			},
+			function() {
+		    	
+		    	//prompt
+		    	mac.toast("User deletion cancelled.");
+		    });
+
+		}
+		
         
     }
+}

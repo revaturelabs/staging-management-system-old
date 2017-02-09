@@ -24,6 +24,11 @@
 										<md-icon style="color:#59E2A8;">settings_backup_restore</md-icon>
 										
 									</md-button>
+						<md-button ng-click="manAttCtrl.deleteSelectedUser($event)" class="md-icon-button" aria-label="Open sample menu">
+							<md-tooltip> Delete user </md-tooltip>
+							<md-icon style="color:#59E2A8;">delete_forever</md-icon>
+						</md-button>
+									
                             
                                 {{ manAttCtrl.selectedUser.firstName }} {{ manAttCtrl.selectedUser.lastName }} - 
                                 ({{ manAttCtrl.selectedUser.batchType.type}} {{ manAttCtrl.selectedUser.graduationDate | date:"MM/dd"}})
