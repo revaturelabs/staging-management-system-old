@@ -35,6 +35,13 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
     	projectService.getAll(function(response) {
     		upc.allProjects = response;
     		for(var i = 0; i<upc.allProjects.length;i++){
+    			
+    			if(upc.allProjects[i].name == "No Project"){
+    				upc.allProjects.splice(i,1);
+    				i--;
+    				continue;
+    			}
+    			
     			upc.allProjects[i].startDate = new Date(upc.allProjects[i].startDate);
     			upc.allProjects[i].endDate = new Date(upc.allProjects[i].endDate);
     			upc.allProjects[i].displayName = upc.allProjects[i].name;
@@ -88,7 +95,7 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 			if(!upc.allProjects[i].startDate){
 				upc.errors.push({ 
 					"name" : upc.allProjects[i].name,
-					"msg": "Error in project: " + upc.allProjects[i].name +  ", no end date"
+					"msg": "Error in project: " + upc.allProjects[i].name +  ", no start date"
 					});
 				pass = false;
 			}
@@ -96,7 +103,7 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 			catch(err){
 				upc.errors.push({ 
 					"name" : upc.allProjects[i].name,
-					"msg": "Error in project: " + upc.allProjects[i].name +  ", no end date"
+					"msg": "Error in project: " + upc.allProjects[i].name +  ", no start date"
 					});
 				pass = false;
 			}
@@ -106,7 +113,7 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 				if(!upc.allProjects[i].endDate){
 					upc.errors.push({ 
 						"name" : upc.allProjects[i].name,
-						"msg": "Error in project: " + upc.allProjects[i].name +  ", no start date"
+						"msg": "Error in project: " + upc.allProjects[i].name +  ", no end date"
 						});
 					pass = false;
 				
@@ -115,7 +122,7 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 			catch(err){
 				upc.errors.push({ 
 					"name" : upc.allProjects[i].name,
-					"msg": "Error in project: " + upc.allProjects[i].name +  ", no start date"
+					"msg": "Error in project: " + upc.allProjects[i].name +  ", no end date"
 					});
 				pass = false;
 			}
@@ -131,7 +138,6 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 				
 				pass = false;
 			}
-			
 		}
 		
 		if(pass){
@@ -140,10 +146,10 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 			}
 			//if there are projects to delete, DELETE
 			if(upc.toDelete.length > 0){
-				projectService.del(upc.toDelete,function(){});
+				projectService.del(upc.toDelete,function(){}, function(){});
 			}
 			//update current projects
-			projectService.update(upc.allProjects,function(){$mdDialog.cancel();});
+			projectService.update(upc.allProjects,function(){$mdDialog.cancel();}, function(){});
 		}
 	}
 	

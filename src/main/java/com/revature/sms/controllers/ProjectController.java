@@ -110,10 +110,13 @@ public class ProjectController {
 				pr.delete(projects);
 				return new ResponseEntity<bc>(new bc(true), HttpStatus.OK);
 			} else {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
-						HttpStatus.UNAUTHORIZED);
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"), HttpStatus.UNAUTHORIZED);
 			}
-		}  catch (Exception e) {
+		} catch (org.hibernate.TransientObjectException toe){  
+			
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Something happened but it still worked."), HttpStatus.I_AM_A_TEAPOT);
+			
+		} catch (Exception e) {
 			Logger.getRootLogger().debug("Exception while removing Project.", e);
 			return new ResponseEntity<ResponseErrorEntity>( new ResponseErrorEntity("Exception while removing Project."), HttpStatus.SERVICE_UNAVAILABLE);
 		}

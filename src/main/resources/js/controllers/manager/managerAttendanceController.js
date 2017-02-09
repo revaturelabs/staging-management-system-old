@@ -73,6 +73,7 @@
         mac.getTaskTypes = getTaskTypes;
         /**@var {function} assignProject function reference variable. */
         mac.assignProject = assignProject;
+        /**@var {function} updateProject function reference variable. */
         mac.updateProjects = updateProjects;
         
         mac.showFullJobInfo = showFullJobInfo;
@@ -496,6 +497,8 @@
                 controller: "updateProjectsCtrl as up",
                 clickOutsideToClose: false,
                 escapeToClose: false
+            }).then(function(){
+                mac.toast("Projects updated");
             });
 		}
 		
