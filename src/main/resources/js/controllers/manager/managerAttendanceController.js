@@ -726,6 +726,8 @@
 			    			
 			    			//prompt the user
 			    			mac.toast("User deleted.");	
+			    			mac.getUsers();
+		                    mac.users = $filter( "taskFilter" )( mac.users, mac.today );
 			    		}, function(error) {
 			    			console.log(error);
 			    			// remove the loading icon
