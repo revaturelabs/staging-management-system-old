@@ -24,6 +24,11 @@
 										<md-icon style="color:#59E2A8;">settings_backup_restore</md-icon>
 										
 									</md-button>
+						<md-button ng-click="manAttCtrl.deleteSelectedUser($event)" class="md-icon-button" aria-label="Open sample menu">
+							<md-tooltip> Delete user </md-tooltip>
+							<md-icon style="color:#59E2A8;">delete_forever</md-icon>
+						</md-button>
+									
                             
                                 {{ manAttCtrl.selectedUser.firstName }} {{ manAttCtrl.selectedUser.lastName }} - 
                                 ({{ manAttCtrl.selectedUser.batchType.type}} {{ manAttCtrl.selectedUser.graduationDate | date:"MM/dd"}})
@@ -86,7 +91,6 @@
                             </p>
                     </md-card-content>
                 </md-card>
-                <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
                 <md-card md-whiteframe="8dp" class="skillCard">
                     <md-card-title>
                         <md-card-title-text>
@@ -154,7 +158,6 @@
                         </div>
                     </md-card-content>
                 </md-card>
-                <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
                 <md-card md-whiteframe="8dp" class="skillCard">
                     <md-card-title>
                         <md-card-title-text>

@@ -1,5 +1,7 @@
 package com.revature.sms.domain;
 
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
@@ -21,6 +23,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 //
 /**
@@ -30,6 +33,7 @@ import org.apache.log4j.Logger;
 @Entity
 @Table(name = "USERS")
 public class User {
+	
 	/**
 	 * int value that represents the primary key of the table, ID is used to
 	 * identify a specific User object by the unique int value. Set up to
@@ -78,14 +82,14 @@ public class User {
 	/**
 	 * List containing AssociateAttendence objects that keeps track of the user's attendance.
 	 */
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name="ASSOCIATE")
 	private List<AssociateAttendance> attendance;
 
 	/**
 	 * List containing AssociateTask objects that keeps track of the user's tasks.
 	 */
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name="ASSOCIATE")
 	private List<AssociateTask> tasks;
 
@@ -126,13 +130,15 @@ public class User {
 
 	 * Trainer object that keeps track of the user's trainer
 	 */
+
 	@ManyToOne
 	@JoinColumn(name = "trainer")
 	private Trainer trainer;
 
 	 // List containing Project objects that keeps track of the user's project.
 	 
-	@OneToMany(cascade=CascadeType.ALL)
+
+	@OneToMany
 	@JoinColumn(name="ASSOCIATE")
 	private List<ProjectUser> project;
 
@@ -377,7 +383,7 @@ public class User {
 	 * the User object.
 	 */
 	public void setEvents(List<JobEvent> events) {
-		
+
 		this.events = events;
 	}
 
@@ -486,3 +492,4 @@ public class User {
 	}
 	
 }
+	
