@@ -129,7 +129,7 @@ public class User {
 	/**
 	 * List containing Project objects that keeps track of the user's project.
 	 */
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="ASSOCIATE")
 	private List<ProjectUser> project;
 	
