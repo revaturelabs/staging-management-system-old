@@ -93,6 +93,7 @@ public class UserController {
 					HttpStatus.CONFLICT);
 		} catch (Exception e) {
 			Logger.getRootLogger().debug("Exception while creating user", e);
+			e.printStackTrace();
 			return new ResponseEntity<ResponseErrorEntity>(
 					new ResponseErrorEntity("Problem occurred while creating user."), HttpStatus.SERVICE_UNAVAILABLE);
 		}
@@ -227,15 +228,23 @@ public class UserController {
 	 *         retrieving the users
 	 */
 	@RequestMapping(value = "/{username}", method = {
-			RequestMethod.DELETE, }, consumes = MediaType.APPLICATION_JSON_VALUE)
+			RequestMethod.DELETE, }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Object deleteUser(@RequestHeader(value = "Authorization") String token,
 			@PathVariable String username) {
 
 		try {
 			// validate token and delete associate
 			if (isValid(token) && isSuperAdmin(role)) {
-				long result = userRepo.deleteByUsername(username);
-				return new ResponseEntity<Long>(result, HttpStatus.OK);
+				
+				//delete tokens
+				List<Token> tokens = tokenRepo.findAll();
+				for (int i = 0; i < tokens.size(); i++) {
+					if (tokens.get(i).getUser().getUsername().equals(username)) {
+						tokenRepo.delete(tokens.get(i));
+					}
+				}
+				userRepo.deleteByUsername(username);
+				return new ResponseEntity<User>(new User(), HttpStatus.OK);
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
 						HttpStatus.UNAUTHORIZED);
