@@ -1,6 +1,5 @@
 package com.revature.sms.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -24,19 +23,39 @@ import com.revature.sms.domain.dao.TokenRepo;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
 import com.revature.sms.domain.dto.bc;
 
+
+/**
+ * Server-side controller to handle Project CRUD.
+ *
+ */
 @RestController
 @RequestMapping("/api/v1/project")
 public class ProjectController {
+	
+	/**
+	 * Autowired ProjectRepo object. Spring handles setting this up for actual use.
+	 */
 	@Autowired
 	ProjectRepo pr;
 
+	
+	/**
+	 * Autowired ProjectUserRepo object. Spring handles setting this up for actual use.
+	 */
 	@Autowired
 	ProjectUserRepo pur;
 
+	
+	/**
+	 * Autowired TokenRepo object. Spring handles setting this up for actual use.
+	 */
 	@Autowired
 	private TokenRepo tokenRepo;
 
-	// returns all projects
+	/**
+	 * Method that returns all projects.
+	 * @return ResponseEntity object containing a list of all projects.
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public Object getAll() {
 		try {
@@ -48,7 +67,12 @@ public class ProjectController {
 		}
 	}
 
-	// updates all inputed projects
+	/**
+	 * Method to update or create projects.
+	 * @param token String value of authorization token.
+	 * @param projects List containing Projects to be updated or created.
+	 * @return ResponseEntity object containing a Boolean object with value of true if if projects were successfully updated/created, false if it is not.
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public @ResponseBody Object update(@RequestHeader(value = "Authorization") String token,@RequestBody List<Project> projects) {
 		try {
@@ -68,7 +92,12 @@ public class ProjectController {
 		}
 	}
 
-	// deletes all inputed projects
+	/**
+	 * Method to delete projects.
+	 * @param token String value of authorization token.
+	 * @param projects List containing Projects to be deleted.
+	 * @return ResponseEntity object containing a Boolean object with value of true if projects were successfully deleted, false if it is not.
+	 */
 	@RequestMapping(value = "/remove", method = RequestMethod.POST)
 	public @ResponseBody Object remove(@RequestHeader(value = "Authorization") String token, @RequestBody List<Project> projects) {
 		try {
@@ -90,7 +119,10 @@ public class ProjectController {
 		}
 	}
 
-	// returns all ProjectUsers
+	/**
+	 * Method that returns all projectUsers.
+	 * @return ResponseEntity object containing a list of all projectUsers.
+	 */
 	@RequestMapping("/user")
 	public Object getAllProjectUsers() {
 		try {
@@ -120,5 +152,4 @@ public class ProjectController {
 		}
 		return valid;
 	}
-
 }

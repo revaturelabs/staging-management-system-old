@@ -119,7 +119,6 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 					});
 				pass = false;
 			}
-				
 			
 			//end dates are after start dates
 			if(pass && upc.allProjects[i].endDate.getTime() < upc.allProjects[i].startDate.getTime()){
@@ -139,7 +138,7 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 			for(var s = 0; s<upc.allProjects.length;s++){
 				upc.allProjects[s].name = upc.allProjects[s].displayName;
 			}
-			//if there are projects to delete DELETE
+			//if there are projects to delete, DELETE
 			if(upc.toDelete.length > 0){
 				projectService.del(upc.toDelete,function(){});
 			}
