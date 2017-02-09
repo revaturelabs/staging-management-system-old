@@ -109,8 +109,7 @@
 	    	    	});
         	
         
-        }
-        
+        }        
         
           // functions
             /**
@@ -655,6 +654,15 @@
 				//<<<<<<<<<<<
 			}
 		}
+		
+		/**
+		 * 
+		 * 
+		 */
+        function orderAssociateTable(associateAttribute){
+        	mac.tableOrder = associateAttribute;
+      
+        }
 		
 		$scope.$on( "setView", function( events, data ) {
             mac.associateTableIsOpen = data.associateTableIsOpen;

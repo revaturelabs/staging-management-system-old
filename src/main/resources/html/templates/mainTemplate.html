@@ -7,7 +7,7 @@
 				
 				<div>
 					<md-tooltip> switch view </md-tooltip>
-					<md-switch ng-show="tempCtrl.user.userRole.name == 'superAdmin'" class="md-primary" md-no-ink="" aria-label="Switch view" ng-change="tempCtrl.changeView()" ng-model="tempCtrl.associateTableIsOpen"/>
+					<md-switch ng-show="tempCtrl.user.userRole.name == 'superAdmin'" class="md-warn" md-no-ink="" aria-label="Switch view" ng-change="tempCtrl.changeView()" ng-model="tempCtrl.associateTableIsOpen"/>
 				</div>
 				
                 <md-button ng-repeat="action in tempCtrl.actions" class="md-icon-button" aria-label="action.tooltip" ng-click="action.function()">

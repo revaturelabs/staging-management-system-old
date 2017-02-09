@@ -7,14 +7,96 @@
 					<thead md-head>
 						<tr md-row>
 							<th md-column>
-								<h3> Associate name </h3>
+								<h3>Last Name</h3>
 							</th>
+							<th md-column>
+								<h3>First Name</h3>
+							</th>
+							<th md-column>
+								<h3>Technologies</h3>
+							</th>
+							<th md-column>
+								<h3>Trainer</h3>
+							</th>
+							<th md-column>
+								<h3>Marketing Start Date</h3>
+							</th>
+							<th md-column>
+								<h3>Days on Market</h3>
+							</th>
+							<th md-column>
+								<h3>Current Status</h3>
+							</th>
+							<th md-column>
+								<h3>Panel Status</h3>
+							</th>
+							<th md-column>
+								<h3>Project</h3>
+							</th>
+							<th md-column>
+								<h3>Primary Certification</h3>
+							</th>
+							
 						</tr>
 					</thead>
 					<tbody>
 						<tr md-row ng-repeat="user in manAttCtrl.users | orderBy:manAttCtrl.tableOrder" ng-class="{highlightSelected: manAttCtrl.selectedUser == user}">
 							<td>
+								{{ user.lastName }}
+							</td>
+							<td>
 								{{ user.firstName }}
+							</td>
+							<td>
+								{{ user.batchType.type }}
+							</td>
+							<td>
+								{{ user.trainer }}
+							</td>
+							<td>
+								{{ user.graduationDate | date:"MM/dd"}}
+							</td>
+							<td>
+                                {{ manAttCtrl.calcMarketingDays() }}
+							</td>
+							<td>
+								current status
+							</td>
+							<td>
+								<md-menu ng-show="user.panels[0]">
+									<!-- Trigger element is a md-button with an icon -->
+									<md-button class="md-icon-button" aria-label="Open sample menu" ngDisabled="true">
+										<md-icon ng-show="user.panels[0].passed == true" style="color:#59E2A8;">check_circle</md-icon>
+										<md-icon ng-show="user.panels[0].passed == false" style="color:#A00;">not_interested</md-icon>
+									</md-button>
+									<md-menu-content>
+										<md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(user, user.panels[0], true)"><md-icon>check_circle</md-icon> Passed</md-button></md-menu-item>
+										<md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(user, user.panels[0], false)"><md-icon>not_interested</md-icon> Not Passed</md-button></md-menu-item>
+									</md-menu-content>
+								</md-menu>
+                                <span ng-show="user.panels[0].passed == false">Date:
+                                	 <span ng-show="user.panels[0]">{{ user.panels[0].dateDisplay }}</span>
+                                	 <span ng-hide="user.panels[0].dateDisplay">No date selected</span>
+                               	</span>
+                               	<md-card md-whiteframe="6dp" style="max-width:30vh;" ng-show="manAttCtrl.panelDatePickerIsOpen">
+	                               	<md-datepicker ng-model="manAttCtrl.panelDate" md-placeholder="Enter date" ng-change="manAttCtrl.updatePanelDate(user, user.panels[0])"></md-datepicker>
+	                            </md-card>
+	                             <span ng-hide="user.panels[0]"><md-icon ng-click="manAttCtrl.createPanel(user)" style="color:white !important;cursor: pointer;">note_add</md-icon></span>
+							</td>
+							<td>
+							 	<div ng-show="user.activeProject" ng-click="manAttCtrl.assignProject(user, user.activeProject)">{{ user.activeProject.name }}</div>
+	                        	<div ng-hide="user.activeProject" ng-click="manAttCtrl.assignProject(user, user.activeProject)">No project</div>
+							</td>
+							<td>
+                       			<div ng-show="user.certs[0].date">
+                            	<div ng-repeat="cert in user.certs | orderBy:'-date'" class="certList" ng-click="manAttCtrl.updateCert(cert,user)">
+                            	<md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48">{{ cert.icon.name }}</md-icon>
+                            	{{ cert.dateDisplay }} |
+                            	{{cert.note}}
+                            	
+                            	<hr>
+                            </div>
+                        </div>
 							</td>
 						</tr>
 					</tbody>
