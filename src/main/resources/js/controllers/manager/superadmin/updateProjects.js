@@ -9,7 +9,9 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 	upc.message = "";
 	/**@prop {object} selectedProject Variable with selected project.*/
 	upc.selectedProject = {};
+	/**@prop {object} errors Variable with list of errors.*/
 	upc.errors = [];
+	/**@prop {object} toDelete Variable with list of projects to delete.*/
 	upc.toDelete = [];
 
 	//functions

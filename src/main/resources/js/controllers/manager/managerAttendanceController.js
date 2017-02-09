@@ -275,13 +275,13 @@
             if (mac.user.userRole.name == "superAdmin") {
                 actions.push( {
                     "function": mac.newAssociates,
-                    "icons"   : "add",
+                    "icon"   : "add",
                     "tooltip" : "Add batch of new associates."
                 });
                 
                 actions.push({
                 	"function": mac.updateProjects,
-                    "icons"   : "work",
+                    "icon"   : "work",
                     "tooltip" : "Create or update an existing project."
                 });
             }

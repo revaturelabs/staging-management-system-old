@@ -3,7 +3,9 @@ package com.revature.sms.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,63 +24,84 @@ import com.revature.sms.domain.dao.TokenRepo;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
 import com.revature.sms.domain.dto.bc;
 
-
 @RestController
 @RequestMapping("/api/v1/project")
 public class ProjectController {
 	@Autowired
 	ProjectRepo pr;
-	
+
 	@Autowired
 	ProjectUserRepo pur;
-	
+
 	@Autowired
 	private TokenRepo tokenRepo;
-	
-	//returns all projects
+
+	// returns all projects
 	@RequestMapping(method = RequestMethod.GET)
 	public Object getAll() {
-		List<Project> list = pr.findAll();
-		return new ResponseEntity<List<Project>>(list, HttpStatus.OK);
+		try {
+			List<Project> list = pr.findAll();
+			return new ResponseEntity<List<Project>>(list, HttpStatus.OK);
+		}  catch (Exception e) {
+			Logger.getRootLogger().debug("Exception while retrieving Projects.", e);
+			return new ResponseEntity<ResponseErrorEntity>( new ResponseErrorEntity("Exception while retrieving Projects."), HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
-	
-	//updates all inputed projects
+
+	// updates all inputed projects
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody Object update(@RequestHeader(value = "Authorization") String token, @RequestBody List<Project> projects) {
-		//validate token
-		if(isValid(token)){
-			pr.save(projects);
-			return new ResponseEntity<bc>(new bc(true), HttpStatus.OK);
-		}
-		else{
-			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"), HttpStatus.UNAUTHORIZED);
-		}
-	}
-	
-	//deletes all inputed projects
-	@RequestMapping(value="/remove",method = RequestMethod.POST)
-	public @ResponseBody Object remove(@RequestHeader(value = "Authorization") String token, @RequestBody List<Project> projects) {
-		//validate token
-		if(isValid(token)){
-			
-			for(Project p : projects){
-				pur.deleteByProject(p);
+	public @ResponseBody Object update(@RequestHeader(value = "Authorization") String token,@RequestBody List<Project> projects) {
+		try {
+			// validate token
+			if (isValid(token)) {
+				pr.save(projects);
+				return new ResponseEntity<bc>(new bc(true), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized."), HttpStatus.UNAUTHORIZED);
 			}
-			pr.delete(projects);
-			return new ResponseEntity<bc>(new bc(true), HttpStatus.OK);
-		}
-		else{
-			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"), HttpStatus.UNAUTHORIZED);
+		} catch (DataIntegrityViolationException dive) {
+			Logger.getRootLogger().debug("Project name already exists.", dive);
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Project name already exists."), HttpStatus.CONFLICT);
+		} catch (Exception e) {
+			Logger.getRootLogger().debug("Exception while creating Project.", e);
+			return new ResponseEntity<ResponseErrorEntity>( new ResponseErrorEntity("Exception while creating Project."), HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
+
+	// deletes all inputed projects
+	@RequestMapping(value = "/remove", method = RequestMethod.POST)
+	public @ResponseBody Object remove(@RequestHeader(value = "Authorization") String token, @RequestBody List<Project> projects) {
+		try {
+			// validate token
+			if (isValid(token)) {
 	
-	//returns all ProjectUsers
+				for (Project p : projects) {
+					pur.deleteByProject(p);
+				}
+				pr.delete(projects);
+				return new ResponseEntity<bc>(new bc(true), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
+						HttpStatus.UNAUTHORIZED);
+			}
+		}  catch (Exception e) {
+			Logger.getRootLogger().debug("Exception while removing Project.", e);
+			return new ResponseEntity<ResponseErrorEntity>( new ResponseErrorEntity("Exception while removing Project."), HttpStatus.SERVICE_UNAVAILABLE);
+		}
+	}
+
+	// returns all ProjectUsers
 	@RequestMapping("/user")
-	public Object getAllProjectUsers(){
-		List<ProjectUser> list = pur.findAll();
-		return new ResponseEntity<List<ProjectUser>>(list, HttpStatus.OK);
+	public Object getAllProjectUsers() {
+		try {
+			List<ProjectUser> list = pur.findAll();
+			return new ResponseEntity<List<ProjectUser>>(list, HttpStatus.OK);
+		}  catch (Exception e) {
+			Logger.getRootLogger().debug("Exception while retrieving Projects.", e);
+			return new ResponseEntity<ResponseErrorEntity>( new ResponseErrorEntity("Exception while retrieving Projects."), HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
-	
+
 	/**
 	 * 
 	 * To validate the token from the request and set the user role
@@ -92,10 +115,10 @@ public class ProjectController {
 
 		Token token = tokenRepo.findByAuthToken(tokenString);
 		if (token != null) {
-			//role = token.getUser().getUserRole().getName();
+			// role = token.getUser().getUserRole().getName();
 			valid = true;
 		}
 		return valid;
 	}
-	
+
 }
