@@ -363,8 +363,7 @@ public class User {
 	 * the User object.
 	 */
 	public void setEvents(List<JobEvent> events) {
-		this.events.clear();
-		this.events.addAll(events);
+		this.events = events;
 	}
 
 	/**
