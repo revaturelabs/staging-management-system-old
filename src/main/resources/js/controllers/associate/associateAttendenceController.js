@@ -49,7 +49,7 @@
         aac.checkIn = checkIn;
         //aac.udateSkills = updateSkills;
 
-          // initialization
+        // initialization
         aac.setToolbar();
         aac.calcWeek( aac.curr );
         if (getScheduledCert() != null) {
@@ -198,11 +198,12 @@
             if (getScheduledCert() == null) {
                 $mdDialog.show({
                     templateUrl: "html/templates/scheduleCertification.html",
-                    controller: "associateCertificationsCtrl as assCertCtrl"
+                    controller: "associateCertificationsCtrl as assCertCtrl", 
+                    clickOutsideToClose: true
                 }).then( function() {
                     aac.toast("Certification Scheduled");
                 }, function() {
-                    aac.toast("Certification Schedule Cancelled");
+                    //certification modal cancelled
                 });
             }
             else {
@@ -218,17 +219,17 @@
         function days_between(date1, date2) {
 
             // The number of milliseconds in one day
-            var ONE_DAY = 1000 * 60 * 60 * 24
+            var ONE_DAY = 1000 * 60 * 60 * 24;
 
             // Convert both dates to milliseconds
-            var date1_ms = date1.getTime()
-            var date2_ms = date2.getTime()
+            var date1_ms = (new Date(date1.getFullYear(), date1.getMonth(), date1.getDate())).getTime();
+            var date2_ms = (new Date(date2.getFullYear(), date2.getMonth(), date2.getDate())).getTime();
 
             // Calculate the difference in milliseconds
-            var difference_ms = Math.abs(date1_ms - date2_ms)
+            var difference_ms = Math.abs(date1_ms - date2_ms);
 
             // Convert back to days and return
-            return Math.round(difference_ms/ONE_DAY)
+            return Math.round(difference_ms/ONE_DAY);
 
         }
         
@@ -253,11 +254,11 @@
         	for(var i = 0; i < aac.user.tasks.length; i++) {
         		var certDate = new Date(aac.user.tasks[i].date);
         		var cert = "Certification";
-        		if (aac.isSameDate(certDate)) {
+        		if (aac.isSameDate(certDate) && (aac.user.tasks[i].taskType.type == cert) ) {
         			return "Certification date is today.";
         		}
         		else if ( certDate.getTime() >= (new Date().getTime()) && (aac.user.tasks[i].taskType.type == cert) ) {
-        			var daysAway = days_between(aac.today, certDate) + 1;
+        			var daysAway = days_between(aac.today, certDate);
         			if (daysAway >= 14) {
         				return "Certification scheduled for: " +  ((certDate.getMonth()) + 1) + "/" + certDate.getDate() + "/" + certDate.getFullYear();
         			}
