@@ -242,7 +242,7 @@ public class UserController {
 						tokenRepo.delete(tokens.get(i));
 					}
 				}
-				long result = userRepo.deleteByUsername(username);
+				userRepo.deleteByUsername(username);
 				return new ResponseEntity<User>(new User(), HttpStatus.OK);
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),

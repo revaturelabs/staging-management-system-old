@@ -717,7 +717,6 @@
 				    	// add a loading icon to show something is going on
 				    	angular.element("body").addClass("loading");
 				    	
-				    	console.log(mac.selectedUser);
 				    	// update the selected user
 			    		userService.remove( mac.selectedUser, function() {
 			    			
@@ -729,7 +728,6 @@
 			    			mac.getUsers();
 		                    mac.users = $filter( "taskFilter" )( mac.users, mac.today );
 			    		}, function(error) {
-			    			console.log(error);
 			    			// remove the loading icon
 			    			angular.element("body").removeClass("loading");
 			    			
