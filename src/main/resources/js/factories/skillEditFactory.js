@@ -9,6 +9,8 @@ function skillEditFac(){
     var skillsAddFail = [];
     var skillsRemoveSuccess = [];
     var skillsRemoveFail = [];
+
+    var changesErrored = {value : false};
     /**
      * @prop {obj} service Service returned by the factory.
      */
@@ -21,6 +23,8 @@ function skillEditFac(){
         getAddFail : getAddFail,
         getRemoveSuccess : getRemoveSuccess,
         getRemoveFail : getRemoveFail,
+        setChangesErrored : setChangesErrored,
+        getChangesErrored : getChangesErrored,
         clearAll : clearAll
     }
     return service;
@@ -76,6 +80,12 @@ function skillEditFac(){
     function getRemoveFail(){
         return skillsRemoveFail;
     }
+    function getChangesErrored(){
+        return changesErrored;
+    }
+    function setChangesErrored(newval){
+        changesErrored.value = newval;
+    }
     /**
      * @description Function that clears all of the arrays.
      */
@@ -84,6 +94,7 @@ function skillEditFac(){
         skillsAddFail.length = 0;
         skillsRemoveSuccess.length = 0;
         skillsRemoveFail.length = 0;
+        changesErrored = {};
     }
 
 }

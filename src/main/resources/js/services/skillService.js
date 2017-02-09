@@ -33,7 +33,7 @@
         }
 
         ssr.remove = function(skillName, success, error){
-            ssr.skillResource.remove({skillName: skillName}, success, error);
+           return ssr.skillResource.remove({skillName: skillName},success, error).$promise;
         }
 
         ssr.update = function(skillName, newSkillName, success, error){

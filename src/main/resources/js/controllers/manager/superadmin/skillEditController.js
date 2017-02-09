@@ -1,7 +1,7 @@
 angular.module("sms").
 controller("skillEditCtrl", editSkillController);
 
-function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEditFactory){
+function editSkillController($scope, $mdDialog, $mdToast, $q, $timeout, skillService, skillEditFactory){
 
         var sec = this;
 
@@ -21,11 +21,18 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
          * @prop {array} skillIds Array of skillIds that exist in currentSkills at the start.
          */
         sec.skillIds = [];
+
+
+        sec.removeSkillPromiseList = [];
   
         /**
          * @prop {number} ADDSKILLDEFAULTVAL Constant that's the default id value for newly added skills
          */
         const ADDSKILLDEFAULTVAL = 0;
+
+        var changesErrored = false;
+
+        
 
 
         //functions
@@ -95,24 +102,57 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
         function addSkillToDB(skill){
                 skillService.create(skill, function(){
                    skillEditFactory.addToAddSuccees(skill.skill);
-                }, function(error){
+                }, function(){
                     skillEditFactory.addToAddFail(skill.skill, "Issue"); //this actually shouldn't come up, but just in case here's something.
                 
                     
                 });
             }
 
+        /**
+         * @description Function that updates a skill in the database, replacing the old name with the new one.
+         * @param {string} oldSkillName The old name of the skill.
+         * @param {string} newSkillName The new name for the skill.
+         */
+        function updateSkillInDB(oldSkillName, newSkillName){
+            skillService.update(oldSkillName, newSkillName, function(success){
+                //empty to make it work
+            }, function(error){
+               //empty to make it work
+            });
+        }
 
+        /**
+         * @description Function that removes the specific skill from the database. 
+         * @param {string} skillName The name of the skill to be deleted.
+         */
+         function removeSkillFromDB(skillName){
+                
+               sec.removeSkillPromiseList.push(
+                   skillService.remove(skillName, function(){
+                    skillEditFactory.addToRemoveSuccess(skillName); 
+                }, function(error){
+                    // if (changesErrored == false){
+                    //     changesErrored = true;
+                    // }
+                     skillEditFactory.addToRemoveFail(skillName, error.data.errorMessage);               
+                })
+               );
+                
+   
+        }
       
         /**
          * @description Function that's called to add, remove, and update the skills in the database
          * according to what the user wants to have done.
          */
          function updateAll(){
+             
              //check the origin skill array and see if any skills have been removed.
             for (var i=0; i<sec.currentSkills.length; i++){
                 var j = sec.skillIds.indexOf(sec.currentSkills[i].id); //gets skill id
                 if (j==-1){ // skill was marked for deletion in the view
+                   
                     sec.removeSkillFromDB(sec.currentSkills[i].skill);
                     continue;
                 }
@@ -134,37 +174,18 @@ function editSkillController($scope, $mdDialog, $mdToast, skillService, skillEdi
                 sec.addSkillToDB(newSkill);//adds skill to DB
 
             }
+
             
-            $mdDialog.hide();
-         }
+        //   while($q.all(sec.removeSkillPromiseList).$$state.status === 0){
+        //       $timeout(1000);
+        //   }
+
+         
+         $mdDialog.hide();
+    }
 
 
-        /**
-         * @description Function that updates a skill in the database, replacing the old name with the new one.
-         * @param {string} oldSkillName The old name of the skill.
-         * @param {string} newSkillName The new name for the skill.
-         */
-        function updateSkillInDB(oldSkillName, newSkillName){
-            skillService.update(oldSkillName, newSkillName, function(success){
-                //empty to make it work
-            }, function(error){
-               //empty to make it work
-            });
-        }
-
-        /**
-         * @description Function that removes the specific skill from the database. 
-         * @param {string} skillName The name of the skill to be deleted.
-         */
-         function removeSkillFromDB(skillName){
-                
-                skillService.remove(skillName, function(){
-                    skillEditFactory.addToRemoveSuccess(skillName); 
-                }, function(error){
-                    skillEditFactory.addToRemoveFail(skillName, error.data.errorMessage);               
-                });
-            
-        }
+      
 
 
         /**
