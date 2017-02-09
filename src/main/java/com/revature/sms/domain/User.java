@@ -183,14 +183,16 @@ public class User {
 	 * @param lastName String that represents the last name of the User object.
 	 * @param hashedPassword String that represents the hashedPassword of the User object.
 	 * @param userRole UserRole object that keeps track of the user's specific role.
+	 * @param trainer 
 	 */
-	public User(String username, String firstName, String lastName, String hashedPassword, UserRole userRole) {
+	public User(String username, String firstName, String lastName, String hashedPassword, UserRole userRole, Trainer trainer) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.hashedPassword = hashedPassword;
 		this.userRole = userRole;
+		this.trainer = trainer;
 	}
 	
 	/**

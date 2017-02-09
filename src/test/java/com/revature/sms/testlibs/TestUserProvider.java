@@ -50,7 +50,7 @@ public class TestUserProvider {
 	 */
 
 	public User getAdmin(){
-		return new User("TestAdminOne", "Alan", "Turing", hashPassword("DaisyDaisy"), urr.findByName("admin"));
+		return new User("TestAdminOne", "Alan", "Turing", hashPassword("DaisyDaisy"), urr.findByName("admin"), null);
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public class TestUserProvider {
 	 */
 	
 	public User getSuperAdmin(){
-		return new User("TestSuperAdminOne", "John", "Conway", hashPassword("LifeIsButAGame"), urr.findByName("superAdmin"));
+		return new User("TestSuperAdminOne", "John", "Conway", hashPassword("LifeIsButAGame"), urr.findByName("superAdmin"), null);
 	}
 	
 	
