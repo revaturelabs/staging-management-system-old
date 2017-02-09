@@ -113,7 +113,7 @@ public class ProjectController {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"), HttpStatus.UNAUTHORIZED);
 			}
 		} catch (org.hibernate.TransientObjectException toe){  
-			
+			Logger.getRootLogger().debug("Exception while removing Project.", toe);
 			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Something happened but it still worked."), HttpStatus.I_AM_A_TEAPOT);
 			
 		} catch (Exception e) {
