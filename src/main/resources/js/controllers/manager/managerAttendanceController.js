@@ -30,6 +30,8 @@
         mac.panelDatePickerIsOpen = false;
         /**@prop {Date} panelDate The date of the panel, binded so it shows up on panel calendar */
         mac.panelDate = new Date();
+        /**@prop {boolean} associateTableIsOpen Variable that tells if the associate table view is open. */
+        $scope.associateTableIsOpen = false;
         mac.markBind = "";
         
         
@@ -86,7 +88,7 @@
         mac.findDevice();
         mac.getUsers();
         mac.getTaskTypes();
-        mac.setToolbar();
+        mac.setToolbar("Weekly attendance");
         mac.marketingStatuses();
   
         
@@ -269,8 +271,9 @@
          * At the moment, only relevant to add superAdmin options to superAdmin users when logged in,
          * as superAdmin should always have all the options that admins do.
          */
-        function setToolbar() {
+        function setToolbar(s) {
             var actions = [];
+            var thisTitle = s;
             if (mac.user.userRole.name == "superAdmin") {
                 actions.push( {
                     "function": mac.newAssociates,
@@ -280,11 +283,10 @@
             }
 
             $scope.$emit( "setToolbar", { 
-                title: "Weekly attendance", 
+                title: thisTitle, 
                 actions }
             );
         }
-
             
             /**
              * @description Changes display to the previous week, unless the current week displayed
@@ -653,6 +655,11 @@
 				//<<<<<<<<<<<
 			}
 		}
+		
+		$scope.$on( "setView", function( events, data ) {
+            mac.associateTableIsOpen = data.associateTableIsOpen;
+            setToolbar(data.title);
+        })
 		
         
     }

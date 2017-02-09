@@ -1,5 +1,29 @@
 
-    <div layout="row">
+	<div layout="row" id="associateTableViewDiv" ng-show="manAttCtrl.associateTableIsOpen">
+		<md-card id="associateTableViewCard" class="md-padding" layout="column">
+			<md-table-container id="associateTableViewTableContainer">
+				<table md-table>
+                 
+					<thead md-head>
+						<tr md-row>
+							<th md-column>
+								<h3> Associate name </h3>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr md-row ng-repeat="user in manAttCtrl.users | orderBy:manAttCtrl.tableOrder" ng-class="{highlightSelected: manAttCtrl.selectedUser == user}">
+							<td>
+								{{ user.firstName }}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+		</md-card>
+	</div>
+	
+    <div layout="row" ng-hide="manAttCtrl.associateTableIsOpen">
 
           <!-- Associate info card -->
         <div ng-show="manAttCtrl.infoOpen" id="associateInformationDiv" ng-class="{showInformationDiv : (manAttCtrl.infoOpen), showBigInformationDiv : (manAttCtrl.infoOpen && manAttCtrl.smallDevice)}">
@@ -292,6 +316,21 @@
     </div>
 
     <style type="text/css">
+    
+    	/* -------------------- start of new css ------------------- */
+    	#associateTableViewDiv{
+    		width: 100%;
+    	}
+    	#associateTableViewCard{
+    		width: 100%;
+    	}
+    	#associateTableViewTableContainer{
+    		width: 100%;
+    	}
+    	
+    	/* -------------------- end of new css ------------------- */
+    	
+    	
         .showInformationDiv{
             width:33%;
         }

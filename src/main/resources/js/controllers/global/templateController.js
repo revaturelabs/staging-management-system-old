@@ -13,6 +13,7 @@
             // data
             /**@prop {object} user Currently logged in user. */
         tc.user = loginService.getUser();
+        tc.associateTableIsOpen = false;
 
             // functions
          /**@var {function} checkPass function reference variable. */   
@@ -23,6 +24,8 @@
         tc.logout = logout;
         /**@var {function} settings function reference variable. */
         tc.settings = settings;
+        
+        tc.changeView = changeView;
 
           // initialization
         tc.checkPass();
@@ -93,5 +96,21 @@
             tc.title = data.title;
             tc.actions = data.actions;
         })
+        
+        function changeView() {
+        	associateTableIsOpen = tc.associateTableIsOpen;
+        	if(associateTableIsOpen){
+        		$scope.$broadcast( "setView", { 
+                    title: "Associate Information", 
+                    associateTableIsOpen }
+                );
+        	}
+        	else{
+        		$scope.$broadcast( "setView", { 
+                    title: "Weekly attendance", 
+                    associateTableIsOpen }
+                );
+        	}
+        }
 
     }
