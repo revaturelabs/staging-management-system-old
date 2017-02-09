@@ -3,6 +3,7 @@ package com.revature.sms.domain;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -31,7 +32,7 @@ public class Token {
 	 * User value that represents the User object that's attached to this Token object.
 	 * A single User can have multiple Token objects attached to it. 
 	 */
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="AUTH_USER", nullable=false)
 	private User user;
 	/**

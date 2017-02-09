@@ -57,7 +57,6 @@ public class TechnicalSkills {
 	 */
 	public TechnicalSkills() {
 		super();
-		//this.users = new ArrayList<User>();
 	}
 
 	/**
