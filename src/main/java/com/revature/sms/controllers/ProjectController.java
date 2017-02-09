@@ -105,18 +105,28 @@ public class ProjectController {
 			if (isValid(token)) {
 	
 				for (Project p : projects) {
+					try{
 					pur.deleteByProject(p);
+					}catch(Exception e){
+						//donothing
+					}
 				}
-				pr.delete(projects);
+				
+				for (Project p : projects) {
+					try{
+					pr.delete(p);
+					}catch(Exception e){
+						//donothing
+					}
+				}
+				
 				return new ResponseEntity<bc>(new bc(true), HttpStatus.OK);
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"), HttpStatus.UNAUTHORIZED);
 			}
-		} catch (org.hibernate.TransientObjectException toe){  
-			Logger.getRootLogger().debug("Exception while removing Project.", toe);
-			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("Something happened but it still worked."), HttpStatus.I_AM_A_TEAPOT);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			Logger.getRootLogger().debug("Exception while removing Project.", e);
 			return new ResponseEntity<ResponseErrorEntity>( new ResponseErrorEntity("Exception while removing Project."), HttpStatus.SERVICE_UNAVAILABLE);
 		}
