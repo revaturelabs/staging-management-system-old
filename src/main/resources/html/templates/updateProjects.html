@@ -1,0 +1,61 @@
+<md-dialog flex="66">
+<md-toolbar>
+	<div class="md-toolbar-tools">
+		<h2>Update project</h2>
+	</div>
+</md-toolbar>
+
+	<span style="color:red;" ng-repeat="x in up.errors | orderBy : 'x.name'">{{x.msg}}</span>	
+
+<div  layout="column"  class="md-padding" layout-align="center space-around" flex="none">
+	{{up.message}}
+
+	<div layout="row">
+		<md-button ng-click="up.newProject()"><md-icon> add </md-icon></md-button>
+		<md-button ng-click="up.deleteProject()"><md-icon> delete </md-icon></md-button>
+	</div>
+	
+	<md-input-container class="InputContainer">
+		<md-select ng-model="up.selectedProject" placeholder="Select a project">
+			<md-option 	ng-value="proj" ng-repeat="proj in up.allProjects | orderBy : 'proj.name' ">{{ proj.name }}</md-option>
+		</md-select>
+	</md-input-container>
+	
+	<div layout="row" layout-align="space-between start" class="projectPopup">
+	
+		<md-input-container class="InputContainer">
+			<label>Project name</label>
+  			<input type="text" ng-model="up.selectedProject.displayName">
+		</md-input-container>
+	
+		<div>
+			<md-input-container class="InputContainer">
+				<label>Start date</label>
+	  			<md-datepicker ng-model="up.selectedProject.startDate"></md-datepicker>
+			</md-input-container>
+			
+				
+			<md-input-container class="InputContainer">
+				<label>End date</label>
+	  			<md-datepicker ng-model="up.selectedProject.endDate"></md-datepicker>
+			</md-input-container>
+		</div>
+	</div>
+	
+	<div layout="column" layout-fill>
+		
+		<md-input-container layout-fill class="InputContainer">
+			<label>Project description</label>
+  			<textarea ng-model="up.selectedProject.description" maxlength="255" rows="4" max-rows="4"></textarea>
+		</md-input-container>
+	
+		<div layout="row">
+			<div flex></div>
+			<md-button type="button" id="reset" class="md-primary"ng-click="up.reset()" layout-fill>Reset all changes</md-button>
+			<md-button type="button" id="assignSubmit" class="md-primary"ng-click="up.assignSubmit()" layout-fill>Submit all changes</md-button>
+			<md-button type="button" id="cancel" class="md-primary"ng-click="up.close()" layout-fill>Cancel</md-button>
+		</div>
+	</div>
+		
+</div>	
+</md-dialog>

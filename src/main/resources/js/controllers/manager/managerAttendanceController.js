@@ -48,12 +48,8 @@
         mac.nextWeek = nextWeek;
         mac.toast = toast;
         mac.newAssociates = newAssociates;
-        /**@var {function} deleteAssociates function reference variable. */
-        mac.deleteAssociates = deleteAssociates;
         mac.marketingStatuses = marketingStatuses;
         mac.changeStatus = changeStatus;
-        mac.deleteSelectedUser = deleteSelectedUser;
-  
       
 
         /**@var {function} calcMarketingDays function reference variable. */
@@ -276,17 +272,6 @@
         function setToolbar() {
             var actions = [];
             if (mac.user.userRole.name == "superAdmin") {
-                $scope.$emit( "setToolbar", { 
-                    title: "Weekly attendance", 
-                    actions: [{ 
-                        "function": mac.newAssociates, 
-                        "icon"    : "add", 
-                        "tooltip" : "Add batch of new associates"},
-                			 {
-                        "function": mac.deleteAssociates,
-                        "icon"    : "transfer_within_a_station",
-                        "tooltip" : "Delete Associates" }]   
-                } );
                 actions.push( {
                     "function": mac.newAssociates,
                     "icons"   : "add",
@@ -360,37 +345,6 @@
                 mac.toast("Batch addition cancelled.");
             });
         }
-		
-		// delete associates
-		function deleteAssociates() {
-			$mdDialog.show({
-				templateUrl: "html/templates/DeleteAssociates.html",
-				controller: "deleteAssoCtrl as assoCtrl",
-				clickOutsideToClose: true,
-				escapeToClose: true 
-			}).then( function() {
-				$mdDialog.show({
-					templateUrl: "html/templates/DeleteAssociateWarning.html",
-					controller: "deleteAssoWarningCtrl as dAssoCtrl",
-					clickOutsideToClose: true,
-					escapeToClose: true 
-				}).then(function() {
-					$mdDialog.show({
-						templateUrl: "html/templates/DeleteAssociateSuccess.html",
-						controller: "deleteAssoSuccessCtrl as dAssoSCtrl",
-						locals: { "deleteAssociates": deleteAssoFactory.deleteAssociate() },
-						bindToController: true
-					}).then(function() {
-						deleteAssoFactory.resetAssociates();
-					});
-				} , function() {
-						mac.toast("Delete Associate cancelled.");
-					});
-			} , function() {
-					mac.toast("Delete Associate cancelled.");
-				});
-		}
-
 		/**
          * @description Called when a superAdmin clicks on update certification button, opens a dialog.
          */
@@ -408,7 +362,6 @@
                 clickOutsideToClose: false,
                 escapeToClose: false
             });
-
 		}
 		
 		/**
@@ -701,48 +654,5 @@
 			}
 		}
 		
-		function deleteSelectedUser(ev) {
-			if( mac.selectedUser != undefined) {
-				var confirm = $mdDialog.confirm()
-		          .title('Delete selected user?')
-		          .textContent(mac.selectedUser.firstName +' '+ mac.selectedUser.lastName+ ' will be removed.' )
-		          .ariaLabel('Lucky day')
-		          .targetEvent(ev)
-		          .ok('Please do it!')
-		          .cancel('No, thank you.');
-				
-				 $mdDialog.show(confirm).then(function() {
-				    	
-				    	//MM TODO Erase mm block use login controller to update pass, make new endpoint
-				    	// add a loading icon to show something is going on
-				    	angular.element("body").addClass("loading");
-				    	
-				    	// update the selected user
-			    		userService.remove( mac.selectedUser, function() {
-			    			
-			    			// remove the loading icon
-			    			angular.element("body").removeClass("loading");
-			    			
-			    			//prompt the user
-			    			mac.toast("User deleted.");	
-			    			mac.getUsers();
-		                    mac.users = $filter( "taskFilter" )( mac.users, mac.today );
-			    		}, function(error) {
-			    			// remove the loading icon
-			    			angular.element("body").removeClass("loading");
-			    			
-			    			//prompt the user
-			    			mac.toast("Error deleting user.");
-			    		});
-			},
-			function() {
-		    	
-		    	//prompt
-		    	mac.toast("User deletion cancelled.");
-		    });
-
-		}
-		
         
     }
-}
