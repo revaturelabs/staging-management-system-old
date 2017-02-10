@@ -1,7 +1,6 @@
 package com.revature.sms.controllers;
 
-import java.io.Console;
-import java.sql.SQLException;
+
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -36,6 +35,10 @@ public class TechSkillsController {
 
 	@Autowired
 	TokenRepo tokenRepo;
+	
+	static final String SUPERADMIN = "superAdmin";
+	static final String USERUNAUTHORIZED = "User is unauthorized";
+	static final String AUTHINVALID = "AuthToken invalid.";
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Object getAll() {
@@ -59,7 +62,7 @@ public class TechSkillsController {
 		try {
 			Token userToken = tokenRepo.findByAuthToken(token);
 			if (userToken == null) {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("AuthToken invalid."),
+				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity(AUTHINVALID),
 						HttpStatus.NOT_FOUND);
 			} else {
 				TechnicalSkills skill = attr.findBySkill(skillName);
@@ -88,9 +91,9 @@ public class TechSkillsController {
 			@RequestBody TechnicalSkillsDTO skillDTO) {
 		Token userToken = tokenRepo.findByAuthToken(token);
 		if (userToken == null) {
-			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("AuthToken invalid."),
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity(AUTHINVALID),
 					HttpStatus.NOT_FOUND);
-		} else if ("superAdmin".equalsIgnoreCase(userToken.getUser().getUserRole().getName())) {
+		} else if (SUPERADMIN.equalsIgnoreCase(userToken.getUser().getUserRole().getName())) {
 			try {
 				TechnicalSkills skill = getSkill(skillDTO);
 				skill = attr.save(skill);
@@ -107,7 +110,7 @@ public class TechSkillsController {
 			}
 		} else {
 			// if the user isn't a SuperAdmin
-			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity(USERUNAUTHORIZED),
 					HttpStatus.UNAUTHORIZED);
 		}
 
@@ -124,10 +127,10 @@ public class TechSkillsController {
 			@PathVariable String skillName){
 		Token userToken = tokenRepo.findByAuthToken(token);
 		if (userToken == null) {
-			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("AuthToken invalid."),
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity(AUTHINVALID),
 					HttpStatus.NOT_FOUND);
 		}
-		else if ("superAdmin".equalsIgnoreCase(userToken.getUser().getUserRole().getName())) {
+		else if (SUPERADMIN.equalsIgnoreCase(userToken.getUser().getUserRole().getName())) {
 			try {
 				long result = attr.deleteBySkill(skillName);
 				if (result == 0){
@@ -149,7 +152,7 @@ public class TechSkillsController {
 		}
 		else {
 			// if the user isn't a SuperAdmin
-			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity(USERUNAUTHORIZED),
 					HttpStatus.UNAUTHORIZED);
 		}
 		
@@ -162,10 +165,10 @@ public class TechSkillsController {
 		
 		Token userToken = tokenRepo.findByAuthToken(token);
 		if (userToken == null) {
-			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("AuthToken invalid."),
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity(AUTHINVALID),
 					HttpStatus.NOT_FOUND);
 		}
-		else if ("superAdmin".equalsIgnoreCase(userToken.getUser().getUserRole().getName())) {
+		else if (SUPERADMIN.equalsIgnoreCase(userToken.getUser().getUserRole().getName())) {
 			try {
 				TechnicalSkills skill = attr.findBySkill(skillName);
 				skill.setSkill(newSkillName);
@@ -173,12 +176,13 @@ public class TechSkillsController {
 				return new ResponseEntity<TechnicalSkills>(skill, HttpStatus.OK);
 				
 			}
+			catch (DataIntegrityViolationException dive){
+				Logger.getRootLogger().debug(dive.getMessage(), dive);
+				return new ResponseEntity<ResponseErrorEntity>(
+						new ResponseErrorEntity("A skill cannot be renamed to the same name as another skill."), HttpStatus.BAD_REQUEST);
+			}
 			catch (Exception e){
 				Logger.getRootLogger().debug(e.getMessage(), e);
-				if (e instanceof DataIntegrityViolationException){
-					return new ResponseEntity<ResponseErrorEntity>(
-							new ResponseErrorEntity("A skill cannot be renamed to the same name as another skill."), HttpStatus.BAD_REQUEST);
-				}
 				
 				return new ResponseEntity<ResponseErrorEntity>(
 						new ResponseErrorEntity("Problem occurred while deleting skill."), HttpStatus.BAD_REQUEST);
@@ -186,7 +190,7 @@ public class TechSkillsController {
 		}		
 		else {
 			// if the user isn't a SuperAdmin
-			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
+			return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity(USERUNAUTHORIZED),
 					HttpStatus.UNAUTHORIZED);
 		}
 	}

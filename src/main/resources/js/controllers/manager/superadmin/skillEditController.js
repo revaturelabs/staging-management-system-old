@@ -30,7 +30,7 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
          */
         const ADDSKILLDEFAULTVAL = 0;
 
-        var changesErrored = false;
+        
 
         
 
@@ -114,9 +114,9 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
          * @param {string} newSkillName The new name for the skill.
          */
         function updateSkillInDB(oldSkillName, newSkillName){
-           sec.skillPromiseList.push( skillService.update(oldSkillName, newSkillName, function(success){
+           sec.skillPromiseList.push( skillService.update(oldSkillName, newSkillName, function(){
                 //empty to make it work
-            }, function(error){
+            }, function(){
                //empty to make it work
             }));
         }
@@ -153,13 +153,11 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
                     continue;
                 }
                 var skillNameIn = sec.newSkillList.indexOf(sec.currentSkills[i].skill);
-                if (j==skillNameIn){//skill is in same spot, everything is fine
-                    continue;
-                }
-                else { // something got changed, need to edit the skill
+                if (!(j==skillNameIn)){
+                  // something got changed, need to edit the skill
                     sec.updateSkillInDB(sec.currentSkills[i].skill, sec.newSkillList[i]);
-                    continue;
                 }
+             
             }
             for (var k = 0; k<sec.skillIds.length; k++){//now we need to search through 
                 //skillIds to find any new skills.
@@ -171,10 +169,7 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
 
             }
 
-            // $q.all(sec.skillPromiseList).then(function(){
-            //     console.log("yay!");
-            //     $mdDialog.hide();
-            // });
+       
 
             $q.all(sec.skillPromiseList).then(function(){
                 sec.toast("Skill edits successful!");

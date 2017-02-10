@@ -172,6 +172,27 @@ public class User {
 		this.marketingStatus = marketingStatus;
 		this.project = project;
 	}
+	
+	// constructor for non-associate
+		/**
+		 * Constructor for User object. This constructor is meant to be used to create
+		 * users who aren't associates. Initializes the username, firsName, lastName, hashedPassword,
+		 * and userRole variables of the user object based on the supplied values.
+		 * @param username String that represents the username of the User object.
+		 * @param firstName String that represents the first name of the User object.
+		 * @param lastName String that represents the last name of the User object.
+		 * @param hashedPassword String that represents the hashedPassword of the User object.
+		 * @param userRole UserRole object that keeps track of the user's specific role.
+		 */
+		public User(String username, String firstName, String lastName, String hashedPassword, UserRole userRole) {
+			super();
+			this.username = username;
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.hashedPassword = hashedPassword;
+			this.userRole = userRole;
+		}
+		
 	public List<ProjectUser> getProject() {
 		return project;
 	} 
@@ -180,25 +201,7 @@ public class User {
 		this.project = project;
 	}
 
-	// constructor for non-associate
-	/**
-	 * Constructor for User object. This constructor is meant to be used to create
-	 * users who aren't associates. Initializes the username, firsName, lastName, hashedPassword,
-	 * and userRole variables of the user object based on the supplied values.
-	 * @param username String that represents the username of the User object.
-	 * @param firstName String that represents the first name of the User object.
-	 * @param lastName String that represents the last name of the User object.
-	 * @param hashedPassword String that represents the hashedPassword of the User object.
-	 * @param userRole UserRole object that keeps track of the user's specific role.
-	 */
-	public User(String username, String firstName, String lastName, String hashedPassword, UserRole userRole) {
-		super();
-		this.username = username;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.hashedPassword = hashedPassword;
-		this.userRole = userRole;
-	}
+	
 	
 	/**
 	 * Method to retrieve the ID value of the User object.
@@ -365,7 +368,7 @@ public class User {
 			this.events.addAll(events);
 		}
 		else  {
-			this.events = new ArrayList<JobEvent>();
+			this.events = new ArrayList<>();
 		}
 	}
 
