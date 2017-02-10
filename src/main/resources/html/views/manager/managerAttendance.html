@@ -11,6 +11,19 @@
                     <md-card-title>
                         <md-card-title-text>
                             <span class="md-headline">
+
+                            
+                            <!-- button to reset users password -->
+                        <md-button ng-click="manAttCtrl.resetSelectedUsersJob($event)" class="md-icon-button" aria-label="Open sample menu">
+										
+									<!-- description of button -->
+                            		<md-tooltip> Reset user's password </md-tooltip>
+										
+										<!-- icon to display on the button -->
+										<md-icon style="color:#59E2A8;">settings_backup_restore</md-icon>
+										
+									</md-button>
+
                                 {{ manAttCtrl.selectedUser.firstName }} {{ manAttCtrl.selectedUser.lastName }} - 
                                 ({{ manAttCtrl.selectedUser.batchType.type}} {{ manAttCtrl.selectedUser.graduationDate | date:"MM/dd"}})
                             </span>
@@ -65,9 +78,80 @@
                             </p>
                     </md-card-content>
                 </md-card>
+                <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
                 <md-card md-whiteframe="8dp" class="skillCard">
                     <md-card-title>
                         <md-card-title-text>
+
+                            <span class="md-headline">Events
+                            
+                            <!-- add a delete button when a job is selected -->
+                            <md-button ng-click ="manAttCtrl.makenewjob()">
+                            		<!-- description of button -->
+                            		<md-tooltip> Add job event </md-tooltip>
+                            <!-- show the delete if there is a selected job being displayed -->
+                            	<md-icon ng-style="{color: 'lightgrey'}" class="material-icons step md-material-icon page-icon" ng-class="md-48">library_add</md-icon>                          	
+                            	</md-button>
+                            
+                            <!-- add a delete button when a job is selected -->
+                            <md-button ng-if="manAttCtrl.selectedjob != null" ng-click ="manAttCtrl.deleteSelectedJob()">
+                            		<!-- description of button -->
+                            		<md-tooltip> Delete selected job </md-tooltip>
+                            <!-- show the delete if there is a selected job being displayed -->
+                            	<md-icon ng-style="{color: 'lightpink'}" class="material-icons step md-material-icon page-icon" ng-class="md-48">delete_forever</md-icon>                          	
+                            	</md-button>
+                            </span>
+                            
+                            
+                            
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                    	<!-- if the user has No events display this text -->
+                        <span ng-hide="manAttCtrl.selectedUser.events[0].date">There is no data to display</span>
+                        
+                        <!-- if the user has events display this div -->
+                        <div ng-show="manAttCtrl.selectedUser.events[0].date">
+                        
+                        <!-- for each of the users selected events list and order it by date -->
+                            <div ng-repeat="event in manAttCtrl.selectedUser.events | orderBy:'-date'" class="certList">
+                            	
+                            	<md-button ng-click ="manAttCtrl.showFullJobInfo(event)">
+                            	
+                            		<!-- description of button -->
+                            		<md-tooltip> More info </md-tooltip>
+                            	
+                            	<!-- text to display in button -->
+                            	{{manAttCtrl.convertToDateObject(event.date)}} |
+                            	{{event.type.type}}
+                            	
+                            	<!-- show the eject icon to notify user there is more info to  be displayed -->
+                            	<md-icon ng-if="manAttCtrl.selectedjob != event" ng-style="{color: 'lightgrey'}" class="material-icons step md-material-icon page-icon" ng-class="md-48">eject</md-icon>                          	
+                            	</md-button>
+                    	
+                            	<!-- show this div if we have selected to see more info on this particular job -->
+                            	<div ng-if="manAttCtrl.selectedjob == event">
+                            	<ul>
+                            	<li>Company name: {{event.assignment.companyName}}</li>
+                            	<li>Type: {{event.type.type}}</li>
+                            	<li>Event location: {{event.location}}</li> 
+                            	<li>Assignment location: {{event.assignment.location}}</li>
+                            	<li>Job title: {{event.assignment.jobTitle}}</li>
+                            	<li>Note: {{event.note}}</li>
+                            	</ul>
+                            	</div>
+                            	
+                            	<!-- horizontal line -->
+                            	<hr>
+                            </div>
+                        </div>
+                    </md-card-content>
+                </md-card>
+                <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
+                <md-card md-whiteframe="8dp" class="skillCard">
+                    <md-card-title>
+                        <md-card-title-text>
+
                             <span class="md-headline">Skills</span>
                         </md-card-title-text>
                     </md-card-title>

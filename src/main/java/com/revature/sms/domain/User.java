@@ -1,6 +1,10 @@
 package com.revature.sms.domain;
 
+
 import java.security.MessageDigest; 
+
+
+
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -126,9 +130,15 @@ public class User {
 	/**
 	 * Trainer object that keeps track of the user's trainer
 	 */
+
 	@ManyToOne
 	@JoinColumn(name = "trainer")
 	private Trainer trainer;
+
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="ASSOCIATE")
+	private List<ProjectUser> project;
+
 	
 	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
@@ -355,7 +365,13 @@ public class User {
 	 * the User object.
 	 */
 	public void setEvents(List<JobEvent> events) {
-		this.events = events;
+		if (this.events != null) {
+			this.events.clear();
+			this.events.addAll(events);
+		}
+		else  {
+			this.events = new ArrayList<JobEvent>();
+		}
 	}
 
 	/**
