@@ -12,6 +12,7 @@ import com.revature.sms.domain.JobEvent;
 import com.revature.sms.domain.MarketingStatus;
 import com.revature.sms.domain.ProjectUser;
 import com.revature.sms.domain.TechnicalSkills;
+import com.revature.sms.domain.Trainer;
 import com.revature.sms.domain.UserRole;
 
 public class UserDTO {
@@ -31,6 +32,7 @@ public class UserDTO {
 	private MarketingStatus marketingStatus;
 	private Set<TechnicalSkills> skill;
 	private List<ProjectUser> project;
+	private Trainer trainer;
 	
 	public UserDTO() {
 		super();
@@ -58,6 +60,8 @@ public class UserDTO {
 		this.tasks = tasks;
 		this.events = events;
 	}
+	
+
 	
 	public UserDTO(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			UserRole userRole, Timestamp graduationDate, List<AssociateTask> tasks, 
@@ -90,6 +94,23 @@ public class UserDTO {
 		this.marketingStatus = marketingStatus;
 		this.skill = skill;
 		this.project = project;
+	}
+	
+	public UserDTO(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
+			UserRole userRole, Timestamp graduationDate, List<AssociateTask> tasks, 
+			Set<TechnicalSkills> skill, MarketingStatus marketingStatus, Trainer trainer) {
+		super();
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.hashedPassword = hashedPassword;
+		this.batchType = batchType;
+		this.userRole = userRole;
+		this.graduationDate = graduationDate;
+		this.tasks = tasks;
+		this.marketingStatus = marketingStatus;
+		this.skill = skill;
+		this.trainer = trainer;
 	}
 
 	public List<ProjectUser> getProject() {
@@ -208,6 +229,14 @@ public class UserDTO {
 
 	public void setSkill(Set<TechnicalSkills> skill) {
 		this.skill = skill;
+	}
+	
+	public Trainer getTrainer() {
+		return trainer;
+	}
+
+	public void setTrainer(Trainer trainer) {
+		this.trainer = trainer;
 	}
 
 }
