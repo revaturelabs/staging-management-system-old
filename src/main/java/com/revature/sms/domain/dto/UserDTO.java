@@ -10,7 +10,6 @@ import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.JobEvent;
 import com.revature.sms.domain.MarketingStatus;
-import com.revature.sms.domain.Project;
 import com.revature.sms.domain.ProjectUser;
 import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.UserRole;
