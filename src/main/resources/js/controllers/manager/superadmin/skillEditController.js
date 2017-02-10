@@ -150,12 +150,13 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
                 if (j==-1){ // skill was marked for deletion in the view
                    
                     sec.removeSkillFromDB(sec.currentSkills[i].skill);
-                    continue;
                 }
+                
                 var skillNameIn = sec.newSkillList.indexOf(sec.currentSkills[i].skill);
                 if (!(j==skillNameIn)){
                   // something got changed, need to edit the skill
-                    sec.updateSkillInDB(sec.currentSkills[i].skill, sec.newSkillList[i]);
+                    
+                    sec.updateSkillInDB(sec.currentSkills[i].skill, sec.newSkillList[j]);
                 }
              
             }
