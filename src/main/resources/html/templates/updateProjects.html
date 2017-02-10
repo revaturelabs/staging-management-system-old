@@ -25,7 +25,6 @@
 		</md-select>
 	</md-input-container>
 	
-	
 		<md-input-container class="InputContainer" layout-fill>
 			<label>Project name</label>
   			<input type="text" ng-model="up.selectedProject.displayName">
@@ -43,7 +42,6 @@
 			</md-input-container>
 		</div>
 	
-		
 		<md-input-container layout-fill class="InputContainer">
 			<label>Project description</label>
   			<textarea ng-model="up.selectedProject.description" maxlength="255" rows="4" max-rows="4"></textarea>
@@ -54,6 +52,5 @@
 			<md-button type="button" id="assignSubmit" class="md-primary"ng-click="up.assignSubmit()">Submit</md-button>
 			<md-button type="button" id="cancel" class="md-primary"ng-click="up.close()">Cancel</md-button>
 		</div>
-		
 </div>	
 </md-dialog>
