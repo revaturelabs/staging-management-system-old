@@ -703,7 +703,6 @@
 		}
 		
 		function deleteSelectedUser(ev) {
-			console.log("in function");
 			if( mac.selectedUser != undefined) {
 				var confirm = $mdDialog.confirm()
 		          .title('Delete selected user?')
