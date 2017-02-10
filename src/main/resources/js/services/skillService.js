@@ -1,13 +1,19 @@
-    
-    angular
+ angular
         .module( "sms" )
         .service( "skillService", skillService );
         
-    function skillService( $resource ) {
+    function skillService( $resource,loginService ) {
         var skillResource = $resource("/api/v1/TechSkills");
-        var ss = this;
+        var ssr = this;
 
-        ss.getAll = function(success,error){
+//        ssr.skillResource = $resource("api/v1/TechSkills/", 
+//        		{},
+//                { 
+//                    get   : { headers: { "Content-Type": "application/json"} }
+//                } 
+//            )
+//            
+        ssr.getAll = function(success,error){
         	skillResource.query(success,error);
         }
     }
