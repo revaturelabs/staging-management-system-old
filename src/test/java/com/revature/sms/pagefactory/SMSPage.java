@@ -89,7 +89,7 @@ public abstract class SMSPage {
 	//notifications are laid out in a similar way.
 	public String getToastMessage() {
 		try {
-			//Utils.attemptWait();
+			Utils.attemptWait(500);
 			WebElement toast = driver.findElement(By.tagName("md-toast"));
 			String text = toast.getText();
 			text = text.trim();
