@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.transaction.Transactional;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,11 +70,11 @@ public class UserController {
 	public @ResponseBody Object createUser(@RequestHeader(value = "Authorization") String token,
 			@RequestBody UserDTO userDTO) {
 
-		
+		// System.out.println("UserDTO username: " + userDTO.getUsername());
 		try {
 			// validate token and create user
 			if (isValid(token) && isSuperAdmin(role)) {
-				
+
 				User user = getUser(userDTO);
 				user = userRepo.save(user);
 				user.blankPassword();
@@ -119,7 +117,6 @@ public class UserController {
 		try {
 			// validate token and update user info
 			if (isValid(token)) {
-				
 				User oldUser = (User) updateValidation(userDTO);
 				User newUser = userRepo.save(oldUser);
 				newUser.blankPassword();
@@ -130,7 +127,6 @@ public class UserController {
 						HttpStatus.UNAUTHORIZED);
 			}
 		} catch (Exception e) {
-			
 			Logger.getRootLogger().debug("Exception while updating user info", e);
 			return new ResponseEntity<ResponseErrorEntity>(
 					new ResponseErrorEntity("Problem occurred while updating user info."), HttpStatus.NOT_FOUND);
@@ -227,23 +223,15 @@ public class UserController {
 	 *         retrieving the users
 	 */
 	@RequestMapping(value = "/{username}", method = {
-			RequestMethod.DELETE, }, produces = MediaType.APPLICATION_JSON_VALUE)
+			RequestMethod.DELETE, }, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Object deleteUser(@RequestHeader(value = "Authorization") String token,
 			@PathVariable String username) {
 
 		try {
 			// validate token and delete associate
 			if (isValid(token) && isSuperAdmin(role)) {
-				
-				//delete tokens
-				List<Token> tokens = tokenRepo.findAll();
-				for (int i = 0; i < tokens.size(); i++) {
-					if (tokens.get(i).getUser().getUsername().equals(username)) {
-						tokenRepo.delete(tokens.get(i));
-					}
-				}
-				userRepo.deleteByUsername(username);
-				return new ResponseEntity<User>(new User(), HttpStatus.OK);
+				long result = userRepo.deleteByUsername(username);
+				return new ResponseEntity<Long>(result, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
 						HttpStatus.UNAUTHORIZED);
@@ -337,6 +325,7 @@ public class UserController {
 		}
 		if (userDTO.getGraduationDate() != null) {
 			user.setGraduationDate(userDTO.getGraduationDate());
+
 		}
 		if(userDTO.getTrainer() != null){
 			user.setTrainer(userDTO.getTrainer());
@@ -347,19 +336,11 @@ public class UserController {
 		if (userDTO.getTasks() != null){
 			user.setTasks(userDTO.getTasks());
 		}
-		if(userDTO.getProject() != null){
-			user.setProject(userDTO.getProject());
-
-		}
-		if (userDTO.getEvents() != null){
-			
-			user.setEvents(userDTO.getEvents());
-		}
 		if (userDTO.getSkill() != null){
 			//remove deleted skills
 			boolean found;
 			Set<TechnicalSkills> list = userDTO.getSkill();
-			list.size();
+			System.out.println(list.size());
 			for(TechnicalSkills ts: user.getSkill()){
 				if(!list.contains(ts.getID())){
 					userDTO.getSkill().remove(ts);

@@ -75,7 +75,6 @@ bac.trainer = "";
                 addUser.username = addUser.firstName[0].toLowerCase() + addUser.lastName.toLowerCase();
                 addUser.trainer = bac.trainer;
                 addUser.userRole = userRole;
-               
             }    
             addUser.hashedPassword = CryptoJS.SHA1(addUser.username).toString();
             

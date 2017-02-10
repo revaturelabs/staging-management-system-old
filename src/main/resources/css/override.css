@@ -20,9 +20,7 @@
 		background: #E8EAF6;
 	}
 	
-	.projectPopup {
-		padding: 0px;
-	}	
+	
 	/* search bar css */
 	#search input[type="text"] {
 		background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
@@ -232,18 +230,4 @@
 
     .highlightSelected {
         background-color: #9fa8da;
-    } 
-
-    /* Associate view info panels */
-    .expansionPanelList md-list-item {
-        height: 36px;
-        min-height: 36px;
-    }
-
-    .expansionPanelList p {
-        text-align: right;
-    }
-    
-    .loading {
-    	cursor: wait; 
     }

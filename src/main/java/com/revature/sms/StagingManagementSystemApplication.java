@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class StagingManagementSystemApplication {
-	/** 
+	/**
 	 * Main method for Spring Boot application.
 	 * 
 	 * @param args
