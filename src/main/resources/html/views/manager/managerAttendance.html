@@ -2,101 +2,79 @@
 	<div layout="row" id="associateTableViewDiv" ng-show="manAttCtrl.associateTableIsOpen">
 		<md-card id="associateTableViewCard" class="md-padding" layout="column">
 			<md-table-container id="associateTableViewTableContainer">
-				<table md-table>
+				<table md-table class="associateInformationTable">
                  
-					<thead md-head>
+					<thead md-head md-order="associateOrderAttribute">
 						<tr md-row>
-							<th md-column>
-								<h3>Last Name</h3>
+							<th md-cell md-column md-order-by="firstName">
+								<h3>Name</h3>
 							</th>
-							<th md-column>
-								<h3>First Name</h3>
-							</th>
-							<th md-column>
+							<th md-cell md-column md-order-by="batchType.type">
 								<h3>Technologies</h3>
 							</th>
-							<th md-column>
+							<th md-cell md-column md-order-by="trainer">
 								<h3>Trainer</h3>
 							</th>
-							<th md-column>
-								<h3>Marketing Start Date</h3>
+							<th md-cell md-column md-order-by="graduationDate">
+								<h3>Marketing start date</h3>
 							</th>
-							<th md-column>
-								<h3>Days on Market</h3>
+							<th md-cell md-column md-order-by="graduationDate">
+								<h3>Days on market</h3>
 							</th>
-							<th md-column>
-								<h3>Current Status</h3>
+							<th md-cell md-column md-order-by="marketingStatus.name">
+								<h3>Current status</h3>
 							</th>
-							<th md-column>
-								<h3>Panel Status</h3>
+							<th md-cell md-column md-order-by="panels[0].passed">
+								<h3>Panel status</h3>
 							</th>
-							<th md-column>
+							<th md-cell md-column md-order-by="activeProject.name">
 								<h3>Project</h3>
 							</th>
-							<th md-column>
-								<h3>Primary Certification</h3>
+							<th md-cell md-column md-order-by="certs[0].note">
+								<h3>Primary certification</h3>
 							</th>
 							
 						</tr>
 					</thead>
 					<tbody>
-						<tr md-row ng-repeat="user in manAttCtrl.users | orderBy:manAttCtrl.tableOrder" ng-class="{highlightSelected: manAttCtrl.selectedUser == user}">
-							<td>
-								{{ user.lastName }}
+						<tr md-row ng-repeat="user in manAttCtrl.users | orderBy:associateOrderAttribute" ng-class="{highlightSelected: manAttCtrl.selectedUser == user}">
+							<td md-cell>
+								{{ user.firstName }} {{ user.lastName }}
 							</td>
-							<td>
-								{{ user.firstName }}
-							</td>
-							<td>
+							<td md-cell>
 								{{ user.batchType.type }}
 							</td>
-							<td>
+							<td md-cell>
 								{{ user.trainer }}
 							</td>
-							<td>
-								{{ user.graduationDate | date:"MM/dd"}}
+							<td md-cell>
+								{{ user.graduationDate | date:"MMMM d, yyyy"}}
 							</td>
-							<td>
-                                {{ manAttCtrl.calcMarketingDays() }}
+							<td md-cell>
+                                {{ manAttCtrl.calcMarketingDaysForAllUsers(user) }}
 							</td>
-							<td>
-								current status
+							<td md-cell>
+								{{ user.marketingStatus.name}}
 							</td>
-							<td>
-								<md-menu ng-show="user.panels[0]">
-									<!-- Trigger element is a md-button with an icon -->
-									<md-button class="md-icon-button" aria-label="Open sample menu" ngDisabled="true">
-										<md-icon ng-show="user.panels[0].passed == true" style="color:#59E2A8;">check_circle</md-icon>
-										<md-icon ng-show="user.panels[0].passed == false" style="color:#A00;">not_interested</md-icon>
-									</md-button>
-									<md-menu-content>
-										<md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(user, user.panels[0], true)"><md-icon>check_circle</md-icon> Passed</md-button></md-menu-item>
-										<md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(user, user.panels[0], false)"><md-icon>not_interested</md-icon> Not Passed</md-button></md-menu-item>
-									</md-menu-content>
-								</md-menu>
-                                <span ng-show="user.panels[0].passed == false">Date:
+							<td md-cell>
+								<md-icon ng-show="user.panels[0].passed == true" style="color:#59E2A8;">check_circle</md-icon>
+								<md-icon ng-show="user.panels[0].passed == false" style="color:#A00;">not_interested</md-icon>
+                                <span ng-show="user.panels[0].passed == false">
                                 	 <span ng-show="user.panels[0]">{{ user.panels[0].dateDisplay }}</span>
                                 	 <span ng-hide="user.panels[0].dateDisplay">No date selected</span>
                                	</span>
-                               	<md-card md-whiteframe="6dp" style="max-width:30vh;" ng-show="manAttCtrl.panelDatePickerIsOpen">
-	                               	<md-datepicker ng-model="manAttCtrl.panelDate" md-placeholder="Enter date" ng-change="manAttCtrl.updatePanelDate(user, user.panels[0])"></md-datepicker>
-	                            </md-card>
-	                             <span ng-hide="user.panels[0]"><md-icon ng-click="manAttCtrl.createPanel(user)" style="color:white !important;cursor: pointer;">note_add</md-icon></span>
 							</td>
-							<td>
-							 	<div ng-show="user.activeProject" ng-click="manAttCtrl.assignProject(user, user.activeProject)">{{ user.activeProject.name }}</div>
-	                        	<div ng-hide="user.activeProject" ng-click="manAttCtrl.assignProject(user, user.activeProject)">No project</div>
+							<td md-cell>
+							 	<div ng-show="user.activeProject">{{ user.activeProject.name }}</div>
+	                        	<div ng-hide="user.activeProject">No project</div>
 							</td>
-							<td>
+							<td md-cell>
                        			<div ng-show="user.certs[0].date">
-                            	<div ng-repeat="cert in user.certs | orderBy:'-date'" class="certList" ng-click="manAttCtrl.updateCert(cert,user)">
-                            	<md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48">{{ cert.icon.name }}</md-icon>
-                            	{{ cert.dateDisplay }} |
-                            	{{cert.note}}
+                            		<div ng-repeat="cert in user.certs | orderBy:'-date'" class="certList">
+                            			{{ cert.dateDisplay }} | {{cert.note}}
                             	
-                            	<hr>
-                            </div>
-                        </div>
+                            		</div>
+                        		</div>
 							</td>
 						</tr>
 					</tbody>
@@ -398,8 +376,6 @@
     </div>
 
     <style type="text/css">
-    
-    	/* -------------------- start of new css ------------------- */
     	#associateTableViewDiv{
     		width: 100%;
     	}
@@ -410,8 +386,12 @@
     		width: 100%;
     	}
     	
-    	/* -------------------- end of new css ------------------- */
-    	
+    	tr:hover{
+  			background:lightgray;
+    	}
+    	.associateInformationTable tr{
+    		height:36px;
+    	}
     	
         .showInformationDiv{
             width:33%;

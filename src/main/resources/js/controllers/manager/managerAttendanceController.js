@@ -32,8 +32,11 @@
         mac.panelDate = new Date();
         /**@prop {boolean} associateTableIsOpen Variable that tells if the associate table view is open. */
         $scope.associateTableIsOpen = false;
-        mac.markBind = "";
+        /**@prop {String} tableOrder variable for sorting the associateTable. Set to sort by last name by default*/
+        mac.tableOrderAttribute = "";
+        mac.reverseOrder = false;
         
+        mac.markBind = "";
         
         
         
@@ -51,11 +54,12 @@
         mac.toast = toast;
         mac.newAssociates = newAssociates;
         mac.marketingStatuses = marketingStatuses;
-        mac.changeStatus = changeStatus;
-      
+        mac.changeStatus = changeStatus;      
 
         /**@var {function} calcMarketingDays function reference variable. */
         mac.calcMarketingDays = calcMarketingDays;
+        /**@var {function} calcMarketingDaysForAllUsers function reference variable*/
+        mac.calcMarketingDaysForAllUsers = calcMarketingDaysForAllUsers;
         /**@var {function} days_between function reference variable. */
         mac.days_between = days_between;
         /**@var {function} editCert function reference variable. */
@@ -90,7 +94,6 @@
         mac.getTaskTypes();
         mac.setToolbar("Weekly attendance");
         mac.marketingStatuses();
-  
         
         // function
         /**
@@ -514,6 +517,20 @@
         }
         
         /**
+         * @description calcMarketingDays function, adapted for iterating over all users. Takes in a user as a parameter
+         * @returns {number} number of days between the grad date and today
+         */
+        function calcMarketingDaysForAllUsers(user){
+	        if(user.graduationDate == null){
+	        	return "N/A";
+	        }
+	        else{
+	       		return " " + mac.days_between(mac.curr, ((new Date(user.graduationDate)))) + " days";	
+	       	}
+        }
+        
+        
+        /**
          * @description Determines the difference betwen the two supplied dates.
          * @param {date} date1 First supplied date.
          * @param {date} date2 Second supplied date.
@@ -654,15 +671,6 @@
 				//<<<<<<<<<<<
 			}
 		}
-		
-		/**
-		 * 
-		 * 
-		 */
-        function orderAssociateTable(associateAttribute){
-        	mac.tableOrder = associateAttribute;
-      
-        }
 		
 		$scope.$on( "setView", function( events, data ) {
             mac.associateTableIsOpen = data.associateTableIsOpen;
