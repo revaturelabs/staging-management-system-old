@@ -355,7 +355,11 @@ public class User {
 	 * the User object.
 	 */
 	public void setEvents(List<JobEvent> events) {
-		this.events = events;
+		if(this.events != null){
+			this.events.clear();
+			this.events.addAll(events);
+		}
+		this.events = new ArrayList<JobEvent>();
 	}
 
 	/**
