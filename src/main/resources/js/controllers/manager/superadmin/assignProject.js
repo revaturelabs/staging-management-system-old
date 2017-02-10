@@ -83,20 +83,20 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 		}
 		
 		//remove user from current project
-		else if("No Project" == apc.project.name){
-			// remove current project
-			for(var i = 0; i < apc.user.project.length;i++){
-				if(apc.user.project[i].project.name == apc.currentProject.name){
-					
-					apc.user.activeProject = undefined;
-					apc.user.project.splice(i,1);
-					//save User
-					userService.update(apc.user);
-					break;
-				}
-			}
-		}
-		
+		 		else if("No Project" == apc.project.name){
+		 			// remove current project
+		 			for(var i = 0; i < apc.user.project.length;i++){
+		 				if(apc.user.project[i].project.name == apc.currentProject.name){
+		 					
+		 					apc.user.activeProject = undefined;
+		 					apc.user.project.splice(i,1);
+		 					console.log(apc.user);
+		 					//save User
+		 					userService.update(apc.user,function(){});
+		 					break;
+		 				}
+		 			}
+		 		}
 		//user does not have a current project a project was selected
 		else if(!apc.currentProject && apc.project){
 			//create new projectUser object entry with new project
