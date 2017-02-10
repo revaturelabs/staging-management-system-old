@@ -1,5 +1,5 @@
 
-    angular
+ angular
         .module( "sms" )
         .controller( "associateViewUserInfoCtrl", associateViewUserInfoCtrl );
 
