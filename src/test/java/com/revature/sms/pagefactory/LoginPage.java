@@ -40,7 +40,6 @@ public class LoginPage extends SMSPage {
 		unField.sendKeys(username);
 		pwField.sendKeys(password);
 		submit.click();
-		Assert.assertEquals(expected.getProperty("loginSuccess"), getToastMessage());
 	}
 	
 	

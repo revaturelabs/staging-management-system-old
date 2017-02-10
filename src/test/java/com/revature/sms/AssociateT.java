@@ -76,6 +76,7 @@ public class AssociateT extends AbstractT {
 	//Asserts that the date displayed under the calendar is the same as the one displayed below the word Monday.
 	@Test
 	public void testWeekFooter()  {
+		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
 		String monday = asp.attendanceCells.get(0).getText();
 		if (monday.contains("/0")) {
 			monday = monday.replace("0", "");
@@ -97,6 +98,7 @@ public class AssociateT extends AbstractT {
 	@Test
 	public void testCheckInCheckOut() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
+		Utils.attemptWait(5000);
 		String checked = expected.getProperty("checkedIn");
 		String notChecked = expected.getProperty("notCheckedIn");
 		String icon = asp.checkincheckout.getText();

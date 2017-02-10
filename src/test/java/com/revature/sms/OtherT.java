@@ -10,7 +10,6 @@ import com.revature.sms.util.Utils;
 //This class tests features of the website that are not associated with a specific type of home page.
 public class OtherT extends AbstractT {
 
-	
 	//This test changes the password of a user, logs out, logs in with the new password, and changes the password
 	//back to the original password. Throughout this proccess, the test also asserts that all of the expected pages 
 	//and toast notifications are loaded appropriately.

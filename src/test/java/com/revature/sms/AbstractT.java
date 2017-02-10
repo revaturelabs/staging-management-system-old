@@ -37,7 +37,7 @@ import com.revature.sms.util.EventListener;
 @RunWith(SpringInstanceTestClassRunner.class)
 @SpringBootTest
 public abstract class AbstractT implements InstanceTestClassListener {
-	protected final static String browser = "Firefox";
+	protected final static String browser = "Chrome";
 	protected final static String inputsPath = "src/test/resources/PropertiesFiles/inputs.properties";
 	protected final static String expectedPath = "src/test/resources/PropertiesFiles/expected.properties";
 
