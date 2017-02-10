@@ -50,6 +50,13 @@
                             </md-select>
                         </md-input-container>
                         
+                         <md-input-container flex>
+                             <label> Trainer </label>			
+						<md-select  ng-model="bACtrl.trainer" required>
+								<md-option ng-repeat="x in bACtrl.trainers | orderBy: 'firstName'" ng-value="x">{{ x.firstName}}  {{x.lastName}}</md-option>
+					 		</md-select>
+						</md-input-container>
+						
                         <md-input-container flex>
                             <label>Enter date</label>
                             <md-datepicker ng-model="bACtrl.selectedDate" name="dateField" md-hide-icons="calendar" md-date-filter="bACtrl.onlyFridays" required> </md-datepicker>
