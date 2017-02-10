@@ -19,32 +19,30 @@
 
 <div  layout="column"  class="md-padding" layout-align="start start" flex="none">
 	{{up.message}}
-
-	<md-input-container class="InputContainer">
+	<md-input-container class="InputContainer" style = "width:100%;">
 		<md-select ng-model="up.selectedProject" placeholder="Select a project">
 			<md-option 	ng-value="proj" ng-repeat="proj in up.allProjects | orderBy : 'proj.name' ">{{ proj.name }}</md-option>
 		</md-select>
 	</md-input-container>
 	
 	
-		<md-input-container class="InputContainer">
+		<md-input-container class="InputContainer" layout-fill>
 			<label>Project name</label>
   			<input type="text" ng-model="up.selectedProject.displayName">
 		</md-input-container>
 	
 		<div layout="row" layout-align="space-between start" >
-			<md-input-container class="InputContainer">
+			<md-input-container class="InputContainer" layout-fill>
 				<label>Start date</label>
 	  			<md-datepicker ng-model="up.selectedProject.startDate" md-hide-icons="calendar"></md-datepicker>
 			</md-input-container>
-			
-			<md-input-container class="InputContainer">
+&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp		
+			<md-input-container class="InputContainer" layout-fill>
 				<label>End date</label>
 	  			<md-datepicker ng-model="up.selectedProject.endDate" md-hide-icons="calendar"></md-datepicker>
 			</md-input-container>
 		</div>
 	
-	<div layout="column" layout-fill>
 		
 		<md-input-container layout-fill class="InputContainer">
 			<label>Project description</label>
@@ -53,10 +51,9 @@
 	
 		<div layout="row" layout-align="end start">
 			<div flex></div>
-			<md-button type="button" id="assignSubmit" class="md-primary"ng-click="up.assignSubmit()" layout-fill>Submit</md-button>
-			<md-button type="button" id="cancel" class="md-primary"ng-click="up.close()" layout-fill>Cancel</md-button>
+			<md-button type="button" id="assignSubmit" class="md-primary"ng-click="up.assignSubmit()">Submit</md-button>
+			<md-button type="button" id="cancel" class="md-primary"ng-click="up.close()">Cancel</md-button>
 		</div>
-	</div>
 		
 </div>	
 </md-dialog>
