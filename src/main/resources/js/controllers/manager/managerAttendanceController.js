@@ -6,7 +6,7 @@
       * @description AngularJs controller for Manager attendance module (both versions of Admins)
       */   
 
-    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, taskTypeService, marketingStatusService, batchAddFactory, weekdays ) {
+    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, skillEditFactory, taskTypeService, marketingStatusService, batchAddFactory, weekdays ) {
        /**@prop {function} Reference variable for this controller */
         var mac = this;
 
@@ -54,15 +54,19 @@
         mac.toast = toast;
         mac.newAssociates = newAssociates;
         mac.marketingStatuses = marketingStatuses;
-        mac.changeStatus = changeStatus;      
+        mac.changeStatus = changeStatus;
+        mac.updateProjects = updateProjects;
+        mac.deleteSelectedUser = deleteSelectedUser;
+
+
 
         /**@var {function} calcMarketingDays function reference variable. */
+
         mac.calcMarketingDays = calcMarketingDays;
         /**@var {function} calcMarketingDaysForAllUsers function reference variable*/
         mac.calcMarketingDaysForAllUsers = calcMarketingDaysForAllUsers;
         /**@var {function} days_between function reference variable. */
         mac.days_between = days_between;
-        /**@var {function} editCert function reference variable. */
         mac.updateCert = updateCert;
         /**@var {function} convert to date object. */
         mac.convertToDateObject = convertToDateObject;
@@ -82,12 +86,19 @@
         
         mac.showFullJobInfo = showFullJobInfo;
 
+
+        mac.editSkills = editSkills;
+
+
+
         mac.deleteSelectedJob = deleteSelectedJob;
         
         mac.makenewjob = makenewjob;
         
+
         mac.resetSelectedUsersJob = resetSelectedUsersJob;
         
+
           // initialization
         mac.findDevice();
         mac.getUsers();
@@ -277,18 +288,43 @@
             var actions = [];
             var thisTitle = s;
             if (mac.user.userRole.name == "superAdmin") {
+
+
                 actions.push( {
                     "function": mac.newAssociates,
-                    "icons"   : "add",
+                    "icon"   : "add",
                     "tooltip" : "Add batch of new associates."
-                })
+                });
+
+                actions.push( {
+                    "function": mac.editSkills, 
+                    "icon"    : "assessment", 
+                    "tooltip" : "Edit available skills"
+                });
+                
+                actions.push({
+                	"function": mac.updateProjects,
+                    "icon"   : "work",
+                    "tooltip" : "Create or update an existing project."
+
+                });
+
+                // actions.push({
+                    	 
+                //         "function": mac.deleteAssociates,
+                //         "icon"    : "transfer_within_a_station",
+                //         "tooltip" : "Delete Associates" 
+                // });
+
             }
+
 
             $scope.$emit( "setToolbar", { 
                 title: thisTitle, 
                 actions }
             );
         }
+
             
             /**
              * @description Changes display to the previous week, unless the current week displayed
@@ -480,6 +516,18 @@
 		}
 		
 
+        //Function for adding skills, document properly after it's fully created.
+        function editSkills(){
+
+            $mdDialog.show({
+                templateUrl: "html/templates/skillsEdit.html",
+                controller: "skillEditCtrl as sECtrl",
+                clickOutsideToClose: true,
+                escapeToClose: true
+             });
+            
+        }
+        
             // adds a leading zero to input if necessary
         function padZero( input ) {
             if (input < 10) {
@@ -503,6 +551,7 @@
          * @returns {number} Number of days between the graduation date and today
          */
         function calcMarketingDays(){
+
 
         	if (mac.selectedUser) {
 	        	if(mac.selectedUser.graduationDate == null){
@@ -672,10 +721,72 @@
 			}
 		}
 		
+
 		$scope.$on( "setView", function( events, data ) {
             mac.associateTableIsOpen = data.associateTableIsOpen;
             setToolbar(data.title);
         })
+		/**
+         * @description Called when a superAdmin clicks on update project icon, opens a dialog.
+         */
+		function updateProjects(){
+			//only superadmins can do this
+			if(mac.user.userRole.name != "superAdmin"){
+				return;
+			}
+			
+			$mdDialog.show({
+                templateUrl: "html/templates/updateProjects.html",
+                controller: "updateProjectsCtrl as up",
+                clickOutsideToClose: false,
+                escapeToClose: false
+            }).then(function(){
+                mac.toast("Projects updated");
+            });
+		}
+		function deleteSelectedUser(ev) {
+			if( mac.selectedUser != undefined) {
+				var confirm = $mdDialog.confirm()
+		          .title('Delete selected user?')
+		          .textContent(mac.selectedUser.firstName +' '+ mac.selectedUser.lastName+ ' will be removed.' )
+		          .ariaLabel('Lucky day')
+		          .targetEvent(ev)
+		          .ok('Please do it!')
+		          .cancel('No, thank you.');
+				
+				 $mdDialog.show(confirm).then(function() {
+				    	
+				    	//MM TODO Erase mm block use login controller to update pass, make new endpoint
+				    	// add a loading icon to show something is going on
+				    	angular.element("body").addClass("loading");
+				    	
+				    	// update the selected user
+			    		userService.remove( mac.selectedUser, function() {
+			    			
+			    			// remove the loading icon
+			    			angular.element("body").removeClass("loading");
+			    			
+			    			//prompt the user
+			    			mac.toast("User deleted.");	
+			    			mac.getUsers();
+		                    mac.users = $filter( "taskFilter" )( mac.users, mac.today );
+			    		}, function(error) {
+			    			// remove the loading icon
+			    			angular.element("body").removeClass("loading");
+			    			
+			    			//prompt the user
+			    			mac.toast("Error deleting user.");
+			    		});
+			},
+			function() {
+		    	
+		    	//prompt
+		    	mac.toast("User deletion cancelled.");
+		    });
+
+		}
 		
         
+    }
+		
     }

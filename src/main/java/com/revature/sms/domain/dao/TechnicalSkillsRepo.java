@@ -3,6 +3,8 @@ package com.revature.sms.domain.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -22,8 +24,18 @@ public interface TechnicalSkillsRepo extends JpaRepository<TechnicalSkills, Inte
 	 * @param skillName String value that contains the name of the skill
 	 * @return skill object based on supplied skill name
 	 */
-	TechnicalSkills findBySkill(String skill);
+	TechnicalSkills findBySkill(String skillName);
 
+	/**
+	 * Method that deletes skill based on skill
+	 * @param skillName String value that contains name of skill
+	 * @return Long value corresponding to the id of the skill that was deleted. 
+	 * Returns 0 if the skill doesn't exist in the database.
+	 */
+	@Transactional
+	Long deleteBySkill(String skillName);
+
+	
 	/**
 	 * Method to retrieve Skills list by specific associate.
 	 * @param associate User object that matches to the list of technical skills to retrieve.
@@ -37,4 +49,6 @@ public interface TechnicalSkillsRepo extends JpaRepository<TechnicalSkills, Inte
 	 * @return List of users associated with the supplied skill.
 	 */
 	//List<User> findbySkill(Technical_Skills skill);
+	
+		
 }

@@ -46,6 +46,10 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
     				continue;
     			}
     		}
+    		apc.availProjects.push({
+    			"name": "No Project",
+    			"description": "Remove user from project.",
+    		});
     		
     		//add displayDates for end and start dates to available projects
     		for(var j = 0; j<apc.availProjects.length;j++){
@@ -60,7 +64,12 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
     	})
 	}
 	
+	SonarQubePls = function (){
+		//do nothing
+	}
+	
 	function assignSubmit(){
+		//console.log(apc.user);
 		//validation
 		//no project selected
 		if(!apc.project){
@@ -75,6 +84,21 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 			return;
 		}
 		
+		//remove user from current project
+		 		else if("No Project" == apc.project.name){
+		 			// remove current project
+		 			for(var i = 0; i < apc.user.project.length;i++){
+		 				if(apc.user.project[i].project.name == apc.currentProject.name){
+		 					
+		 					apc.user.activeProject = undefined;
+		 					apc.user.project.splice(i,1);
+
+		 					//save User
+		 					userService.update(apc.user,SonarQubePls);
+		 					break;
+		 				}
+		 			}
+		 		}
 		//user does not have a current project a project was selected
 		else if(!apc.currentProject && apc.project){
 			//create new projectUser object entry with new project
@@ -91,9 +115,9 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 			apc.user.activeProject = apc.project;
 			
 			// update old project
-			for(var i = 0; i < apc.user.project.length;i++){
-				if(apc.user.project[i].project.name == apc.currentProject.name){
-					apc.user.project[i].project = apc.project;
+			for(var j = 0; j < apc.user.project.length; j++){
+				if(apc.user.project[j].project.name == apc.currentProject.name){
+					apc.user.project[j].project = apc.project;
 					break;
 				}
 			}

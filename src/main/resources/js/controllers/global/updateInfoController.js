@@ -8,6 +8,7 @@
          */
     function updateInfoCtrl ( $scope, $state, $mdToast, $mdDialog, loginService, userService ) {
         var uic = this;
+
         
           // bindables
         uic.user = loginService.getUser();
