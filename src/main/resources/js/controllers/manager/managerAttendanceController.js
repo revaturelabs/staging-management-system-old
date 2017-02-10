@@ -47,13 +47,8 @@
         mac.toast = toast;
         mac.newAssociates = newAssociates;
 
-
         mac.marketingStatuses = marketingStatuses;
         mac.changeStatus = changeStatus;
-
-        mac.marketingStatuses = marketingStatuses;
-        mac.changeStatus = changeStatus;
-
 
         /**@var {function} calcMarketingDays function reference variable. */
         mac.calcMarketingDays = calcMarketingDays;
@@ -71,13 +66,6 @@
         mac.createPanel = createPanel;
         /**@var {function} getTaskTypes function reference variable. */
         mac.getTaskTypes = getTaskTypes;
-
-        /**@var {function} assignProject function reference variable. */
-        mac.assignProject = assignProject;
-
-        
-        mac.showFullJobInfo = showFullJobInfo;
-
 
 
 
@@ -268,20 +256,12 @@
          */
         function setToolbar() {
             if (mac.user.userRole.name == "superAdmin") {
-
                 $scope.$emit( "setToolbar", { 
                     title: "Weekly attendance", 
                     actions: [{ 
                         "function": mac.newAssociates, 
                         "icon"    : "add", 
                         "tooltip" : "Add batch of new associates"}] } );
-
-                actions.push( {
-                    "function": mac.newAssociates,
-                    "icons"   : "add",
-                    "tooltip" : "Add batch of new associates."
-                })
- 
             }
         }
 
@@ -453,29 +433,6 @@
                 mac.toast("Error retrieving all task types.");
             });
         }
- 
-        
-    	/**
-         * @description Called when a superAdmin clicks on assign project, opens a dialog.
-         */
-		function assignProject(user, project){
-			//only superadmins can do this
-			if(mac.user.userRole.name != "superAdmin"){
-				return;
-			}
-			
-			$mdDialog.show({
-                templateUrl: "html/templates/assignProject.html",
-                controller: "assignProjectCtrl as ap",
-                locals:{
-                	user,
-                	project
-                },
-                clickOutsideToClose: false,
-                escapeToClose: false
-            });
-		}
- 
 		
 
             // adds a leading zero to input if necessary
@@ -527,126 +484,4 @@
 
 
         }
- 
-        
-        function convertToDateObject(adate){
-        	 var condate =  new Date(adate);
-        	return (condate.getMonth()+1)+ "/" + condate.getDate() + "/"+ condate.getFullYear();
-        }
-        
-        function showFullJobInfo(event){
-            
-            // if the info boxes are open for a particular user
-            if (mac.infoOpen) {
-            	// if the selected job is already the open job of information 
-                if (mac.selectedjob == event) {
-                    
-                	//set the selected to null
-                	mac.selectedjob = null;
-                }
-                // if the selected is not == to the new job
-                else {
-                	
-                	// set a new selected
-                	mac.selectedjob = event;
-                }
-            }
-        }
-        
-        /*mac.closeJobInfo = function(){
-            mac.selectedjob =null;
-        }*/
-        function deleteSelectedJob(){
-        	
-        	// if we have a selected job and user
-        	if( ( mac.selectedjob != undefined ) && ( mac.selectedUser != undefined ) ) {
-        		
-        		mac.selectedUser.events.splice( mac.selectedUser.events.indexOf(mac.selectedjob), 1 );
-        		userService.update( mac.selectedUser, function() {
-        			//prompt
-        			mac.toast("Job deleted.");
-        			mac.selectedjob = null;
-        		}, function() {
-        			//prompt
-        			mac.toast("Error deleting job.");
-        		})
-        	}
-        }
-        
-        //................................
-     // adds associates by batch
-		function makenewjob() {
-            
-              // opens a dialog to allows addition of a new batch of associates
-                // opens another dialog upon success to show added associates' info
-            $mdDialog.show({
-                templateUrl: "html/templates/jobAdd.html",
-                controller: "jobAddCtrl as jACtrl",
-                locals: { "selectedUser": mac.selectedUser },
-                bindToController: true,
-                clickOutsideToClose: true,
-                escapeToClose: true
-            }).then( function() {
-            	
-            	//prompt
-            	mac.toast("Job addition successful.");
-            }, function() {
-                mac.toast("Job addition cancelled.");
-            });
-        }
-        //..............................
-		
-		function resetSelectedUsersJob(ev){
-			// of we have selected a user
-			if( mac.selectedUser != undefined) {
-				//<<<<<<<<<<<
-				 
-					    // Appending dialog to document.body to cover sidenav in docs app
-					    var confirm = $mdDialog.confirm()
-					          .title('Reset selected users password?')
-					          .textContent('Password will be reset to '+ mac.selectedUser.firstName +' '+ mac.selectedUser.lastName+'\'s username')
-					          .ariaLabel('Lucky day')
-					          .targetEvent(ev)
-					          .ok('Please do it!')
-					          .cancel('No, thank you.');
-
-					    $mdDialog.show(confirm).then(function() {
-					    	
-					    	//MM TODO Erase mm block use login controller to update pass, make new endpoint
-					    	// add a loading icon to show something is going on
-					    	angular.element("body").addClass("loading");
-					    	
-					    	// update the selected user
-				    		loginService.resetPass( mac.selectedUser, function() {
-				    			
-				    			// remove the loading icon
-				    			angular.element("body").removeClass("loading");
-				    			
-				    			//prompt the user
-				    			mac.toast("Password reset successful.");	
-				    		}, function() {
-				    			
-				    			// remove the loading icon
-				    			angular.element("body").removeClass("loading");
-				    			
-				    			//prompt the user
-				    			mac.toast("Error resetting Password.");
-				    		});
-					    	//MM
-					    	
-					    	
-					    	
-					    }, 
-					    //on error
-					    function() {
-					    	
-					    	//prompt
-					    	mac.toast("Password reset cancelled.");
-					    });
-				//<<<<<<<<<<<
-			}
-		}
-		
-        
-
     }
