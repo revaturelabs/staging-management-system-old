@@ -150,44 +150,7 @@ public class LoginController {
 	}
 
 
-/*	
- * *//**
-	 * Marks an associate as present
-	 * 
-	 * @param username
-	 *            User to be marked as present
-	 *//*
-	private void markPresent(String username) {
-		User user = ur.findByUsername(username);
-		Timestamp d = new Timestamp(new java.util.Date().getTime());
-		List<AssociateAttendance> associateAttendanceList = user.getAttendance();
 
-		if (!associateAttendanceList.isEmpty()) {
-
-			for (AssociateAttendance aa : associateAttendanceList) {
-				if (d.getDate() == aa.getDate().getDate() && d.getDay() == aa.getDate().getDay()
-						&& d.getYear() == aa.getDate().getYear()) {
-					// Associate has checked in before and current day exists
-					aa.setCheckedIn(true);
-					aar.save(aa);
-					return;
-				}
-			}
-		}
-
-		// Associate has not checked in before
-		// or
-		// Associate has checked in before but current day does not exist
-		AssociateAttendance aa = new AssociateAttendance(d, true, false, "");
-
-		List<AssociateAttendance> l = user.getAttendance();
-		l.add(aa);
-		user.setAttendance(l);
-
-		ur.save(user);
-	}
-*/
-	
 
 	/**
 	 * To update user info
@@ -234,7 +197,6 @@ public class LoginController {
 	}
 
 	
-//????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
 	/**
 	 * To allow superadmin update user info
 	 * 
@@ -249,7 +211,7 @@ public class LoginController {
 	 *         user password
 	 */
 	@RequestMapping(value="/resetPass", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Object resetPassword(@RequestHeader(value = "Authorization") String token,
+	@ResponseBody public Object resetPassword(@RequestHeader(value = "Authorization") String token,
 			@RequestBody UserDTO userDTO) {
 
 		try {

@@ -9,13 +9,10 @@
           // bindables
             // data
             // functions
-		/**@var {function} showName function reference variable. */
+		
         aic.showName = showName;
-		/**@var {function} showTaskPanel function reference variable. */
-        aic.showTaskPanel = showTaskPanel;
-		/**@var {function} showTaskCertification function reference variable. */
-        aic.showTaskCertification = showTaskCertification;
-		/**@var {function} cancel function reference variable. */
+	    aic.showTaskPanel = showTaskPanel;
+		aic.showTaskCertification = showTaskCertification;
         aic.cancel = cancel;
 
           // initilization
