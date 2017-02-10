@@ -93,7 +93,6 @@ public class UserController {
 					HttpStatus.CONFLICT);
 		} catch (Exception e) {
 			Logger.getRootLogger().debug("Exception while creating user", e);
-			e.printStackTrace();
 			return new ResponseEntity<ResponseErrorEntity>(
 					new ResponseErrorEntity("Problem occurred while creating user."), HttpStatus.SERVICE_UNAVAILABLE);
 		}

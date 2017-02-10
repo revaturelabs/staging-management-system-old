@@ -66,7 +66,6 @@
                 batchAddFactory.addOneAssociate(response);
                 bac.saveHelper(list);
             }, function(error) {
-            	console.log("error:", error);
                 if (error.status == 409) {
                     if (addUser.username.search("[0-9]+") == -1) {
                         addUser.username += "1";
