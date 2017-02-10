@@ -3,6 +3,7 @@ package com.revature.sms.domain;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -359,8 +360,13 @@ public class User {
 	 * the User object.
 	 */
 	public void setEvents(List<JobEvent> events) {
-		this.events.clear();
-		this.events.addAll(events);
+		if (this.events != null) {
+			this.events.clear();
+			this.events.addAll(events);
+		}
+		else  {
+			this.events = new ArrayList<JobEvent>();
+		}
 	}
 
 	/**
