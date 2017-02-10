@@ -50,6 +50,7 @@
         mac.newAssociates = newAssociates;
         mac.marketingStatuses = marketingStatuses;
         mac.changeStatus = changeStatus;
+        mac.updateProjects = updateProjects;
         mac.deleteSelectedUser = deleteSelectedUser;
 
 
@@ -285,7 +286,6 @@
                     "function": mac.newAssociates,
                     "icon"   : "add",
                     "tooltip" : "Add batch of new associates."
-
                 });
 
                 actions.push( {
@@ -307,9 +307,7 @@
                 //         "icon"    : "transfer_within_a_station",
                 //         "tooltip" : "Delete Associates" 
                 // });
-            
 
-               
             }
 
 
@@ -702,6 +700,24 @@
 			}
 		}
 		
+		/**
+         * @description Called when a superAdmin clicks on update project icon, opens a dialog.
+         */
+		function updateProjects(){
+			//only superadmins can do this
+			if(mac.user.userRole.name != "superAdmin"){
+				return;
+			}
+			
+			$mdDialog.show({
+                templateUrl: "html/templates/updateProjects.html",
+                controller: "updateProjectsCtrl as up",
+                clickOutsideToClose: false,
+                escapeToClose: false
+            }).then(function(){
+                mac.toast("Projects updated");
+            });
+		}
 		function deleteSelectedUser(ev) {
 			if( mac.selectedUser != undefined) {
 				var confirm = $mdDialog.confirm()
@@ -747,5 +763,4 @@
         
     }
 		
-        
     }

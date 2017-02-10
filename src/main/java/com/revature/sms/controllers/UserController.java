@@ -346,7 +346,6 @@ public class UserController {
 		}
 		if(userDTO.getProject() != null){
 			user.setProject(userDTO.getProject());
-
 		}
 		if (userDTO.getEvents() != null){
 			
