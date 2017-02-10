@@ -1,5 +1,89 @@
 
-    <div layout="row">
+	<div layout="row" id="associateTableViewDiv" ng-show="manAttCtrl.associateTableIsOpen">
+		<md-card id="associateTableViewCard" class="md-padding" layout="column">
+			<md-table-container id="associateTableViewTableContainer">
+				<table md-table class="associateInformationTable">
+                 
+					<thead md-head md-order="associateOrderAttribute">
+						<tr md-row>
+							<th md-cell md-column md-order-by="firstName">
+								<h3>Name</h3>
+							</th>
+							<th md-cell md-column md-order-by="batchType.type">
+								<h3>Technologies</h3>
+							</th>
+							<th md-cell md-column md-order-by="trainer">
+								<h3>Trainer</h3>
+							</th>
+							<th md-cell md-column md-order-by="graduationDate">
+								<h3>Marketing start date</h3>
+							</th>
+							<th md-cell md-column md-order-by="graduationDate">
+								<h3>Days on market</h3>
+							</th>
+							<th md-cell md-column md-order-by="marketingStatus.name">
+								<h3>Current status</h3>
+							</th>
+							<th md-cell md-column md-order-by="panels[0].passed">
+								<h3>Panel status</h3>
+							</th>
+							<th md-cell md-column md-order-by="activeProject.name">
+								<h3>Project</h3>
+							</th>
+							<th md-cell md-column md-order-by="certs[0].note">
+								<h3>Primary certification</h3>
+							</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr md-row ng-repeat="user in manAttCtrl.users | orderBy:associateOrderAttribute" ng-class="{highlightSelected: manAttCtrl.selectedUser == user}">
+							<td md-cell>
+								{{ user.firstName }} {{ user.lastName }}
+							</td>
+							<td md-cell>
+								{{ user.batchType.type }}
+							</td>
+							<td md-cell>
+								{{ user.trainer }}
+							</td>
+							<td md-cell>
+								{{ user.graduationDate | date:"MMMM d, yyyy"}}
+							</td>
+							<td md-cell>
+                                {{ manAttCtrl.calcMarketingDaysForAllUsers(user) }}
+							</td>
+							<td md-cell>
+								{{ user.marketingStatus.name}}
+							</td>
+							<td md-cell>
+								<md-icon ng-show="user.panels[0].passed == true" style="color:#59E2A8;">check_circle</md-icon>
+								<md-icon ng-show="user.panels[0].passed == false" style="color:#A00;">not_interested</md-icon>
+                                <span ng-show="user.panels[0].passed == false">
+                                	 <span ng-show="user.panels[0]">{{ user.panels[0].dateDisplay }}</span>
+                                	 <span ng-hide="user.panels[0].dateDisplay">No date selected</span>
+                               	</span>
+							</td>
+							<td md-cell>
+							 	<div ng-show="user.activeProject">{{ user.activeProject.name }}</div>
+	                        	<div ng-hide="user.activeProject">No project</div>
+							</td>
+							<td md-cell>
+                       			<div ng-show="user.certs[0].date">
+                            		<div ng-repeat="cert in user.certs | orderBy:'-date'" class="certList">
+                            			{{ cert.dateDisplay }} | {{cert.note}}
+                            	
+                            		</div>
+                        		</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+		</md-card>
+	</div>
+	
+    <div layout="row" ng-hide="manAttCtrl.associateTableIsOpen">
 
           <!-- Associate info card -->
         <div ng-show="manAttCtrl.infoOpen" id="associateInformationDiv" ng-class="{showInformationDiv : (manAttCtrl.infoOpen), showBigInformationDiv : (manAttCtrl.infoOpen && manAttCtrl.smallDevice)}">
@@ -296,6 +380,23 @@
     </div>
 
     <style type="text/css">
+    	#associateTableViewDiv{
+    		width: 100%;
+    	}
+    	#associateTableViewCard{
+    		width: 100%;
+    	}
+    	#associateTableViewTableContainer{
+    		width: 100%;
+    	}
+    	
+    	tr:hover{
+  			background:lightgray;
+    	}
+    	.associateInformationTable tr{
+    		height:36px;
+    	}
+    	
         .showInformationDiv{
             width:33%;
         }
