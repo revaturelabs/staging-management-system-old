@@ -1,6 +1,6 @@
 package com.revature.sms.domain;
 
-import java.security.MessageDigest;
+import java.security.MessageDigest; 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public class User {
 	/**
 	 * List containing JobEvent objects that keeps track of the user's events.
 	 */
-	@OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="ASSOCIATE")
 	private List<JobEvent> events;
 
@@ -124,11 +124,11 @@ public class User {
 	private MarketingStatus marketingStatus;
 	
 	/**
-	 * List containing Project objects that keeps track of the user's project.
+	 * Trainer object that keeps track of the user's trainer
 	 */
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="ASSOCIATE")
-	private List<ProjectUser> project;
+	@ManyToOne
+	@JoinColumn(name = "trainer")
+	private Trainer trainer;
 	
 	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
@@ -136,6 +136,8 @@ public class User {
 	public User() {
 		super();
 	}
+
+
 
 	// constructor for associate
 	/**
@@ -152,11 +154,10 @@ public class User {
 	 * @param userRole UserRole object that keeps track of the user's specific role.
 	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
 	 * @param skills gets a list of technical skills that an associate has
-	 * @param project projects that a user is currently working on.
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate, 
-			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus,List<ProjectUser> project) {
+			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus, Trainer trainer) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -170,38 +171,29 @@ public class User {
 		this.skill = skills;
 		this.events = events;
 		this.marketingStatus = marketingStatus;
-		this.project = project;
+		this.trainer = trainer;
 	}
-	
 	// constructor for non-associate
-		/**
-		 * Constructor for User object. This constructor is meant to be used to create
-		 * users who aren't associates. Initializes the username, firsName, lastName, hashedPassword,
-		 * and userRole variables of the user object based on the supplied values.
-		 * @param username String that represents the username of the User object.
-		 * @param firstName String that represents the first name of the User object.
-		 * @param lastName String that represents the last name of the User object.
-		 * @param hashedPassword String that represents the hashedPassword of the User object.
-		 * @param userRole UserRole object that keeps track of the user's specific role.
-		 */
-		public User(String username, String firstName, String lastName, String hashedPassword, UserRole userRole) {
-			super();
-			this.username = username;
-			this.firstName = firstName;
-			this.lastName = lastName;
-			this.hashedPassword = hashedPassword;
-			this.userRole = userRole;
-		}
-		
-	public List<ProjectUser> getProject() {
-		return project;
-	} 
- 
-	public void setProject(List<ProjectUser> project) {
-		this.project = project;
+	/**
+	 * Constructor for User object. This constructor is meant to be used to create
+	 * users who aren't associates. Initializes the username, firsName, lastName, hashedPassword,
+	 * and userRole variables of the user object based on the supplied values.
+	 * @param username String that represents the username of the User object.
+	 * @param firstName String that represents the first name of the User object.
+	 * @param lastName String that represents the last name of the User object.
+	 * @param hashedPassword String that represents the hashedPassword of the User object.
+	 * @param userRole UserRole object that keeps track of the user's specific role.
+	 * @param trainer 
+	 */
+	public User(String username, String firstName, String lastName, String hashedPassword, UserRole userRole, Trainer trainer) {
+		super();
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.hashedPassword = hashedPassword;
+		this.userRole = userRole;
+		this.trainer = trainer;
 	}
-
-	
 	
 	/**
 	 * Method to retrieve the ID value of the User object.
@@ -363,13 +355,11 @@ public class User {
 	 * the User object.
 	 */
 	public void setEvents(List<JobEvent> events) {
-		if (this.events != null) {
+		if(this.events != null){
 			this.events.clear();
 			this.events.addAll(events);
 		}
-		else  {
-			this.events = new ArrayList<>();
-		}
+		this.events = new ArrayList<JobEvent>();
 	}
 
 	/**
@@ -432,7 +422,13 @@ public class User {
 	public void setMarketingStatus(MarketingStatus marketingStatus) {
 		this.marketingStatus = marketingStatus;
 	}
+	public Trainer getTrainer() {
+		return trainer;
+	}
 
+	public void setTrainer(Trainer trainer) {
+		this.trainer = trainer;
+	}
 	/**
 	 * Method that returns a string representation of the current User object.
 	 */
@@ -442,7 +438,7 @@ public class User {
 		return "User [ID=" + ID + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", hashedPassword=" + hashedPassword + ", batchType=" + batchType + ", attendance=" + attendance
 				+ ", tasks=" + tasks + ", events=" + events + ", userRole=" + userRole + ", graduationDate="
-				+ graduationDate + ", skill=" + skill + ", marketingStatus=" + marketingStatus + ", Projects=" + project +"]";
+				+ graduationDate + ", skill=" + skill + ", marketingStatus=" + marketingStatus +", trainer=" + trainer + "]";
 	}
 
 	/**
