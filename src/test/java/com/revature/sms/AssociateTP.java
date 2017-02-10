@@ -158,6 +158,8 @@ public class AssociateTP extends AbstractT {
 			while (itr.hasNext()) {
 				String key = itr.next();
 				if (!("taskNote".equals(key) && "Panel".equals(expectedInfo.get("taskType")))) {
+					System.out.println(expectedInfo.get(key));
+					System.out.println(actualInfo.get(key));
 					Assert.assertEquals(expectedInfo.get(key), actualInfo.get(key));
 				}
 			}

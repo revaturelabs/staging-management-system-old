@@ -208,10 +208,12 @@ public class AssociatePage extends HomePage {
 	public HashMap<String, String> findCertification(LocalDate expectedDate) {
 		HashMap<String, String> hm = new HashMap<String, String>();
 		try {
+			//System.out.println("Here1");
 			List<WebElement> allTasks =  tasksPanel.findElements(By.xpath("//*[@class=\"expansionPanelList\"]/*"));
 			boolean c = false;
 			for (WebElement task:allTasks) {
 				if ("div".equals(task.getTagName()) && "Certifications".equals(task.getText())) {
+					System.out.println("Here2");
 					c = true;
 				}
 				if ("div".equals(task.getTagName()) && !"Certifications".equals(task.getText())) {
@@ -219,15 +221,15 @@ public class AssociatePage extends HomePage {
 				}
 				
 				if ("md-list-item".equals(task.getTagName()) && "listitem".equals(task.getAttribute("role")) && c) {
-					WebElement element = task.findElement(By.tagName("p"));
+					//System.out.println("Here2");
 					String date = task.findElement(By.tagName("p")).getText().trim();
-					
 					date = date.replace("On ", "");
 					date = date.replace("Scheduled for ", "");
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
 					LocalDate dateObject = LocalDate.parse(date, formatter);
 					
 					if (expectedDate.compareTo(dateObject) == 0) {
+						//System.out.println("Here3");
 						hm.put("taskType", "Certification");
 						hm.put("taskNote", task.findElement(By.tagName("h3")).getText().trim());
 						hm.put("taskDate", dateObject.toString());

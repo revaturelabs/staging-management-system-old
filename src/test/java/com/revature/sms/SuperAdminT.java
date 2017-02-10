@@ -1,5 +1,6 @@
 package com.revature.sms;
 
+import org.junit.Assert;
 import org.junit.Test;
 import com.revature.sms.util.Utils;
 
@@ -10,12 +11,16 @@ public class SuperAdminT extends AdminT  {
 	public void testCancelButtons() {
 		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("PW"));
 		sap.addBatch.click();
-		cbw.cancel.click();
 		
+		cbw.cancel.click();
 		//System.out.println("HERE: "+sap.getToastMessage());
 		//String here2 = sap.getToastMessage();
 		//System.out.println("HERE2: "+here2);
-		//Assert.assertEquals(expected.getProperty("cancelBatchAddition"), sap.getToastMessage());
+		Assert.assertEquals(expected.getProperty("cancelBatchAddition"), sap.getToastMessage());
+		
+		sap.editSkills.click();
+		tsw.cancel.click();
+		Assert.assertEquals(expected.getProperty("cancelAddSkill"), sap.getToastMessage());
 		
 		sap.settings.click();
 		sw.cancel.click();

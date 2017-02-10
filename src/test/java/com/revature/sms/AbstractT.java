@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.revature.sms.util.InstanceTestClassListener;
 import com.revature.sms.util.SpringInstanceTestClassRunner;
 import com.revature.sms.util.TestSetup;
+import com.revature.sms.util.Utils;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;
@@ -28,6 +29,7 @@ import com.revature.sms.pagefactory.LoginPage;
 import com.revature.sms.pagefactory.RaiseBugWindow;
 import com.revature.sms.pagefactory.ScheduleCertificationWindow;
 import com.revature.sms.pagefactory.SuperAdminPage;
+import com.revature.sms.pagefactory.TechnicalSkillsWindow;
 import com.revature.sms.util.EventListener;
 
 //This test class can't be directly run, but it provides set up and tear down for various other tests that are
@@ -53,6 +55,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	protected SuperAdminPage sap;
 	protected ScheduleCertificationWindow scw;
 	protected CreateBatchWindow cbw;
+	protected TechnicalSkillsWindow tsw;
 	protected SettingsWindow sw;
 	protected RaiseBugWindow rbw;
 
@@ -138,6 +141,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	public void after() {
 		if (hp.verify()) {
 			hp.logout.click();
+			Utils.attemptWait(500);
 			Assert.assertEquals(expected.getProperty("logoutSuccess"), lp.getToastMessage());
 		}
 	}
