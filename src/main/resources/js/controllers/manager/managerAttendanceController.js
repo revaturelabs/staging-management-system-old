@@ -6,7 +6,7 @@
       * @description AngularJs controller for Manager attendance module (both versions of Admins)
       */   
 
-    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, taskTypeService, marketingStatusService, batchAddFactory, weekdays ) {
+    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, skillEditFactory, taskTypeService, marketingStatusService, batchAddFactory, weekdays ) {
        /**@prop {function} Reference variable for this controller */
         var mac = this;
 
@@ -50,13 +50,14 @@
         mac.newAssociates = newAssociates;
         mac.marketingStatuses = marketingStatuses;
         mac.changeStatus = changeStatus;
-      
+
+       
+
 
         /**@var {function} calcMarketingDays function reference variable. */
+
         mac.calcMarketingDays = calcMarketingDays;
-        /**@var {function} days_between function reference variable. */
         mac.days_between = days_between;
-        /**@var {function} editCert function reference variable. */
         mac.updateCert = updateCert;
         /**@var {function} convert to date object. */
         mac.convertToDateObject = convertToDateObject;
@@ -76,12 +77,19 @@
         
         mac.showFullJobInfo = showFullJobInfo;
 
+
+        mac.editSkills = editSkills;
+
+
+
         mac.deleteSelectedJob = deleteSelectedJob;
         
         mac.makenewjob = makenewjob;
         
+
         mac.resetSelectedUsersJob = resetSelectedUsersJob;
         
+
           // initialization
         mac.findDevice();
         mac.getUsers();
@@ -272,18 +280,46 @@
         function setToolbar() {
             var actions = [];
             if (mac.user.userRole.name == "superAdmin") {
+
+
                 actions.push( {
                     "function": mac.newAssociates,
-                    "icons"   : "add",
+                    "icon"   : "add",
                     "tooltip" : "Add batch of new associates."
-                })
+
+                });
+
+                actions.push( {
+                    "function": mac.editSkills, 
+                    "icon"    : "assessment", 
+                    "tooltip" : "Edit available skills"
+                });
+                
+                actions.push({
+                	"function": mac.updateProjects,
+                    "icon"   : "work",
+                    "tooltip" : "Create or update an existing project."
+
+                });
+
+                // actions.push({
+                    	 
+                //         "function": mac.deleteAssociates,
+                //         "icon"    : "transfer_within_a_station",
+                //         "tooltip" : "Delete Associates" 
+                // });
+            
+
+               
             }
+
 
             $scope.$emit( "setToolbar", { 
                 title: "Weekly attendance", 
                 actions }
             );
         }
+        
 
             
             /**
@@ -476,6 +512,18 @@
 		}
 		
 
+        //Function for adding skills, document properly after it's fully created.
+        function editSkills(){
+
+            $mdDialog.show({
+                templateUrl: "html/templates/skillsEdit.html",
+                controller: "skillEditCtrl as sECtrl",
+                clickOutsideToClose: true,
+                escapeToClose: true
+             });
+            
+        }
+        
             // adds a leading zero to input if necessary
         function padZero( input ) {
             if (input < 10) {
@@ -499,6 +547,7 @@
          * @returns {number} Number of days between the graduation date and today
          */
         function calcMarketingDays(){
+
 
         	if (mac.selectedUser) {
 	        	if(mac.selectedUser.graduationDate == null){
