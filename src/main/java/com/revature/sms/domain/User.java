@@ -190,14 +190,14 @@ public class User {
 	 * @param userRole UserRole object that keeps track of the user's specific role.
 	 * @param trainer 
 	 */
-	public User(String username, String firstName, String lastName, String hashedPassword, UserRole userRole, Trainer trainer) {
+	public User(String username, String firstName, String lastName, String hashedPassword, UserRole userRole) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.hashedPassword = hashedPassword;
 		this.userRole = userRole;
-		this.trainer = trainer;
+		//this.trainer = trainer;
 	}
 		
 	public List<ProjectUser> getProject() {
