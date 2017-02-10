@@ -329,6 +329,10 @@ public class UserController {
 		}
 		if (userDTO.getGraduationDate() != null) {
 			user.setGraduationDate(userDTO.getGraduationDate());
+
+		}
+		if(userDTO.getTrainer() != null){
+			user.setTrainer(userDTO.getTrainer());
 		}
 		if (userDTO.getMarketingStatus() != null){
 			user.setMarketingStatus(userDTO.getMarketingStatus());
@@ -336,19 +340,11 @@ public class UserController {
 		if (userDTO.getTasks() != null){
 			user.setTasks(userDTO.getTasks());
 		}
-		if(userDTO.getProject() != null){
-			user.setProject(userDTO.getProject());
-
-		}
-		if (userDTO.getEvents() != null){
-			
-			user.setEvents(userDTO.getEvents());
-		}
 		if (userDTO.getSkill() != null){
 			//remove deleted skills
 			boolean found;
 			Set<TechnicalSkills> list = userDTO.getSkill();
-			list.size();
+			System.out.println(list.size());
 			for(TechnicalSkills ts: user.getSkill()){
 				if(!list.contains(ts.getID())){
 					userDTO.getSkill().remove(ts);
