@@ -64,6 +64,10 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
     	})
 	}
 	
+	SonarQubePls = function (){
+		//do nothing
+	}
+	
 	function assignSubmit(){
 		//console.log(apc.user);
 		//validation
@@ -73,8 +77,6 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 			return;
 		}
 		//end Validation
-		
-
 		
 		// a new project was not selected or the selected project is the same as the current project
 		if(!apc.project && apc.project.name == apc.currentProject.name){
@@ -90,9 +92,9 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 		 					
 		 					apc.user.activeProject = undefined;
 		 					apc.user.project.splice(i,1);
-		 					console.log(apc.user);
+
 		 					//save User
-		 					userService.update(apc.user,function(){});
+		 					userService.update(apc.user,SonarQubePls);
 		 					break;
 		 				}
 		 			}
