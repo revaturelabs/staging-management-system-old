@@ -10,7 +10,6 @@ import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
 import com.revature.sms.domain.JobEvent;
 import com.revature.sms.domain.MarketingStatus;
-import com.revature.sms.domain.Project;
 import com.revature.sms.domain.ProjectUser;
 import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.Trainer;
@@ -53,7 +52,7 @@ public class UserDTO {
 	}
 
 	public UserDTO(String username, String firstName, String lastName,String password, UserRole userRole,
-			BatchType batchType, Timestamp graduationDate, List<AssociateTask> tasks, List<JobEvent> events) {
+			BatchType batchType, Timestamp graduationDate, List<AssociateTask> tasks, List<JobEvent> events, List<AssociateAttendance> attendance) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -64,11 +63,12 @@ public class UserDTO {
 		this.graduationDate = graduationDate;
 		this.tasks = tasks;
 		this.events = events;
+		this.attendance = attendance;
 	}
 	
 	public UserDTO(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			UserRole userRole, Timestamp graduationDate, List<AssociateTask> tasks, 
-			Set<TechnicalSkills> skill, MarketingStatus marketingStatus, Trainer trainer) {
+			Set<TechnicalSkills> skill, MarketingStatus marketingStatus, Trainer trainer, List<AssociateAttendance> attendance) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -81,23 +81,28 @@ public class UserDTO {
 		this.marketingStatus = marketingStatus;
 		this.skill = skill;
 		this.trainer = trainer;
+		this.attendance = attendance;
 	}
 	
 	public UserDTO(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			UserRole userRole, Timestamp graduationDate, List<AssociateTask> tasks, 
-			Set<TechnicalSkills> skill, MarketingStatus marketingStatus, List<ProjectUser> project) {
+			Set<TechnicalSkills> skill, MarketingStatus marketingStatus, List<ProjectUser> project, List<AssociateAttendance> attendance, List<JobEvent> events, Trainer trainer) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.hashedPassword = hashedPassword;
+		this.attendance = attendance;
 		this.batchType = batchType;
 		this.userRole = userRole;
 		this.graduationDate = graduationDate;
 		this.tasks = tasks;
 		this.marketingStatus = marketingStatus;
 		this.skill = skill;
+		this.events = events;
 		this.project = project;
+		this.trainer = trainer;
+		
 	}
 
 	public List<ProjectUser> getProject() {

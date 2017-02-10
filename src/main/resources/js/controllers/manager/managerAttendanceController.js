@@ -54,8 +54,6 @@
         mac.changeStatus = changeStatus;
         mac.deleteSelectedUser = deleteSelectedUser;
   
-      
-
         /**@var {function} calcMarketingDays function reference variable. */
         mac.calcMarketingDays = calcMarketingDays;
         /**@var {function} days_between function reference variable. */
@@ -76,7 +74,8 @@
         mac.getTaskTypes = getTaskTypes;
         /**@var {function} assignProject function reference variable. */
         mac.assignProject = assignProject;
-
+        /**@var {function} updateProject function reference variable. */
+        mac.updateProjects = updateProjects;
         
         mac.showFullJobInfo = showFullJobInfo;
 
@@ -289,9 +288,15 @@
                 } );
                 actions.push( {
                     "function": mac.newAssociates,
-                    "icons"   : "add",
+                    "icon"   : "add",
                     "tooltip" : "Add batch of new associates."
-                })
+                });
+                
+                actions.push({
+                	"function": mac.updateProjects,
+                    "icon"   : "work",
+                    "tooltip" : "Create or update an existing project."
+                });
             }
 
             $scope.$emit( "setToolbar", { 
@@ -519,6 +524,25 @@
                 },
                 clickOutsideToClose: false,
                 escapeToClose: false
+            });
+		}
+		
+    	/**
+         * @description Called when a superAdmin clicks on update project icon, opens a dialog.
+         */
+		function updateProjects(){
+			//only superadmins can do this
+			if(mac.user.userRole.name != "superAdmin"){
+				return;
+			}
+			
+			$mdDialog.show({
+                templateUrl: "html/templates/updateProjects.html",
+                controller: "updateProjectsCtrl as up",
+                clickOutsideToClose: false,
+                escapeToClose: false
+            }).then(function(){
+                mac.toast("Projects updated");
             });
 		}
 		
