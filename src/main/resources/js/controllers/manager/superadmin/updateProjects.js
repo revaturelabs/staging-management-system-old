@@ -11,8 +11,6 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 	upc.selectedProject = {};
 	/**@prop {object} errors Variable with list of errors.*/
 	upc.errors = [];
-	/**@prop {object} toDelete Variable with list of projects to delete.*/
-	upc.toDelete = [];
 
 	//functions
 	/**@var {function} getProjects function reference variable. */
@@ -23,8 +21,6 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 	upc.deleteProject = deleteProject;
 	/**@var {function} assignSubmit function reference variable. */
 	upc.assignSubmit = assignSubmit;
-	/**@var {function} reset function reference variable. */
-	upc.reset = reset;
 	/**@var {function} close function reference variable. */
 	upc.close = close;
 	
@@ -36,18 +32,13 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
     		upc.allProjects = response;
     		for(var i = 0; i<upc.allProjects.length;i++){
     			
-    			if(upc.allProjects[i].name == "No Project"){
-    				upc.allProjects.splice(i,1);
-    				i--;
-    				continue;
-    			}
-    			
     			upc.allProjects[i].startDate = new Date(upc.allProjects[i].startDate);
     			upc.allProjects[i].endDate = new Date(upc.allProjects[i].endDate);
     			upc.allProjects[i].displayName = upc.allProjects[i].name;
     		}
-    	}, function(error) {
-    	})
+    		upc.selectedProject = upc.allProjects[0];
+    	}, function() {
+    	});
 	}
 	var count=0;
 	function newProject(){
@@ -58,15 +49,22 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 	}
 	
 	function deleteProject(){
-		if(upc.selectedProject == {}){
+		//no project selected
+		if(!upc.selectedProject || upc.selectedProject == {}){
 			upc.message = "Select a project to delete.";
 			return;
 		}
 		
+		//delete selected project from DB
+		upc.selectedProject.startDate = upc.selectedProject.startDate.getTime();
+		upc.selectedProject.endDate = upc.selectedProject.endDate.getTime();
+		projectService.del([upc.selectedProject],function(){}, function(){});
+		
+		
+		//find project to be deleted
 		for(var i = 0; i < upc.allProjects.length; i++){
 			if(upc.allProjects[i].name == upc.selectedProject.name){
-				upc.toDelete.push(upc.allProjects[i]);
-				
+				//clear and remove from all projects list
 				upc.selectedProject = {};
 				
 				upc.allProjects.splice(i,1);
@@ -144,22 +142,15 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 			for(var s = 0; s<upc.allProjects.length;s++){
 				upc.allProjects[s].name = upc.allProjects[s].displayName;
 			}
-			//if there are projects to delete, DELETE
-			if(upc.toDelete.length > 0){
-				projectService.del(upc.toDelete,function(){}, function(){});
-			}
 			//update current projects
 			projectService.update(upc.allProjects,function(){$mdDialog.cancel();}, function(){});
 		}
 	}
 	
-	function reset(){
+	function close(){
 		upc.selectedProject={};
 		upc.errors=[];
 		upc.getProjects();
-	}
-	
-	function close(){
 		$mdDialog.cancel();
 	}
 	
