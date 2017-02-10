@@ -25,11 +25,11 @@
         }
 
         ssr.retrieve = function(skillName, success,error){
-            ssr.skillResource.get({skillName: skillName}, success, error);
+            return ssr.skillResource.get({skillName: skillName}, success, error).$promise;
         }
 
         ssr.create = function(skill, success, error) {
-        	ssr.skillResource.save(skill, success, error);
+        	return ssr.skillResource.save(skill, success, error).$promise;
         }
 
         ssr.remove = function(skillName, success, error){
@@ -37,7 +37,7 @@
         }
 
         ssr.update = function(skillName, newSkillName, success, error){
-            ssr.skillResource.update({skillName: skillName, newSkillName : newSkillName}, success, error);
+            return ssr.skillResource.update({skillName: skillName, newSkillName : newSkillName}, success, error).$promise;
         }
 
     }
