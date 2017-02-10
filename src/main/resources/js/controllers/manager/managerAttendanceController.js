@@ -51,7 +51,7 @@
         mac.marketingStatuses = marketingStatuses;
         mac.changeStatus = changeStatus;
 
-        mac.deleteSelectedUser = deleteSelectedUser;
+       // mac.deleteSelectedUser = deleteSelectedUser;
 
 
         /**@var {function} calcMarketingDays function reference variable. */
@@ -284,7 +284,7 @@
 
                 actions.push( {
                     "function": mac.newAssociates,
-                    "icons"   : "add",
+                    "icon"   : "add",
                     "tooltip" : "Add batch of new associates."
 
                 });
@@ -302,12 +302,12 @@
 
                 });
 
-                actions.push({
+                // actions.push({
                     	 
-                        "function": mac.deleteAssociates,
-                        "icon"    : "transfer_within_a_station",
-                        "tooltip" : "Delete Associates" 
-                });
+                //         "function": mac.deleteAssociates,
+                //         "icon"    : "transfer_within_a_station",
+                //         "tooltip" : "Delete Associates" 
+                // });
             
 
                
