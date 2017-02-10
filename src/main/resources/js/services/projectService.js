@@ -11,9 +11,6 @@
     		del  : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "POST", url: "api/v1/project/remove" }
     	});
     	
-    	
-        
-
         pr.getAll = function(success, error) {
         	pr.projectResource.query(success, error);
         }

@@ -46,6 +46,10 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
     				continue;
     			}
     		}
+    		apc.availProjects.push({
+    			"name": "No Project",
+    			"description": "Remove user from project.",
+    		});
     		
     		//add displayDates for end and start dates to available projects
     		for(var j = 0; j<apc.availProjects.length;j++){
@@ -61,6 +65,7 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 	}
 	
 	function assignSubmit(){
+		//console.log(apc.user);
 		//validation
 		//no project selected
 		if(!apc.project){
@@ -69,10 +74,28 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 		}
 		//end Validation
 		
+
+		
 		// a new project was not selected or the selected project is the same as the current project
 		if(!apc.project && apc.project.name == apc.currentProject.name){
 			$mdDialog.hide();
 			return;
+		}
+		
+		//remove user from current project
+		else if("No Project" == apc.project.name){
+			// remove current project
+			for(var i = 0; i < apc.user.project.length;i++){
+				if(apc.user.project[i].project.name == apc.currentProject.name){
+					
+					apc.user.activeProject = undefined;
+					apc.user.project.splice(i,1);
+					console.log(apc.user);
+					//save User
+					userService.update(apc.user,function(){});
+					break;
+				}
+			}
 		}
 		
 		//user does not have a current project a project was selected

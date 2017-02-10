@@ -47,10 +47,11 @@
   			<textarea ng-model="up.selectedProject.description" maxlength="255" rows="4" max-rows="4"></textarea>
 		</md-input-container>
 	
-		<div layout="row" layout-align="end start">
-			<div flex></div>
-			<md-button type="button" id="assignSubmit" class="md-primary"ng-click="up.assignSubmit()">SUBMIT</md-button>
-			<md-button type="button" id="cancel" class="md-primary"ng-click="up.close()">CANCEL</md-button>
-		</div>
+
 </div>	
+		<div layout="row" layout-align="center space-around">
+			<div flex> </div>
+			<md-button type="button" id="assignSubmit" class="md-primary"ng-click="up.assignSubmit()">SUBMIT</md-button>
+			<md-button type="button" id="cancel" class="md-accent" ng-click="up.close()">CANCEL</md-button>
+		</div>
 </md-dialog>

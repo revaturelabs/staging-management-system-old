@@ -36,8 +36,9 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
     			upc.allProjects[i].endDate = new Date(upc.allProjects[i].endDate);
     			upc.allProjects[i].displayName = upc.allProjects[i].name;
     		}
+    		upc.selectedProject = upc.allProjects[0];
     	}, function(error) {
-    	})
+    	});
 	}
 	var count=0;
 	function newProject(){
@@ -49,7 +50,7 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 	
 	function deleteProject(){
 		//no project selected
-		if(upc.selectedProject == {}){
+		if(!upc.selectedProject || upc.selectedProject == {}){
 			upc.message = "Select a project to delete.";
 			return;
 		}
