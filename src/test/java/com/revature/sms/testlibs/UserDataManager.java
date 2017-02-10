@@ -51,7 +51,7 @@ public class UserDataManager {
 	 */
 	
 	public User createTestAdmin(String username, String firstName, String lastName, String unhashedPassword, UserRole userRole){
-		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), userRole, null);
+		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), userRole);
 		
 		return createTestUser(newUser);
 	}

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.sms.domain.MarketingStatus;
+import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.dao.MarketingStatusRepo;
 
 @RestController

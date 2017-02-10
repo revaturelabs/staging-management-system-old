@@ -55,7 +55,14 @@ sms.controller("associateCertificationsCtrl", function($scope, $state, $mdDialog
 		}
 		//if there are no certs scheduled or there is a scheduled cert that hasn't happened yet
 		//return the user's grad date + 1 month
-		return new Date(acc.gradDate.getFullYear(), acc.gradDate
+		var defaultMaxDate = new Date(acc.gradDate.getFullYear(), acc.gradDate.getMonth() + 1, acc.gradDate.getDate());
+		
+		//if it is one month passed the users grad date and they have not scheduled a cert, set max date to a month from today
+		if (defaultMaxDate.getTime() <= acc.myDate.getTime())
+			return new Date(acc.myDate.getFullYear(), acc.myDate
+					.getMonth() + 1, acc.myDate.getDate());
+		else
+			return new Date(acc.gradDate.getFullYear(), acc.gradDate
 				.getMonth() + 1, acc.gradDate.getDate());
 	}
 		
