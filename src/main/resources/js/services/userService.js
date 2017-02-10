@@ -6,15 +6,13 @@
     function userService( $resource, loginService ) {
         var us = this;
         us.userResource = $resource("api/v1/user/:username", 
-            { username: "@username" }, 
+            { id: "@username" }, 
             { 
                 save  : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "PUT", url: "api/v1/user" }, 
                 query : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, isArray: true }, 
                 get   : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } }, 
                 update: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "POST", url: "api/v1/user" },
-                remove: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "DELETE"},
-                "delete": { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } } 
-                
+                remove: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } } 
             } 
         )
 
@@ -34,10 +32,7 @@
             us.userResource.update(user, success, error);
         }
 
-//        us.remove = function(user, success, error) {
-//            user.$delete(success, error);
-//        }
         us.remove = function(user, success, error) {
-            us.userResource.remove({username: user.username}, success, error);
+            user.$remove(success, error);
         }
     }

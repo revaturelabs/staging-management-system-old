@@ -1,0 +1,39 @@
+
+    <md-card class="mainCard" md-whiteframe="8dp">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+
+                <md-button class="md-icon-button" aria-label="Menu" ng-click="suCtrl.openMenu()">
+                    <md-tooltip> Menu </md-tooltip>
+                    <md-icon md-svg-icon="img/icons/ic_menu_white_24px.svg"> </md-icon>
+                </md-button>
+                <div flex> {{ suCtrl.title }}</div>
+                <md-button class="md-icon-button" aria-label="New associate" ng-click="suCtrl.newAssociate()">
+                    <md-tooltip> Add batch </md-tooltip>
+                    <md-icon md-svg-icon="img/icons/ic_add_white_24px.svg"> </md-icon>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="Logout" ng-click="suCtrl.logout()">
+                    <md-tooltip> Logout </md-tooltip>
+                    <md-icon md-svg-icon="img/icons/ic_exit_to_app_white_24px.svg"> </md-icon>
+                </md-button>
+                
+            </div>
+        </md-toolbar>
+	</md-card>
+	
+	<div>
+	    <ui-view name="mainSuperView"> </ui-view>
+	</div>
+
+    
+
+    <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
+        <md-toolbar>
+            <div class="md-toolbar-tools"> Menu </div> 
+        </md-toolbar>
+        <ul>
+            <li><md-button type ="button" class="md-raised" ng-click="suCtrl.viewAttendance()">View attendance</md-button>
+        	<li><md-button type ="button" class="md-raised" ng-click="suCtrl.updateInformation()">Update Password</md-button>
+        </ul>
+    </md-sidenav>

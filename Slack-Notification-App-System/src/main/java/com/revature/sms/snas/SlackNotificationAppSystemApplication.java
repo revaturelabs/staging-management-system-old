@@ -1,9 +1,7 @@
 package com.revature.sms.snas;
 
+import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,32 +18,25 @@ import com.revature.sms.snas.domain.dao.AssociateAttendanceRepo;
 import com.revature.sms.snas.domain.dao.UserRepo;
 import com.revature.sms.snas.domain.dao.UserRoleRepo;
 
-
 @Transactional
 @SpringBootApplication
 public class SlackNotificationAppSystemApplication {
 
-	@Transactional
 	public static void main(String[] args) {
 		SpringApplication.run(SlackNotificationAppSystemApplication.class, args);
 	}
-	
+
 	@Bean
 	public CommandLineRunner demo(AssociateAttendanceRepo aar, UserRepo ur, UserRoleRepo urr) {
 		return (args) -> {
-			ZonedDateTime rightNow = ZonedDateTime.now();
-			ZonedDateTime beginningOfDay = rightNow.minusHours(rightNow.getHour()).minusMinutes(rightNow.getMinute()).minusSeconds(rightNow.getSecond()).minusNanos(rightNow.getNano()); //get midnight of today
-			ZonedDateTime endOfDay = beginningOfDay.plusDays(1).minusNanos(1); //get the last possible second of today
-			
+			Date now = new Date();
+			Timestamp ts = new Timestamp(now.getTime());
 			List<User> allAssociates = ur.findByUserRole(urr.findByName("associate"));
 			List<User> associatesToRemindAbout = new ArrayList<>();
-			
-			
 			for (User associate : allAssociates) {
 				Boolean attendanceObjectExists = false;
-				for (AssociateAttendance aa : associate.getAttendance()) {
-					ZonedDateTime zdt = ZonedDateTime.of(LocalDateTime.parse(aa.getDate().toString().replace(" ", "T")), ZoneId.of("UTC")); //get the timestamp of the attendance object in UTC time
-					if ( ( zdt.isAfter(beginningOfDay) && zdt.isBefore(endOfDay) ) || zdt.isEqual(beginningOfDay) || zdt.isEqual(endOfDay)) {
+				for (AssociateAttendance aa : aar.findByDate(ts)) {
+					if ((aa.getDate().getDate() == now.getDate()) && (aa.getDate().getMonth() == now.getMonth())) {
 						attendanceObjectExists = true;
 						if (!aa.isVerified()) {
 							associatesToRemindAbout.add(associate);

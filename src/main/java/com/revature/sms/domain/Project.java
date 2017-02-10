@@ -14,12 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
-/**
- * 
- * Object that tracks the current available projects.
- *
- */
 @Entity
 @Table(name="PROJECT")
 public class Project {
