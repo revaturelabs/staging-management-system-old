@@ -107,7 +107,6 @@ public class ProjectController {
 					try{
 					pur.deleteByProject(p);
 					}catch(Exception e){
-						e.printStackTrace();
 						Logger.getRootLogger().debug("Exception while removing Project.", e);
 					}
 				}
@@ -116,7 +115,6 @@ public class ProjectController {
 					try{
 						pr.delete(p);
 					}catch(Exception e){
-						e.printStackTrace();
 						Logger.getRootLogger().debug("Exception while removing Project.", e);
 					}
 				}

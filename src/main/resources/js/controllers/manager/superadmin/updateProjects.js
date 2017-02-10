@@ -58,20 +58,20 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 		//delete selected project from DB
 		upc.selectedProject.startDate = upc.selectedProject.startDate.getTime();
 		upc.selectedProject.endDate = upc.selectedProject.endDate.getTime();
-		projectService.del([upc.selectedProject],function(){}, function(error){console.log(error);});
+		projectService.del([upc.selectedProject],function(){}, function(error){});
 		
 		
 		//find project to be deleted
 		for(var i = 0; i < upc.allProjects.length; i++){
 			if(upc.allProjects[i].name == upc.selectedProject.name){
 				//clear and remove from all projects list
-			}
 				upc.selectedProject = {};
 				
 				upc.allProjects.splice(i,1);
 				break;
 			}
 		}
+	}
 	
 	function assignSubmit(){
 		var pass = true;

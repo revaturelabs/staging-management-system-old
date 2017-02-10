@@ -90,9 +90,8 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 					
 					apc.user.activeProject = undefined;
 					apc.user.project.splice(i,1);
-					console.log(apc.user);
 					//save User
-					userService.update(apc.user,function(){});
+					userService.update(apc.user);
 					break;
 				}
 			}
@@ -114,9 +113,9 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 			apc.user.activeProject = apc.project;
 			
 			// update old project
-			for(var i = 0; i < apc.user.project.length;i++){
-				if(apc.user.project[i].project.name == apc.currentProject.name){
-					apc.user.project[i].project = apc.project;
+			for(var j = 0; j < apc.user.project.length; j++){
+				if(apc.user.project[j].project.name == apc.currentProject.name){
+					apc.user.project[j].project = apc.project;
 					break;
 				}
 			}
