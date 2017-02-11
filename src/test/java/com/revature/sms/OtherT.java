@@ -24,7 +24,7 @@ public class OtherT extends AbstractT {
 		sw.newPass.sendKeys(pw2);
 		sw.confirmPass.sendKeys(pw2);
 		sw.submit.click();
-		Utils.attemptWait(500);
+		//Utils.attemptWait(500);
 		Assert.assertEquals(expected.getProperty("successfulPasswordSubmission"), hp.getToastMessage());
 		hp.logout.click();
 
@@ -35,7 +35,7 @@ public class OtherT extends AbstractT {
 		sw.newPass.sendKeys(pw);
 		sw.confirmPass.sendKeys(pw);
 		sw.submit.click();
-		Utils.attemptWait(500);
+		//Utils.attemptWait(500);
 		Assert.assertEquals(expected.getProperty("successfulPasswordSubmission"), hp.getToastMessage());
 		hp.logout.click();
 	}

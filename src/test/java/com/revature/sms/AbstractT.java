@@ -129,9 +129,11 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	//Allows a single test class to log in multiple times, each time as a different user
 	public void LoginHeaderLogoutTemplate(String username, String password, String ev) {
 		lp.login(username, password);
+		Assert.assertEquals(expected.getProperty("loginSuccess"), hp.getToastMessage());
 		Assert.assertTrue(hp.verify());
 		Assert.assertEquals(ev, hp.header.getText());
 		hp.logout.click();
+		Assert.assertEquals(expected.getProperty("logoutSuccess"), lp.getToastMessage());
 		Assert.assertTrue(lp.verify());
 	}
 	
@@ -141,7 +143,6 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	public void after() {
 		if (hp.verify()) {
 			hp.logout.click();
-			Utils.attemptWait(500);
 			Assert.assertEquals(expected.getProperty("logoutSuccess"), lp.getToastMessage());
 		}
 	}

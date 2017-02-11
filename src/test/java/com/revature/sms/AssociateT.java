@@ -46,7 +46,9 @@ public class AssociateT extends AbstractT {
 	public void testCancelButtons() {
 		lp.login(un, pw);
 		asp.certification.click();
-		scw.cancel.click();
+		if (!(expected.getProperty("noMoreCerts").equals(lp.getToastMessage()))) {
+			scw.cancel.click();
+		}
 		asp.settings.click();
 		sw.cancel.click();
 		asp.reportBug.click();
@@ -98,7 +100,8 @@ public class AssociateT extends AbstractT {
 	@Test
 	public void testCheckInCheckOut() {
 		lp.login(inputs.getProperty("javaUN"), inputs.getProperty("PW"));
-		Utils.attemptWait(500);
+		 //I need this long wait because the two toast notifications you can get after logging in can disrupt the other toast notification assertions in this method
+		//Utils.attemptWait(1000);   
 		String checked = expected.getProperty("checkedIn");
 		String notChecked = expected.getProperty("notCheckedIn");
 		String icon = asp.checkincheckout.getText();
@@ -108,13 +111,13 @@ public class AssociateT extends AbstractT {
 		icon = asp.checkincheckout.getText(); //The text related to the dashboard icon changes whenever its clicked on, so the reference to the WebElement must be reset in this situation.
 		Assert.assertEquals(checked, icon);   //This line appears to fail when there is not enough wait time after a click.
 		asp.checkincheckout.click();
-		Utils.attemptWait(500);
+		//Utils.attemptWait(500);
 		driver.findElement(By.xpath("/html/body/div[5]/md-dialog/md-dialog-actions/button[1]")).click();  //Chooses no in the pop-up that asks whether you really want to un-check in.
 		icon = asp.checkincheckout.getText();
 		Assert.assertEquals(checked, icon);
 		asp.checkincheckout.click();
 		driver.findElement(By.xpath("/html/body/div[5]/md-dialog/md-dialog-actions/button[2]")).click();  //Chooses yses in the pop-up that asks whether you really want to un-check in.
-		Utils.attemptWait(500);
+		//Utils.attemptWait(500);
 		Assert.assertEquals(expected.getProperty("checkOutSuccess"), asp.getToastMessage());
 		icon = asp.checkincheckout.getText();
 		Assert.assertEquals(notChecked, icon);
@@ -188,10 +191,8 @@ public class AssociateT extends AbstractT {
 			}
 
 			asp.prevWeek.click();
-			if (asp.getToastMessage() != null) {
-				if (expected.getProperty("tooFarBack").equals(asp.getToastMessage())) {
-					flag = false;
-				}
+			if (expected.getProperty("tooFarBack").equals(asp.getToastMessage())) {
+				flag = false;
 			}
 		} while (flag);
 	}
