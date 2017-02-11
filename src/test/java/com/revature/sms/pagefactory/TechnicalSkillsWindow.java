@@ -10,10 +10,10 @@ public class TechnicalSkillsWindow extends SMSPage{
 	@FindBy(xpath="//*[@aria-label=\"New skill\"]")
 	public WebElement newSkill;
 	
-	@FindBy(xpath="//*[@type=\"submit\"]")
+	@FindBy(xpath="//*[@name=\"updateAll\"]/button[1]")
 	public WebElement submit;
 	
-	@FindBy(xpath="//*[@type=\"button\"]")
+	@FindBy(xpath="//*[@name=\"updateAll\"]/button[2]")
 	public WebElement cancel;
 	
 	public TechnicalSkillsWindow(WebDriver driver) {

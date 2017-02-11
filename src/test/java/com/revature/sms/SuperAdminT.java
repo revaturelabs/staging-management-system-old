@@ -13,9 +13,8 @@ public class SuperAdminT extends AdminT  {
 		sap.addBatch.click();
 		
 		cbw.cancel.click();
-		//System.out.println("HERE: "+sap.getToastMessage());
-		//String here2 = sap.getToastMessage();
-		//System.out.println("HERE2: "+here2);
+		Utils.attemptWait(500);
+
 		Assert.assertEquals(expected.getProperty("cancelBatchAddition"), sap.getToastMessage());
 		
 		sap.editSkills.click();

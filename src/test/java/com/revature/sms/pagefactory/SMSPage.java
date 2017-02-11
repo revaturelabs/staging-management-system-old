@@ -97,15 +97,12 @@ public abstract class SMSPage {
 			}
 			text = text.trim();
 			String[] splitText = text.split("\n");
+			
 			try {
 				WebElement ok = driver.findElement(By.xpath("//md-toast/div/button"));
 				ok.click();
 			} catch (NoSuchElementException e1) {}
 			
-			//System.out.println("Split text at 0: "+splitText[0]);
-			//if (splitText[0].equals("Batch addition cancelled.")) {
-			//	System.out.println("WHY?");
-			//}
 			Utils.attemptWait(500);
 			return splitText[0];
 			

@@ -100,6 +100,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		sap = new SuperAdminPage(driver);
 		scw = new ScheduleCertificationWindow(driver);
 		cbw = new CreateBatchWindow(driver);
+		tsw = new TechnicalSkillsWindow(driver);
 		sw = new SettingsWindow(driver);
 		rbw = new RaiseBugWindow(driver);
 		
