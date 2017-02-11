@@ -30,8 +30,13 @@
         mac.panelDatePickerIsOpen = false;
         /**@prop {Date} panelDate The date of the panel, binded so it shows up on panel calendar */
         mac.panelDate = new Date();
-        mac.markBind = "";
+        /**@prop {boolean} associateTableIsOpen Variable that tells if the associate table view is open. */
+        $scope.associateTableIsOpen = false;
+        /**@prop {String} tableOrder variable for sorting the associateTable. Set to sort by last name by default*/
+        mac.tableOrderAttribute = "";
+        mac.reverseOrder = false;
         
+        mac.markBind = "";
         
         
         
@@ -50,13 +55,17 @@
         mac.newAssociates = newAssociates;
         mac.marketingStatuses = marketingStatuses;
         mac.changeStatus = changeStatus;
+        mac.updateProjects = updateProjects;
+        mac.deleteSelectedUser = deleteSelectedUser;
 
-       
 
 
         /**@var {function} calcMarketingDays function reference variable. */
 
         mac.calcMarketingDays = calcMarketingDays;
+        /**@var {function} calcMarketingDaysForAllUsers function reference variable*/
+        mac.calcMarketingDaysForAllUsers = calcMarketingDaysForAllUsers;
+        /**@var {function} days_between function reference variable. */
         mac.days_between = days_between;
         mac.updateCert = updateCert;
         /**@var {function} convert to date object. */
@@ -94,9 +103,8 @@
         mac.findDevice();
         mac.getUsers();
         mac.getTaskTypes();
-        mac.setToolbar();
+        mac.setToolbar("Weekly attendance");
         mac.marketingStatuses();
-  
         
         // function
         /**
@@ -115,8 +123,7 @@
 	    	    	});
         	
         
-        }
-        
+        }        
         
           // functions
             /**
@@ -277,8 +284,9 @@
          * At the moment, only relevant to add superAdmin options to superAdmin users when logged in,
          * as superAdmin should always have all the options that admins do.
          */
-        function setToolbar() {
+        function setToolbar(s) {
             var actions = [];
+            var thisTitle = s;
             if (mac.user.userRole.name == "superAdmin") {
 
 
@@ -286,7 +294,6 @@
                     "function": mac.newAssociates,
                     "icon"   : "add",
                     "tooltip" : "Add batch of new associates."
-
                 });
 
                 actions.push( {
@@ -308,18 +315,15 @@
                 //         "icon"    : "transfer_within_a_station",
                 //         "tooltip" : "Delete Associates" 
                 // });
-            
 
-               
             }
 
 
             $scope.$emit( "setToolbar", { 
-                title: "Weekly attendance", 
+                title: thisTitle, 
                 actions }
             );
         }
-        
 
             
             /**
@@ -562,6 +566,20 @@
         }
         
         /**
+         * @description calcMarketingDays function, adapted for iterating over all users. Takes in a user as a parameter
+         * @returns {number} number of days between the grad date and today
+         */
+        function calcMarketingDaysForAllUsers(user){
+	        if(user.graduationDate == null){
+	        	return "N/A";
+	        }
+	        else{
+	       		return " " + mac.days_between(mac.curr, ((new Date(user.graduationDate)))) + " days";	
+	       	}
+        }
+        
+        
+        /**
          * @description Determines the difference betwen the two supplied dates.
          * @param {date} date1 First supplied date.
          * @param {date} date2 Second supplied date.
@@ -703,5 +721,72 @@
 			}
 		}
 		
+
+		$scope.$on( "setView", function( events, data ) {
+            mac.associateTableIsOpen = data.associateTableIsOpen;
+            setToolbar(data.title);
+        })
+		/**
+         * @description Called when a superAdmin clicks on update project icon, opens a dialog.
+         */
+		function updateProjects(){
+			//only superadmins can do this
+			if(mac.user.userRole.name != "superAdmin"){
+				return;
+			}
+			
+			$mdDialog.show({
+                templateUrl: "html/templates/updateProjects.html",
+                controller: "updateProjectsCtrl as up",
+                clickOutsideToClose: false,
+                escapeToClose: false
+            }).then(function(){
+                mac.toast("Projects updated");
+            });
+		}
+		function deleteSelectedUser(ev) {
+			if( mac.selectedUser != undefined) {
+				var confirm = $mdDialog.confirm()
+		          .title('Delete selected user?')
+		          .textContent(mac.selectedUser.firstName +' '+ mac.selectedUser.lastName+ ' will be removed.' )
+		          .ariaLabel('Lucky day')
+		          .targetEvent(ev)
+		          .ok('Please do it!')
+		          .cancel('No, thank you.');
+				
+				 $mdDialog.show(confirm).then(function() {
+				    	
+				    	//MM TODO Erase mm block use login controller to update pass, make new endpoint
+				    	// add a loading icon to show something is going on
+				    	angular.element("body").addClass("loading");
+				    	
+				    	// update the selected user
+			    		userService.remove( mac.selectedUser, function() {
+			    			
+			    			// remove the loading icon
+			    			angular.element("body").removeClass("loading");
+			    			
+			    			//prompt the user
+			    			mac.toast("User deleted.");	
+			    			mac.getUsers();
+		                    mac.users = $filter( "taskFilter" )( mac.users, mac.today );
+			    		}, function(error) {
+			    			// remove the loading icon
+			    			angular.element("body").removeClass("loading");
+			    			
+			    			//prompt the user
+			    			mac.toast("Error deleting user.");
+			    		});
+			},
+			function() {
+		    	
+		    	//prompt
+		    	mac.toast("User deletion cancelled.");
+		    });
+
+		}
+		
         
+    }
+		
     }
