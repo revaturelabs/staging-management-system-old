@@ -16,6 +16,7 @@ import com.revature.sms.domain.MarketingStatus;
 import com.revature.sms.domain.ProjectUser;
 import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.Token;
+import com.revature.sms.domain.Trainer;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
@@ -106,8 +107,9 @@ public class UserDataManager {
 	
 	public User createTestUser(String username, String firstName, String lastName, String unhashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate,
-			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus, List<ProjectUser> project) {
-		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole, graduationDate, skills, events, marketingStatus, project);
+			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus, List<ProjectUser> project,
+			Trainer trainer) {
+		User newUser = new User(username, firstName, lastName, hashPassword(unhashedPassword), batchType, attendance, tasks, userRole, graduationDate, skills, events, marketingStatus, project, trainer);
 		return createTestUser(newUser);
 	}
 	

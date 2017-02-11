@@ -20,11 +20,13 @@ import com.revature.sms.domain.JobEvent;
 import com.revature.sms.domain.MarketingStatus;
 import com.revature.sms.domain.ProjectUser;
 import com.revature.sms.domain.TechnicalSkills;
+import com.revature.sms.domain.Trainer;
 import com.revature.sms.domain.User;
 import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.AssociateTaskTypeRepo;
 import com.revature.sms.domain.dao.BatchTypeRepo;
 import com.revature.sms.domain.dao.MarketingStatusRepo;
+import com.revature.sms.domain.dao.TrainerRepo;
 import com.revature.sms.domain.dao.UserRoleRepo;
 import com.revature.sms.util.ExcelHelper;
 import com.revature.sms.util.Utils;
@@ -49,6 +51,9 @@ public class DBInitializationController {
 	@Autowired
 	private MarketingStatusRepo msr;
 	
+	@Autowired
+	private TrainerRepo tr;
+	
 	
 	DBInitializationController() {
 		super();
@@ -65,6 +70,7 @@ public class DBInitializationController {
 			ArrayList<String> userRoles = eh.getValues("userRole");
 			ArrayList<String> graduationDates = eh.getValues("graduationDate");
 			ArrayList<String> marketingStatuses = eh.getValues("marketingStatus");
+			//ArrayList<String> trainers = eh.getValues("trainer");
 			
 			
 			List<AssociateAttendance> attendance = new ArrayList<AssociateAttendance>();
@@ -72,6 +78,8 @@ public class DBInitializationController {
 			List<JobEvent> events = new ArrayList<JobEvent>();
 			Set<TechnicalSkills> skills = new HashSet<TechnicalSkills>();
 			List<ProjectUser> projects = new ArrayList<ProjectUser>();
+			
+			
 			
 			//Each iteration of the loop corresponds to a new user that is added
 			int i = 0;
@@ -83,8 +91,11 @@ public class DBInitializationController {
 				String graduationDate = graduationDates.get(i);
 				Timestamp gts = Utils.convertDateToTimestamp(graduationDate);
 				MarketingStatus marketingStatus = msr.findByStatus(marketingStatuses.get(i));
+				Trainer trainer = tr.findOne(0);  //This line is a placeholder until someone creates a method in the TrainerRepo that lets me find Trainers
 				
-				udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), unhashedPasswords.get(i), batchType, attendance, tasks, userRole, gts, skills, events, marketingStatus, projects);
+				udm.createTestUser(usernames.get(i), firstNames.get(i), lastNames.get(i), 
+								   unhashedPasswords.get(i), batchType, attendance, tasks, userRole, 
+								   gts, skills, events, marketingStatus, projects, trainer);
 				i++;
 			}
 		} catch (FilloException e) {Logger.getRootLogger().debug(e);}
