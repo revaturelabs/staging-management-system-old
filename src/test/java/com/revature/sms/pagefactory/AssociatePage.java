@@ -127,16 +127,18 @@ public class AssociatePage extends HomePage {
 	
 	public ArrayList<String> goThroughUserInfo() {
 		ArrayList<String> userInfo = new ArrayList<String>();
-		List<WebElement> rows = driver.findElements(By.xpath("//md-expansion-panel[1]/md-expansion-panel-expanded/md-expansion-panel-content/md-list/md-list-item"));
+		List<WebElement> rows = driver.findElements(By.xpath("//*[@class=\"expansionPanelList\"]/md-list-item"));
 		for (WebElement row:rows) {
 			WebElement button = row.findElement(By.tagName("button"));
+			//Most of this just gets rid of extraneous whitespace in the current roe
 			String text = button.getAttribute("aria-label");
 			text = text.replace("\n"," ");
 			String[] splitText = text.split("  ");
 			String rowTitle = splitText[0];
-			String rowValue = splitText[15].trim();
+			String rowValue = splitText[15].trim();  
 			String reformedText = rowTitle+": "+rowValue;
 			
+			//Special formatting is needed for dates
 			if ("Graduation date".equals(rowTitle)) {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
 				LocalDate dateObject = LocalDate.parse(rowValue, formatter);
@@ -152,6 +154,7 @@ public class AssociatePage extends HomePage {
 	public ArrayList<String> goThroughSkills() {
 		ArrayList<String> skills = new ArrayList<String>();
 		String skillText = skillsPanel.findElement(By.xpath("md-expansion-panel-expanded/md-expansion-panel-content")).getText();
+		//Parses through the skills, which are seperated by commas
 		String[] splitSkillText = skillText.split(",");
 		int i=0;
 		while (i<splitSkillText.length) {
@@ -167,10 +170,14 @@ public class AssociatePage extends HomePage {
 	
 	public HashMap<String, String> goThroughEvent(int eventNumber) {
 		HashMap<String, String> hm = new HashMap<String, String>();
-		WebElement button = eventsPanel.findElement(By.xpath("md-expansion-panel-expanded/md-expansion-panel-content/md-list/md-list-item["+eventNumber+"]/div/button"));
+		
+		//Splits the text on the button by line
+		WebElement button = eventsPanel.findElement(By.xpath("//*[@class=\"expansionPanelList md-dense\"]/md-list-item["+eventNumber+"]/div/button"));
 		String eventText = button.getAttribute("aria-label");
+		System.out.println(eventText);
 		String[] textSplit = eventText.split("\n");
 		
+		//Puts each line (that actually has text) into an ArrayList
 		ArrayList<String> eventData = new ArrayList<String>();
 		int i=0;
 		while (i<textSplit.length) {
@@ -182,6 +189,7 @@ public class AssociatePage extends HomePage {
 			i++;
 		}
 		
+		//Each line is further split, trimmed, and given a key to identify the type of information it contains
 		String line1 = eventData.get(0);
 		String[] split1 = line1.split("-");
 		hm.put("companyName", split1[0].trim());
@@ -205,91 +213,75 @@ public class AssociatePage extends HomePage {
 	}
 	
 	
-	public HashMap<String, String> findCertification(LocalDate expectedDate) {
+	//Given the type and date of a task, this method can find all the information about that task on 
+	//the associate page and return it
+	public HashMap<String, String> findTask(String taskType, LocalDate expectedDate) {
 		HashMap<String, String> hm = new HashMap<String, String>();
 		try {
-			//System.out.println("Here1");
-			List<WebElement> allTasks =  tasksPanel.findElements(By.xpath("//*[@class=\"expansionPanelList\"]/*"));
-			boolean c = false;
-			for (WebElement task:allTasks) {
-				if ("div".equals(task.getTagName()) && "Certifications".equals(task.getText())) {
-					System.out.println("Here2");
-					c = true;
-				}
-				if ("div".equals(task.getTagName()) && !"Certifications".equals(task.getText())) {
-					c = false;
-				}
+			List<WebElement> elements =  tasksPanel.findElements(By.xpath("//*[@class=\"expansionPanelList\"]/*"));
+			//Shorthand for identifying what type of task to search for
+			boolean certSearch = "Certification".equals(taskType);
+			boolean panelSearch = "Panel".equals(taskType);
+			
+			boolean isTask = false;
+			boolean taskMatches = false;
+			//This loop goes through all the WebElements in the the Tasks panel.
+			for (WebElement e:elements) {
+				String tagName = e.getTagName();
+				//We should add to the hash when the element has information specific to the task.
+				//Only md-list-item elements with a role attribute of listitem fit these requirements.
+				isTask = "md-list-item".equals(tagName) && e.getText()!=null;
 				
-				if ("md-list-item".equals(task.getTagName()) && "listitem".equals(task.getAttribute("role")) && c) {
-					//System.out.println("Here2");
-					String date = task.findElement(By.tagName("p")).getText().trim();
+				//The div elements in the task panel have text that reveal the types of the following tasks.
+				if ("div".equals(tagName)) {
+					String header = e.getText();
+					String[] splitHeader = header.split("\n");  //We only need the text before the first new line.
+					if (certSearch) {
+						taskMatches = "Certifications".equals(splitHeader[0]);
+					}
+					if (panelSearch) {
+						System.out.println("Task Type 2: "+taskType);
+						taskMatches = "Panels".equals(splitHeader[0]);
+					}
+				} 
+				
+				//This runs when we know that the current element has information about the type of task
+				//we're looking for
+				if (isTask && taskMatches) {
+					//Formats the date so it can be compared to the expected date
+					String date = e.findElement(By.tagName("p")).getText().trim();
 					date = date.replace("On ", "");
 					date = date.replace("Scheduled for ", "");
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
 					LocalDate dateObject = LocalDate.parse(date, formatter);
 					
+					//We only add information to the hash when the task has the date we expect
 					if (expectedDate.compareTo(dateObject) == 0) {
-						//System.out.println("Here3");
-						hm.put("taskType", "Certification");
-						hm.put("taskNote", task.findElement(By.tagName("h3")).getText().trim());
 						hm.put("taskDate", dateObject.toString());
-						
-						String icon = task.findElement(By.tagName("md-icon")).getText().trim();
+						String icon = e.findElement(By.tagName("md-icon")).getText().trim();
 						if ("done".equals(icon)) {
 							hm.put("taskStatus", "true");
-						}
-						if ("close".equals(icon)) {
+						} else if ("close".equals(icon)) {
 							hm.put("taskStatus", "false");
-						}	
-					}
-				}	
-			}
-		} catch (NoSuchElementException e) {}
-		return hm;
-	}
-	
-	
-	public HashMap<String, String> findPanel() {
-		HashMap<String, String> hm = new HashMap<String, String>();
-		try {
-			List<WebElement> allTasks =  tasksPanel.findElements(By.xpath("//*[@class=\"expansionPanelList\"]/*"));
-			boolean p = false;
-				for (WebElement task:allTasks) {
-					if ("div".equals(task.getTagName()) && "Panels".equals(task.getText())) {
-						p = true;
-					}
-					if ("div".equals(task.getTagName()) && !"Panels".equals(task.getText())) {
-						p = false;
-					}
-	
-					if ("md-list-item".equals(task.getTagName()) && "listitem".equals(task.getAttribute("role")) && p) {
-						hm.put("taskType", "Panel");
-						WebElement element = task.findElement(By.tagName("p"));
-						String date = task.findElement(By.tagName("p")).getText().trim();
-						
-						date = date.replace("On ", "");
-						date = date.replace("Scheduled for ", "");
-						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-						LocalDate dateObject = LocalDate.parse(date, formatter);
-						hm.put("taskDate", dateObject.toString());
-						
-						String icon = task.findElement(By.tagName("md-icon")).getText().trim();
-						if ("done".equals(icon)) {
-							hm.put("taskStatus", "true");
+						} else {
+							hm.put("taskStatus", "???");
 						}
-						if ("close".equals(icon)) {
-							hm.put("taskStatus", "false");
+						
+						//These if statements get information that is only relevant for specific types of tasks.
+						if (certSearch) {
+							hm.put("taskType", "Certification");
+							hm.put("taskNote", e.findElement(By.tagName("h3")).getText().trim());
+						}
+						
+						if (panelSearch) {
+							hm.put("taskType", "Panel");
 						}	
 					}
 				}
-				
-		} catch (NoSuchElementException e) {}
-		return hm;
+			}
+		} catch (NoSuchElementException exception) {}
+		return hm;	
 	}
-	
-	
-	
-	
 	
 	
 }

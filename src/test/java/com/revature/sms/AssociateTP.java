@@ -22,36 +22,23 @@ import com.revature.sms.domain.JobEventType;
 import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.User;
 import com.revature.sms.util.Utils;
+import static com.revature.sms.util.PanelHelper.*;
 
 //This test class makes sure that the data displayed in each of the panels on the associate page (expectedInfo) 
 //matches the data in the database (actualInfo).
 public class AssociateTP extends AbstractT {
 
+	//Mixes together user related information (retrieved using the User domain object) with the
+	//row names that are expected to be used in the user info panel (from expected.properties) and
+	//combines them into strings that can be compared with the text that is actually visible on
+	//the website (retrieved with Selenium)
 	@Test
 	public void testUserInfoPanel() {
 		lp.login(un, pw);
 		asp.openPanel(asp.userInfoPanel);
 		User user = ur.findByUsername(un);
 		
-		ArrayList<String> expectedInfo = new ArrayList<String>();
-		String title1 = expected.getProperty("nameTitle");
-		String fname = user.getFirstName();
-		String lname = user.getLastName();
-		String nameRow = title1+": "+fname+" "+lname;
-		expectedInfo.add(nameRow);
-		String title2 = expected.getProperty("usernameTitle");
-		String usernameRow = title2+": "+un;
-		expectedInfo.add(usernameRow);
-		String title3 = expected.getProperty("batchCurriculumTitle");
-		BatchType bt = user.getBatchType();
-		String batchType = bt.getType();
-		String batchCurriculumRow = title3+": "+batchType;
-		expectedInfo.add(batchCurriculumRow);
-		String title4 = expected.getProperty("graduationDateTitle");
-		LocalDate dateObject = Utils.convertTimestampToLocalDate(user.getGraduationDate());
-		String gDateRow = title4+": "+dateObject.toString();
-		expectedInfo.add(gDateRow);
-		
+		ArrayList<String> expectedInfo = getExpectedUserInfo(expected, user);
 		ArrayList<String> actualInfo = asp.goThroughUserInfo();
 		Assert.assertEquals(expectedInfo, actualInfo);
 		asp.closePanel(asp.userInfoPanel);
@@ -64,18 +51,11 @@ public class AssociateTP extends AbstractT {
 		asp.openPanel(asp.skillsPanel);
 		User user = ur.findByUsername(un);
 		
-		ArrayList<String> expectedSkills = new ArrayList<String>();
-		Set<TechnicalSkills> skillset = user.getSkill();
-		Iterator<TechnicalSkills> itr = skillset.iterator();
-		while (itr.hasNext()) {
-			TechnicalSkills ts = itr.next();
-			String skill = ts.getSkill();
-			expectedSkills.add(skill);
-		}
-		
+		//Iterates through the Set of skills of the logged in user
+		ArrayList<String> expectedSkills = getExpectedSkills(expected, user);
 		ArrayList<String> actualSkills = asp.goThroughSkills();
-		System.out.println(expectedSkills);
-		System.out.println(actualSkills);
+		
+		//All data is transfered to sorted ArrayLists, since they can be easily compared
 		Collections.sort(expectedSkills);
 		Collections.sort(actualSkills);
 
@@ -93,29 +73,24 @@ public class AssociateTP extends AbstractT {
 		
 		List<JobEvent> eventObjects = user.getEvents();
 		int i=0;
+		//Each event from the database has a bunch of information that needs to be compared to what
+		//is actually displayed on the website, so a HashMap is created for each event to organize
+		//this information, and this while loop is used so the two representations of an event are
+		//compared one at a time
 		while (i < eventObjects.size()) {
 			JobEvent e = eventObjects.get(i);
-			HashMap<String, String> expectedInfo = new HashMap<String, String>();
-			JobAssignment a = e.getAssignment();
-			expectedInfo.put("companyName", a.getCompanyName());
-			expectedInfo.put("companyLocation", a.getLocation());
-			expectedInfo.put("jobTitle", a.getJobTitle());
-			
-			JobEventType t = e.getType();
-			expectedInfo.put("eventType", t.getType());
-			
-			Timestamp ts = e.getDate();
-			LocalDate date = Utils.convertTimestampToLocalDate(ts);
-			expectedInfo.put("eventDate", date.toString());
-			
-			expectedInfo.put("eventNote", e.getNote());
-			expectedInfo.put("eventLocation", e.getLocation());
+			HashMap<String, String> expectedInfo = getExpectedEvent(expected, user, e);
 			Set<String> keys = expectedInfo.keySet();
 			
-			HashMap<String, String> actualInfo = asp.goThroughEvent(i+1);
+			//i+1 is used to compensate for the difference between zero-based indexing in Java and one-based indexing in XPaths
+			HashMap<String, String> actualInfo = asp.goThroughEvent(i+1);  
+			
+			//Makes sure that job event type is correctly displayed above the rest of the information 
 			String subheader = asp.eventsPanel.findElement(By.xpath("md-expansion-panel-expanded/md-expansion-panel-content/md-list/div["+(i+1)+"]")).getText();  
 			Assert.assertEquals(subheader, expectedInfo.get("eventType"));
 			
+			//By using the same key to get info from both Hashes, we know they're both referring to 
+			//the same event
 			Iterator<String> itr = keys.iterator();
 			while (itr.hasNext()) {
 				String key = itr.next();
@@ -135,31 +110,19 @@ public class AssociateTP extends AbstractT {
 		
 		List<AssociateTask> taskObjects = user.getTasks();
 		for (AssociateTask task:taskObjects) {
-			HashMap<String, String> expectedInfo = new HashMap<String, String>();
-			AssociateTaskType taskType = task.getTaskType();
 			Timestamp ts = task.getDate();
 			LocalDate date = Utils.convertTimestampToLocalDate(ts);
-			
-			expectedInfo.put("taskDate", date.toString());  //The comparison will mess up if the taskDate is before 5am in the database
-			expectedInfo.put("taskNote", task.getNote());
-			expectedInfo.put("taskType", taskType.getType());
-			expectedInfo.put("taskStatus", String.valueOf(task.getPassed()));
+			HashMap<String, String> expectedInfo = getExpectedTask(expected, user, task, date.toString());
 			
 			Set<String> keys = expectedInfo.keySet();
-			HashMap<String, String> actualInfo; 
-			
-			if ("Certification".equals(expectedInfo.get("taskType"))) {
-				actualInfo = asp.findCertification(date);
-			} else {
-				actualInfo = asp.findPanel();
-			}
+			HashMap<String, String> actualInfo = asp.findTask(expectedInfo.get("taskType"), date);
 				
 			Iterator<String> itr = keys.iterator();
 			while (itr.hasNext()) {
 				String key = itr.next();
-				if (!("taskNote".equals(key) && "Panel".equals(expectedInfo.get("taskType")))) {
-					System.out.println(expectedInfo.get(key));
-					System.out.println(actualInfo.get(key));
+				//This if statement is here because task notes are not displayed in any way on the web
+				//page for panels
+				if (!("taskNote".equals(key) && "Panel".equals(expectedInfo.get("taskType")))) {  
 					Assert.assertEquals(expectedInfo.get(key), actualInfo.get(key));
 				}
 			}
