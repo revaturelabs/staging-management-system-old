@@ -14,7 +14,7 @@ public class AdminT extends AbstractT {
 
 	//Tests that when an Admin or a Super Admin logs in and out, they are navigated to the appropriate pages.
 	@Test
-	public void testLoginHeaderLogout() {
+	public void testAdminLogin() {
 		String pageType = hp.getClass().getName();
 		String expectedValue;
 		if (pageType.contains(".Admin")) {
@@ -22,17 +22,13 @@ public class AdminT extends AbstractT {
 		} else {
 			expectedValue = expected.getProperty("superAdminPg");
 		}
-		LoginHeaderLogoutTemplate(un, pw, expectedValue);
+		loginHeaderLogoutTemplate(un, pw, expectedValue);
 	}
 
 	@Test
 	public void testCancelButtons() {
-		lp.login(inputs.getProperty("adminUN"), inputs.getProperty("PW"));
-		adp.settings.click();
-		sw.cancel.click();
-		adp.reportBug.click();
-		driver.switchTo().frame("atlwdg-frame");
-		rbw.cancel.click();
+		lp.login(un, pw);
+		cancelCommonButtons();
 	}
 
 	// This test is temporarily unusable and irrelevant while the search bar is

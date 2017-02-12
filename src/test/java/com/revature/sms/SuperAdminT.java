@@ -9,7 +9,7 @@ public class SuperAdminT extends AdminT  {
 
 	@Test
 	public void testCancelButtons() {
-		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("PW"));
+		lp.login(un, pw);
 		sap.addBatch.click();
 		
 		cbw.cancel.click();
@@ -21,11 +21,7 @@ public class SuperAdminT extends AdminT  {
 		tsw.cancel.click();
 		Assert.assertEquals(expected.getProperty("cancelAddSkill"), sap.getToastMessage());
 		
-		sap.settings.click();
-		sw.cancel.click();
-		sap.reportBug.click();
-		driver.switchTo().frame("atlwdg-frame");
-		rbw.cancel.click();
+		cancelCommonButtons();
 		Utils.attemptWait(500);
 	}	
 	
@@ -38,7 +34,7 @@ public class SuperAdminT extends AdminT  {
 	//This test creates a new batch using the dashboard icon.
 	@Test
 	public void testBatchCreation() {
-		lp.login(inputs.getProperty("superAdminUN"), inputs.getProperty("superAdminPW"));
+		lp.login(un, pw);
 		
 		sap.addBatch.click();
 		Assert.assertTrue(cbw.verify());
