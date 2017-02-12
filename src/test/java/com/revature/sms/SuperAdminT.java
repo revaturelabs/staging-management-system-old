@@ -14,7 +14,6 @@ public class SuperAdminT extends AdminT  {
 		
 		cbw.cancel.click();
 		Utils.attemptWait(500);
-
 		Assert.assertEquals(expected.getProperty("cancelBatchAddition"), sap.getToastMessage());
 		
 		sap.editSkills.click();

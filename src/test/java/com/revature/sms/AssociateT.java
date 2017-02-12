@@ -75,7 +75,7 @@ public class AssociateT extends AbstractT {
 	@Test
 	public void testWeekFooter()  {
 		lp.login(un, pw);
-		String monday = asp.attendanceCells.get(0).getText();
+		String monday = asp.attendanceHeaders.findElement(By.tagName("th")).getText();
 		if (monday.contains("/0")) {
 			monday = monday.replace("0", "");
 		}

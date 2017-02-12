@@ -33,35 +33,6 @@ public class AdminT extends AbstractT {
 		cancelCommonButtons();
 	}
 
-	// This test is temporarily unusable and irrelevant while the search bar is
-	// being fixed
-	// Test to enter username in search box and verify correct associate name is
-	// returned
-	/*
-	 * @Test 
-	 * public void testAdminSearchBar() {
-	 * lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
-	 * Assert.assertTrue(adp.verify());
-	 * Assert.assertEquals(expected.getProperty("adminPg"),
-	 * adp.header.getText());
-	 * 
-	 * adp.searchBox.sendKeys("Java");
-	 * Assert.assertEquals(expected.getProperty("java"),
-	 * adp.searchResult.getText()); adp.searchBox.clear();
-	 * 
-	 * adp.searchBox.sendKeys("DotNet");
-	 * Assert.assertEquals(expected.getProperty("dotnet"),
-	 * adp.searchResult.getText()); adp.searchBox.clear();
-	 * 
-	 * adp.searchBox.sendKeys("SDET");
-	 * Assert.assertEquals(expected.getProperty("sdet"),
-	 * adp.searchResult.getText()); adp.searchBox.clear();
-	 * 
-	 * adp.logout.click(); 
-	 * Assert.assertTrue(lp.verify()); 
-	 * }
-	 */
-
 	//Associate attendance icons do not always seem to change 100% of the time when they are clicked on many 
 	//times during the following test, so I created this constant so anyone can choose how consistent they
 	//want the test to be. Adding waits in critical spots can increase the success rate of the test
@@ -89,7 +60,7 @@ public class AdminT extends AbstractT {
 		}
 		
 		while (!expected.getProperty("tooFarBack").equals(adp.getToastMessage())) {
-			List<WebElement> allCells = adp.attendanceTable.findElements(By.tagName("td"));
+			List<WebElement> allCells = adp.attendanceCells.findElements(By.tagName("td"));
 			WebElement cell;
 			int count = allCells.size();
 			int i=0;
@@ -103,7 +74,7 @@ public class AdminT extends AbstractT {
 				Utils.attemptWait(800);  
 				//The table on the web page is reloaded after every click on a cell, so the WebElements must
 				//be reloaded too.
-				allCells = adp.attendanceTable.findElements(By.tagName("td"));
+				allCells = adp.attendanceCells.findElements(By.tagName("td"));
 				cell = allCells.get(i);
 				if (cell.getText().contains("\n")) {  //When an associate name is clicked
 					adp.closeIcon.click();
@@ -123,7 +94,34 @@ public class AdminT extends AbstractT {
 			adp.prevWeekTop.click();
 		}
 		
-	
+		// This test is temporarily unusable and irrelevant while the search bar is
+		// being fixed
+		// Test to enter username in search box and verify correct associate name is
+		// returned
+		/*
+		 * @Test 
+		 * public void testAdminSearchBar() {
+		 * lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
+		 * Assert.assertTrue(adp.verify());
+		 * Assert.assertEquals(expected.getProperty("adminPg"),
+		 * adp.header.getText());
+		 * 
+		 * adp.searchBox.sendKeys("Java");
+		 * Assert.assertEquals(expected.getProperty("java"),
+		 * adp.searchResult.getText()); adp.searchBox.clear();
+		 * 
+		 * adp.searchBox.sendKeys("DotNet");
+		 * Assert.assertEquals(expected.getProperty("dotnet"),
+		 * adp.searchResult.getText()); adp.searchBox.clear();
+		 * 
+		 * adp.searchBox.sendKeys("SDET");
+		 * Assert.assertEquals(expected.getProperty("sdet"),
+		 * adp.searchResult.getText()); adp.searchBox.clear();
+		 * 
+		 * adp.logout.click(); 
+		 * Assert.assertTrue(lp.verify()); 
+		 * }
+		 */
 		
 		
 		

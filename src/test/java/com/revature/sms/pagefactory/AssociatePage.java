@@ -40,20 +40,14 @@ public class AssociatePage extends HomePage {
 	@FindBy(xpath = "//*[@md-component-id=\"taskPanel\"]")
 	public WebElement tasksPanel;
 	
-	@FindBy(tagName = "tbody")
-	public WebElement weekTable;
-	
-	@FindBy(xpath = "//*[@name=\"mainView\"]/div/md-card/div/div[2]/button[1]/md-icon")
+	@FindBy(xpath = "//*[@name=\"mainView\"]/div/md-card/div/div[2]/button[1]")
 	public WebElement prevWeek;
 
-	@FindBy(xpath = "//*[@name=\"mainView\"]/div/md-card/div/div[2]/button[2]/md-icon")
+	@FindBy(xpath = "//*[@name=\"mainView\"]/div/md-card/div/div[2]/button[2]")
 	public WebElement nextWeek;
 
 	@FindBy(xpath = "//*[@name=\"mainView\"]/div/md-card/div/div[2]/div")
 	public WebElement weekOf;
-
-	@FindBy(xpath = "//*[@name=\"mainView\"]/div/md-card/md-table-container/table/thead/tr/th")
-	public List<WebElement> attendanceCells;
 
 	public AssociatePage(WebDriver driver) {
 		super(driver);
@@ -62,7 +56,8 @@ public class AssociatePage extends HomePage {
 	//This method is used to organize and return dates from the attendance table on the Associate page.
 	public ArrayList<MonthDay> goThroughWeek() {
 		ArrayList<MonthDay> monthDays = new ArrayList<MonthDay>();
-		for (WebElement e : attendanceCells) {
+		List<WebElement> allHeaders = attendanceHeaders.findElements(By.tagName("th"));
+		for (WebElement e : allHeaders) {
 			String text = e.getText();
 			text = text.replace("\n", "");
 			text = text.replace("/", "-");

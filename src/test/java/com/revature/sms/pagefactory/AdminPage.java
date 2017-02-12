@@ -24,18 +24,12 @@ public class AdminPage extends HomePage {
 
 	@FindBy(xpath = "//*[@id=\"attendanceTableDiv\"]/md-card/div/div[2]/div[2]/div")
 	public WebElement weekOfBottom;
-
-	@FindBy(xpath = "//*[@id=\"attendanceTableDiv\"]/md-card/div/md-table-container/table")
-	public WebElement attendanceTable;
 	
-	@FindBy(xpath = "//*[@id=\"attendanceTableDiv\"]/md-card/div/md-table-container/table/tbody/tr[1]/td[2]/div/md-icon")
+	@FindBy(xpath = "//*[@class=\"attendanceTable\"]/table/tbody/tr[1]/td[2]")
 	public WebElement sampleAttendanceTableCell;
 
 	@FindBy(id = "closeIcon")
 	public WebElement closeIcon;
-
-	@FindBy(xpath = "//*[@id='attendanceTableDiv']/md-card/div/md-table-container/table/tbody/tr[1]/td[2]")
-	public WebElement verifyAssoc;
 
 	@FindBy(id = "associateInformationDiv")
 	public WebElement verifyInfoDiv;
