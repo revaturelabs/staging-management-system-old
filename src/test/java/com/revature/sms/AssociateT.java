@@ -132,8 +132,6 @@ public class AssociateT extends AbstractT {
 		asp.closePanel(asp.eventsPanel);
 		asp.closePanel(asp.tasksPanel);
 		
-		
-		
 		while (!expected.getProperty("tooFarForward").equals(asp.getToastMessage())) {
 			asp.nextWeek.click();
 		}
@@ -141,8 +139,6 @@ public class AssociateT extends AbstractT {
 		while (!expected.getProperty("tooFarBack").equals(asp.getToastMessage())) {
 			asp.prevWeek.click();
 		}
-	
-	
 	}
 
 }

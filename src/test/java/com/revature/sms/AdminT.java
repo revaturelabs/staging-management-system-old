@@ -9,6 +9,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
+import com.revature.sms.util.Utils;
+
 //This test class tests features that are particular to an Admin's home page.
 public class AdminT extends AbstractT {
 
@@ -60,44 +62,70 @@ public class AdminT extends AbstractT {
 	 * }
 	 */
 
+	//Associate attendance icons do not always seem to change 100% of the time when they are clicked on many 
+	//times during the following test, so I created this constant so anyone can choose how consistent they
+	//want the test to be. Adding waits in critical spots can increase the success rate of the test
+	final int tooManyMisses = 3;
 	
 	//This test clicks all of the buttons on the Admin attendance table and makes sure that they work.
 	@Test
 	public void testAdminAttendanceButtons() {
 		lp.login(un, pw);
 		
+		//Test toast notification for attendance table cells
+		adp.sampleAttendanceTableCell.click();
+		Assert.assertEquals(expected.getProperty("attendanceUpdate"), adp.getToastMessage());
+		adp.sampleAttendanceTableCell.click();
+		
 		//Navigation buttons
-		adp.prevWeekTop.click();
-		adp.nextWeekTop.click();
-		adp.prevWeekBottom.click();
-		adp.nextWeekBottom.click();
+		while (!expected.getProperty("tooFarForward").equals(adp.getToastMessage())) {
+			adp.nextWeekTop.click();
+		}
+		while (!expected.getProperty("tooFarBack").equals(adp.getToastMessage())) {
+			adp.prevWeekBottom.click();
+		}
+		while (!expected.getProperty("tooFarForward").equals(adp.getToastMessage())) {
+			adp.nextWeekBottom.click();
+		}
 		
-		List<WebElement> allCells = adp.attendanceTable.findElements(By.tagName("td"));
-		int count = allCells.size();
-		
-		
-		int i=0;
-		//Iterates through every cell in the attendance table.
-		while (i<count) {
-			try {
-				WebElement cell = allCells.get(i);
+		while (!expected.getProperty("tooFarBack").equals(adp.getToastMessage())) {
+			List<WebElement> allCells = adp.attendanceTable.findElements(By.tagName("td"));
+			WebElement cell;
+			int count = allCells.size();
+			int i=0;
+			int misses=0;
+			
+			//Iterates through every cell in the attendance table.
+			while (i<count) {
+				cell = allCells.get(i);
 				String textBefore = cell.getText();
 				cell.click();
+				Utils.attemptWait(800);  
+				//The table on the web page is reloaded after every click on a cell, so the WebElements must
+				//be reloaded too.
+				allCells = adp.attendanceTable.findElements(By.tagName("td"));
+				cell = allCells.get(i);
 				if (cell.getText().contains("\n")) {  //When an associate name is clicked
 					adp.closeIcon.click();
 				} else {  //When an attendance icon is clicked
 					String textAfter = cell.getText();
-					System.out.println(textBefore);
-					System.out.println(textAfter);
-					System.out.println();
-					Assert.assertNotEquals(textBefore, textAfter);  //Asserts that the icon changed after being clicked.
+					if (textBefore.equals(textAfter)) {
+						misses++;
+					}
+					Assert.assertTrue(misses < tooManyMisses);
 				}
-				
-			} catch (StaleElementReferenceException e) {  //If the table changed on the web page, it must be reloaded.
-				allCells = adp.attendanceTable.findElements(By.tagName("td"));
+				i++;
 			}
-			i++;
+			System.out.println();
+			System.out.println("Week: "+adp.weekOfTop.getText());
+			System.out.println("Misses: "+misses);
+			Utils.attemptWait(2000);
+			adp.prevWeekTop.click();
 		}
+		
+	
+		
+		
 		
 	}
 

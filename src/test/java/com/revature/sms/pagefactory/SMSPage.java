@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -89,7 +90,7 @@ public abstract class SMSPage {
 	//notifications are laid out in a similar way.
 	public String getToastMessage() {
 		try {
-			Utils.attemptWait(500);
+			Utils.attemptWait(400);
 			WebElement toast = driver.findElement(By.tagName("md-toast"));
 			String text = toast.getText();
 			if (text.equals("")) {
@@ -99,11 +100,15 @@ public abstract class SMSPage {
 			String[] splitText = text.split("\n");
 			
 			try {
+				//This method has the side effect of clicking the ok button on the toast notification window.
+				//This could theoretically be undesirable at some point, but for now, it helps to prevent
+				//Selenium from getting confused when there are multiple toast notifications on the web
+				//page at the same time.
 				WebElement ok = driver.findElement(By.xpath("//md-toast/div/button"));
 				ok.click();
-			} catch (NoSuchElementException e1) {}
+			} catch (WebDriverException e1) {}
 			
-			Utils.attemptWait(500);
+			Utils.attemptWait(400);
 			return splitText[0];
 			
 		} catch (NoSuchElementException e) {
