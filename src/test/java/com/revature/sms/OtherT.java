@@ -1,5 +1,8 @@
 package com.revature.sms;
 
+import java.time.MonthDay;
+import java.util.ArrayList;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -91,6 +94,25 @@ public class OtherT extends AbstractT {
 		Assert.assertEquals(passwordFail, message);
 		lp.unField.clear();
 		lp.pwField.clear();	
+	}
+	
+	//Makes sure the current week is shown on the home page when you log in.
+	@Test
+	public void testDefaultWeek() {
+		lp.login(un, pw);
+		
+		//Gets the date of every day this week from expected.properties...
+		ArrayList<MonthDay> expectedMonthDays = new ArrayList<MonthDay>();
+		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Mon")));
+		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Tue")));
+		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Wed")));
+		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Thu")));
+		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Fri")));
+
+		
+		ArrayList<MonthDay> actualMonthDays = hp.goThroughWeek();
+		//...and compares them to the dates displayed on the website
+		Assert.assertEquals(expectedMonthDays, actualMonthDays);
 	}
 	
 }

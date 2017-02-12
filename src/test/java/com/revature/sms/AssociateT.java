@@ -51,25 +51,6 @@ public class AssociateT extends AbstractT {
 		}
 		cancelCommonButtons();
 	}
-
-	//Makes sure the current week is shown on the associate page when you log in.
-	@Test
-	public void testDefaultWeek() {
-		lp.login(un, pw);
-		
-		//Gets the date of every day this week from expected.properties...
-		ArrayList<MonthDay> expectedMonthDays = new ArrayList<MonthDay>();
-		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Mon")));
-		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Tue")));
-		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Wed")));
-		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Thu")));
-		expectedMonthDays.add(MonthDay.parse(expected.getProperty("Fri")));
-
-		
-		ArrayList<MonthDay> actualMonthDays = asp.goThroughWeek();
-		//...and compares them to the dates displayed on the website
-		Assert.assertEquals(expectedMonthDays, actualMonthDays);
-	}
 	
 	//Asserts that the date displayed under the calendar is the same as the one displayed below the word Monday.
 	@Test
