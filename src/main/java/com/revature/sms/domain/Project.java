@@ -1,16 +1,12 @@
 package com.revature.sms.domain;
 
 import java.sql.Timestamp;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -21,10 +17,10 @@ public class Project {
 	 * int value that represents the primary key of the record.
 	 */
 	@Id
-	@Column(name = "ID")
+	@Column(name = "Id")
 	@SequenceGenerator(allocationSize = 1, name = "projectSeq", sequenceName = "PROJECT_SEQ")
 	@GeneratedValue(generator = "projectSeq", strategy = GenerationType.SEQUENCE)
-	private int ID;
+	private int Id;
 
 	/**
 	 * String value that represents name of the project.
@@ -73,19 +69,19 @@ public class Project {
 	}
 
 	/**
-	 * Set method for ID.
-	 * @return ID int value that represents the primary key of the record
+	 * Set method for Id.
+	 * @return Id int value that represents the primary key of the record
 	 */
 	public int getID() {
-		return ID;
+		return Id;
 	}
 
 	/**
-	 * Get method for ID
-	 * @param iD int value that represents the primary key of the record
+	 * Get method for Id
+	 * @param Id int value that represents the primary key of the record
 	 */
-	public void setID(int iD) {
-		ID = iD;
+	public void setID(int Id) {
+		Id = Id;
 	}
 
 	/**
@@ -157,7 +153,7 @@ public class Project {
 	 */
 	@Override
 	public String toString() {
-		return "Project [ID=" + ID + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
+		return "Project [Id=" + Id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", description=" + description + "]";
 	}
 	
