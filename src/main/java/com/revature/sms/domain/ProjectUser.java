@@ -36,9 +36,6 @@ public class ProjectUser {
 	@JoinColumn(name="PROJECT")
 	private Project project;
 
-/*	@Column
-	private User associate;*/
-	
 	/**
 	 * Default constructor for ProjectUser.
 	 */

@@ -6,9 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Id;
 
 @Entity
 @Table(name="PROJECT")
@@ -17,10 +17,10 @@ public class Project {
 	 * int value that represents the primary key of the record.
 	 */
 	@Id
-	@Column(name = "Id")
+	@Column(name = "id")
 	@SequenceGenerator(allocationSize = 1, name = "projectSeq", sequenceName = "PROJECT_SEQ")
 	@GeneratedValue(generator = "projectSeq", strategy = GenerationType.SEQUENCE)
-	private int Id;
+	private int id;
 
 	/**
 	 * String value that represents name of the project.
@@ -69,19 +69,19 @@ public class Project {
 	}
 
 	/**
-	 * Set method for Id.
-	 * @return Id int value that represents the primary key of the record
+	 * Set method for id.
+	 * @return id int value that represents the primary key of the record
 	 */
 	public int getID() {
-		return Id;
+		return id;
 	}
 
 	/**
-	 * Get method for Id
-	 * @param Id int value that represents the primary key of the record
+	 * Get method for id
+	 * @param id int value that represents the primary key of the record
 	 */
-	public void setID(int Id) {
-		Id = Id;
+	public void setID(int id) {
+		id = id;
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class Project {
 	 */
 	@Override
 	public String toString() {
-		return "Project [Id=" + Id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
+		return "Project [id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", description=" + description + "]";
 	}
 	
