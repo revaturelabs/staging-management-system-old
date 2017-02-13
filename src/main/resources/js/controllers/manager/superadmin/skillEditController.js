@@ -22,9 +22,10 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
          */
         sec.skillIds = [];
 
-
         sec.skillPromiseList = [];
-  
+        sec.skillRemovePromiseList = [];
+        sec.skillEditPromiseList = [];
+        sec.skillAddPromiseList = [];
         /**
          * @prop {number} ADDSKILLDEFAULTVAL Constant that's the default id value for newly added skills
          */
@@ -100,7 +101,7 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
          * @param {boolean} isValid boolean value of the form's $valid property.
          */
         function addSkillToDB(skill){
-                sec.skillPromiseList.push(skillService.create(skill, function(){
+                sec.skillAddPromiseList.push(skillService.create(skill, function(){
                   //empty function
                 }, function(){
                     //empty function
@@ -113,8 +114,8 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
          * @param {string} oldSkillName The old name of the skill.
          * @param {string} newSkillName The new name for the skill.
          */
-        function updateSkillInDB(oldSkillName, newSkillName){
-           sec.skillPromiseList.push( skillService.update(oldSkillName, newSkillName, function(){
+        function updateSkillInDB(skillInfo){
+           sec.skillEditPromiseList.push( skillService.update(skillInfo.oldSkillName, skillInfo.newSkillName, function(){
                 //empty to make it work
             }, function(){
                //empty to make it work
@@ -127,7 +128,7 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
          */
          function removeSkillFromDB(skillName){
                 
-               sec.skillPromiseList.push(
+               sec.skillRemovePromiseList.push(
                    skillService.remove(skillName, function(){
                    //empty function to make this work
                 }, function(){
@@ -143,20 +144,25 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
          * according to what the user wants to have done.
          */
          function updateAll(){
+             var removeList = [];
+             var editList = [];
+             var addList = [];
              
              //check the origin skill array and see if any skills have been removed.
             for (var i=0; i<sec.currentSkills.length; i++){
                 var j = sec.skillIds.indexOf(sec.currentSkills[i].id); //gets skill id
                 if (j==-1){ // skill was marked for deletion in the view
                    
-                    sec.removeSkillFromDB(sec.currentSkills[i].skill);
+                    //sec.removeSkillFromDB(sec.currentSkills[i].skill);
+                    removeList.push(sec.currentSkills[i].skill);
                 }
                 
                 var skillNameIn = sec.newSkillList.indexOf(sec.currentSkills[i].skill);
                 if (!(j==skillNameIn)){
                   // something got changed, need to edit the skill
-                    
-                    sec.updateSkillInDB(sec.currentSkills[i].skill, sec.newSkillList[j]);
+                    var editSkill = {oldSkill: sec.currentSkills[i].skill, newSkill: sec.newSkillList[j]};
+                    editList.push(editSkill);
+                    //sec.updateSkillInDB(sec.currentSkills[i].skill, sec.newSkillList[j]);
                 }
              
             }
@@ -166,25 +172,39 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
                     continue;
                 }
                 var newSkill = {skill : sec.newSkillList[k]};
-                sec.addSkillToDB(newSkill);//adds skill to DB
+                addList.push(newSkill);
+                //sec.addSkillToDB(newSkill);//adds skill to DB
 
             }
 
-       
+            resolveSkills(removeList, editList, addList);
+            sec.skillPromiseList = sec.skillRemovePromiseList.concat(sec.skillEditPromiseList).concat(sec.skillAddPromiseList);
+            
 
+            
             $q.all(sec.skillPromiseList).then(function(){
                 sec.toast("Skill edits successful!");
+                console.log(skillPromiseList);
                 $mdDialog.hide();
             }, function(){
                 sec.toast("Problem occurred while editing skills.")
+                console.log(skillPromiseList);
                 $mdDialog.hide();
             });
                    
-            
         
        
             
          }
+
+
+         var resolveSkills = function(removeList, editList, addList){
+            removeList.forEach(sec.removeSkillFromDB());
+            editList.forEAch(sec.updateSkillInDB());
+            addList.forEach(sec.addSkillToDB());
+         }
+
+
 
 
       
