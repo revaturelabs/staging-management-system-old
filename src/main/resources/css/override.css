@@ -246,4 +246,19 @@
     
     .loading {
     	cursor: wait; 
+
+    .dense-list, .dense-list div, .dense-list button {
+        height: 24px !important;
+        min-height: 24px !important;
+        margin: 0px !important;
+    }
+
+    .dense-list .md-list-item-inner div {
+        position: relative;
+        top: 5px;
+    }
+
+    .denseItem {
+        font-size: 13px;
+        font-weight: bold;
     }
