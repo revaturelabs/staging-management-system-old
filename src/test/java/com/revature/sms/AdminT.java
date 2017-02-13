@@ -72,7 +72,7 @@ public class AdminT extends AbstractT {
 		}
 		
 		while (!expected.getProperty("tooFarBack").equals(adp.getToastMessage())) {
-			List<WebElement> allCells = adp.attendanceCells.findElements(By.tagName("td"));
+			List<WebElement> allCells = adp.attendanceBody.findElements(By.tagName("td"));
 			WebElement cell;
 			int count = allCells.size();
 			int i=0;
@@ -86,7 +86,7 @@ public class AdminT extends AbstractT {
 				Utils.attemptWait(600);  
 				//The table on the web page is reloaded after every click on a cell, so the WebElements must
 				//be reloaded too.
-				allCells = adp.attendanceCells.findElements(By.tagName("td"));
+				allCells = adp.attendanceBody.findElements(By.tagName("td"));
 				cell = allCells.get(i);
 				if (cell.getText().contains("\n")) {  //When an associate name is clicked
 					adp.closeIcon.click();

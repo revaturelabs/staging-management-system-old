@@ -62,7 +62,7 @@ public class AssociatePage extends HomePage {
 		// x = "close"
 		ArrayList<String> icons = new ArrayList<String>();
 		for (int i = 1; i <= 5; i++) {
-			WebElement e = driver.findElement(By.xpath("//tbody/tr/td[" + i + "]/div/md-icon"));
+			WebElement e = attendanceBody.findElement(By.xpath("//tr/td[" + i + "]/div/md-icon"));
 			String text = e.getText();
 			icons.add(text.trim());
 		}

@@ -30,7 +30,7 @@ public class HomePage extends SMSPage {
 	public WebElement attendanceHeaders;
 	
 	@FindBy(xpath = "//*[@class=\"attendanceTable\"]/table/tbody")
-	public WebElement attendanceCells;
+	public WebElement attendanceBody;
 	
 	
 	public HomePage(WebDriver driver) {
@@ -46,10 +46,11 @@ public class HomePage extends SMSPage {
 			String text = e.getText();
 			text = text.replace("/", "-");
 			String[] split = text.split("-");	
-			if (split[0].length()<2) {
+			//Add dashes and possibly a zero to make MonthDay's parse method happy.
+			if (split[0].length()<2) {   
 				text = "0" + text;
 			}
-			text = "--" + text;  //The dashes are just to make MonthDay's parse method happy.
+			text = "--" + text;  
 			MonthDay md = MonthDay.parse(text);
 			monthDays.add(md);
 		}

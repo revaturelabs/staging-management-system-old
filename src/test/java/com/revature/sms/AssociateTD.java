@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.User;
+import com.revature.sms.util.Utils;
 
 public class AssociateTD extends AbstractT {
 
@@ -22,34 +23,7 @@ public class AssociateTD extends AbstractT {
 		asp.verify();
 
 		User user = ur.findByUsername(un);
-		List<AssociateAttendance> attendanceList = user.getAttendance();
-		HashMap<MonthDay, String> expectedStatuses = new HashMap<MonthDay, String>();  //Database data
-		
-		//Goes through the User's list of attendance objects and gathers information from them in a way that allows
-		//it to be compared to the website.
-		for (AssociateAttendance a : attendanceList) {
-			Timestamp ts = a.getDate();
-			String fullTime = ts.toString();
-			String monthDay = fullTime.substring(5, 10);
-			String formattedMonthDay = "--" + monthDay;
-			MonthDay md = MonthDay.parse(formattedMonthDay);
-
-			String status;
-			boolean ci = a.isCheckedIn();
-			boolean v = a.isVerified();
-			//Depending on whether an associate is checked in and verified, a certain icon should be displayed, 
-			//and each icon is associated with a different string in the html.
-			if (v) { 
-				status = "done_all";
-			} else if (ci && !v) {
-				status = "done";
-			} else if (!ci && !v) {
-				status = "close";
-			} else {
-				status = "???";
-			}
-			expectedStatuses.put(md, status);
-		}
+		HashMap<MonthDay, String> expectedStatuses = Utils.getExpectedAttendanceStatuses(user);
 		
 		boolean flag = true;
 		//This do-while loop uses the navigation buttons on the calendar to go through all of the weeks in 

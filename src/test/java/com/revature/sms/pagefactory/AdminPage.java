@@ -1,5 +1,9 @@
 package com.revature.sms.pagefactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,8 +41,45 @@ public class AdminPage extends HomePage {
 		super(driver);
 	}
 	
+	
 	public boolean infoDisplayed() {
 		return verifyInfoDiv.isDisplayed();
+	}
+	
+	public ArrayList<String> goThroughWeekIcons(int row) {
+		// no icon = no string
+		// checkmark = "done"
+		// double checkmark = "done_all"
+		// x = "close"
+		ArrayList<String> icons = new ArrayList<String>();
+		for (int i = 2; i <= 6; i++) {
+			WebElement e = attendanceBody.findElement(By.xpath("//tr["+row+"]/td["+i+"]/div/md-icon"));
+			String text = e.getText();
+			icons.add(text.trim());
+		}
+		return icons;
+	}
+	
+	
+	public List<WebElement> getAttendanceRows() {
+		List<WebElement> rows = attendanceBody.findElements(By.tagName("tr"));
+		return rows;
+	}
+	
+	public ArrayList<String> getAssociateNames(String infoType) {
+		ArrayList<String> info = new ArrayList<String>();
+		List<WebElement> rows = getAttendanceRows();
+		if ("username".equals(infoType)) {
+			for (WebElement row:rows) {
+				info.add(row.findElement(By.xpath("//td[1]/div/div[2]/p")).getText());
+			}
+		}
+		if ("fullName".equals(infoType)) {
+			for (WebElement row:rows) {
+				info.add(row.findElement(By.xpath("//td[1]/div/div[2]/h3")).getText());
+			}
+		}
+		return info;
 	}
 	
 }
