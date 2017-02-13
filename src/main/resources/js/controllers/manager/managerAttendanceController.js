@@ -6,7 +6,7 @@
       * @description AngularJs controller for Manager attendance module (both versions of Admins)
       */   
 
-    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, skillEditFactory, taskTypeService, marketingStatusService, batchAddFactory, weekdays ) {
+    function managerAttendanceCtrl( $scope, $state, $filter, $mdDialog, loginService, userService, taskTypeService, marketingStatusService, batchAddFactory, weekdays ) {
        /**@prop {function} Reference variable for this controller */
         var mac = this;
 
@@ -30,14 +30,7 @@
         mac.panelDatePickerIsOpen = false;
         /**@prop {Date} panelDate The date of the panel, binded so it shows up on panel calendar */
         mac.panelDate = new Date();
-        /**@prop {boolean} associateTableIsOpen Variable that tells if the associate table view is open. */
-        $scope.associateTableIsOpen = false;
-        /**@prop {String} tableOrder variable for sorting the associateTable. Set to sort by last name by default*/
-        mac.tableOrderAttribute = "";
-        mac.reverseOrder = false;
-        
         mac.markBind = "";
-        
         
         
             // functions
@@ -53,23 +46,16 @@
         mac.nextWeek = nextWeek;
         mac.toast = toast;
         mac.newAssociates = newAssociates;
+
         mac.marketingStatuses = marketingStatuses;
         mac.changeStatus = changeStatus;
-        mac.updateProjects = updateProjects;
-        mac.deleteSelectedUser = deleteSelectedUser;
-
-
 
         /**@var {function} calcMarketingDays function reference variable. */
-
         mac.calcMarketingDays = calcMarketingDays;
-        /**@var {function} calcMarketingDaysForAllUsers function reference variable*/
-        mac.calcMarketingDaysForAllUsers = calcMarketingDaysForAllUsers;
         /**@var {function} days_between function reference variable. */
         mac.days_between = days_between;
+        /**@var {function} editCert function reference variable. */
         mac.updateCert = updateCert;
-        /**@var {function} convert to date object. */
-        mac.convertToDateObject = convertToDateObject;
         /**@var {function} togglePanelDatePicker function reference variable. */
         mac.togglePanelDatePicker = togglePanelDatePicker;
         /**@var {function} editPanel function reference variable. */
@@ -80,30 +66,14 @@
         mac.createPanel = createPanel;
         /**@var {function} getTaskTypes function reference variable. */
         mac.getTaskTypes = getTaskTypes;
-        /**@var {function} assignProject function reference variable. */
-        mac.assignProject = assignProject;
-
-        
-        mac.showFullJobInfo = showFullJobInfo;
 
 
-        mac.editSkills = editSkills;
-
-
-
-        mac.deleteSelectedJob = deleteSelectedJob;
-        
-        mac.makenewjob = makenewjob;
-        
-
-        mac.resetSelectedUsersJob = resetSelectedUsersJob;
-        
 
           // initialization
         mac.findDevice();
         mac.getUsers();
         mac.getTaskTypes();
-        mac.setToolbar("Weekly attendance");
+        mac.setToolbar();
         mac.marketingStatuses();
         
         // function
@@ -119,11 +89,12 @@
         	var sentData = mac.selectedUser.toJSON();
                 	
         	userService.update(sentData,function(){
-	    		mac.toast("Marketing status updated");
+	    		mac.toast("Marketing Status Updated");
 	    	    	});
         	
         
-        }        
+        }
+        
         
           // functions
             /**
@@ -141,12 +112,12 @@
         /**
          * @description Retrieves the information for all users from the server.
          */
-        function getUsers() {
+        function getUsers( success ) {
             userService.getAll( function(response) {
                 mac.users = $filter( "associateFilter" )( response );
                 mac.users = $filter( "taskFilter" )( mac.users, mac.today );
                 mac.calcWeek( mac.curr );
-            }, function() {
+            }, function(error) {
                 mac.toast("Error retrieving all users.");
             });
         }
@@ -208,7 +179,7 @@
                 } else {
                     mac.selectedUser = user;
                     mac.panelDatePickerIsOpen = false;
-                    if(user.panels[0].date){
+                    if( (user.panels[0]) && (user.panels[0].date) ) {
 	                    mac.panelDate = user.panels[0].date;
 	                    mac.panelDate = new Date(user.panels[0].date);
                     }
@@ -217,7 +188,7 @@
                 mac.infoOpen = true;
                 mac.panelDatePickerIsOpen = false;
                 mac.selectedUser = user;
-                if(user.panels[0].date){
+                if( (user.panels[0]) && (user.panels[0].date) ) {
                     mac.panelDate = user.panels[0].date;
                     mac.panelDate = new Date(user.panels[0].date);
                 }
@@ -274,7 +245,7 @@
                     mac.getUsers();
                     mac.users = $filter( "taskFilter" )( mac.users, mac.today );
                 }, function() {
-                    mac.toast("Could not update attendance.")
+                    mac.toast("Could not udpdate attendance.")
                 });
             }    
         }
@@ -284,43 +255,18 @@
          * At the moment, only relevant to add superAdmin options to superAdmin users when logged in,
          * as superAdmin should always have all the options that admins do.
          */
-        function setToolbar(s) {
+        function setToolbar() {
             var actions = [];
-            var thisTitle = s;
             if (mac.user.userRole.name == "superAdmin") {
-
-
                 actions.push( {
                     "function": mac.newAssociates,
-                    "icon"   : "add",
+                    "icons"   : "add",
                     "tooltip" : "Add batch of new associates."
-                });
-
-                actions.push( {
-                    "function": mac.editSkills, 
-                    "icon"    : "assessment", 
-                    "tooltip" : "Edit available skills"
-                });
-                
-                actions.push({
-                	"function": mac.updateProjects,
-                    "icon"   : "work",
-                    "tooltip" : "Create or update an existing project."
-
-                });
-
-                // actions.push({
-                    	 
-                //         "function": mac.deleteAssociates,
-                //         "icon"    : "transfer_within_a_station",
-                //         "tooltip" : "Delete Associates" 
-                // });
-
+                })
             }
 
-
             $scope.$emit( "setToolbar", { 
-                title: thisTitle, 
+                title: "Weekly attendance", 
                 actions }
             );
         }
@@ -423,7 +369,7 @@
 						mac.toast("Panel date is updated");
 						mac.getUsers();
 						mac.panelDatePickerIsOpen = false;
-					}, function(){
+					}, function(error){
 						mac.toast("Failed to update panel date");
 					});
 				}
@@ -447,7 +393,7 @@
 						userService.update( user, function(){
 							mac.toast("Panel passed updated to "+status);
 							mac.getUsers();
-						}, function(){
+						}, function(error){
 							mac.toast("Failed to update panel status");
 						});
 					}
@@ -478,7 +424,7 @@
                 mac.toast("Panel created.");
                 
                 mac.getUsers();
-            }, function() {
+            }, function(response) {
                 mac.toast("Failed to create panel");
             });
 		}
@@ -486,48 +432,15 @@
 		/**
          * @description Retrieves the taskTypes from the DB.
          */
-        function getTaskTypes() {
+        function getTaskTypes( success ) {
             taskTypeService.getAll( function(response) {
                 mac.taskTypes = response;
-            }, function() {
+            }, function(error) {
                 mac.toast("Error retrieving all task types.");
             });
         }
-        
-    	/**
-         * @description Called when a superAdmin clicks on assign project, opens a dialog.
-         */
-		function assignProject(user, project){
-			//only superadmins can do this
-			if(mac.user.userRole.name != "superAdmin"){
-				return;
-			}
-			
-			$mdDialog.show({
-                templateUrl: "html/templates/assignProject.html",
-                controller: "assignProjectCtrl as ap",
-                locals:{
-                	user,
-                	project
-                },
-                clickOutsideToClose: false,
-                escapeToClose: false
-            });
-		}
 		
 
-        //Function for adding skills, document properly after it's fully created.
-        function editSkills(){
-
-            $mdDialog.show({
-                templateUrl: "html/templates/skillsEdit.html",
-                controller: "skillEditCtrl as sECtrl",
-                clickOutsideToClose: true,
-                escapeToClose: true
-             });
-            
-        }
-        
             // adds a leading zero to input if necessary
         function padZero( input ) {
             if (input < 10) {
@@ -551,33 +464,8 @@
          * @returns {number} Number of days between the graduation date and today
          */
         function calcMarketingDays(){
-
-
-        	if (mac.selectedUser) {
-	        	if(mac.selectedUser.graduationDate == null){
-	        		return "N/A";
-	        	}
-	        	else{
-	
-	        		return " " + mac.days_between(mac.curr, ((new Date(mac.selectedUser.graduationDate)))) + " days";	
-	        	}
-        	}
-
+        	return " " + mac.days_between(mac.curr, ((new Date(mac.selectedUser.graduationDate)))) + " days";
         }
-        
-        /**
-         * @description calcMarketingDays function, adapted for iterating over all users. Takes in a user as a parameter
-         * @returns {number} number of days between the grad date and today
-         */
-        function calcMarketingDaysForAllUsers(user){
-	        if(user.graduationDate == null){
-	        	return "N/A";
-	        }
-	        else{
-	       		return " " + mac.days_between(mac.curr, ((new Date(user.graduationDate)))) + " days";	
-	       	}
-        }
-        
         
         /**
          * @description Determines the difference betwen the two supplied dates.
@@ -602,191 +490,11 @@
 
 
         }
-        
-        function convertToDateObject(adate){
-        	 var condate =  new Date(adate);
-        	return (condate.getMonth()+1)+ "/" + condate.getDate() + "/"+ condate.getFullYear();
-        }
-        
-        function showFullJobInfo(event){
-            
-            // if the info boxes are open for a particular user
-            if (mac.infoOpen) {
-            	// if the selected job is already the open job of information 
-                if (mac.selectedjob == event) {
-                    
-                	//set the selected to null
-                	mac.selectedjob = null;
-                }
-                // if the selected is not == to the new job
-                else {
-                	
-                	// set a new selected
-                	mac.selectedjob = event;
-                }
+
+          // watchers
+        $scope.$watch( function() { return mac.selectedUser }, function( newUser, oldUser ) {
+            if ( (newUser != oldUser) && (newUser) ) {
+                $scope.$broadcast( "newSelectedUser", mac.selectedUser );
             }
-        }
-        
-        /*mac.closeJobInfo = function(){
-            mac.selectedjob =null;
-        }*/
-        function deleteSelectedJob(){
-        	
-        	// if we have a selected job and user
-        	if( ( mac.selectedjob != undefined ) && ( mac.selectedUser != undefined ) ) {
-        		
-        		mac.selectedUser.events.splice( mac.selectedUser.events.indexOf(mac.selectedjob), 1 );
-        		userService.update( mac.selectedUser, function() {
-        			//prompt
-        			mac.toast("Job deleted.");
-        			mac.selectedjob = null;
-        		}, function() {
-        			//prompt
-        			mac.toast("Error deleting job.");
-        		})
-        	}
-        }
-        
-        //................................
-     // adds associates by batch
-		function makenewjob() {
-            
-              // opens a dialog to allows addition of a new batch of associates
-                // opens another dialog upon success to show added associates' info
-            $mdDialog.show({
-                templateUrl: "html/templates/jobAdd.html",
-                controller: "jobAddCtrl as jACtrl",
-                locals: { "selectedUser": mac.selectedUser },
-                bindToController: true,
-                clickOutsideToClose: true,
-                escapeToClose: true
-            }).then( function() {
-            	
-            	//prompt
-            	mac.toast("Job addition successful.");
-            }, function() {
-                mac.toast("Job addition cancelled.");
-            });
-        }
-        //..............................
-		
-		function resetSelectedUsersJob(ev){
-			// of we have selected a user
-			if( mac.selectedUser != undefined) {
-				//<<<<<<<<<<<
-				 
-					    // Appending dialog to document.body to cover sidenav in docs app
-					    var confirm = $mdDialog.confirm()
-					          .title('Reset selected users password?')
-					          .textContent('Password will be reset to '+ mac.selectedUser.firstName +' '+ mac.selectedUser.lastName+'\'s username')
-					          .ariaLabel('Lucky day')
-					          .targetEvent(ev)
-					          .ok('Please do it!')
-					          .cancel('No, thank you.');
-
-					    $mdDialog.show(confirm).then(function() {
-					    	
-					    	//MM TODO Erase mm block use login controller to update pass, make new endpoint
-					    	// add a loading icon to show something is going on
-					    	angular.element("body").addClass("loading");
-					    	
-					    	// update the selected user
-				    		loginService.resetPass( mac.selectedUser, function() {
-				    			
-				    			// remove the loading icon
-				    			angular.element("body").removeClass("loading");
-				    			
-				    			//prompt the user
-				    			mac.toast("Password reset successful.");	
-				    		}, function() {
-				    			
-				    			// remove the loading icon
-				    			angular.element("body").removeClass("loading");
-				    			
-				    			//prompt the user
-				    			mac.toast("Error resetting Password.");
-				    		});
-					    	//MM
-					    	
-					    	
-					    	
-					    }, 
-					    //on error
-					    function() {
-					    	
-					    	//prompt
-					    	mac.toast("Password reset cancelled.");
-					    });
-				//<<<<<<<<<<<
-			}
-		}
-		
-
-		$scope.$on( "setView", function( events, data ) {
-            mac.associateTableIsOpen = data.associateTableIsOpen;
-            setToolbar(data.title);
         })
-		/**
-         * @description Called when a superAdmin clicks on update project icon, opens a dialog.
-         */
-		function updateProjects(){
-			//only superadmins can do this
-			if(mac.user.userRole.name != "superAdmin"){
-				return;
-			}
-			
-			$mdDialog.show({
-                templateUrl: "html/templates/updateProjects.html",
-                controller: "updateProjectsCtrl as up",
-                clickOutsideToClose: false,
-                escapeToClose: false
-            }).then(function(){
-                mac.toast("Projects updated");
-            });
-		}
-		function deleteSelectedUser(ev) {
-			if( mac.selectedUser != undefined) {
-				var confirm = $mdDialog.confirm()
-		          .title('Delete selected user?')
-		          .textContent(mac.selectedUser.firstName +' '+ mac.selectedUser.lastName+ ' will be removed.' )
-		          .ariaLabel('Lucky day')
-		          .targetEvent(ev)
-		          .ok('Please do it!')
-		          .cancel('No, thank you.');
-				
-				 $mdDialog.show(confirm).then(function() {
-				    	
-				    	//MM TODO Erase mm block use login controller to update pass, make new endpoint
-				    	// add a loading icon to show something is going on
-				    	angular.element("body").addClass("loading");
-				    	
-				    	// update the selected user
-			    		userService.remove( mac.selectedUser, function() {
-			    			
-			    			// remove the loading icon
-			    			angular.element("body").removeClass("loading");
-			    			
-			    			//prompt the user
-			    			mac.toast("User deleted.");	
-			    			mac.getUsers();
-		                    mac.users = $filter( "taskFilter" )( mac.users, mac.today );
-			    		}, function(error) {
-			    			// remove the loading icon
-			    			angular.element("body").removeClass("loading");
-			    			
-			    			//prompt the user
-			    			mac.toast("Error deleting user.");
-			    		});
-			},
-			function() {
-		    	
-		    	//prompt
-		    	mac.toast("User deletion cancelled.");
-		    });
-
-		}
-		
-        
-    }
-		
     }
