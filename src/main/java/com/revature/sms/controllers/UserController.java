@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.transaction.Transactional;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +19,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.sms.domain.MarketingStatus;
 import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
+import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
+import com.revature.sms.domain.dao.MarketingStatusRepo;
 import com.revature.sms.domain.dao.TokenRepo;
 import com.revature.sms.domain.dao.UserRepo;
+import com.revature.sms.domain.dao.UserRoleRepo;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
 import com.revature.sms.domain.dto.UserDTO;
 
@@ -46,6 +48,12 @@ public class UserController {
 
 	@Autowired
 	private TokenRepo tokenRepo;
+	
+	@Autowired
+	private UserRoleRepo uRoleRepo;
+	
+	@Autowired
+	private MarketingStatusRepo markStatRepo;
 
 	/**
 	 * Autowired AssociateAttendenceRepo object. Spring handles setting this up
@@ -78,6 +86,10 @@ public class UserController {
 			if (isValid(token) && isSuperAdmin(role)) {
 				
 				User user = getUser(userDTO);
+				UserRole role = uRoleRepo.findByName("associate");
+				MarketingStatus status = markStatRepo.findByStatus("Staging");
+				user.setUserRole(role);
+				user.setMarketingStatus(status);
 				user = userRepo.save(user);
 				user.blankPassword();
 				user.setID(0);

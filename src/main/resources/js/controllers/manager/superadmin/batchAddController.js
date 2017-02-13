@@ -53,14 +53,7 @@ bac.trainer = "";
 		$mdDialog.cancel();
 	});
 	
-	    // hard coded value for userRole object of associate
-	var userRole = {};
-	userRole.name = "associate";
-	userRole.id = 1;
-
-    var marketingStatus = {};
-    marketingStatus.name = "Staging";
-    marketingStatus.id = 2;
+	 
 
     bac.save = function(isValid) {
         if ( isValid && bac.associates.length != 0 ) {
@@ -78,8 +71,7 @@ bac.trainer = "";
                 addUser.graduationDate = bac.selectedDate;
                 addUser.username = addUser.firstName[0].toLowerCase() + addUser.lastName.toLowerCase();
                 addUser.trainer = bac.trainer;
-                addUser.userRole = userRole;
-                addUser.marketingStatus = marketingStatus;
+               
             }    
             addUser.hashedPassword = CryptoJS.SHA1(addUser.username).toString();
             
