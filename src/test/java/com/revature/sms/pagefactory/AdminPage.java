@@ -60,15 +60,9 @@ public class AdminPage extends HomePage {
 		return icons;
 	}
 	
-	
-	public List<WebElement> getAttendanceRows() {
-		List<WebElement> rows = attendanceBody.findElements(By.tagName("tr"));
-		return rows;
-	}
-	
 	public ArrayList<String> getAssociateNames(String infoType) {
 		ArrayList<String> info = new ArrayList<String>();
-		List<WebElement> rows = getAttendanceRows();
+		List<WebElement> rows = attendanceBody.findElements(By.tagName("tr"));
 		if ("username".equals(infoType)) {
 			for (WebElement row:rows) {
 				info.add(row.findElement(By.xpath("//td[1]/div/div[2]/p")).getText());
@@ -81,5 +75,22 @@ public class AdminPage extends HomePage {
 		}
 		return info;
 	}
+	
+	
+	public int getRowByUsername(String expectedUN) {
+		int rowNumber;
+		List<WebElement> rows = attendanceBody.findElements(By.tagName("tr"));
+		for (WebElement row:rows) {
+			WebElement actualUNCell = row.findElement(By.xpath("//td[1]/div/div[2]/p"));
+			if (expectedUN.equals(actualUNCell.getText())) {
+				WebElement rowNumberCell = row.findElement(By.xpath("//td[1]/div/div[1]/h2"));
+				rowNumber = Integer.parseInt(rowNumberCell.getText());
+				return rowNumber;
+			}
+		}
+		return 0;
+	}
+	
+	
 	
 }
