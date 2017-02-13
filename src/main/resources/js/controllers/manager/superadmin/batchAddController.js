@@ -17,7 +17,7 @@ bac.trainer = "";
         	bac.trainers = response;
         	
         }, function() {
-            
+            // empty function here to make service work
         });}
 	
 	
@@ -104,5 +104,5 @@ bac.trainer = "";
 		$mdDialog.cancel();
 	}
 
-    bac.recursion = 0;
+   
 });
