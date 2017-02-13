@@ -24,6 +24,9 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
 
 
         sec.skillPromiseList = [];
+        sec.skillRemovePromiseList = [];
+        sec.skillUpdatePromiseList = [];
+        sec.skillAddPromiseList = [];
   
         /**
          * @prop {number} ADDSKILLDEFAULTVAL Constant that's the default id value for newly added skills
@@ -100,7 +103,7 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
          * @param {boolean} isValid boolean value of the form's $valid property.
          */
         function addSkillToDB(skill){
-                sec.skillPromiseList.push(skillService.create(skill, function(){
+                sec.skillAddPromiseList.push(skillService.create(skill, function(){
                   //empty function
                 }, function(){
                     //empty function
@@ -114,7 +117,7 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
          * @param {string} newSkillName The new name for the skill.
          */
         function updateSkillInDB(oldSkillName, newSkillName){
-           sec.skillPromiseList.push( skillService.update(oldSkillName, newSkillName, function(){
+           sec.skillUpdatePromiseList.push( skillService.update(oldSkillName, newSkillName, function(){
                 //empty to make it work
             }, function(){
                //empty to make it work
@@ -127,7 +130,7 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
          */
          function removeSkillFromDB(skillName){
                 
-               sec.skillPromiseList.push(
+               sec.skillRemovePromiseList.push(
                    skillService.remove(skillName, function(){
                    //empty function to make this work
                 }, function(){
@@ -170,7 +173,9 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
 
             }
 
-       
+            sec.skillPromiseList = sec.skillRemovePromiseList
+            .concat(sec.skillUpdatePromiseList)
+            .concat(sec.skillAddPromiseList);
 
             $q.all(sec.skillPromiseList).then(function(){
                 sec.toast("Skill edits successful!");
