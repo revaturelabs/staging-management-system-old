@@ -347,7 +347,7 @@
         function nextWeek() {
             var newDate = new Date( mac.curr.getFullYear(), mac.curr.getMonth(), mac.curr.getDate() + 7 );
             if ( newDate.getTime() > mac.maxWeek.getTime() ) {
-                mac.toast( "Cannot view attendance in the future." );
+                mac.toast( "Cannot view attendance more than 1 week in the future." );
             } else {
                 mac.curr = newDate;
                 mac.calcWeek( mac.curr );
