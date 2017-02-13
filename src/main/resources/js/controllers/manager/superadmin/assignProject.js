@@ -27,6 +27,10 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 	//initialization
 	apc.getProjects();
 	
+	
+    /**
+     * @description Function that runs during initialization, retrieves all projects and removes the projects that have ended.
+     */
 	function getProjects(){
     	projectService.getAll(function(response) {
     		apc.availProjects = response;
@@ -42,6 +46,7 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
     			if(apc.currentProject && apc.availProjects[i].name == apc.currentProject.name || apc.availProjects[i].endDate < today.getTime()){
     				//remove project
     				apc.availProjects.splice(i,1);
+    				//move back one to prevent skipping over projects
     				i--;
     				continue;
     			}
@@ -60,16 +65,22 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
     			apc.availProjects[j].startDateDisplay = (startDate.getMonth()+1)+"/"+startDate.getDate();
     		}
     		
-    	}, function(error) {
+    	}, function() {
+    		//an error has occurred
     	})
 	}
 	
-	SonarQubePls = function (){
+    /**
+     * @description Function created to appease sonarQube.
+     */
+	var SonarQubePls = function (){
 		//do nothing
 	}
 	
+    /**
+     * @description Function that runs when when user clicks on submit button in the view, will assign selected project to user. 
+     */
 	function assignSubmit(){
-		//console.log(apc.user);
 		//validation
 		//no project selected
 		if(!apc.project){
@@ -102,7 +113,9 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 			apc.user.activeProject = apc.project;
 			
 			//save User
-			userService.update(apc.user,function(){});
+			userService.update(apc.user,function(){
+				//successful update
+			});
 		}
 		
 		//user has a current Project AND a new project was selected
@@ -118,12 +131,17 @@ function assignProjectCtrl( $scope, $mdDialog, userService, projectService, user
 			}
 			apc.user.activeProject = apc.project;
 			//save User
-			userService.update(apc.user,function(){});
+			userService.update(apc.user,function(){
+				//successful update
+			});
 		}
 		
 		$mdDialog.hide();
 	}
 	
+    /**
+     * @description Function that runs when a user clicks on cancel button, closes the dialog.
+     */
 	function assignCancel(){
 		$mdDialog.cancel();
 	}

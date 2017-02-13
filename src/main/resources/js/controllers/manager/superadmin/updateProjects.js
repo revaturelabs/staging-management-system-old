@@ -19,14 +19,17 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 	upc.newProject = newProject;
 	/**@var {function} deleteProject function reference variable. */
 	upc.deleteProject = deleteProject;
-	/**@var {function} assignSubmit function reference variable. */
-	upc.assignSubmit = assignSubmit;
+	/**@var {function} updateSubmit function reference variable. */
+	upc.updateSubmit = updateSubmit;
 	/**@var {function} close function reference variable. */
 	upc.close = close;
 	
 	//initialization
 	upc.getProjects();
 	
+    /**
+     * @description Function that runs during initialization, retrieves all projects into variable upc.allProjects.
+     */
 	function getProjects(){
     	projectService.getAll(function(response) {
     		upc.allProjects = response;
@@ -48,6 +51,9 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 		count++;
 	}
 	
+    /**
+     * @description Function that runs when user clicks on delete project button, deletes project from DB asynchronously and cannot be undone.
+     */
 	function deleteProject(){
 		//no project selected
 		if(!upc.selectedProject || upc.selectedProject == {}){
@@ -60,7 +66,6 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 		upc.selectedProject.endDate = upc.selectedProject.endDate.getTime();
 		projectService.del([upc.selectedProject],function(){}, function(){});
 		
-		
 		//find project to be deleted
 		for(var i = 0; i < upc.allProjects.length; i++){
 			if(upc.allProjects[i].name == upc.selectedProject.name){
@@ -72,8 +77,11 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 			}
 		}
 	}
-	
-	function assignSubmit(){
+
+    /**
+     * @description Function that runs when a user clicks on submit button, updates all projects.
+     */
+	function updateSubmit(){
 		var pass = true;
 		upc.errors = [];
 		for(var i = 0; i < upc.allProjects.length; i++){
@@ -142,11 +150,15 @@ function updateProjectsCtrl( $scope, $mdDialog, userService, projectService) {
 			for(var s = 0; s<upc.allProjects.length;s++){
 				upc.allProjects[s].name = upc.allProjects[s].displayName;
 			}
+			console.log(upc.allProjects)
 			//update current projects
 			projectService.update(upc.allProjects,function(){$mdDialog.cancel();}, function(){});
 		}
 	}
 	
+    /**
+     * @description Function that runs when user clicks on close, closes the dialog.
+     */
 	function close(){
 		upc.selectedProject={};
 		upc.errors=[];
