@@ -29,8 +29,8 @@
         mic.createFilterFor = createFilterFor;
 
           // initialization
-        // mic.getTaskTypes();
-        // mic.getSkills();
+        mic.getTaskTypes();
+        mic.getSkills();
         // mic.divideTasks();
         // mic.divideEvents();
 
@@ -44,6 +44,7 @@
         function getTaskTypes() {
             taskTypeService.getAll( function(response) {
                 mic.taskTypes = response;
+            }, function(error){
             });
         }
 
@@ -51,6 +52,7 @@
         function getSkills() {
             skillService.getAll( function(response) {
                 mic.skills = response;
+                console.log("runs");
             }, function(){});
         }
 
@@ -85,14 +87,14 @@
             }
         }
 
-            // formates task list content by type
+            // formats task list content by type
         function formatTaskListItemContent(task) {
-            var today = new Date();
-            if ( task.taskType.type.toLowerCase() == "project" ) {
+            /*var today = new Date();
+            if ( task.taskType.type.toLowerCase() == "project" ) {*/
                 return $filter( "date" )( task.date, "MMMM dd, yyyy" );
-            } else {
+            /*} else {
                 return $filter( "date" )( task.date, "MMMM dd, yyyy" ); 
-            }
+            }*/
         }
 
             // divides user events into categories
@@ -155,8 +157,8 @@
           // watcher
         $scope.$on( "newSelectedUser", function( event, data ) {
             mic.user = data;
-            mic.getTaskTypes();
-            mic.getSkills();
+            /*mic.getTaskTypes();
+            mic.getSkills();*/
             mic.divideTasks();
             mic.divideEvents();
         })

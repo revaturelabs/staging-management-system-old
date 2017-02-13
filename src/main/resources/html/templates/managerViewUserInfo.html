@@ -152,12 +152,16 @@
                 <md-expansion-panel-content>
                     <md-list class="expansionPanelList">
                         
-                        <md-subheader class="md-no-sticky" ng-repeat-start="(type, specificTasks) in mVUICtrl.allTasks" layout="row" layout-align="space-between center"> 
-                            <span> {{ type }}s </span>
-                            <md-button ng-if="(mVUICtrl.newCert == true) && (type.toLowerCase() == 'certification')" class="md-icon-button" aria-label="Add certification" ng-click="mVUICtrl.addCert()">
+                        <md-subheader class="md-no-sticky" ng-repeat-start="type in mVUICtrl.taskTypes" layout="row" layout-align="space-between center"> 
+                            <span> {{ type.type }}s </span>
+                            <md-button ng-if="(mVUICtrl.newCert == true) && (type.type.toLowerCase() == 'certification')" class="md-icon-button" aria-label="Add certification" ng-click="mVUICtrl.addCert()">
                                 <md-tooltip> Add certification </md-tooltip>
                                 <md-icon class="md-material-icon"> add </md-icon>
-                            </md-button>  
+                            </md-button>
+                            <md-button ng-if="(mVUICtrl.newCert == true) && (type.type.toLowerCase() == 'certification')" class="md-icon-button" aria-label="Add certification" ng-click="mVUICtrl.addCert()">
+                                <md-tooltip> Add panel </md-tooltip>
+                                <md-icon class="md-material-icon"> add </md-icon>
+                            </md-button>    
                         </md-subheader>
                         
                         <!--<md-list-item ng-repeat="task in specificTasks">
@@ -167,7 +171,7 @@
                             <md-icon class="material-icons"> {{ task | iconFilter:"passed" }} </md-icon>
                         </md-list-item>-->
 
-                        <md-list-item class="md-3-line dense-list" ng-click="null" ng-repeat="task in specificTasks">
+                        <md-list-item class="md-3-line dense-list" ng-click="null" ng-repeat="task in mVUICtrl.allTasks[type.type]" ng-if="task.taskType.type.toLowerCase() == type.type.toLowerCase()">
                             <div class="md-list-item-text" layout="column"> 
                                 <h3 class="h3Top"> {{ mVUICtrl.formatTaskListItemTitle(task) }} </h3>
                             </div>
