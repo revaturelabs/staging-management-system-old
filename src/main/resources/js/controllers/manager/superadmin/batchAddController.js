@@ -58,6 +58,10 @@ bac.trainer = "";
 	userRole.name = "associate";
 	userRole.id = 1;
 
+    var marketingStatus = {};
+    marketingStatus.name = "Staging";
+    marketingStatus.id = 2;
+
     bac.save = function(isValid) {
         if ( isValid && bac.associates.length != 0 ) {
             var list = bac.associates;
@@ -75,6 +79,7 @@ bac.trainer = "";
                 addUser.username = addUser.firstName[0].toLowerCase() + addUser.lastName.toLowerCase();
                 addUser.trainer = bac.trainer;
                 addUser.userRole = userRole;
+                addUser.marketingStatus = marketingStatus;
             }    
             addUser.hashedPassword = CryptoJS.SHA1(addUser.username).toString();
             
