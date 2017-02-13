@@ -90,7 +90,7 @@
             $cookies.put( "RevatureSMSToken", loginService.getToken() );
 
             $state.go("attendance");
-            lc.toast("Login Successful.");
+            lc.toast("Login successful.");
             lc.associateCertToast();
         }
 

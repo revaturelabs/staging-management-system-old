@@ -1,100 +1,8 @@
 
     <div layout="row">
 
-          <!-- Associate info card -->
-        <div ng-show="manAttCtrl.infoOpen" id="associateInformationDiv" ng-class="{showInformationDiv : (manAttCtrl.infoOpen), showBigInformationDiv : (manAttCtrl.infoOpen && manAttCtrl.smallDevice)}">
-            <div id="fixedContainer">
-                <div id="closeIconContainer">
-                    <span><md-icon id="closeIcon" ng-click="manAttCtrl.closeInfo()">compare_arrows</md-icon></span>
-                </div>
-                <md-card md-whiteframe="8dp">
-                    <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline">
-                                {{ manAttCtrl.selectedUser.firstName }} {{ manAttCtrl.selectedUser.lastName }} - 
-                                ({{ manAttCtrl.selectedUser.batchType.type}} {{ manAttCtrl.selectedUser.graduationDate | date:"MM/dd"}})
-                            </span>
-                        </md-card-title-text>
-                    </md-card-title>
-                    <md-card-content>
-
-                            <p>
-                            	Marketing Status:
-                            			<md-input-container id="marketingStatus">
-                            			
-				  							<md-select style="color:white;"  placeholder="{{manAttCtrl.selectedUser.marketingStatus.name}}"
-				    							  ng-model="manAttCtrl.markBind" ng-change="manAttCtrl.changeStatus()">
-				    							<md-option ng-repeat="x in manAttCtrl.mStatuses | orderBy: 'name'" ng-value="x">{{ x.name }}</md-option>
-				 							 </md-select>
-										</md-input-container>
-                            
-                            </p>
-
-                        
-                            
-                            <p>
-                                Days in marketing:  
-                                <span ng-if="manAttCtrl.selectedUser">{{ manAttCtrl.calcMarketingDays() }}</span>
-                            </p>
-                            
-
-                            <p>
-                                Panel Status:
-								<md-menu ng-show="manAttCtrl.selectedUser.panels[0]">
-									<!-- Trigger element is a md-button with an icon -->
-									<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-										<md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == true" style="color:#59E2A8;">check_circle</md-icon>
-										<md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == false" style="color:#A00;">not_interested</md-icon>
-									</md-button>
-									<md-menu-content>
-										<md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0], true)"><md-icon>check_circle</md-icon> Passed</md-button></md-menu-item>
-										<md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0], false)"><md-icon>not_interested</md-icon> Not Passed</md-button></md-menu-item>
-									</md-menu-content>
-								</md-menu>
-                                <span ng-show="manAttCtrl.selectedUser.panels[0].passed == false" ng-click="manAttCtrl.togglePanelDatePicker()" style="cursor: pointer;">Scheduled for:
-                                	 <span ng-show="manAttCtrl.selectedUser.panels[0]">{{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
-                                	 <span ng-hide="manAttCtrl.selectedUser.panels[0].dateDisplay">no date selected</span>
-                               	</span>
-                               	<md-card md-whiteframe="4dp" style="max-width:30vh;">
-	                               	<md-datepicker ng-show="manAttCtrl.panelDatePickerIsOpen" ng-model="manAttCtrl.panelDate" md-placeholder="Enter date" ng-change="manAttCtrl.updatePanelDate(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0])"></md-datepicker>
-                                <span ng-hide="manAttCtrl.selectedUser.panels[0]"><md-icon ng-click="manAttCtrl.createPanel(manAttCtrl.selectedUser)" style="color:white !important;cursor: pointer;">note_add</md-icon></span>
-
-                            </p>
-                    </md-card-content>
-                </md-card>
-                <md-card md-whiteframe="8dp" class="skillCard">
-                    <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline">Skills</span>
-                        </md-card-title-text>
-                    </md-card-title>
-                    <md-card-content>
-                        <p>
-                            No content to display
-                        </p>
-                    </md-card-content>
-                </md-card>
-                <md-card md-whiteframe="8dp" class="certCard">
-                    <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline">Certifications</span>
-                        </md-card-title-text>
-                    </md-card-title>
-                    <md-card-content>
-                        <span ng-hide="manAttCtrl.selectedUser.certs[0].date">There is no data to display</span>
-                        <div ng-show="manAttCtrl.selectedUser.certs[0].date">
-                            <div ng-repeat="cert in manAttCtrl.selectedUser.certs | orderBy:'-date'" class="certList">
-                            	<md-icon ng-show="cert.icon" md-whiteframe="2dp" ng-style="{color: cert.icon.color}" class="material-icons step certIcon" ng-class="md-48" ng-click="manAttCtrl.updateCert(cert,manAttCtrl.selectedUser)">{{ cert.icon.name }}</md-icon>
-                            	{{ cert.dateDisplay }} |
-                            	{{cert.note}}
-                            	
-                            	<hr>
-                            </div>
-                        </div>
-                    </md-card-content>
-                </md-card>
-            </div>
-        </div>
+          <!-- Associate info panels -->
+        <div class="md-margin" ng-include="'html/templates/managerViewUserInfo.html'" ng-show="manAttCtrl.infoOpen" id="associateInformationDiv" ng-class="{showInformationDiv : (manAttCtrl.infoOpen), showBigInformationDiv : (manAttCtrl.infoOpen && manAttCtrl.smallDevice)}"> </div>
 
           <!-- Associate attendance table -->
         <div id="attendanceTableDiv" ng-class="{resizeAttendanceDiv : (manAttCtrl.infoOpen), resizeSmallAttendanceDiv : (manAttCtrl.infoOpen && supAttCtrl.smallDevice)}">
@@ -104,14 +12,14 @@
                     <div layout="row">
                         <div flex> </div>
 
-                        <div flex="25" layout="row" layout-align="center center">
+                        <div flex="25" layout="row" layout-align="space-between center">
 
                             <md-button class="md-icon-button" aria-label="Logout" ng-click="manAttCtrl.prevWeek()">
                                 <md-tooltip> Previous week </md-tooltip>
                                 <md-icon class="md-material-icon page-icon"> arrow_back </md-icon>
                             </md-button>
                             
-                            <div flex style="text-align: center"> {{ manAttCtrl.weekLabel }} </div>
+                            <div style="text-align: center"> {{ manAttCtrl.weekLabel }} </div>
 
                             <md-button class="md-icon-button" aria-label="Logout" ng-click="manAttCtrl.nextWeek()">
                                 <md-tooltip> Next week </md-tooltip>
@@ -170,14 +78,14 @@
                     <div layout="row">
                         <div flex> </div>
 
-                        <div flex="25" layout="row" layout-align="center center">
+                        <div flex="25" layout="row" layout-align="space-between center">
 
                             <md-button class="md-icon-button" aria-label="Logout" ng-click="manAttCtrl.prevWeek()">
                                 <md-tooltip> Previous week </md-tooltip>
                                 <md-icon class="md-material-icon page-icon"> arrow_back </md-icon>
                             </md-button>
                             
-                            <div flex style="text-align: center"> {{ manAttCtrl.weekLabel }} </div>
+                            <div style="text-align: center"> {{ manAttCtrl.weekLabel }} </div>
 
                             <md-button class="md-icon-button" aria-label="Logout" ng-click="manAttCtrl.nextWeek()">
                                 <md-tooltip> Next week </md-tooltip>

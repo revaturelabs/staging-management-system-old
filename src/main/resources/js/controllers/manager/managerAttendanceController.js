@@ -179,7 +179,7 @@
                 } else {
                     mac.selectedUser = user;
                     mac.panelDatePickerIsOpen = false;
-                    if(user.panels[0].date){
+                    if( (user.panels[0]) && (user.panels[0].date) ) {
 	                    mac.panelDate = user.panels[0].date;
 	                    mac.panelDate = new Date(user.panels[0].date);
                     }
@@ -188,7 +188,7 @@
                 mac.infoOpen = true;
                 mac.panelDatePickerIsOpen = false;
                 mac.selectedUser = user;
-                if(user.panels[0].date){
+                if( (user.panels[0]) && (user.panels[0].date) ) {
                     mac.panelDate = user.panels[0].date;
                     mac.panelDate = new Date(user.panels[0].date);
                 }
@@ -490,4 +490,11 @@
 
 
         }
+
+          // watchers
+        $scope.$watch( function() { return mac.selectedUser }, function( newUser, oldUser ) {
+            if ( (newUser != oldUser) && (newUser) ) {
+                $scope.$broadcast( "newSelectedUser", mac.selectedUser );
+            }
+        })
     }
