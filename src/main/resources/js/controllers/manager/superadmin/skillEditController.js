@@ -146,20 +146,26 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
          * according to what the user wants to have done.
          */
          function updateAll(){
-             
+             var removeList = [];
+             var updateList = [];
+             var addList = [];
+
              //check the origin skill array and see if any skills have been removed.
             for (var i=0; i<sec.currentSkills.length; i++){
                 var j = sec.skillIds.indexOf(sec.currentSkills[i].id); //gets skill id
                 if (j==-1){ // skill was marked for deletion in the view
                    
-                    sec.removeSkillFromDB(sec.currentSkills[i].skill);
+                    //sec.removeSkillFromDB(sec.currentSkills[i].skill);
+                    removeList.push(sec.currentSkills[i].skill);
                 }
                 
                 var skillNameIn = sec.newSkillList.indexOf(sec.currentSkills[i].skill);
                 if (!(j==skillNameIn)){
                   // something got changed, need to edit the skill
                     
-                    sec.updateSkillInDB(sec.currentSkills[i].skill, sec.newSkillList[j]);
+                    //sec.updateSkillInDB(sec.currentSkills[i].skill, sec.newSkillList[j]);
+                    var updateSkill = {oldSkillName: sec.currentSkills[i].skill, newSkillName: sec.newSkillList[j]};
+                    updateList.push(updateSkill);
                 }
              
             }
@@ -169,10 +175,50 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
                     continue;
                 }
                 var newSkill = {skill : sec.newSkillList[k]};
-                sec.addSkillToDB(newSkill);//adds skill to DB
+                addList.push(newSkill);
+                //sec.addSkillToDB(newSkill);//adds skill to DB
 
             }
 
+            //resolve remove skills
+            for (var i=0; i<removeList.length; i++){
+                sec.removeSkillFromDB(removeList[i]);
+            }
+
+            $q.all(sec.skillRemovePromiseList).then(function(){
+                //successful on removeList
+                for (var i = 0; i<updateList.length; i++){
+                    sec.updateSkillInDB(updateList[i].oldSkillName, updateList[i].newSkillName);
+                }
+                $q.all(sec.skillUpdatePromiseList).then(function(){
+                    //successful update
+                    for (var i=0; i<addList.length; i++){
+                        sec.addSkillToDB(addList[i]);
+                    }
+                }, function(){
+                    //failed update
+                    for (var i=0; i<addList.length; i++){
+                        sec.addSkillToDB(addList[i]);
+                    }
+                });
+            }, function(){
+                //error on remove list
+                for (var i = 0; i<updateList.length; i++){
+                    sec.updateSkillInDB(updateList[i].oldSkillName, updateList[i].newSkillName);
+                }
+                $q.all(sec.skillUpdatePromiseList).then(function(){
+                    //successful update
+                    for (var i=0; i<addList.length; i++){
+                        sec.addSkillToDB(addList[i]);
+                    }
+                }, function(){
+                    //failed update
+                    for (var i=0; i<addList.length; i++){
+                        sec.addSkillToDB(addList[i]);
+                    }
+                });
+                
+            });
             sec.skillPromiseList = sec.skillRemovePromiseList
             .concat(sec.skillUpdatePromiseList)
             .concat(sec.skillAddPromiseList);
