@@ -30,8 +30,13 @@
         mac.panelDatePickerIsOpen = false;
         /**@prop {Date} panelDate The date of the panel, binded so it shows up on panel calendar */
         mac.panelDate = new Date();
-        mac.markBind = "";
+        /**@prop {boolean} associateTableIsOpen Variable that tells if the associate table view is open. */
+        $scope.associateTableIsOpen = false;
+        /**@prop {String} tableOrder variable for sorting the associateTable. Set to sort by last name by default*/
+        mac.tableOrderAttribute = "";
+        mac.reverseOrder = false;
         
+        mac.markBind = "";
         
         
         
@@ -54,9 +59,13 @@
         mac.deleteSelectedUser = deleteSelectedUser;
 
 
+
         /**@var {function} calcMarketingDays function reference variable. */
 
         mac.calcMarketingDays = calcMarketingDays;
+        /**@var {function} calcMarketingDaysForAllUsers function reference variable*/
+        mac.calcMarketingDaysForAllUsers = calcMarketingDaysForAllUsers;
+        /**@var {function} days_between function reference variable. */
         mac.days_between = days_between;
         mac.updateCert = updateCert;
         /**@var {function} convert to date object. */
@@ -94,9 +103,8 @@
         mac.findDevice();
         mac.getUsers();
         mac.getTaskTypes();
-        mac.setToolbar();
+        mac.setToolbar("Weekly attendance");
         mac.marketingStatuses();
-  
         
         // function
         /**
@@ -115,8 +123,7 @@
 	    	    	});
         	
         
-        }
-        
+        }        
         
           // functions
             /**
@@ -277,8 +284,9 @@
          * At the moment, only relevant to add superAdmin options to superAdmin users when logged in,
          * as superAdmin should always have all the options that admins do.
          */
-        function setToolbar() {
+        function setToolbar(s) {
             var actions = [];
+            var thisTitle = s;
             if (mac.user.userRole.name == "superAdmin") {
 
 
@@ -312,11 +320,10 @@
 
 
             $scope.$emit( "setToolbar", { 
-                title: "Weekly attendance", 
+                title: thisTitle, 
                 actions }
             );
         }
-        
 
             
             /**
@@ -559,6 +566,20 @@
         }
         
         /**
+         * @description calcMarketingDays function, adapted for iterating over all users. Takes in a user as a parameter
+         * @returns {number} number of days between the grad date and today
+         */
+        function calcMarketingDaysForAllUsers(user){
+	        if(user.graduationDate == null){
+	        	return "N/A";
+	        }
+	        else{
+	       		return " " + mac.days_between(mac.curr, ((new Date(user.graduationDate)))) + " days";	
+	       	}
+        }
+        
+        
+        /**
          * @description Determines the difference betwen the two supplied dates.
          * @param {date} date1 First supplied date.
          * @param {date} date2 Second supplied date.
@@ -700,6 +721,11 @@
 			}
 		}
 		
+
+		$scope.$on( "setView", function( events, data ) {
+            mac.associateTableIsOpen = data.associateTableIsOpen;
+            setToolbar(data.title);
+        })
 		/**
          * @description Called when a superAdmin clicks on update project icon, opens a dialog.
          */
