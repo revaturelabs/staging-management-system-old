@@ -13,7 +13,7 @@
 	      	Current project: {{ ap.currentProject.name }}
 	      	<md-input-container class="InputContainer">
   				<md-select ng-model="ap.project" placeholder="Select a new project.">
-    				<md-option ng-value="proj" ng-repeat="proj in ap.availProjects">{{ proj.name }}</md-option>
+    				<md-option ng-value="proj" ng-repeat="proj in ap.availProjects | orderBy : 'name'">{{ proj.name }}</md-option>
   				</md-select>
 			</md-input-container>
 			

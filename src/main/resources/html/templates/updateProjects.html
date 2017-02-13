@@ -21,7 +21,7 @@
 	{{up.message}}
 	<md-input-container class="InputContainer" style = "width:100%;">
 		<md-select ng-model="up.selectedProject" placeholder="Select a project">
-			<md-option 	ng-value="proj" ng-repeat="proj in up.allProjects | orderBy : 'proj.name' ">{{ proj.name }}</md-option>
+			<md-option 	ng-value="proj" ng-repeat="proj in up.allProjects | orderBy : 'name' ">{{ proj.name }}</md-option>
 		</md-select>
 	</md-input-container>
 	
@@ -30,12 +30,12 @@
   			<input type="text" ng-model="up.selectedProject.displayName">
 		</md-input-container>
 	
-		<div layout="row" layout-align="space-between start" >
+		<div layout="row" layout-align="space-between start">
 			<md-input-container class="InputContainer" layout-fill>
 				<label>Start date</label>
 	  			<md-datepicker ng-model="up.selectedProject.startDate" md-hide-icons="calendar"></md-datepicker>
 			</md-input-container>
-&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp		
+&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
 			<md-input-container class="InputContainer" layout-fill>
 				<label>End date</label>
 	  			<md-datepicker ng-model="up.selectedProject.endDate" md-hide-icons="calendar"></md-datepicker>
