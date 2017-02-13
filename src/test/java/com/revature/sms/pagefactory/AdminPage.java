@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -46,19 +47,47 @@ public class AdminPage extends HomePage {
 		return verifyInfoDiv.isDisplayed();
 	}
 	
-	public ArrayList<String> goThroughWeekIcons(int row) {
+	public ArrayList<String> goThroughWeekIcons(int rowNumber) {
 		// no icon = no string
 		// checkmark = "done"
 		// double checkmark = "done_all"
 		// x = "close"
 		ArrayList<String> icons = new ArrayList<String>();
 		for (int i = 2; i <= 6; i++) {
-			WebElement e = attendanceBody.findElement(By.xpath("//tr["+row+"]/td["+i+"]/div/md-icon"));
+			WebElement e = attendanceBody.findElement(By.xpath("//tr["+rowNumber+"]/td["+i+"]/div/md-icon"));
 			String text = e.getText();
 			icons.add(text.trim());
 		}
 		return icons;
 	}
+	
+	
+	public WebElement getRowByUsername(String expectedUN) {
+		
+		ArrayList<WebElement> rows = new ArrayList<WebElement>();
+		int i = 1;
+		try {
+			while (attendanceBody.findElement(By.xpath("//tr["+i+"]")) != null) {
+				rows.add(attendanceBody.findElement(By.xpath("//tr["+i+"]")));
+				i++;
+			}
+		} catch (NoSuchElementException e) {}
+			
+		System.out.println(driver.findElement(By.xpath("//*[@class=\"attendanceTable\"]/table/tbody/tr[2]/td[1]/div/div[2]/p")).getText());
+		
+		WebElement actualUNCell;
+		for (WebElement row:rows) {
+			actualUNCell = row.findElement(By.xpath("//td[1]/div/div[2]/p"));
+			if (expectedUN.equals(actualUNCell.getText())) {
+				return row;
+			}
+		}
+		return null;
+	}
+	
+	
+	
+	
 	
 	public ArrayList<String> getAssociateNames(String infoType) {
 		ArrayList<String> info = new ArrayList<String>();
@@ -75,22 +104,5 @@ public class AdminPage extends HomePage {
 		}
 		return info;
 	}
-	
-	
-	public int getRowByUsername(String expectedUN) {
-		int rowNumber;
-		List<WebElement> rows = attendanceBody.findElements(By.tagName("tr"));
-		for (WebElement row:rows) {
-			WebElement actualUNCell = row.findElement(By.xpath("//td[1]/div/div[2]/p"));
-			if (expectedUN.equals(actualUNCell.getText())) {
-				WebElement rowNumberCell = row.findElement(By.xpath("//td[1]/div/div[1]/h2"));
-				rowNumber = Integer.parseInt(rowNumberCell.getText());
-				return rowNumber;
-			}
-		}
-		return 0;
-	}
-	
-	
 	
 }

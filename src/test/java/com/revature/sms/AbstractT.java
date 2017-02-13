@@ -1,5 +1,8 @@
 package com.revature.sms;
 
+import java.time.MonthDay;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -173,6 +176,28 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		return monday;
 	}
 	
+	public void compareAttendanceStatuses(ArrayList<MonthDay> monthDays, HashMap<MonthDay, String> expectedStatuses, 
+										  HashMap<MonthDay, String> actualStatuses) {
+		//This for-each loop iterates through both HashMaps using every matching monthDay key, and asserts
+		//that the values are equal.
+		for (MonthDay md : monthDays) {
+			String es = expectedStatuses.get(md);
+			String as = actualStatuses.get(md);
+			if (es == null) {
+				if (md.compareTo(MonthDay.now()) < 0) {
+					es = "close";
+				} else {
+					es = "";
+				}
+			}
+			Assert.assertEquals(es, as);
+		}
+	}
 		
+	
+	
+	
+	
+	
 	
 }
