@@ -295,7 +295,7 @@
         function nextWeek() {
             var newDate = new Date( aac.curr.getFullYear(), aac.curr.getMonth(), aac.curr.getDate() + 7 );
             if ( newDate.getTime() > aac.maxWeek.getTime() ) {
-                aac.toast( "Cannot view attendance in the future." );
+                aac.toast( "Cannot view attendance more than 1 week in the future." );
             } else {
                 aac.curr = newDate;
                 aac.calcWeek( aac.curr );
