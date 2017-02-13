@@ -12,11 +12,13 @@ public class SuperAdminT extends AdminT  {
 		lp.login(un, pw);
 		sap.addBatch.click();
 		
+		cbw.verify();
 		cbw.cancel.click();
 		Utils.attemptWait(500);
 		Assert.assertEquals(expected.getProperty("cancelBatchAddition"), sap.getToastMessage());
 		
 		sap.editSkills.click();
+		tsw.verify();
 		tsw.cancel.click();
 		Assert.assertEquals(expected.getProperty("cancelAddSkill"), sap.getToastMessage());
 		

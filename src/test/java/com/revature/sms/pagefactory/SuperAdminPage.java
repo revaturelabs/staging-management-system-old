@@ -6,6 +6,9 @@ import org.openqa.selenium.support.FindBy;
 
 public class SuperAdminPage extends AdminPage {
 	
+	@FindBy(tagName="md-switch")
+	public WebElement switchView;
+	
 	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/md-card/md-toolbar/div/button[1]/md-icon")
 	public WebElement addBatch;
 	

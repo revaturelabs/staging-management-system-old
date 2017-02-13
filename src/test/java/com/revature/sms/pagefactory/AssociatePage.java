@@ -54,8 +54,6 @@ public class AssociatePage extends HomePage {
 	}
 
 	
-
-	
 	//This method is used to return check-in and verification data from the attendance table on the Associate page.
 	public ArrayList<String> goThroughWeekIcons() {
 		// no icon = no string
@@ -87,25 +85,27 @@ public class AssociatePage extends HomePage {
 	
 	public ArrayList<String> goThroughUserInfo() {
 		ArrayList<String> userInfo = new ArrayList<String>();
-		List<WebElement> rows = driver.findElements(By.xpath("//*[@class=\"expansionPanelList\"]/md-list-item"));
+		List<WebElement> rows = userInfoPanel.findElements(By.xpath("//*[@class=\"expansionPanelList\"]/md-list-item"));
 		for (WebElement row:rows) {
-			WebElement button = row.findElement(By.tagName("button"));
-			//Most of this just gets rid of extraneous whitespace in the current roe
-			String text = button.getAttribute("aria-label");
-			text = text.replace("\n"," ");
-			String[] splitText = text.split("  ");
-			String rowTitle = splitText[0];
-			String rowValue = splitText[15].trim();  
-			String reformedText = rowTitle+": "+rowValue;
-			
-			//Special formatting is needed for dates
-			if ("Graduation date".equals(rowTitle)) {
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-				LocalDate dateObject = LocalDate.parse(rowValue, formatter);
-				reformedText = rowTitle+": "+dateObject.toString();
+			if ("_md-button-wrap _md md-clickable".equals(row.getAttribute("class"))) {  //Because apparently, there are empty md-list-items that are of a different class 
+				WebElement button = row.findElement(By.tagName("button"));
+				//Most of this just gets rid of extraneous whitespace in the current roe
+				String text = button.getAttribute("aria-label");
+				text = text.replace("\n"," ");
+				String[] splitText = text.split("  ");
+				String rowTitle = splitText[0];
+				String rowValue = splitText[15].trim();  
+				String reformedText = rowTitle+": "+rowValue;
+				
+				//Special formatting is needed for dates
+				if ("Graduation date".equals(rowTitle)) {
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+					LocalDate dateObject = LocalDate.parse(rowValue, formatter);
+					reformedText = rowTitle+": "+dateObject.toString();
+				}
+	
+				userInfo.add(reformedText);
 			}
-
-			userInfo.add(reformedText);
 		}
 		return userInfo;
 	}

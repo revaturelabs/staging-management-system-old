@@ -47,6 +47,7 @@ public class AssociateT extends AbstractT {
 		lp.login(un, pw);
 		asp.certification.click();
 		if (!(expected.getProperty("noMoreCerts").equals(lp.getToastMessage()))) {
+			scw.verify();
 			scw.cancel.click();
 		}
 		cancelCommonButtons();

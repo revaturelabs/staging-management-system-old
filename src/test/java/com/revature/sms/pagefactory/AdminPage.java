@@ -1,6 +1,5 @@
 package com.revature.sms.pagefactory;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,11 +33,12 @@ public class AdminPage extends HomePage {
 	@FindBy(id = "associateInformationDiv")
 	public WebElement verifyInfoDiv;
 
-	public boolean infoDisplayed() {
-		return verifyInfoDiv.isDisplayed();
-	}
-
 	public AdminPage(WebDriver driver) {
 		super(driver);
 	}
+	
+	public boolean infoDisplayed() {
+		return verifyInfoDiv.isDisplayed();
+	}
+	
 }

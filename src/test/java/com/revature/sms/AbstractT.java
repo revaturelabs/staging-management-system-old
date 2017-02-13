@@ -30,7 +30,7 @@ import com.revature.sms.pagefactory.LoginPage;
 import com.revature.sms.pagefactory.RaiseBugWindow;
 import com.revature.sms.pagefactory.ScheduleCertificationWindow;
 import com.revature.sms.pagefactory.SuperAdminPage;
-import com.revature.sms.pagefactory.TechnicalSkillsWindow;
+import com.revature.sms.pagefactory.AvailableSkillsWindow;
 import com.revature.sms.util.EventListener;
 
 //This test class can't be directly run, but it provides set up and tear down for various other tests that are
@@ -56,7 +56,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	protected SuperAdminPage sap;
 	protected ScheduleCertificationWindow scw;
 	protected CreateBatchWindow cbw;
-	protected TechnicalSkillsWindow tsw;
+	protected AvailableSkillsWindow tsw;
 	protected SettingsWindow sw;
 	protected RaiseBugWindow rbw;
 
@@ -101,7 +101,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		sap = new SuperAdminPage(driver);
 		scw = new ScheduleCertificationWindow(driver);
 		cbw = new CreateBatchWindow(driver);
-		tsw = new TechnicalSkillsWindow(driver);
+		tsw = new AvailableSkillsWindow(driver);
 		sw = new SettingsWindow(driver);
 		rbw = new RaiseBugWindow(driver);
 		
@@ -141,6 +141,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		driver.close();
 	}
 	
+	
 	//Below are convenience methods that are used by similar tests on different pages:
 	
 	//Allows a single test class to log in multiple times, each time as a different user
@@ -156,9 +157,11 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	
 	public void cancelCommonButtons() {
 		hp.settings.click();
+		sw.verify();
 		sw.cancel.click();
 		hp.reportBug.click();
 		driver.switchTo().frame("atlwdg-frame");
+		rbw.verify();
 		rbw.cancel.click();
 	}
 	
