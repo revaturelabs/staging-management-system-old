@@ -17,9 +17,11 @@ import com.revature.sms.domain.JobEventType;
 import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.User;
 
+//This class contains methods that take in database domain objects and format their information so that they
+//can be compared to what is found on an SMS web page.
 public class PanelHelper {
 
-	public static ArrayList<String> getExpectedUserInfo(Properties expected, User user) {
+	public static ArrayList<String> getExpectedUserInfo(User user, Properties expected) {
 		ArrayList<String> expectedInfo = new ArrayList<String>();
 		String title1 = expected.getProperty("nameTitle");
 		String fname = user.getFirstName();
@@ -41,7 +43,7 @@ public class PanelHelper {
 		return expectedInfo;
 	}
 	
-	public static ArrayList<String> getExpectedSkills(Properties expected, User user) {
+	public static ArrayList<String> getExpectedSkills(User user) {
 		ArrayList<String> expectedInfo = new ArrayList<String>();
 		Set<TechnicalSkills> skillset = user.getSkill();
 		Iterator<TechnicalSkills> itr = skillset.iterator();
@@ -53,7 +55,7 @@ public class PanelHelper {
 		return expectedInfo;
 	}
 	
-	public static HashMap<String, String> getExpectedEvent(Properties expected, User user, JobEvent e) {
+	public static HashMap<String, String> getExpectedEvent(User user, JobEvent e) {
 		HashMap<String, String> expectedInfo = new HashMap<String, String>();
 		JobAssignment a = e.getAssignment();
 		expectedInfo.put("companyName", a.getCompanyName());
@@ -72,7 +74,7 @@ public class PanelHelper {
 		return expectedInfo;
 	}
 	
-	public static HashMap<String, String> getExpectedTask(Properties expected, User user, AssociateTask task, String date) {
+	public static HashMap<String, String> getExpectedTask(User user, AssociateTask task, String date) {
 		HashMap<String, String> expectedInfo = new HashMap<String, String>();
 		AssociateTaskType taskType = task.getTaskType();
 		expectedInfo.put("taskDate", date);  //The comparison will mess up if the taskDate is before 5am in the database

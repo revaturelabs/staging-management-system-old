@@ -127,7 +127,6 @@ public class AssociatePage extends HomePage {
 	}
 	
 	
-	
 	public HashMap<String, String> goThroughEvent(int eventNumber) {
 		HashMap<String, String> hm = new HashMap<String, String>();
 		

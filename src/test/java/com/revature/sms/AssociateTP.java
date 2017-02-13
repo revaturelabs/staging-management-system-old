@@ -38,7 +38,7 @@ public class AssociateTP extends AbstractT {
 		asp.openPanel(asp.userInfoPanel);
 		User user = ur.findByUsername(un);
 		
-		ArrayList<String> expectedInfo = getExpectedUserInfo(expected, user);
+		ArrayList<String> expectedInfo = getExpectedUserInfo(user, expected);
 		ArrayList<String> actualInfo = asp.goThroughUserInfo();
 		Assert.assertEquals(expectedInfo, actualInfo);
 		asp.closePanel(asp.userInfoPanel);
@@ -52,7 +52,7 @@ public class AssociateTP extends AbstractT {
 		User user = ur.findByUsername(un);
 		
 		//Iterates through the Set of skills of the logged in user
-		ArrayList<String> expectedSkills = getExpectedSkills(expected, user);
+		ArrayList<String> expectedSkills = getExpectedSkills(user);
 		ArrayList<String> actualSkills = asp.goThroughSkills();
 		
 		//All data is transfered to sorted ArrayLists, since they can be easily compared
@@ -79,7 +79,7 @@ public class AssociateTP extends AbstractT {
 		//compared one at a time
 		while (i < eventObjects.size()) {
 			JobEvent e = eventObjects.get(i);
-			HashMap<String, String> expectedInfo = getExpectedEvent(expected, user, e);
+			HashMap<String, String> expectedInfo = getExpectedEvent(user, e);
 			Set<String> keys = expectedInfo.keySet();
 			
 			//i+1 is used to compensate for the difference between zero-based indexing in Java and one-based indexing in XPaths
@@ -112,7 +112,7 @@ public class AssociateTP extends AbstractT {
 		for (AssociateTask task:taskObjects) {
 			Timestamp ts = task.getDate();
 			LocalDate date = Utils.convertTimestampToLocalDate(ts);
-			HashMap<String, String> expectedInfo = getExpectedTask(expected, user, task, date.toString());
+			HashMap<String, String> expectedInfo = getExpectedTask(user, task, date.toString());
 			
 			Set<String> keys = expectedInfo.keySet();
 			HashMap<String, String> actualInfo = asp.findTask(expectedInfo.get("taskType"), date);

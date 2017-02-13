@@ -41,41 +41,19 @@ public class HomePage extends SMSPage {
 	//This method is used to organize and return dates from the attendance table.
 	public ArrayList<MonthDay> goThroughWeek() {
 		ArrayList<MonthDay> monthDays = new ArrayList<MonthDay>();
-		List<WebElement> allHeaders = attendanceHeaders.findElements(By.tagName("th"));
+		List<WebElement> allHeaders = attendanceHeaders.findElements(By.tagName("p"));
 		for (WebElement e : allHeaders) {
 			String text = e.getText();
-			text = text.replace("\n", "");
 			text = text.replace("/", "-");
-			String pattern;
-			boolean addZero = false;  
-
-			//Regular expression classes are used to find date related information within a larger string. 
-			if (text.contains("10-") || text.contains("11-") || text.contains("12-")) { //October through December
-				pattern = "\\d\\d-\\d\\d";
-			} else {
-				pattern = "\\d-\\d\\d";
-				addZero = true;  //example: 2-6 becomes 02-6
+			String[] split = text.split("-");	
+			if (split[0].length()<2) {
+				text = "0" + text;
 			}
-
-			
-			Pattern r = Pattern.compile(pattern);
-			Matcher m = r.matcher(text);
-			if (m.find()) {
-				text = m.group();
-				if (addZero) {
-					text = "0" + text;
-				}
-				text = "--" + text;  //The dashes are just to make MonthDay's parse method happy.
-				MonthDay md = MonthDay.parse(text);
-				monthDays.add(md);
-			}
+			text = "--" + text;  //The dashes are just to make MonthDay's parse method happy.
+			MonthDay md = MonthDay.parse(text);
+			monthDays.add(md);
 		}
 		return monthDays;
 	}
-	
-	
-	
-	
-
 	
 }

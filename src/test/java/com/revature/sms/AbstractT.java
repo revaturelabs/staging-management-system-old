@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.After;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -126,6 +127,21 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		Assert.assertEquals(expected.getProperty("loginPg"), lp.header.getText());
 	}
 	
+	//Logs out if the test is still on the home page when it ends
+	@After
+	public void after() {
+		if (hp.verify()) {
+			hp.logout.click();
+			Assert.assertEquals(expected.getProperty("logoutSuccess"), lp.getToastMessage());
+		}
+	}
+	
+	@Override
+	public void afterClassSetup() {
+		driver.close();
+	}
+	
+	//Below are convenience methods that are used by similar tests on different pages:
 	
 	//Allows a single test class to log in multiple times, each time as a different user
 	public void loginHeaderLogoutTemplate(String username, String password, String ev) {
@@ -146,19 +162,14 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		rbw.cancel.click();
 	}
 	
-	
-	//Logs out if the test is still on the home page when it ends
-	@After
-	public void after() {
-		if (hp.verify()) {
-			hp.logout.click();
-			Assert.assertEquals(expected.getProperty("logoutSuccess"), lp.getToastMessage());
+	public String getThisMondayFromHeader() {
+		String monday = hp.attendanceHeaders.findElement(By.tagName("p")).getText();
+		if (monday.contains("/0")) {
+			monday = monday.replace("0", "");
 		}
+		return monday;
 	}
 	
-	@Override
-	public void afterClassSetup() {
-		driver.close();
-	}
+		
 	
 }

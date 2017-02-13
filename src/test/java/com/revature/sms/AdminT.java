@@ -4,6 +4,7 @@ import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -34,6 +35,18 @@ public class AdminT extends AbstractT {
 		lp.login(un, pw);
 		cancelCommonButtons();
 	}
+	
+	
+	@Test
+	public void testWeekOf() {
+		lp.login(un, pw);
+		String monday = getThisMondayFromHeader();
+		String weekTop = Utils.getDateFromText(adp.weekOfTop.getText());
+		String weekBottom = Utils.getDateFromText(adp.weekOfBottom.getText());
+		Assert.assertEquals(weekTop, weekBottom);
+		Assert.assertEquals(monday, weekTop);
+	}
+	
 	
 	
 	//Associate attendance icons do not always seem to change 100% of the time when they are clicked on many 
@@ -74,7 +87,7 @@ public class AdminT extends AbstractT {
 				cell = allCells.get(i);
 				String textBefore = cell.getText();
 				cell.click();
-				Utils.attemptWait(800);  
+				Utils.attemptWait(600);  
 				//The table on the web page is reloaded after every click on a cell, so the WebElements must
 				//be reloaded too.
 				allCells = adp.attendanceCells.findElements(By.tagName("td"));
@@ -90,10 +103,11 @@ public class AdminT extends AbstractT {
 				}
 				i++;
 			}
-			System.out.println();
-			System.out.println("Week: "+adp.weekOfTop.getText());
-			System.out.println("Misses: "+misses);
-			Utils.attemptWait(2000);
+			Logger.getRootLogger().debug("Week: "+adp.weekOfTop.getText());
+			Logger.getRootLogger().debug("Misses: "+misses);
+			//System.out.println("Week: "+adp.weekOfTop.getText());
+			//System.out.println("Misses: "+misses);
+			Utils.attemptWait(1500);
 			adp.prevWeekTop.click();
 		}
 		

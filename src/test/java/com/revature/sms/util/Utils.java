@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
@@ -34,7 +36,7 @@ public class Utils {
 	}
 	
 	//Because Timestamps are a pain to initialize
-	public static Timestamp convertDateToTimestamp(String dateString) {
+	public static Timestamp convertDateStringToTimestamp(String dateString) {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		Date date;
 		long millis;
@@ -66,15 +68,105 @@ public class Utils {
 	}
 	
 	
-	@SuppressWarnings("rawtypes")
-	public static void printMap(Map mp) {
-	    Iterator it = mp.entrySet().iterator();
-	    while (it.hasNext()) {
-	        Map.Entry pair = (Map.Entry)it.next();
-	        System.out.println(pair.getKey() + " = " + pair.getValue());
-	        it.remove(); // avoids a ConcurrentModificationException
-	    }
+	//This method will not retrieve leap days because I'm lazy
+	public static String getDateFromText(String text) {
+		String pattern = "\\d{1,2}[-/]\\d{1,2}";
+		Pattern p = Pattern.compile(pattern);
+		Matcher m = p.matcher(text);
+		String dateString = null;
+		if (m.find()) {
+			dateString = m.group();
+		}
+		
+		String[] split;
+		if (dateString.contains("-")) {
+			split = dateString.split("-");
+		} else {
+			split = dateString.split("/");
+		}
+		
+		int month = Integer.parseInt(split[0]);
+		int day = Integer.parseInt(split[1]);
+		boolean properDate = true;
+		
+		if (month<0||day<0) {
+			properDate = false;
+		}
+		
+		String monthString;
+        switch (month) {
+            case 1:  
+            	if (day>31) {
+            		properDate = false;
+            	}
+                break;
+            case 2:  
+            	if (day>28) {
+            		properDate = false;
+            	}
+                break;
+            case 3:  
+            	if (day>31) {
+            		properDate = false;
+            	}
+                break;
+            case 4:  
+            	if (day>30) {
+            		properDate = false;
+            	}
+                break;
+            case 5:  
+            	if (day>31) {
+            		properDate = false;
+            	}
+                break;
+            case 6:  
+            	if (day>30) {
+            		properDate = false;
+            	}
+                break;
+            case 7:  
+            	if (day>31) {
+            		properDate = false;
+            	}
+                break;
+            case 8:  
+            	if (day>31) {
+            		properDate = false;
+            	}
+                break;
+            case 9:  
+            	if (day>30) {
+            		properDate = false;
+            	}
+                break;
+            case 10: 
+            	if (day>31) {
+            		properDate = false;
+            	}
+                break;
+            case 11: 
+            	if (day>30) {
+            		properDate = false;
+            	}
+                break;
+            case 12: 
+            	if (day>31) {
+            		properDate = false;
+            	}
+                break;
+            default: 
+            	properDate = false;
+                break;
+        }
+		
+		if (!properDate) {
+			dateString = null;
+		}
+		
+		return dateString;
 	}
+	
 	
 	
 	//Allows a thread to sleep for the given number of milliseconds.
@@ -86,7 +178,6 @@ public class Utils {
 			Thread.currentThread().interrupt();
 		}
 	}
-		
-		
+	
 
 }

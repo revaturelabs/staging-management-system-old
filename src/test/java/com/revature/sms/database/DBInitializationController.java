@@ -89,7 +89,7 @@ public class DBInitializationController {
 				BatchType batchType = btr.findByType(batchTypes.get(i));
 				UserRole userRole = urr.findByName(userRoles.get(i));
 				String graduationDate = graduationDates.get(i);
-				Timestamp gts = Utils.convertDateToTimestamp(graduationDate);
+				Timestamp gts = Utils.convertDateStringToTimestamp(graduationDate);
 				MarketingStatus marketingStatus = msr.findByStatus(marketingStatuses.get(i));
 				Trainer trainer = tr.findOne(0);  //This line is a placeholder until someone creates a method in the TrainerRepo that lets me find Trainers
 				
@@ -143,7 +143,7 @@ public class DBInitializationController {
 			if (dates != null) {
 				while (j < dates.size()) {
 					String date = dates.get(j);
-					Timestamp dts = Utils.convertDateToTimestamp(date);
+					Timestamp dts = Utils.convertDateStringToTimestamp(date);
 					String checkedIn = checkIns.get(j);
 					boolean ci = Boolean.parseBoolean(checkedIn);
 					String verified = verifications.get(j);
@@ -162,7 +162,7 @@ public class DBInitializationController {
 					String taskType = taskTypes.get(k);
 					AssociateTaskType att = attr.findByType(taskType);
 					String taskDate = taskDates.get(k);
-					Timestamp tdts = Utils.convertDateToTimestamp(taskDate);
+					Timestamp tdts = Utils.convertDateStringToTimestamp(taskDate);
 					String taskNote = taskNotes.get(k);
 					AssociateTask at = new AssociateTask(att, tdts, taskNote);
 					taskList.add(at);	

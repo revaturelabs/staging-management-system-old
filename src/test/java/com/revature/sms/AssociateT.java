@@ -54,20 +54,11 @@ public class AssociateT extends AbstractT {
 	
 	//Asserts that the date displayed under the calendar is the same as the one displayed below the word Monday.
 	@Test
-	public void testWeekFooter()  {
+	public void testWeekOf()  {
 		lp.login(un, pw);
-		String monday = asp.attendanceHeaders.findElement(By.tagName("th")).getText();
-		if (monday.contains("/0")) {
-			monday = monday.replace("0", "");
-		}
-		String[] splitMonday = monday.split("\n");
-		String mondate = splitMonday[1];
-		
-		String week = asp.weekOf.getText();
-		String[] splitWeek = week.split(" ");
-		String dateOfWeek = splitWeek[2];
-		
-		Assert.assertEquals(mondate, dateOfWeek);
+		String monday = getThisMondayFromHeader();
+		String week = Utils.getDateFromText(asp.weekOf.getText());
+		Assert.assertEquals(monday, week);
 	}
 
 	
