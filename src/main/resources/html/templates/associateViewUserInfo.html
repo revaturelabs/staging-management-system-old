@@ -17,31 +17,48 @@
                 </md-expansion-panel-header>
                 
                 <md-expansion-panel-content>
-                    <md-list class="expansionPanelList">
-                        <md-list-item ng-click="null">
-                            <h3> Name </h3>
-                            <p> {{ aVUICtrl.user.firstName }} {{ aVUICtrl.user.lastName }} </p>
+                    <md-list class="expansionPanelList md-dense">
+ 
+                        <md-list-item class="md-3-line dense-list" ng-click="null">
+                            <div class="md-list-item-text" layout="column"> 
+                                <h3 class="h3Top"> Name </h3>
+                            </div>
+                            <div flex> </div>
+                            <div class="md-list-item-text eventListRight" layout="column">
+                                <h3> {{ aVUICtrl.user.firstName }} {{ aVUICtrl.user.lastName }} </h3>
+                            </div>
                         </md-list-item>
 
-                        <md-list-item ng-click="null">
-                            <h3> Username </h3>
-                            <p> {{ aVUICtrl.user.username }} </p>
+                        <md-list-item class="md-3-line dense-list" ng-click="null">
+                            <div class="md-list-item-text" layout="column"> 
+                                <h3 class="h3Top"> Username </h3>
+                            </div>
+                            <div flex> </div>
+                            <div class="md-list-item-text eventListRight" layout="column">
+                                <h3> {{ aVUICtrl.user.username }} </h3>
+                            </div>
                         </md-list-item>
 
-                        <!--<md-list-item ng-click="null">
-                            <h3> Panel status </h3>
-                            <p> {{ (aVUICtrl.user.panel.passed == true) ? "Passed" : "Scheduled for " + (aVUICtrl.user.panel.date | date:"MMMM dd, yyyy") }} </p>
-                        </md-list-item>-->
-
-                        <md-list-item ng-click="null">
-                            <h3> Batch curriculum </h3>
-                            <p> {{ aVUICtrl.user.batchType.type }} </p>
+                        <md-list-item class="md-3-line dense-list" ng-click="null">
+                            <div class="md-list-item-text" layout="column"> 
+                                <h3 class="h3Top"> Batch curriculum </h3>
+                            </div>
+                            <div flex> </div>
+                            <div class="md-list-item-text eventListRight" layout="column">
+                                <h3> {{ aVUICtrl.user.batchType.type }} </h3>
+                            </div>
                         </md-list-item>
 
-                        <md-list-item ng-click="null">
-                            <h3> Graduation date </h3>
-                            <p> {{ aVUICtrl.user.graduationDate | date:"MMMM dd, yyyy" }} </p>
+                        <md-list-item class="md-3-line dense-list" ng-click="null">
+                            <div class="md-list-item-text" layout="column"> 
+                                <h3 class="h3Top"> Graduation date </h3>
+                            </div>
+                            <div flex> </div>
+                            <div class="md-list-item-text eventListRight" layout="column">
+                                <h3> {{ aVUICtrl.user.graduationDate | date:"MMMM dd, yyyy" }} </h3>
+                            </div>
                         </md-list-item>
+
                     </md-list>
                 </md-expansion-panel-content>
             </md-expansion-panel-expanded>
@@ -121,7 +138,7 @@
                                 <p style="text-align: left"> &nbsp; </p>
                             </div>
                         </md-list-item>
-                        <md-divider ng-repeat-end> </md-divider>
+                        <md-divider ng-repeat-end ng-if="!$last"> </md-divider>
 
                     </md-list>
                 </md-expansion-panel-content>
@@ -148,10 +165,10 @@
                         
                         <md-subheader class="md-no-sticky" ng-repeat-start="(type, specificTasks) in aVUICtrl.allTasks" layout="row" layout-align="space-between center"> 
                             <span> {{ type }}s </span>
-                            <md-button ng-if="(aVUICtrl.newCert == true) && (type.toLowerCase() == 'certification')" class="md-icon-button" aria-label="Add certification" ng-click="aVUICtrl.addCert()">
+                            <!--<md-button ng-if="(aVUICtrl.newCert == true) && (type.toLowerCase() == 'certification')" class="md-icon-button" aria-label="Add certification" ng-click="aVUICtrl.addCert()">
                                 <md-tooltip> Add certification </md-tooltip>
-                                <md-icon class="md-material-icon"> add </md-icon>
-                            </md-button>  
+                                <md-icon class="md-material-icon" ng-click="aVUICtrl.assocCertifications()"> add </md-icon>
+                            </md-button>  -->
                         </md-subheader>
                         <md-list-item ng-repeat="task in specificTasks">
                             <h3> {{ aVUICtrl.formatTaskListItemTitle(task) }} </h3>
@@ -159,7 +176,7 @@
                             <p> {{ aVUICtrl.formatTaskListItemContent(task) }} </p>
                             <md-icon class="material-icons"> {{ task | iconFilter:"passed" }} </md-icon>
                         </md-list-item>
-                        <md-divider ng-repeat-end> </md-divider>
+                        <md-divider ng-repeat-end ng-if="!$last"> </md-divider>
 
                     </md-list>
                 </md-expansion-panel-content>
