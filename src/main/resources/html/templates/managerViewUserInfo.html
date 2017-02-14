@@ -2,229 +2,247 @@
     <div ng-controller="managerViewUserInfoCtrl as mVUICtrl" id="mgrViewUserInfoDiv">
         
           <!-- User info panel -->
-        <md-expansion-panel md-component-id="userInfoPanel" ng-if="mVUICtrl.user != undefined">
-            <md-expansion-panel-collapsed>
-                <div class="md-title"> User info </div>
-                <div class="md-summary"> Basic information </div>
-                <md-expansion-panel-icon> </md-expansion-panel-icon>
-            </md-expansion-panel-collapsed>
-
-            <md-expansion-panel-expanded>
-                <md-expansion-panel-header md-ink-ripple="#000000" ng-click="$panel.collapse()"> 
+        <div class="userInfoPanels">
+            <md-expansion-panel md-component-id="userInfoPanel" ng-if="mVUICtrl.user != undefined">
+                <md-expansion-panel-collapsed>
                     <div class="md-title"> User info </div>
                     <div class="md-summary"> Basic information </div>
                     <md-expansion-panel-icon> </md-expansion-panel-icon>
-                </md-expansion-panel-header>
-                
-                <md-expansion-panel-content>
-                    <md-list class="expansionPanelList md-dense">
+                </md-expansion-panel-collapsed>
 
-                        <md-list-item class="md-3-line dense-list" ng-click="null">
-                            <div class="md-list-item-text" layout="column"> 
-                                <h3 class="h3Top"> Name </h3>
-                            </div>
-                            <div flex> </div>
-                            <div class="md-list-item-text eventListRight" layout="column">
-                                <h3> {{ mVUICtrl.user.firstName }} {{ mVUICtrl.user.lastName }} </h3>
-                            </div>
-                        </md-list-item>
+                <md-expansion-panel-expanded>
+                    <md-expansion-panel-header md-ink-ripple="#000000" ng-click="$panel.collapse()"> 
+                        <div class="md-title"> User info </div>
+                        <div class="md-summary"> Basic information </div>
+                        <md-expansion-panel-icon> </md-expansion-panel-icon>
+                    </md-expansion-panel-header>
+                    
+                    <md-expansion-panel-content>
+                        <md-list class="expansionPanelList md-dense">
 
-                        <md-list-item class="md-3-line dense-list" ng-click="null">
-                            <div class="md-list-item-text" layout="column"> 
-                                <h3 class="h3Top"> Username </h3>
-                            </div>
-                            <div flex> </div>
-                            <div class="md-list-item-text eventListRight" layout="column">
-                                <h3> {{ mVUICtrl.user.username }} </h3>
-                            </div>
-                        </md-list-item>
+                            <md-list-item class="md-3-line dense-list" ng-click="null">
+                                <div class="md-list-item-text" layout="column"> 
+                                    <h3 class="h3Top"> Name </h3>
+                                </div>
+                                <div flex> </div>
+                                <div class="md-list-item-text eventListRight" layout="column">
+                                    <h3> {{ mVUICtrl.user.firstName }} {{ mVUICtrl.user.lastName }} </h3>
+                                </div>
+                            </md-list-item>
 
-                        <md-list-item class="md-3-line dense-list" ng-click="null">
-                            <div class="md-list-item-text" layout="column"> 
-                                <h3 class="h3Top"> Batch </h3>
-                            </div>
-                            <div flex> </div>
-                            <div class="md-list-item-text eventListRight" layout="column">
-                                <h3> {{ mVUICtrl.user.batchType.type }} </h3>
-                            </div>
-                        </md-list-item>
+                            <md-list-item class="md-3-line dense-list" ng-click="null">
+                                <div class="md-list-item-text" layout="column"> 
+                                    <h3 class="h3Top"> Username </h3>
+                                </div>
+                                <div flex> </div>
+                                <div class="md-list-item-text eventListRight" layout="column">
+                                    <h3> {{ mVUICtrl.user.username }} </h3>
+                                </div>
+                            </md-list-item>
 
-                        <md-list-item class="md-3-line dense-list" ng-click="null">
-                            <div class="md-list-item-text" layout="column"> 
-                                <h3 class="h3Top"> Trainer </h3>
-                            </div>
-                            <div flex> </div>
-                            <div class="md-list-item-text eventListRight" layout="column">
-                                <!--<h3> {{ mVUICtrl.user.trainer.firstName }} {{ mVUICtrl.user.trainer.lastName }} </h3>-->
-                            </div>
-                        </md-list-item>
+                            <md-list-item class="md-3-line dense-list" ng-click="null">
+                                <div class="md-list-item-text" layout="column"> 
+                                    <h3 class="h3Top"> Batch </h3>
+                                </div>
+                                <div flex> </div>
+                                <div class="md-list-item-text eventListRight" layout="column">
+                                    <h3> {{ mVUICtrl.user.batchType.type }} </h3>
+                                </div>
+                            </md-list-item>
 
-                        <md-list-item class="md-3-line dense-list" ng-click="null">
-                            <div class="md-list-item-text" layout="column"> 
-                                <h3 class="h3Top"> Graduation date </h3>
-                            </div>
-                            <div flex> </div>
-                            <div class="md-list-item-text eventListRight" layout="column">
-                                <h3> {{ mVUICtrl.user.graduationDate | date:"MMMM dd, yyyy" }} </h3>
-                            </div>
-                        </md-list-item>
+                            <md-list-item class="md-3-line dense-list" ng-click="null">
+                                <div class="md-list-item-text" layout="column"> 
+                                    <h3 class="h3Top"> Trainer </h3>
+                                </div>
+                                <div flex> </div>
+                                <div class="md-list-item-text eventListRight" layout="column">
+                                    <!--<h3> {{ mVUICtrl.user.trainer.firstName }} {{ mVUICtrl.user.trainer.lastName }} </h3>-->
+                                </div>
+                            </md-list-item>
 
-                        <md-list-item class="md-3-line dense-list" ng-click="null">
-                            <div class="md-list-item-text" layout="column"> 
-                                <h3 class="h3Top"> Marketing status </h3>
-                            </div>
-                            <div flex> </div>
-                            <div class="md-list-item-text eventListRight" layout="column">
-	                         	<md-input-container id="marketingStatus">	
-		  							<md-select style="color:black;"  placeholder="{{manAttCtrl.selectedUser.marketingStatus.name}}"
-		    							  ng-model="manAttCtrl.markBind" ng-change="manAttCtrl.changeStatus()">
-		    							<md-option ng-repeat="x in manAttCtrl.mStatuses | orderBy: 'name'" ng-value="x">{{ x.name }}</md-option>
-		 							 </md-select>
-								</md-input-container>                            
-							</div>
-                        </md-list-item>
-                    </md-list>
-                </md-expansion-panel-content>
-            </md-expansion-panel-expanded>
-        </md-expansion-panel>
+                            <md-list-item class="md-3-line dense-list" ng-click="null">
+                                <div class="md-list-item-text" layout="column"> 
+                                    <h3 class="h3Top"> Graduation date </h3>
+                                </div>
+                                <div flex> </div>
+                                <div class="md-list-item-text eventListRight" layout="column">
+                                    <h3> {{ mVUICtrl.user.graduationDate | date:"MMMM dd, yyyy" }} </h3>
+                                </div>
+                            </md-list-item>
 
-          <!-- Skill panel -->
-        <md-expansion-panel md-component-id="skillPanel">
-            <md-expansion-panel-collapsed>
-                <div class="md-title"> Skills </div>
-                <div class="md-summary"> Technical skills </div>
-                <md-expansion-panel-icon> </md-expansion-panel-icon>
-            </md-expansion-panel-collapsed>
+                            <md-list-item class="md-3-line dense-list" ng-click="null">
+                                <div class="md-list-item-text" layout="column"> 
+                                    <h3 class="h3Top"> Days in marketing </h3>
+                                </div>
+                                <div flex> </div>
+                                <div class="md-list-item-text eventListRight" layout="column">
+                                    <h3> {{ mVUICtrl.calcMarketingDays() }} </h3>
+                                </div>
+                            </md-list-item>
 
-            <md-expansion-panel-expanded>
-                <md-expansion-panel-header md-ink-ripple="#000000" ng-click="$panel.collapse()"> 
+                            <md-list-item class="md-3-line dense-list" ng-click="null">
+                                <div class="md-list-item-text" layout="column"> 
+                                    <h3 class="h3Top"> Marketing status </h3>
+                                </div>
+                                <div flex> </div>
+                                <div class="md-list-item-text eventListRight" layout="column">
+                                    <md-input-container id="marketingStatus">	
+                                        <md-select style="color:black;"  placeholder="{{manAttCtrl.selectedUser.marketingStatus.name}}"
+                                            ng-model="manAttCtrl.markBind" ng-change="manAttCtrl.changeStatus()">
+                                            <md-option ng-repeat="x in manAttCtrl.mStatuses | orderBy: 'name'" ng-value="x">{{ x.name }}</md-option>
+                                        </md-select>
+                                    </md-input-container>                            
+                                </div>
+                            </md-list-item>
+                        </md-list>
+                    </md-expansion-panel-content>
+
+                    <md-expansion-panel-footer>
+                        <div flex> </div>
+                        <md-button class="md-primary" ng-click="mVUICtrl.resetSelectedUsersPassword()"> RESET PASSWORD </md-button>
+                        <md-button class="md-primary" ng-click="mVUICtrl.deleteSelectedUser()"> DELETE USER </md-button>
+                    </md-expansion-panel-footer>
+                </md-expansion-panel-expanded>
+            </md-expansion-panel>
+
+            <!-- Skill panel -->
+            <md-expansion-panel md-component-id="skillPanel">
+                <md-expansion-panel-collapsed>
                     <div class="md-title"> Skills </div>
                     <div class="md-summary"> Technical skills </div>
                     <md-expansion-panel-icon> </md-expansion-panel-icon>
-                </md-expansion-panel-header>
-                
-                <md-expansion-panel-content> 
-                    <div class="denseItem" ng-if="mVUICtrl.user.skill.length != 0"> {{ mVUICtrl.user.skill.map( mVUICtrl.joinArrayBySkill ).join(", ") }} </div>
-                    <div class="denseItem" ng-if="mVUICtrl.user.skill.length == 0"> User has not added any skills. </div>
-                </md-expansion-panel-content>
-            </md-expansion-panel-expanded>
-        </md-expansion-panel>  
-            
-          <!-- Event panel -->
-        <md-expansion-panel md-component-id="eventPanel">
-            <md-expansion-panel-collapsed>
-                <div class="md-title"> Events </div>
-                <div class="md-summary"> Interviews, submissions, selections </div>
-                <md-expansion-panel-icon> </md-expansion-panel-icon>
-            </md-expansion-panel-collapsed>
+                </md-expansion-panel-collapsed>
 
-            <md-expansion-panel-expanded>
-                <md-expansion-panel-header md-ink-ripple="#000000" ng-click="$panel.collapse()"> 
+                <md-expansion-panel-expanded>
+                    <md-expansion-panel-header md-ink-ripple="#000000" ng-click="$panel.collapse()"> 
+                        <div class="md-title"> Skills </div>
+                        <div class="md-summary"> Technical skills </div>
+                        <md-expansion-panel-icon> </md-expansion-panel-icon>
+                    </md-expansion-panel-header>
+                    
+                    <md-expansion-panel-content> 
+                        <div class="denseItem" ng-if="mVUICtrl.user.skill.length != 0"> {{ mVUICtrl.user.skill.map( mVUICtrl.joinArrayBySkill ).join(", ") }} </div>
+                        <div class="denseItem" ng-if="mVUICtrl.user.skill.length == 0"> User has not added any skills. </div>
+                    </md-expansion-panel-content>
+                </md-expansion-panel-expanded>
+            </md-expansion-panel>  
+                
+            <!-- Event panel -->
+            <md-expansion-panel md-component-id="eventPanel">
+                <md-expansion-panel-collapsed>
                     <div class="md-title"> Events </div>
                     <div class="md-summary"> Interviews, submissions, selections </div>
                     <md-expansion-panel-icon> </md-expansion-panel-icon>
-                </md-expansion-panel-header>
+                </md-expansion-panel-collapsed>
+
+                <md-expansion-panel-expanded>
+                    <md-expansion-panel-header md-ink-ripple="#000000" ng-click="$panel.collapse()"> 
+                        <div class="md-title"> Events </div>
+                        <div class="md-summary"> Interviews, submissions, selections </div>
+                        <md-expansion-panel-icon> </md-expansion-panel-icon>
+                    </md-expansion-panel-header>
+                    
+                    <md-expansion-panel-content>
+                        <md-list class="expansionPanelList md-dense">
+                            
+                            <md-subheader class="md-no-sticky" ng-repeat-start="(type, specificEvents) in mVUICtrl.allEvents"> {{ type }} </md-subheader>
+                            <md-list-item class="md-3-line" ng-repeat="event in specificEvents" ng-click="null">
+                                <div class="md-list-item-text" layout="column"> 
+                                    <h3 class="h3Top"> {{ event.assignment.companyName }} - {{ event.assignment.location }} </h3>
+                                    <h4> {{ event.type.type }} - {{ event.assignment.jobTitle }} </h4>
+                                    <p style="text-align: left"> {{ event.note }} </p>
+                                </div>
+                                <div flex> </div>
+                                <div class="md-list-item-text eventListRight" layout="column">
+                                    <h3> {{ event.date | date:'MMMM dd, yyyy' }} </h3>
+                                    <h4> {{ event.location }} </h4>
+                                    <p style="text-align: left"> &nbsp; </p>
+                                </div>
+                            </md-list-item>
+                            <md-divider ng-repeat-end ng-if="!$last"> </md-divider>
+
+                        </md-list>
+                    </md-expansion-panel-content>
+                </md-expansion-panel-expanded>
+            </md-expansion-panel>
                 
-                <md-expansion-panel-content>
-                    <md-list class="expansionPanelList md-dense">
-                        
-                        <md-subheader class="md-no-sticky" ng-repeat-start="(type, specificEvents) in mVUICtrl.allEvents"> {{ type }} </md-subheader>
-                        <md-list-item class="md-3-line" ng-repeat="event in specificEvents" ng-click="null">
-                            <div class="md-list-item-text" layout="column"> 
-                                <h3 class="h3Top"> {{ event.assignment.companyName }} - {{ event.assignment.location }} </h3>
-                                <h4> {{ event.type.type }} - {{ event.assignment.jobTitle }} </h4>
-                                <p style="text-align: left"> {{ event.note }} </p>
-                            </div>
-                            <div flex> </div>
-                            <div class="md-list-item-text eventListRight" layout="column">
-                                <h3> {{ event.date | date:'MMMM dd, yyyy' }} </h3>
-                                <h4> {{ event.location }} </h4>
-                                <p style="text-align: left"> &nbsp; </p>
-                            </div>
-                        </md-list-item>
-                        <md-divider ng-repeat-end ng-if="!$last"> </md-divider>
-
-                    </md-list>
-                </md-expansion-panel-content>
-            </md-expansion-panel-expanded>
-        </md-expansion-panel>
-            
-          <!-- Task panel -->
-        <md-expansion-panel md-component-id="taskPanel">
-            <md-expansion-panel-collapsed>
-                <div class="md-title"> Tasks </div>
-                <div class="md-summary"> Certifications, panels, projects </div>
-                <md-expansion-panel-icon> </md-expansion-panel-icon>
-            </md-expansion-panel-collapsed>
-
-            <md-expansion-panel-expanded>
-                <md-expansion-panel-header md-ink-ripple="#000000" ng-click="$panel.collapse()"> 
+            <!-- Task panel -->
+            <md-expansion-panel md-component-id="taskPanel">
+                <md-expansion-panel-collapsed>
                     <div class="md-title"> Tasks </div>
                     <div class="md-summary"> Certifications, panels, projects </div>
                     <md-expansion-panel-icon> </md-expansion-panel-icon>
-                </md-expansion-panel-header>
-                
-                <md-expansion-panel-content>
-                    <md-list class="expansionPanelList">
-                        
-                        <md-subheader class="md-no-sticky" ng-repeat-start="thisTaskType in mVUICtrl.taskTypes" layout="row" layout-align="space-between center"> 
-                            <span> {{ thisTaskType.type }}s </span>
- 					<!--    <md-button ng-if="(mVUICtrl.newCert == true) && (thisTaskType.type.toLowerCase() == 'certification')" class="md-icon-button" aria-label="Add certification" ng-click="mVUICtrl.addCert()">
-                                <md-tooltip> Add certification </md-tooltip>
-                                <md-icon class="md-material-icon"> add </md-icon>
-                            </md-button> -->
+                </md-expansion-panel-collapsed>
+
+                <md-expansion-panel-expanded>
+                    <md-expansion-panel-header md-ink-ripple="#000000" ng-click="$panel.collapse()"> 
+                        <div class="md-title"> Tasks </div>
+                        <div class="md-summary"> Certifications, panels, projects </div>
+                        <md-expansion-panel-icon> </md-expansion-panel-icon>
+                    </md-expansion-panel-header>
+                    
+                    <md-expansion-panel-content>
+                        <md-list class="expansionPanelList">
                             
-                            <div ng-if="(mVUICtrl.newCert == true) && (thisTaskType.type.toLowerCase() == 'panel')">
-                            	<md-menu ng-show="manAttCtrl.selectedUser.panels[0]">
-									<!-- Trigger element is a md-button with an icon -->
-									<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-										<md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == true" style="color:#59E2A8;">check_circle</md-icon>
-										<md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == false" style="color:#A00;">not_interested</md-icon>
-									</md-button>
-									<md-menu-content>
-										<md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0], true)"><md-icon>check_circle</md-icon> Passed</md-button></md-menu-item>
-										<md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0], false)"><md-icon>not_interested</md-icon> Not Passed</md-button></md-menu-item>
-									</md-menu-content>
-								</md-menu>
-                                <span ng-show="manAttCtrl.selectedUser.panels[0].passed == false" ng-click="manAttCtrl.togglePanelDatePicker()" style="cursor: pointer;">Scheduled for:
-                                	 <span ng-show="manAttCtrl.selectedUser.panels[0]">{{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
-                                	 <span ng-hide="manAttCtrl.selectedUser.panels[0].dateDisplay">No date selected</span>
-                               	</span>
-                               	<md-card md-whiteframe="6dp" style="max-width:30vh;" ng-show="manAttCtrl.panelDatePickerIsOpen">
-	                               	<md-datepicker ng-model="manAttCtrl.panelDate" md-placeholder="Enter date" ng-change="manAttCtrl.updatePanelDate(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0])"></md-datepicker>
-	                            </md-card>
-                                <span ng-hide="manAttCtrl.selectedUser.panels[0]"><md-icon ng-click="manAttCtrl.createPanel(manAttCtrl.selectedUser)" style="color:black !important;cursor: pointer;">note_add</md-icon></span>
-                            </div>
+                            <md-subheader class="md-no-sticky" ng-repeat-start="thisTaskType in mVUICtrl.taskTypes" layout="row" layout-align="space-between center"> 
+                                <span> {{ thisTaskType.type }}s </span>
+                        <!--    <md-button ng-if="(mVUICtrl.newCert == true) && (thisTaskType.type.toLowerCase() == 'certification')" class="md-icon-button" aria-label="Add certification" ng-click="mVUICtrl.addCert()">
+                                    <md-tooltip> Add certification </md-tooltip>
+                                    <md-icon class="md-material-icon"> add </md-icon>
+                                </md-button> -->
+                                
+                                <div ng-if="(mVUICtrl.newCert == true) && (thisTaskType.type.toLowerCase() == 'panel')">
+                                    <md-menu ng-show="manAttCtrl.selectedUser.panels[0]">
+                                        <!-- Trigger element is a md-button with an icon -->
+                                        <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+                                            <md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == true" style="color:#59E2A8;">check_circle</md-icon>
+                                            <md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == false" style="color:#A00;">not_interested</md-icon>
+                                        </md-button>
+                                        <md-menu-content>
+                                            <md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0], true)"><md-icon>check_circle</md-icon> Passed</md-button></md-menu-item>
+                                            <md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0], false)"><md-icon>not_interested</md-icon> Not Passed</md-button></md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                    <span ng-show="manAttCtrl.selectedUser.panels[0].passed == false" ng-click="manAttCtrl.togglePanelDatePicker()" style="cursor: pointer;">Scheduled for:
+                                        <span ng-show="manAttCtrl.selectedUser.panels[0]">{{ manAttCtrl.selectedUser.panels[0].dateDisplay }}</span>
+                                        <span ng-hide="manAttCtrl.selectedUser.panels[0].dateDisplay">No date selected</span>
+                                    </span>
+                                    <md-card md-whiteframe="6dp" style="max-width:30vh;" ng-show="manAttCtrl.panelDatePickerIsOpen">
+                                        <md-datepicker ng-model="manAttCtrl.panelDate" md-placeholder="Enter date" ng-change="manAttCtrl.updatePanelDate(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0])"></md-datepicker>
+                                    </md-card>
+                                    <span ng-hide="manAttCtrl.selectedUser.panels[0]"><md-icon ng-click="manAttCtrl.createPanel(manAttCtrl.selectedUser)" style="color:black !important;cursor: pointer;">note_add</md-icon></span>
+                                </div>
 
-							<div ng-if="(mVUICtrl.newCert == true) && (thisTaskType.type.toLowerCase() == 'project')">
-								<div ng-show="manAttCtrl.selectedUser.activeProject"> Current project : {{ manAttCtrl.selectedUser.activeProject.name }}</div>
-                          		<div ng-hide="manAttCtrl.selectedUser.activeProject"> Current project : No project</div>
-								<md-button class="md-raised md-primary" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject)">Change current project</md-button>
-							</div>
-                        </md-subheader>
-                        
-                        <!--<md-list-item ng-repeat="task in specificTasks">
-                            <h3> {{ mVUICtrl.formatTaskListItemTitle(task) }} </h3>
-                            <div flex> </div>
-                            <p> {{ mVUICtrl.formatTaskListItemContent(task) }} </p>
-                            <md-icon class="material-icons"> {{ task | iconFilter:"passed" }} </md-icon>
-                        </md-list-item>-->
+                                <div ng-if="(mVUICtrl.newCert == true) && (thisTaskType.type.toLowerCase() == 'project')">
+                                    <div ng-show="manAttCtrl.selectedUser.activeProject"> Current project : {{ manAttCtrl.selectedUser.activeProject.name }}</div>
+                                    <div ng-hide="manAttCtrl.selectedUser.activeProject"> Current project : No project</div>
+                                    <md-button class="md-raised md-primary" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject)">Change current project</md-button>
+                                </div>
+                            </md-subheader>
+                            
+                            <!--<md-list-item ng-repeat="task in specificTasks">
+                                <h3> {{ mVUICtrl.formatTaskListItemTitle(task) }} </h3>
+                                <div flex> </div>
+                                <p> {{ mVUICtrl.formatTaskListItemContent(task) }} </p>
+                                <md-icon class="material-icons"> {{ task | iconFilter:"passed" }} </md-icon>
+                            </md-list-item>-->
 
-                        <md-list-item class="md-3-line dense-list" ng-click="null" ng-repeat="task in mVUICtrl.allTasks[thisTaskType.type]" ng-if="task.taskType.type.toLowerCase() == 'certification'">
-                            <div class="md-list-item-text" layout="column"> 
-                                <h3 class="h3Top"> {{ mVUICtrl.formatTaskListItemTitle(task) }} </h3>
-                            </div>
-                            <div flex> </div>
-                            <div class="md-list-item-text eventListRight" layout="column">
-                                <h3> {{ mVUICtrl.formatTaskListItemContent(task) }} </h3>
-                            </div>
-                        </md-list-item>
-                        
-                        <md-divider ng-repeat-end ng-if="!$last"> </md-divider>
+                            <md-list-item class="md-3-line dense-list" ng-click="null" ng-repeat="task in mVUICtrl.allTasks[thisTaskType.type]" ng-if="task.taskType.type.toLowerCase() == 'certification'">
+                                <div class="md-list-item-text" layout="column"> 
+                                    <h3 class="h3Top"> {{ mVUICtrl.formatTaskListItemTitle(task) }} </h3>
+                                </div>
+                                <div flex> </div>
+                                <div class="md-list-item-text eventListRight" layout="column">
+                                    <h3> {{ mVUICtrl.formatTaskListItemContent(task) }} </h3>
+                                </div>
+                            </md-list-item>
+                            
+                            <md-divider ng-repeat-end ng-if="!$last"> </md-divider>
 
-                    </md-list>
-                </md-expansion-panel-content>
-            </md-expansion-panel-expanded>
-        </md-expansion-panel>
+                        </md-list>
+                    </md-expansion-panel-content>
+                </md-expansion-panel-expanded>
+            </md-expansion-panel>
 
+        </div>
     </div>

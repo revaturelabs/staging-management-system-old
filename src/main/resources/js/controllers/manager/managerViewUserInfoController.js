@@ -3,7 +3,7 @@
         .module( "sms" )
         .controller( "managerViewUserInfoCtrl", managerViewUserInfoCtrl );
 
-    function managerViewUserInfoCtrl( $scope, $filter, loginService, skillService, userService, taskTypeService ) {
+    function managerViewUserInfoCtrl( $scope, $filter, $mdDialog, loginService, skillService, userService, taskTypeService ) {
         var mic = this;
 
           // bindables
@@ -11,6 +11,7 @@
         mic.user = $scope.$parent.manAttCtrl.user;
         mic.showChips = false;
         mic.selectedSkills = mic.user.skill;
+        mic.curr = new Date();
 
             //functions
         mic.toast = toast;
@@ -27,12 +28,16 @@
         mic.transformChip = transformChip;
         mic.skillSearch = skillSearch;
         mic.createFilterFor = createFilterFor;
+        mic.emitRepull = emitRepull;
+        mic.deleteSelectedUser = deleteSelectedUser;
+        mic.resetSelectedUsersPassword = resetSelectedUsersPassword;
+        mic.calcMarketingDays = calcMarketingDays;
+        mic.calcMarketingDaysForAllUsers = calcMarketingDaysForAllUsers;
+        mic.days_between = days_between;
 
           // initialization
         mic.getTaskTypes();
         mic.getSkills();
-        // mic.divideTasks();
-        // mic.divideEvents();
 
           // functions
             // calls global toast function
@@ -52,7 +57,6 @@
         function getSkills() {
             skillService.getAll( function(response) {
                 mic.skills = response;
-                console.log("runs");
             }, function(){});
         }
 
@@ -154,12 +158,173 @@
             }
         }
 
+        function deleteSelectedUser(ev) {
+			if( mic.user != undefined) {
+				var confirm = $mdDialog.confirm()
+		          .title('Delete selected user?')
+		          .textContent(mic.user.firstName + ' ' + mic.user.lastName + ' will be removed.' )
+		          .ariaLabel('Lucky day')
+		          .targetEvent(ev)
+		          .ok('Please do it!')
+		          .cancel('No, thank you.');
+				
+				 $mdDialog.show(confirm).then(function() {
+				    	
+				    	//MM TODO Erase mm block use login controller to update pass, make new endpoint
+				    	// add a loading icon to show something is going on
+				    	angular.element("body").addClass("loading");
+				    	
+				    	// update the selected user
+			    		userService.remove( mic.user, function() {
+			    			
+			    			// remove the loading icon
+			    			angular.element("body").removeClass("loading");
+			    			
+			    			//prompt the user
+			    			mic.toast("User deleted.");	
+                            mic.emitRepull();
+			    		}, function(error) {
+			    			// remove the loading icon
+			    			angular.element("body").removeClass("loading");
+			    			
+			    			//prompt the user
+			    			mic.toast("Error deleting user.");
+			    		});
+                },
+                function() {
+                    //prompt
+                    mic.toast("User deletion cancelled.");
+                });
+            }
+        }
+
+        function resetSelectedUsersPassword(ev){
+			// of we have selected a user
+			if( mic.user != undefined) {
+				//<<<<<<<<<<<
+				 
+					    // Appending dialog to document.body to cover sidenav in docs app
+					    var confirm = $mdDialog.confirm()
+					          .title('Reset selected user\'s password?')
+					          .textContent('Password will be reset to '+ mic.user.firstName +' '+ mic.user.lastName+'\'s username')
+					          .ariaLabel('Lucky day')
+					          .targetEvent(ev)
+					          .ok('OKAY')
+					          .cancel('CANCEL');
+
+					    $mdDialog.show(confirm).then(function() {
+					    	
+					    	//MM TODO Erase mm block use login controller to update pass, make new endpoint
+					    	// add a loading icon to show something is going on
+					    	angular.element("body").addClass("loading");
+					    	
+					    	// update the selected user
+				    		loginService.resetPass( mic.user, function() {
+				    			
+				    			// remove the loading icon
+				    			angular.element("body").removeClass("loading");
+				    			
+				    			//prompt the user
+				    			mic.toast("Password reset successful.");	
+				    		}, function() {
+				    			
+				    			// remove the loading icon
+				    			angular.element("body").removeClass("loading");
+				    			
+				    			//prompt the user
+				    			mic.toast("Error resetting Password.");
+				    		});
+					    	//MM
+					    }, 
+					    //on error
+					    function() {
+					    	
+					    	//prompt
+					    	mic.toast("Password reset cancelled.");
+					    });
+				//<<<<<<<<<<<
+			}
+		}
+
+        function emitRepull() {
+            $scope.$emit( "repullUsers" );
+        }
+
+        /**
+         * @description calls a function that Determines the difference between the two supplied dates.
+         * @returns {number} Number of days between the graduation date and today
+         */
+        function calcMarketingDays(){
+
+        	if (mic.user) {
+	        	if(mic.user.graduationDate == null){
+	        		return "N/A";
+	        	}
+	        	else{
+	
+	        		return " " + mic.days_between(mic.curr, ((new Date(mic.user.graduationDate)))) + " days";	
+	        	}
+        	}
+        }
+        
+        /**
+         * @description calcMarketingDays function, adapted for iterating over all users. Takes in a user as a parameter
+         * @returns {number} number of days between the grad date and today
+         */
+        function calcMarketingDaysForAllUsers(user){
+	        if(user.graduationDate == null){
+	        	return "N/A";
+	        }
+	        else{
+	       		return " " + mic.days_between(mic.curr, ((new Date(user.graduationDate)))) + " days";	
+	       	}
+        }
+        
+        
+        /**
+         * @description Determines the difference betwen the two supplied dates.
+         * @param {date} date1 First supplied date.
+         * @param {date} date2 Second supplied date.
+         * @returns {number} Number of days between the two dates
+         */
+        function days_between(date1, date2) {
+
+            // The number of milliseconds in one day
+            var ONE_DAY = 1000 * 60 * 60 * 24
+
+            // Convert both dates to milliseconds
+            var date1_ms = date1.getTime()
+            var date2_ms = date2.getTime()
+
+            // Calculate the difference in milliseconds
+            var difference_ms = Math.abs(date1_ms - date2_ms)
+
+            // Convert back to days and return
+            return Math.round(difference_ms/ONE_DAY)
+        }
+
           // watcher
         $scope.$on( "newSelectedUser", function( event, data ) {
             mic.user = data;
-            /*mic.getTaskTypes();
-            mic.getSkills();*/
             mic.divideTasks();
             mic.divideEvents();
+        })
+
+          // changes the functionality of the user info panel based on its position
+            // allows user info panels to lock at upper corner upon scroll
+        $(window).scroll(function () {
+            var headerTop = $(".templateCard").offset().top + $(".templateCard").outerHeight();
+
+            if ($(window).scrollTop() > headerTop) {
+                //when the header reaches the top of the window change position to fixed
+                $(".userInfoPanels").css( "position", "fixed" );
+                $(".userInfoPanels").css( "top", "10px" );
+                $(".userInfoPanels").css( "width", $(".userInfoPanels").css("width") );
+            } else {
+                //put position back to relative
+                $(".userInfoPanels").css( "position", "relative" );
+                $(".userInfoPanels").css( "top", "0px" );
+                $(".userInfoPanels").css( "width", $(".userInfoPanels").css("width") );
+            }
         })
     }

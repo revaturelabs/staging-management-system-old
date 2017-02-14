@@ -82,20 +82,10 @@
         mac.getTaskTypes = getTaskTypes;
         /**@var {function} assignProject function reference variable. */
         mac.assignProject = assignProject;
-
-        
         mac.showFullJobInfo = showFullJobInfo;
-
-
         mac.editSkills = editSkills;
-
-
-
         mac.deleteSelectedJob = deleteSelectedJob;
-        
         mac.makenewjob = makenewjob;
-        
-
         mac.resetSelectedUsersJob = resetSelectedUsersJob;
         
 
@@ -111,18 +101,11 @@
          * @description Updates user Marketing Status.
          */
         function changeStatus() {
-        	     	
-        	
-        	mac.selectedUser.marketingStatus
-        	= mac.markBind;
-        
+        	mac.selectedUser.marketingStatus = mac.markBind;
         	var sentData = mac.selectedUser.toJSON();
-                	
         	userService.update(sentData,function(){
-	    		mac.toast("Marketing status updated");
-	    	    	});
-        	
-        
+	    		mac.toast("Marketing status updated.");
+	    	});
         }        
         
           // functions
@@ -298,7 +281,7 @@
                 actions.push( {
                     "function": mac.newAssociates,
                     "icon"   : "add",
-                    "tooltip" : "Add batch of new associates."
+                    "tooltip" : "Add batch of new associates"
                 });
 
                 actions.push( {
@@ -310,7 +293,7 @@
                 actions.push({
                 	"function": mac.updateProjects,
                     "icon"   : "work",
-                    "tooltip" : "Create or update an existing project."
+                    "tooltip" : "Create or update an existing project"
 
                 });
 
@@ -712,9 +695,6 @@
 				    			mac.toast("Error resetting Password.");
 				    		});
 					    	//MM
-					    	
-					    	
-					    	
 					    }, 
 					    //on error
 					    function() {
@@ -725,12 +705,12 @@
 				//<<<<<<<<<<<
 			}
 		}
-		
 
 		$scope.$on( "setView", function( events, data ) {
             mac.associateTableIsOpen = data.associateTableIsOpen;
             setToolbar(data.title);
         })
+
 		/**
          * @description Called when a superAdmin clicks on update project icon, opens a dialog.
          */
@@ -749,6 +729,7 @@
                 mac.toast("Projects updated");
             });
 		}
+
 		function deleteSelectedUser(ev) {
 			if( mac.selectedUser != undefined) {
 				var confirm = $mdDialog.confirm()
@@ -756,8 +737,8 @@
 		          .textContent(mac.selectedUser.firstName +' '+ mac.selectedUser.lastName+ ' will be removed.' )
 		          .ariaLabel('Lucky day')
 		          .targetEvent(ev)
-		          .ok('Please do it!')
-		          .cancel('No, thank you.');
+		          .ok('OKAY')
+		          .cancel('CANCEL');
 				
 				 $mdDialog.show(confirm).then(function() {
 				    	
@@ -782,23 +763,22 @@
 			    			//prompt the user
 			    			mac.toast("Error deleting user.");
 			    		});
-			},
-			function() {
-		    	
-		    	//prompt
-		    	mac.toast("User deletion cancelled.");
-		    });
-
-		}
+                },
+                function() {
+                    //prompt
+                    mac.toast("User deletion cancelled.");
+                });
+            }
+        }
 		
-        
-    }
-		
-
           // watchers
         $scope.$watch( function() { return mac.selectedUser }, function( newUser, oldUser ) {
             if ( (newUser != oldUser) && (newUser) ) {
                 $scope.$broadcast( "newSelectedUser", mac.selectedUser );
             }
+        })
+
+        $scope.$on( "repullUsers", function() {
+            mac.getUsers();
         })
     }
