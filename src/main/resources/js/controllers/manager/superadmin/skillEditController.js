@@ -155,17 +155,18 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
                 var j = sec.skillIds.indexOf(sec.currentSkills[i].id); //gets skill id
                 if (j==-1){ // skill was marked for deletion in the view
                    
-                    //sec.removeSkillFromDB(sec.currentSkills[i].skill);
+                    
                     removeList.push(sec.currentSkills[i].skill);
                 }
                 
                 var skillNameIn = sec.newSkillList.indexOf(sec.currentSkills[i].skill);
                 if (!(j==skillNameIn)){
                   // something got changed, need to edit the skill
+                    if (sec.newSkillList[j] != undefined){
                     
-                    //sec.updateSkillInDB(sec.currentSkills[i].skill, sec.newSkillList[j]);
-                    var updateSkill = {oldSkillName: sec.currentSkills[i].skill, newSkillName: sec.newSkillList[j]};
-                    updateList.push(updateSkill);
+                        var updateSkill = {oldSkillName: sec.currentSkills[i].skill, newSkillName: sec.newSkillList[j]};
+                        updateList.push(updateSkill);
+                    }
                 }
              
             }
@@ -176,9 +177,10 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
                 }
                 var newSkill = {skill : sec.newSkillList[k]};
                 addList.push(newSkill);
-                //sec.addSkillToDB(newSkill);//adds skill to DB
+               
 
             }
+           
 
             //resolve remove skills
             for (var i=0; i<removeList.length; i++){
