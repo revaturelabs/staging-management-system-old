@@ -20,6 +20,7 @@
                         <tr md-row>
                             <td md-cell class="attendanceCell" flex="20" ng-repeat="day in assocAttCtrl.weekAttendance track by $index">
                                 <div class="tableData" layout-align="center center"> 
+                                    <md-tooltip> {{ day.icon.tooltip }} </md-tooltip>
                                     <md-icon class="md-material-icon" ng-style="{ color: day.icon.color }"> {{ day.icon.name }} </md-icon>
                                 </div>
                             </td>

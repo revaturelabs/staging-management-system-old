@@ -82,20 +82,10 @@
         mac.getTaskTypes = getTaskTypes;
         /**@var {function} assignProject function reference variable. */
         mac.assignProject = assignProject;
-
-        
         mac.showFullJobInfo = showFullJobInfo;
-
-
         mac.editSkills = editSkills;
-
-
-
         mac.deleteSelectedJob = deleteSelectedJob;
-        
         mac.makenewjob = makenewjob;
-        
-
         mac.resetSelectedUsersJob = resetSelectedUsersJob;
         
 
@@ -111,18 +101,11 @@
          * @description Updates user Marketing Status.
          */
         function changeStatus() {
-        	     	
-        	
-        	mac.selectedUser.marketingStatus
-        	= mac.markBind;
-        
+        	mac.selectedUser.marketingStatus = mac.markBind;
         	var sentData = mac.selectedUser.toJSON();
-                	
         	userService.update(sentData,function(){
-	    		mac.toast("Marketing status updated");
-	    	    	});
-        	
-        
+	    		mac.toast("Marketing status updated.");
+	    	});
         }        
         
           // functions
@@ -169,7 +152,12 @@
                 mac.filterWeek( monday, user );
                 if ( ( mac.selectedUser ) && ( user.username == mac.selectedUser.username ) ) {
                 	mac.selectedUser = user;
-                	mac.panelDate = new Date(user.panels[0].date);
+                	if(user.panels[0].date){
+                		mac.panelDate = new Date(user.panels[0].date);
+                	}
+                	else{
+                		mac.panelDate = null;
+                	}
                 }
             });
         }
@@ -208,7 +196,7 @@
                 } else {
                     mac.selectedUser = user;
                     mac.panelDatePickerIsOpen = false;
-                    if(user.panels[0].date){
+                    if( (user.panels[0]) && (user.panels[0].date) ) {
 	                    mac.panelDate = user.panels[0].date;
 	                    mac.panelDate = new Date(user.panels[0].date);
                     }
@@ -217,7 +205,7 @@
                 mac.infoOpen = true;
                 mac.panelDatePickerIsOpen = false;
                 mac.selectedUser = user;
-                if(user.panels[0].date){
+                if( (user.panels[0]) && (user.panels[0].date) ) {
                     mac.panelDate = user.panels[0].date;
                     mac.panelDate = new Date(user.panels[0].date);
                 }
@@ -293,7 +281,7 @@
                 actions.push( {
                     "function": mac.newAssociates,
                     "icon"   : "add",
-                    "tooltip" : "Add batch of new associates."
+                    "tooltip" : "Add batch of new associates"
                 });
 
                 actions.push( {
@@ -305,7 +293,7 @@
                 actions.push({
                 	"function": mac.updateProjects,
                     "icon"   : "work",
-                    "tooltip" : "Create or update an existing project."
+                    "tooltip" : "Create or update an existing project"
 
                 });
 
@@ -510,8 +498,8 @@
                 	user,
                 	project
                 },
-                clickOutsideToClose: false,
-                escapeToClose: false
+                clickOutsideToClose: true,
+                escapeToClose: true
             });
 		}
 		
@@ -604,7 +592,7 @@
         }
         
         function convertToDateObject(adate){
-        	 var condate =  new Date(adate);
+        	var condate =  new Date(adate);
         	return (condate.getMonth()+1)+ "/" + condate.getDate() + "/"+ condate.getFullYear();
         }
         
@@ -675,57 +663,54 @@
 			if( mac.selectedUser != undefined) {
 				//<<<<<<<<<<<
 				 
-					    // Appending dialog to document.body to cover sidenav in docs app
-					    var confirm = $mdDialog.confirm()
-					          .title('Reset selected users password?')
-					          .textContent('Password will be reset to '+ mac.selectedUser.firstName +' '+ mac.selectedUser.lastName+'\'s username')
-					          .ariaLabel('Lucky day')
-					          .targetEvent(ev)
-					          .ok('Please do it!')
-					          .cancel('No, thank you.');
+                // Appending dialog to document.body to cover sidenav in docs app
+                var confirm = $mdDialog.confirm()
+                        .title('Reset selected users password?')
+                        .textContent('Password will be reset to '+ mac.selectedUser.firstName +' '+ mac.selectedUser.lastName+'\'s username')
+                        .ariaLabel('Lucky day')
+                        .targetEvent(ev)
+                        .ok('Please do it!')
+                        .cancel('No, thank you.');
 
-					    $mdDialog.show(confirm).then(function() {
-					    	
-					    	//MM TODO Erase mm block use login controller to update pass, make new endpoint
-					    	// add a loading icon to show something is going on
-					    	angular.element("body").addClass("loading");
-					    	
-					    	// update the selected user
-				    		loginService.resetPass( mac.selectedUser, function() {
-				    			
-				    			// remove the loading icon
-				    			angular.element("body").removeClass("loading");
-				    			
-				    			//prompt the user
-				    			mac.toast("Password reset successful.");	
-				    		}, function() {
-				    			
-				    			// remove the loading icon
-				    			angular.element("body").removeClass("loading");
-				    			
-				    			//prompt the user
-				    			mac.toast("Error resetting Password.");
-				    		});
-					    	//MM
-					    	
-					    	
-					    	
-					    }, 
-					    //on error
-					    function() {
-					    	
-					    	//prompt
-					    	mac.toast("Password reset cancelled.");
-					    });
+                $mdDialog.show(confirm).then(function() {
+                    
+                    //MM TODO Erase mm block use login controller to update pass, make new endpoint
+                    // add a loading icon to show something is going on
+                    angular.element("body").addClass("loading");
+                    
+                    // update the selected user
+                    loginService.resetPass( mac.selectedUser, function() {
+                        
+                        // remove the loading icon
+                        angular.element("body").removeClass("loading");
+                        
+                        //prompt the user
+                        mac.toast("Password reset successful.");	
+                    }, function() {
+                        
+                        // remove the loading icon
+                        angular.element("body").removeClass("loading");
+                        
+                        //prompt the user
+                        mac.toast("Error resetting Password.");
+                    });
+                    //MM
+                }, 
+                //on error
+                function() {
+                    
+                    //prompt
+                    mac.toast("Password reset cancelled.");
+                });
 				//<<<<<<<<<<<
 			}
 		}
-		
 
 		$scope.$on( "setView", function( events, data ) {
             mac.associateTableIsOpen = data.associateTableIsOpen;
             setToolbar(data.title);
         })
+
 		/**
          * @description Called when a superAdmin clicks on update project icon, opens a dialog.
          */
@@ -744,6 +729,7 @@
                 mac.toast("Projects updated");
             });
 		}
+
 		function deleteSelectedUser(ev) {
 			if( mac.selectedUser != undefined) {
 				var confirm = $mdDialog.confirm()
@@ -751,8 +737,8 @@
 		          .textContent(mac.selectedUser.firstName +' '+ mac.selectedUser.lastName+ ' will be removed.' )
 		          .ariaLabel('Lucky day')
 		          .targetEvent(ev)
-		          .ok('Please do it!')
-		          .cancel('No, thank you.');
+		          .ok('OKAY')
+		          .cancel('CANCEL');
 				
 				 $mdDialog.show(confirm).then(function() {
 				    	
@@ -777,16 +763,22 @@
 			    			//prompt the user
 			    			mac.toast("Error deleting user.");
 			    		});
-			},
-			function() {
-		    	
-		    	//prompt
-		    	mac.toast("User deletion cancelled.");
-		    });
+                },
+                function() {
+                    //prompt
+                    mac.toast("User deletion cancelled.");
+                });
+            }
+        }
+		
+          // watchers
+        $scope.$watch( function() { return mac.selectedUser }, function( newUser, oldUser ) {
+            if ( (newUser != oldUser) && (newUser) ) {
+                $scope.$broadcast( "newSelectedUser", mac.selectedUser );
+            }
+        })
 
-		}
-		
-        
-    }
-		
+        $scope.$on( "repullUsers", function() {
+            mac.getUsers();
+        })
     }
