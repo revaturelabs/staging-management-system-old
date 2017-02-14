@@ -3,7 +3,7 @@
         .module( "sms" )
         .controller( "templateCtrl", templateCtrl );
     /**@description AngularJs controller for the Staging Manager System application. This is one of the
-     * parent controllers withc funcationaliy that is available regardless of the user who is
+     * parent controllers with functionality that is available regardless of the user who is
      * logged in.
      */
     function templateCtrl( $scope, $state, $mdDialog, loginService ) {
@@ -13,6 +13,8 @@
             // data
             /**@prop {object} user Currently logged in user. */
         tc.user = loginService.getUser();
+        tc.associateTableIsOpen = false;
+        tc.viewLabel = "Associate information";
 
             // functions
          /**@var {function} checkPass function reference variable. */   
@@ -23,6 +25,8 @@
         tc.logout = logout;
         /**@var {function} settings function reference variable. */
         tc.settings = settings;
+        
+        tc.changeView = changeView;
 
           // initialization
         tc.checkPass();
@@ -93,5 +97,23 @@
             tc.title = data.title;
             tc.actions = data.actions;
         })
+        
+        function changeView() {
+        	associateTableIsOpen = tc.associateTableIsOpen;
+        	if(associateTableIsOpen){
+        		$scope.$broadcast( "setView", { 
+                    title: "Associate Information", 
+                    associateTableIsOpen }
+                );
+        		tc.viewLabel = "Weekly attendance";
+        	}
+        	else{
+        		$scope.$broadcast( "setView", { 
+                    title: "Weekly attendance", 
+                    associateTableIsOpen }
+                );
+        		tc.viewLabel = "Associate information";
+        	}
+        }
 
     }

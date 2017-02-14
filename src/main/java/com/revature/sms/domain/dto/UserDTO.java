@@ -8,8 +8,11 @@ import java.util.Set;
 import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.AssociateTask;
 import com.revature.sms.domain.BatchType;
+import com.revature.sms.domain.JobEvent;
 import com.revature.sms.domain.MarketingStatus;
+import com.revature.sms.domain.ProjectUser;
 import com.revature.sms.domain.TechnicalSkills;
+import com.revature.sms.domain.Trainer;
 import com.revature.sms.domain.UserRole;
 
 public class UserDTO {
@@ -25,8 +28,11 @@ public class UserDTO {
 	private List<AssociateAttendance> attendance;
 	private Timestamp graduationDate;
 	private List<AssociateTask> tasks;
+	private List<JobEvent> events;
 	private MarketingStatus marketingStatus;
 	private Set<TechnicalSkills> skill;
+	private List<ProjectUser> project;
+	private Trainer trainer;
 	
 	public UserDTO() {
 		super();
@@ -42,7 +48,7 @@ public class UserDTO {
 	}
 
 	public UserDTO(String username, String firstName, String lastName,String password, UserRole userRole,
-			BatchType batchType, Timestamp graduationDate, List<AssociateTask> tasks) {
+			BatchType batchType, Timestamp graduationDate, List<AssociateTask> tasks, List<JobEvent> events) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -52,7 +58,10 @@ public class UserDTO {
 		this.batchType = batchType;
 		this.graduationDate = graduationDate;
 		this.tasks = tasks;
+		this.events = events;
 	}
+	
+
 	
 	public UserDTO(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			UserRole userRole, Timestamp graduationDate, List<AssociateTask> tasks, 
@@ -68,6 +77,48 @@ public class UserDTO {
 		this.tasks = tasks;
 		this.marketingStatus = marketingStatus;
 		this.skill = skill;
+	}
+	
+	public UserDTO(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
+			UserRole userRole, Timestamp graduationDate, List<AssociateTask> tasks, 
+			Set<TechnicalSkills> skill, MarketingStatus marketingStatus, List<ProjectUser> project) {
+		super();
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.hashedPassword = hashedPassword;
+		this.batchType = batchType;
+		this.userRole = userRole;
+		this.graduationDate = graduationDate;
+		this.tasks = tasks;
+		this.marketingStatus = marketingStatus;
+		this.skill = skill;
+		this.project = project;
+	}
+	
+	public UserDTO(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
+			UserRole userRole, Timestamp graduationDate, List<AssociateTask> tasks, 
+			Set<TechnicalSkills> skill, MarketingStatus marketingStatus, Trainer trainer) {
+		super();
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.hashedPassword = hashedPassword;
+		this.batchType = batchType;
+		this.userRole = userRole;
+		this.graduationDate = graduationDate;
+		this.tasks = tasks;
+		this.marketingStatus = marketingStatus;
+		this.skill = skill;
+		this.trainer = trainer;
+	}
+
+	public List<ProjectUser> getProject() {
+		return project;
+	}
+
+	public void setProject(List<ProjectUser> project) {
+		this.project = project;
 	}
 
 	public String getUsername() {
@@ -163,6 +214,14 @@ public class UserDTO {
 	public void setTasks(List<AssociateTask> tasks) {
 		this.tasks = tasks;
 	}
+	
+	public List<JobEvent> getEvents() {
+		return events;
+	}
+	
+	public void setEvents(List<JobEvent> events) {
+		this.events = events;
+	}
 
 	public Set<TechnicalSkills> getSkill() {
 		return skill;
@@ -170,6 +229,14 @@ public class UserDTO {
 
 	public void setSkill(Set<TechnicalSkills> skill) {
 		this.skill = skill;
+	}
+	
+	public Trainer getTrainer() {
+		return trainer;
+	}
+
+	public void setTrainer(Trainer trainer) {
+		this.trainer = trainer;
 	}
 
 }

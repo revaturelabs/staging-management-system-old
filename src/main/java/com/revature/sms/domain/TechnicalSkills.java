@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,7 +46,7 @@ public class TechnicalSkills {
 	 * List of users associated with skill
 	 */
 	@JsonIgnore
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name="USER_SKILLS", 
 	joinColumns=@JoinColumn(name="TS_ID"), 
 	inverseJoinColumns=@JoinColumn(name="USER_ID"))
@@ -56,7 +57,7 @@ public class TechnicalSkills {
 	 */
 	public TechnicalSkills() {
 		super();
-		//this.users = new ArrayList<User>();
+		
 	}
 
 	/**

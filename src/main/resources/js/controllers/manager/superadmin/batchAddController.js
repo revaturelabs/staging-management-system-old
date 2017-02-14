@@ -1,12 +1,28 @@
   
     var sms = angular.module("sms");
 
-    sms.controller( "batchAddCtrl", function( $scope, $mdDialog, userService, batchTypeService, batchAddFactory ) {
+    sms.controller( "batchAddCtrl", function( $scope, $mdDialog, userService, trainerService, batchTypeService, batchAddFactory ) {
 	var bac = this;
-
+bac.trainer = "";
 	  // functions
+	bac.getTrainers = getTrainers
+	
+	// initialization
+	bac.getTrainers();
 	    // adds new associate to list
 
+	
+	function getTrainers() {
+        trainerService.getAll(function(response) {
+        	bac.trainers = response;
+        	
+        }, function() {
+            
+        });}
+	
+	
+	
+	
 	bac.addNew = function(isValid) {
 		if (isValid) {
 			bac.associates.push({
@@ -37,10 +53,7 @@
 		$mdDialog.cancel();
 	});
 	
-	    // hard coded value for userRole object of associate
-	var userRole = {};
-	userRole.name = "associate";
-	userRole.id = 1;
+	 
 
     bac.save = function(isValid) {
         if ( isValid && bac.associates.length != 0 ) {
@@ -57,7 +70,8 @@
                 addUser.batchType = bac.selectedBatchType;
                 addUser.graduationDate = bac.selectedDate;
                 addUser.username = addUser.firstName[0].toLowerCase() + addUser.lastName.toLowerCase();
-                addUser.userRole = userRole;
+                addUser.trainer = bac.trainer;
+               
             }    
             addUser.hashedPassword = CryptoJS.SHA1(addUser.username).toString();
             
