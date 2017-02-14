@@ -159,7 +159,7 @@ public class TechSkillsController {
 	}
 	
 	@RequestMapping(value = "/{skillName}/{newSkillName}", method = {
-			RequestMethod.PUT, },produces = MediaType.APPLICATION_JSON_VALUE)
+			RequestMethod.POST, },produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody public Object updateSkill(@RequestHeader(value = "Authorization") String token,
 			@PathVariable String skillName, @PathVariable String newSkillName){
 		
