@@ -1,5 +1,4 @@
-
-    md-dialog {
+ md-dialog {
         max-width: 60%;
     }
     
@@ -20,9 +19,7 @@
 		background: #E8EAF6;
 	}
 	
-	.projectPopup {
-		padding: 0px;
-	}	
+	
 	/* search bar css */
 	#search input[type="text"] {
 		background: url(/img/icons/search-white.png) no-repeat 10px 6px #fcfcfc;
@@ -243,9 +240,6 @@
     .expansionPanelList p {
         text-align: right;
     }
-    
-    .loading {
-    	cursor: wait; 
 
     .dense-list, .dense-list div, .dense-list button {
         height: 24px !important;

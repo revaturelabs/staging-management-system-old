@@ -192,11 +192,7 @@
                                	<md-card md-whiteframe="6dp" style="max-width:30vh;" ng-show="manAttCtrl.panelDatePickerIsOpen">
 	                               	<md-datepicker ng-model="manAttCtrl.panelDate" md-placeholder="Enter date" ng-change="manAttCtrl.updatePanelDate(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0])"></md-datepicker>
 	                            </md-card>
-                                <span ng-hide="manAttCtrl.selectedUser.panels[0]"><md-icon ng-click="manAttCtrl.createPanel(manAttCtrl.selectedUser)" style="color:white !important;cursor: pointer;">note_add</md-icon></span>
-                    <!--    <md-button ng-if="(mVUICtrl.newCert == true) && (thisTaskType.type.toLowerCase() == 'panel')" class="md-icon-button" aria-label="Add panel" ng-click="mVUICtrl.addCert()">
-                                <md-tooltip> Add panel </md-tooltip>
-                                <md-icon class="md-material-icon"> add </md-icon>
-                            </md-button>     -->
+                                <span ng-hide="manAttCtrl.selectedUser.panels[0]"><md-icon ng-click="manAttCtrl.createPanel(manAttCtrl.selectedUser)" style="color:black !important;cursor: pointer;">note_add</md-icon></span>
                             </div>
 
 							<div ng-if="(mVUICtrl.newCert == true) && (thisTaskType.type.toLowerCase() == 'project')">
