@@ -256,3 +256,8 @@
         font-size: 13px;
         font-weight: bold;
     }
+    
+    #panelTaskMdMenu button {
+        position: relative;
+    	top: -12px;
+    }

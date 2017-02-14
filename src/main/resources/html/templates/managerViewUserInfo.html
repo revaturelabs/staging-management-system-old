@@ -172,17 +172,25 @@
                                 <md-tooltip> Add certification </md-tooltip>
                                 <md-icon class="md-material-icon"> add </md-icon>
                             </md-button> -->
-                            
-                            <div ng-if="(mVUICtrl.newCert == true) && (thisTaskType.type.toLowerCase() == 'panel')">
+                        </md-subheader>
+                        
+                        <!--<md-list-item ng-repeat="task in specificTasks">
+                            <h3> {{ mVUICtrl.formatTaskListItemTitle(task) }} </h3>
+                            <div flex> </div>
+                            <p> {{ mVUICtrl.formatTaskListItemContent(task) }} </p>
+                            <md-icon class="material-icons"> {{ task | iconFilter:"passed" }} </md-icon>
+                        </md-list-item>-->
+                        
+                          <md-list-item class="md-3-line dense-list" ng-repeat="task in mVUICtrl.allTasks[thisTaskType.type]" ng-if="task.taskType.type.toLowerCase() == 'panel'">
+                             <div id="panelTaskMdMenu" class="md-list-item-text" layout="column" ng-if="(mVUICtrl.newCert == true) && (thisTaskType.type.toLowerCase() == 'panel')">
                             	<md-menu ng-show="manAttCtrl.selectedUser.panels[0]">
-									<!-- Trigger element is a md-button with an icon -->
-									<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-										<md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == true" style="color:#59E2A8;">check_circle</md-icon>
-										<md-icon ng-show="manAttCtrl.selectedUser.panels[0].passed == false" style="color:#A00;">not_interested</md-icon>
+									<md-button ng-click="$mdOpenMenu($event)" aria-label="Open sample menu">
+										<span ng-show="manAttCtrl.selectedUser.panels[0].passed == true" >Passed</span>
+										<span ng-show="manAttCtrl.selectedUser.panels[0].passed == false" >Failed {{manAttCtrl.selectedUser.panels[0].dateDisplay}}</span>
 									</md-button>
 									<md-menu-content>
-										<md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0], true)"><md-icon>check_circle</md-icon> Passed</md-button></md-menu-item>
-										<md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0], false)"><md-icon>not_interested</md-icon> Not Passed</md-button></md-menu-item>
+										<md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0], true)">Passed</md-button></md-menu-item>
+										<md-menu-item><md-button ng-click="manAttCtrl.togglePanelStatus(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0], false)">Failed</md-button></md-menu-item>
 									</md-menu-content>
 								</md-menu>
                                 <span ng-show="manAttCtrl.selectedUser.panels[0].passed == false" ng-click="manAttCtrl.togglePanelDatePicker()" style="cursor: pointer;">Scheduled for:
@@ -193,21 +201,8 @@
 	                               	<md-datepicker ng-model="manAttCtrl.panelDate" md-placeholder="Enter date" ng-change="manAttCtrl.updatePanelDate(manAttCtrl.selectedUser, manAttCtrl.selectedUser.panels[0])"></md-datepicker>
 	                            </md-card>
                                 <span ng-hide="manAttCtrl.selectedUser.panels[0]"><md-icon ng-click="manAttCtrl.createPanel(manAttCtrl.selectedUser)" style="color:black !important;cursor: pointer;">note_add</md-icon></span>
-                            </div>
-
-							<div ng-if="(mVUICtrl.newCert == true) && (thisTaskType.type.toLowerCase() == 'project')">
-								<div ng-show="manAttCtrl.selectedUser.activeProject"> Current project : {{ manAttCtrl.selectedUser.activeProject.name }}</div>
-                          		<div ng-hide="manAttCtrl.selectedUser.activeProject"> Current project : No project</div>
-								<md-button class="md-raised md-primary" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject)">Change current project</md-button>
-							</div>
-                        </md-subheader>
-                        
-                        <!--<md-list-item ng-repeat="task in specificTasks">
-                            <h3> {{ mVUICtrl.formatTaskListItemTitle(task) }} </h3>
-                            <div flex> </div>
-                            <p> {{ mVUICtrl.formatTaskListItemContent(task) }} </p>
-                            <md-icon class="material-icons"> {{ task | iconFilter:"passed" }} </md-icon>
-                        </md-list-item>-->
+                           	 </div>
+                           </md-list-item>
 
                         <md-list-item class="md-3-line dense-list" ng-click="null" ng-repeat="task in mVUICtrl.allTasks[thisTaskType.type]" ng-if="task.taskType.type.toLowerCase() == 'certification'">
                             <div class="md-list-item-text" layout="column"> 
@@ -218,6 +213,14 @@
                                 <h3> {{ mVUICtrl.formatTaskListItemContent(task) }} </h3>
                             </div>
                         </md-list-item>
+                        
+                        <md-list-item class="md-3-line dense-list" ng-repeat="task in mVUICtrl.allTasks[thisTaskType.type]" ng-if="task.taskType.type.toLowerCase() == 'project'">
+                        	<div flex class="md-list-item-text" layout="column" ng-if="thisTaskType.type.toLowerCase() == 'project'">
+								anything?
+								<span ng-show="manAttCtrl.selectedUser.activeProject" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject)" style="cursor:pointer;">Current project : {{ manAttCtrl.selectedUser.activeProject.name }}</span]>
+                          		<span ng-hide="manAttCtrl.selectedUser.activeProject" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject)" style="cursor:pointer;">Current project : No project</span>
+							</div>
+						</md-list-item>
                         
                         <md-divider ng-repeat-end ng-if="!$last"> </md-divider>
 
