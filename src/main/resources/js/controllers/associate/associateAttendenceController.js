@@ -159,17 +159,10 @@
         		actions.push(cin);
         	}
 
-              // view all events
             actions.push({
-                "function": aac.openEvents,
-                "icon"    : "event_note",
-                "tooltip" : "View events"
-            })
-              // schedule certification
-            actions.push({ 
-                "function": aac.assocCertifications, 
-                "icon"    : "date_range", 
-                "tooltip" : "Certifications"
+                "function": aac.assocCertifications,
+                "icon": "date_range",
+                "tooltip": "Certifications"
             });
 
             $scope.$emit( "setToolbar", { 
@@ -191,25 +184,7 @@
                 escapeToClose: true
             });
         }
-        /**
-         * @description Displays the dialog window for scheduling a certification.
-         */
-        function assocCertifications() {
-            if (getScheduledCert() == null) {
-                $mdDialog.show({
-                    templateUrl: "html/templates/scheduleCertification.html",
-                    controller: "associateCertificationsCtrl as assCertCtrl", 
-                    clickOutsideToClose: true
-                }).then( function() {
-                    aac.toast("Certification Scheduled");
-                }, function() {
-                    //certification modal cancelled
-                });
-            }
-            else {
-                aac.toast("You can only schedule one certification at a time.");
-            }
-        }
+        
         /**
          * @description Determines the difference betwen the two supplied dates.
          * @param {date} date1 First supplied date.
@@ -245,6 +220,22 @@
         	);
         }
         
+        function assocCertifications() {
+            if (getScheduledCert() == null) {
+                $mdDialog.show({
+                    templateUrl: "html/templates/scheduleCertification.html",
+                    controller: "associateCertificationsCtrl as assCertCtrl", 
+                    clickOutsideToClose: true
+                }).then( function() {
+                    aac.toast("Certification Scheduled");
+                }, function() {
+                    //certification modal cancelled
+                });
+            }
+            else {
+                aac.toast("You can only schedule one certification at a time.");
+            }
+        }
 
           /**
            * @description Gets the date of the schedule certification if it exists.

@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="50167cae-c32c-4a5e-950d-1480e999a029" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/html/templates/mainTemplate.html" afterPath="$PROJECT_DIR$/src/main/resources/html/templates/mainTemplate.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/html/templates/managerViewUserInfo.html" afterPath="$PROJECT_DIR$/src/main/resources/html/templates/managerViewUserInfo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/html/templates/associateViewUserInfo.html" afterPath="$PROJECT_DIR$/src/main/resources/html/templates/associateViewUserInfo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/js/controllers/associate/associateAttendenceController.js" afterPath="$PROJECT_DIR$/src/main/resources/js/controllers/associate/associateAttendenceController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/js/controllers/associate/associateViewUserInfoController.js" afterPath="$PROJECT_DIR$/src/main/resources/js/controllers/associate/associateViewUserInfoController.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/js/controllers/manager/managerAttendanceController.js" afterPath="$PROJECT_DIR$/src/main/resources/js/controllers/manager/managerAttendanceController.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/js/controllers/manager/managerViewUserInfoController.js" afterPath="$PROJECT_DIR$/src/main/resources/js/controllers/manager/managerViewUserInfoController.js" />
     </list>
@@ -709,12 +710,12 @@
       <workItem from="1486480132447" duration="1175000" />
       <workItem from="1486672748520" duration="2442000" />
       <workItem from="1486739690666" duration="7619000" />
-      <workItem from="1487085326872" duration="7024000" />
+      <workItem from="1487085326872" duration="8538000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92720000" />
+    <option name="totallyTimeSpent" value="94234000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />

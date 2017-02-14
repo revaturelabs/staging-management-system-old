@@ -27,6 +27,7 @@
         vic.transformChip = transformChip;
         vic.skillSearch = skillSearch;
         vic.createFilterFor = createFilterFor;
+        vic.assocCertifications = assocCertifications;
 
           // initialization
         vic.getTaskTypes();
@@ -83,6 +84,49 @@
             } else {
                 return task.note;
             }
+        }
+
+        /**
+         * @description Displays the dialog window for scheduling a certification.
+         */
+        function assocCertifications() {
+            if (getScheduledCert() == null) {
+                $mdDialog.show({
+                    templateUrl: "html/templates/scheduleCertification.html",
+                    controller: "associateCertificationsCtrl as assCertCtrl", 
+                    clickOutsideToClose: true
+                }).then( function() {
+                    aac.toast("Certification Scheduled");
+                }, function() {
+                    //certification modal cancelled
+                });
+            }
+            else {
+                aac.toast("You can only schedule one certification at a time.");
+            }
+        }
+
+        function getScheduledCert() {
+        	for(var i = 0; i < aac.user.tasks.length; i++) {
+        		var certDate = new Date(aac.user.tasks[i].date);
+        		var cert = "Certification";
+        		if (aac.isSameDate(certDate) && (aac.user.tasks[i].taskType.type == cert) ) {
+        			return "Certification date is today.";
+        		}
+        		else if ( certDate.getTime() >= (new Date().getTime()) && (aac.user.tasks[i].taskType.type == cert) ) {
+        			var daysAway = days_between(aac.today, certDate);
+        			if (daysAway >= 14) {
+        				return "Certification scheduled for: " +  ((certDate.getMonth()) + 1) + "/" + certDate.getDate() + "/" + certDate.getFullYear();
+        			}
+        			else if (daysAway < 14 && daysAway >= 2) {
+        				return "Certification date is " + daysAway + " days away.";
+        			}
+        			else if (daysAway == 1) {
+        				return "Certification date is tomorrow.";
+        			}
+        		}
+        	}
+        	return null;
         }
 
             // formates task list content by type

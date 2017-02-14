@@ -165,8 +165,8 @@
 		          .textContent(mic.user.firstName + ' ' + mic.user.lastName + ' will be removed.' )
 		          .ariaLabel('Lucky day')
 		          .targetEvent(ev)
-		          .ok('Please do it!')
-		          .cancel('No, thank you.');
+		          .ok('OKAY')
+		          .cancel('CANCEL');
 				
 				 $mdDialog.show(confirm).then(function() {
 				    	
