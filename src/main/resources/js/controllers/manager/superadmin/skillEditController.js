@@ -183,40 +183,40 @@ function editSkillController($scope, $mdDialog, $mdToast, $q, skillService, skil
            
 
             //resolve remove skills
-            for (var i=0; i<removeList.length; i++){
+            for ( i=0; i<removeList.length; i++){
                 sec.removeSkillFromDB(removeList[i]);
             }
 
             $q.all(sec.skillRemovePromiseList).then(function(){
                 //successful on removeList
-                for (var i = 0; i<updateList.length; i++){
-                    sec.updateSkillInDB(updateList[i].oldSkillName, updateList[i].newSkillName);
+                for (var index1 = 0; index1<updateList.length; index1++){
+                    sec.updateSkillInDB(updateList[index1].oldSkillName, updateList[index1].newSkillName);
                 }
                 $q.all(sec.skillUpdatePromiseList).then(function(){
                     //successful update
-                    for (var i=0; i<addList.length; i++){
-                        sec.addSkillToDB(addList[i]);
+                    for (var index2=0; index2<addList.length; index2++){
+                        sec.addSkillToDB(addList[index2]);
                     }
                 }, function(){
                     //failed update
-                    for (var i=0; i<addList.length; i++){
-                        sec.addSkillToDB(addList[i]);
+                    for (var index3=0; index3<addList.length; index3++){
+                        sec.addSkillToDB(addList[index3]);
                     }
                 });
             }, function(){
                 //error on remove list
-                for (var i = 0; i<updateList.length; i++){
-                    sec.updateSkillInDB(updateList[i].oldSkillName, updateList[i].newSkillName);
+                for (var index4 = 0; index4<updateList.length; index4++){
+                    sec.updateSkillInDB(updateList[index4].oldSkillName, updateList[index4].newSkillName);
                 }
                 $q.all(sec.skillUpdatePromiseList).then(function(){
                     //successful update
-                    for (var i=0; i<addList.length; i++){
-                        sec.addSkillToDB(addList[i]);
+                    for (var index5=0; index5<addList.length; index5++){
+                        sec.addSkillToDB(addList[index5]);
                     }
                 }, function(){
                     //failed update
-                    for (var i=0; i<addList.length; i++){
-                        sec.addSkillToDB(addList[i]);
+                    for (var index6=0; index6<addList.length; index6++){
+                        sec.addSkillToDB(addList[index6]);
                     }
                 });
                 
