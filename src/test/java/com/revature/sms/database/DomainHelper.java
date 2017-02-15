@@ -30,18 +30,18 @@ public class DomainHelper {
 
 	public static ArrayList<String> getExpectedUserInfo(User user, Properties expected) {
 		ArrayList<String> expectedInfo = new ArrayList<String>();
-		String title1 = expected.getProperty("nameTitle");
+		String title1 = expected.getProperty("title1");
 		String nameRow = title1+": "+user.getFirstName()+" "+user.getLastName();
 		expectedInfo.add(nameRow);
-		String title2 = expected.getProperty("usernameTitle");
+		String title2 = expected.getProperty("title2");
 		String usernameRow = title2+": "+user.getUsername();
 		expectedInfo.add(usernameRow);
-		String title3 = expected.getProperty("batchCurriculumTitle");
+		String title3 = expected.getProperty("title3");
 		BatchType bt = user.getBatchType();
 		String batchType = bt.getType();
 		String batchCurriculumRow = title3+": "+batchType;
 		expectedInfo.add(batchCurriculumRow);
-		String title4 = expected.getProperty("graduationDateTitle");
+		String title4 = expected.getProperty("title4");
 		LocalDate dateObject = Utils.convertTimestampToLocalDate(user.getGraduationDate());
 		String gDateRow = title4+": "+dateObject.toString();
 		expectedInfo.add(gDateRow);

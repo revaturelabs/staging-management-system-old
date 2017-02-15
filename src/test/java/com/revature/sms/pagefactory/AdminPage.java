@@ -61,11 +61,11 @@ public class AdminPage extends HomePage {
 	}
 	
 	
-	public WebElement getRowByUsername(String expectedUN) {
-		List<WebElement> rows = attendanceBody.findElements(By.tagName("tr"));
+	public WebElement getRowByIdentifier(String id, String idLocation) {
+		List<WebElement> rows = driver.findElements(By.tagName("tr"));
 		for (WebElement row:rows) {
-			WebElement actualUNCell = row.findElement(By.xpath("td[1]/div/div[2]/p"));
-			if (expectedUN.equals(actualUNCell.getText())) {
+			WebElement idCell = row.findElement(By.xpath(idLocation));
+			if (id.equals(idCell.getText())) {
 				return row;
 			}
 		}

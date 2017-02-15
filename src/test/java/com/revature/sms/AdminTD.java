@@ -30,7 +30,7 @@ public class AdminTD extends AbstractT {
 					
 					ArrayList<MonthDay> monthDays = adp.goThroughWeek();
 					ArrayList<String> icons = new ArrayList<String>();
-					WebElement row = adp.getRowByUsername(expectedUsername);
+					WebElement row = adp.getRowByIdentifier(expectedUsername, "td[1]/div/div[2]/p");
 					Assert.assertTrue(row!=null);
 					
 					WebElement fullNameCell = row.findElement(By.xpath("td[1]/div/div[2]/h3"));
