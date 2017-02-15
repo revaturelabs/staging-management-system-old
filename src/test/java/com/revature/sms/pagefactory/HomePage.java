@@ -3,8 +3,6 @@ package com.revature.sms.pagefactory;
 import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.revature.sms.util.InstanceTestClassListener;
 import com.revature.sms.util.SpringInstanceTestClassRunner;
 import com.revature.sms.util.TestSetup;
-import com.revature.sms.util.Utils;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;

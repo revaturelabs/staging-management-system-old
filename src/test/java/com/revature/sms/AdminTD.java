@@ -18,19 +18,15 @@ public class AdminTD extends AbstractT {
 	@Test
 	public void testAdminAttendanceView() {
 		lp.login(un, pw);
-		adp.verify();
+		Assert.assertTrue(adp.verify());
 		
-		//ArrayList<String> actualUsernames = adp.getAssociateNames("username");
-		//ArrayList<String> actualFullnames = adp.getAssociateNames("fullName");
 		List<User> users = ur.findAll();
-		
 		while (!expected.getProperty("tooFarBack").equals(adp.getToastMessage())) {
 			for (User user:users) {
 				if ("associate".equals(user.getUserRole().getName())) {	
 					HashMap<MonthDay, String> expectedStatuses = Utils.getExpectedAttendanceStatuses(user);
 					String expectedUsername = user.getUsername();
 					String expectedFullName = user.getFirstName()+" "+user.getLastName();
-					System.out.println("Expected UN: "+expectedUsername);
 					
 					ArrayList<MonthDay> monthDays = adp.goThroughWeek();
 					ArrayList<String> icons = new ArrayList<String>();
@@ -56,14 +52,7 @@ public class AdminTD extends AbstractT {
 			}
 			adp.prevWeekTop.click();
 		}
-		
-		
-		
 	}
-	
-	
-	
-	
 	
 	
 }

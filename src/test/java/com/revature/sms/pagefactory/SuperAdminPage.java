@@ -1,5 +1,8 @@
 package com.revature.sms.pagefactory;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,6 +24,11 @@ public class SuperAdminPage extends AdminPage {
 	
 	public SuperAdminPage(WebDriver driver) {
 		super(driver);
+	}
+	
+	public List<WebElement> getAssociateInfoRows() {
+		List<WebElement> rows = driver.findElements(By.tagName("tr"));
+		return rows;
 	}
 	
 	

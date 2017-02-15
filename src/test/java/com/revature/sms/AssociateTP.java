@@ -14,15 +14,11 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 
 import com.revature.sms.domain.AssociateTask;
-import com.revature.sms.domain.AssociateTaskType;
-import com.revature.sms.domain.BatchType;
-import com.revature.sms.domain.JobAssignment;
 import com.revature.sms.domain.JobEvent;
-import com.revature.sms.domain.JobEventType;
-import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.User;
 import com.revature.sms.util.Utils;
-import static com.revature.sms.util.PanelHelper.*;
+
+import static com.revature.sms.database.DomainHelper.*;
 
 //This test class makes sure that the data displayed in each of the panels on the associate page (expectedInfo) 
 //matches the data in the database (actualInfo).
@@ -79,7 +75,7 @@ public class AssociateTP extends AbstractT {
 		//compared one at a time
 		while (i < eventObjects.size()) {
 			JobEvent e = eventObjects.get(i);
-			HashMap<String, String> expectedInfo = getExpectedEvent(user, e);
+			HashMap<String, String> expectedInfo = getExpectedEvent(e);
 			Set<String> keys = expectedInfo.keySet();
 			
 			//i+1 is used to compensate for the difference between zero-based indexing in Java and one-based indexing in XPaths
@@ -108,11 +104,11 @@ public class AssociateTP extends AbstractT {
 		asp.openPanel(asp.tasksPanel);
 		User user = ur.findByUsername(un);
 		
-		List<AssociateTask> taskObjects = user.getTasks();
-		for (AssociateTask task:taskObjects) {
+		List<AssociateTask> tasks = user.getTasks();
+		for (AssociateTask task:tasks) {
 			Timestamp ts = task.getDate();
 			LocalDate date = Utils.convertTimestampToLocalDate(ts);
-			HashMap<String, String> expectedInfo = getExpectedTask(user, task, date.toString());
+			HashMap<String, String> expectedInfo = getExpectedTask(task, date.toString());
 			
 			Set<String> keys = expectedInfo.keySet();
 			HashMap<String, String> actualInfo = asp.findTask(expectedInfo.get("taskType"), date);

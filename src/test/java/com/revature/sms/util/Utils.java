@@ -9,9 +9,7 @@ import java.time.LocalDate;
 import java.time.MonthDay;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,7 +97,6 @@ public class Utils {
 			properDate = false;
 		}
 		
-		String monthString;
         switch (month) {
             case 1:  
             	if (day>31) {

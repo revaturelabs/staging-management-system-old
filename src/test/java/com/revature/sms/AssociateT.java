@@ -1,29 +1,8 @@
 package com.revature.sms;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.MonthDay;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import com.revature.sms.domain.AssociateAttendance;
-import com.revature.sms.domain.AssociateTask;
-import com.revature.sms.domain.AssociateTaskType;
-import com.revature.sms.domain.BatchType;
-import com.revature.sms.domain.JobAssignment;
-import com.revature.sms.domain.JobEvent;
-import com.revature.sms.domain.JobEventType;
-import com.revature.sms.domain.TechnicalSkills;
-import com.revature.sms.domain.User;
 import com.revature.sms.util.Utils;
 
 //This test class tests features on the front end that are particular to an Associate's home page.
@@ -47,7 +26,7 @@ public class AssociateT extends AbstractT {
 		lp.login(un, pw);
 		asp.certification.click();
 		if (!(expected.getProperty("noMoreCerts").equals(lp.getToastMessage()))) {
-			scw.verify();
+			Assert.assertTrue(scw.verify());
 			scw.cancel.click();
 		}
 		cancelCommonButtons();
