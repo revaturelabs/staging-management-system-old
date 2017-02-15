@@ -11,7 +11,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.revature.sms.domain.User;
-import com.revature.sms.domain.UserRole;
 import com.revature.sms.util.Utils;
 
 public class AdminTD extends AbstractT {

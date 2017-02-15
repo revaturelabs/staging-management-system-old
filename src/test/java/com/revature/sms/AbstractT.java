@@ -183,6 +183,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		for (MonthDay md : monthDays) {
 			String es = expectedStatuses.get(md);
 			String as = actualStatuses.get(md);
+			//This if statement is for when there is no attendance data for the current date in the database
 			if (es == null) {
 				if (md.compareTo(MonthDay.now()) < 0) {
 					es = "close";
