@@ -57,6 +57,18 @@ public class Utils {
 	}
 	
 	
+	public static String convertTimestampToSimpleDate(Timestamp ts) {
+		String datetime = ts.toString();
+		String[] splitDatetime = datetime.split(" ");
+		String date = splitDatetime[0];
+		String[] splitDate = date.split("-");
+		int month = Integer.parseInt(splitDate[1]);
+		int day = Integer.parseInt(splitDate[2]);
+		String simpleDate = month+"/"+day;
+		return simpleDate;
+	}
+	
+	
 	//Takes a Timestamp (from SQL), makes it a string, isolates the  components of this string, and uses the
 	//components to create a new LocalDate object (from the Java 8 time package).
 	public static LocalDate convertTimestampToLocalDate(Timestamp ts) {

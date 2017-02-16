@@ -1,5 +1,7 @@
 package com.revature.sms.pagefactory;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,10 +34,12 @@ public class SuperAdminPage extends AdminPage {
 	
 	
 	public ArrayList<String> getAssociateViewHeaders() {
-		List<WebElement> avHeaderCells = driver.findElements(By.xpath("thead/tr/th"));
+		List<WebElement> avHeaderCells = driver.findElements(By.xpath("//thead/tr/th"));
 		ArrayList<String> avHeaders = new ArrayList<String>();
 		for (WebElement headerCell:avHeaderCells) {
-			avHeaders.add(headerCell.getText());
+			if (!("".equals(headerCell.getText()))) {
+				avHeaders.add(headerCell.getText());
+			}
 		}
 		return avHeaders;
 	}
@@ -46,22 +50,29 @@ public class SuperAdminPage extends AdminPage {
 		
 		ArrayList<String> avHeaders = getAssociateViewHeaders();
 		int i = 1;
-		for (String header: avHeaders) {
+		for (String avHeader:avHeaders) {
+			//System.out.println();
+			//System.out.println("Iteration: "+i);
+			//System.out.println("Header: "+avHeader);
 			WebElement cell = row.findElement(By.xpath("td["+i+"]"));
+			//System.out.println("Cell: "+cell);
 			
-			if (header.equals(expected.getProperty("header1"))) {
+			if (avHeader.equals(expected.getProperty("header1"))) {
 				hm.put("fullName", cell.getText());
-			} else if (header.equals(expected.getProperty("header1"))) {
+			} else if (avHeader.equals(expected.getProperty("header2"))) {
 				hm.put("batchType", cell.getText());
-			} else if (header.equals(expected.getProperty("header1"))) {
+			} else if (avHeader.equals(expected.getProperty("header3"))) {
 				hm.put("trainer", cell.getText());
-			} else if	(header.equals(expected.getProperty("header1"))) {
-				hm.put("marketingStartDate", cell.getText());
-			} else if	(header.equals(expected.getProperty("header1"))) {
+			} else if (avHeader.equals(expected.getProperty("header4"))) {
+				String dateText = cell.getText();
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+				LocalDate parsedDate = LocalDate.parse(dateText, dtf);
+				hm.put("marketingStartDate", parsedDate.toString());
+			} else if (avHeader.equals(expected.getProperty("header5"))) {
 				hm.put("daysOnMarket", cell.getText());
-			} else if 	(header.equals(expected.getProperty("header1"))) {
+			} else if (avHeader.equals(expected.getProperty("header6"))) {
 				hm.put("marketingStatus", cell.getText());
-			} else if	(header.equals(expected.getProperty("header1"))) {
+			} else if (avHeader.equals(expected.getProperty("header7"))) {
 				List<WebElement> possibleIcons = cell.findElements(By.tagName("md-icon"));
 				WebElement passed = possibleIcons.get(0);
 				WebElement notPassed = possibleIcons.get(1);
@@ -71,13 +82,15 @@ public class SuperAdminPage extends AdminPage {
 					hm.put("panelStatus", notPassed.getText());
 				}
 				hm.put("panelDate", cell.findElement(By.xpath("span/span[1]")).getText());
-			} else if	(header.equals(expected.getProperty("header1"))) {
+			} else if (avHeader.equals(expected.getProperty("header8"))) {
 				hm.put("project", cell.getText());
-			} else if	(header.equals(expected.getProperty("header1"))) {
+			} else if (avHeader.equals(expected.getProperty("header9"))) {
 				String allCertText = cell.getText();
-				String[] split = allCertText.split(" | ");
-				hm.put("certDate", split[0]);
-				hm.put("certName", split[1]);
+				if (!("".equals(allCertText))) {
+					String[] split = allCertText.split(" | ");
+					hm.put("certDate", split[0]);
+					hm.put("certName", split[2]);
+				}
 			} else {
 				try {
 					Exception e = new Exception("Header with this text doesn't exist");
@@ -87,7 +100,7 @@ public class SuperAdminPage extends AdminPage {
 					Thread.currentThread().interrupt();
 				}
 			}
-			
+			i++;
 		}
 		return hm;
 	}

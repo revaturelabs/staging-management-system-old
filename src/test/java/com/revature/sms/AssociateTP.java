@@ -87,6 +87,7 @@ public class AssociateTP extends AbstractT {
 		asp.closePanel(asp.eventsPanel);
 	}
 	
+	
 	@Test
 	public void testTasksPanel() {
 		lp.login(un, pw);
@@ -97,7 +98,7 @@ public class AssociateTP extends AbstractT {
 		for (AssociateTask task:tasks) {
 			Timestamp ts = task.getDate();
 			LocalDate date = Utils.convertTimestampToLocalDate(ts);
-			HashMap<String, String> expectedInfo = getExpectedTask(task, date.toString());
+			HashMap<String, String> expectedInfo = getExpectedTask(task);
 			HashMap<String, String> actualInfo = asp.findTask(expectedInfo.get("taskType"), date);
 			compareHashes(expectedInfo, actualInfo);
 			

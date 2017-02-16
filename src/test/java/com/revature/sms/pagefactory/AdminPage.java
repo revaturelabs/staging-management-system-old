@@ -62,7 +62,7 @@ public class AdminPage extends HomePage {
 	
 	
 	public WebElement getRowByIdentifier(String id, String idLocation) {
-		List<WebElement> rows = driver.findElements(By.tagName("tr"));
+		List<WebElement> rows = driver.findElements(By.xpath("//tbody/tr"));
 		for (WebElement row:rows) {
 			WebElement idCell = row.findElement(By.xpath(idLocation));
 			if (id.equals(idCell.getText())) {

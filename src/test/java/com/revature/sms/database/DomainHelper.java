@@ -79,12 +79,18 @@ public class DomainHelper {
 		return expectedInfo;
 	}
 	
-	public static HashMap<String, String> getExpectedTask(AssociateTask task, String date) {
+	public static HashMap<String, String> getExpectedTask(AssociateTask task) {
 		HashMap<String, String> expectedInfo = new HashMap<String, String>();
-		AssociateTaskType taskType = task.getTaskType();
-		expectedInfo.put("taskDate", date);  //The comparison will mess up if the taskDate is before 5am in the database
+		
+		Timestamp ts = task.getDate();
+		LocalDate date = Utils.convertTimestampToLocalDate(ts);
+		expectedInfo.put("taskDate", date.toString());  //The comparison will mess up if the taskDate is before 5am in the database
+		
 		expectedInfo.put("taskNote", task.getNote());
+		
+		AssociateTaskType taskType = task.getTaskType();
 		expectedInfo.put("taskType", taskType.getType());
+		
 		expectedInfo.put("taskStatus", String.valueOf(task.getPassed()));
 		return expectedInfo;
 	}
@@ -95,29 +101,30 @@ public class DomainHelper {
 		expectedInfo.put("batchType", user.getBatchType().getType());
 		expectedInfo.put("trainer", user.getTrainer().getFirstName()+" "+user.getTrainer().getLastName());
 		
-		Timestamp gts = user.getGraduationDate();
-		LocalDate msd = Utils.convertTimestampToLocalDate(gts);
+		LocalDate msd = Utils.convertTimestampToLocalDate(user.getGraduationDate());
 		expectedInfo.put("marketingStartDate", msd.toString());
 		
 		LocalDate today = LocalDate.now();
 		int daysBetween = (int) DAYS.between(msd, today);
+		daysBetween++;
 		expectedInfo.put("daysOnMarket", daysBetween+" days");
 		
 		expectedInfo.put("marketingStatus", user.getMarketingStatus().getName());
 		
 		List<AssociateTask> tasks = user.getTasks();
 		for (AssociateTask task:tasks) {
-			Timestamp tts = task.getDate();
-			LocalDate td = Utils.convertTimestampToLocalDate(tts);
-			HashMap<String, String> expectedTaskInfo = getExpectedTask(task, td.toString());
+			String td = Utils.convertTimestampToSimpleDate(task.getDate());
+			HashMap<String, String> expectedTaskInfo = getExpectedTask(task);
 			if ("Panel".equals(expectedTaskInfo.get("taskType"))) {
+				//QUESTION: How are panels that have not happened yet displayed?
 				if ("true".equals(expectedTaskInfo.get("taskStatus"))) {
 					expectedInfo.put("panelStatus", "check_circle");
-				} else {  //the user failed their panel
-					expectedInfo.put("panelStatus", "not_interested");
-				}
+					expectedInfo.put("panelDate", "");
 				//QUESTION: Why is the date only displayed when the user has not passed their panel?
-				expectedInfo.put("panelDate", td.toString());
+				} else {  
+					expectedInfo.put("panelStatus", "not_interested");
+					expectedInfo.put("panelDate", td.toString());
+				}
 			}
 			//QUESTION: How do I know which certification is the primary certification?
 			//QUESTION: Shouldn't the table say whether the certification has been passed or not?
@@ -127,11 +134,15 @@ public class DomainHelper {
 			}
 		}
 		
-		//QUESTION: Why is only one of a user's projects shown?
+		//QUESTION: Why is only the last of a user's projects shown?
 		List<ProjectUser> pus = user.getProject();
-		ProjectUser pu = pus.get(0);
-		Project project = pu.getProject();
-		expectedInfo.put("project", project.getName());
+		if (pus.isEmpty()) {
+			expectedInfo.put("project", "No project");
+		} else {
+			ProjectUser pu = pus.get(pus.size()-1);
+			Project project = pu.getProject();
+			expectedInfo.put("project", project.getName());
+		}
 		
 		return expectedInfo;
 	}
