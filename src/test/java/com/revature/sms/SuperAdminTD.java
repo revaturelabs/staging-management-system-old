@@ -26,10 +26,8 @@ public class SuperAdminTD extends AdminTD {
 				String fullName = user.getFirstName()+" "+user.getLastName();
 				WebElement row = sap.getRowByIdentifier(fullName, "td[1]");
 				Assert.assertTrue(row!=null);
-				
 				HashMap<String, String> actualInfo = sap.goThroughAssociateView(row, expected);
-				
-				
+				compareHashes(expectedInfo, actualInfo);
 			}
 		}
 	}

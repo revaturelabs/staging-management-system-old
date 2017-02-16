@@ -76,25 +76,14 @@ public class AssociateTP extends AbstractT {
 		while (i < eventObjects.size()) {
 			JobEvent e = eventObjects.get(i);
 			HashMap<String, String> expectedInfo = getExpectedEvent(e);
-			Set<String> keys = expectedInfo.keySet();
-			
 			//i+1 is used to compensate for the difference between zero-based indexing in Java and one-based indexing in XPaths
 			HashMap<String, String> actualInfo = asp.goThroughEvent(i+1);  
 			
 			//Makes sure that job event type is correctly displayed above the rest of the information 
 			String subheader = asp.eventsPanel.findElement(By.xpath("md-expansion-panel-expanded/md-expansion-panel-content/md-list/div["+(i+1)+"]")).getText();  
 			Assert.assertEquals(subheader, expectedInfo.get("eventType"));
-			
-			//By using the same key to get info from both Hashes, we know they're both referring to 
-			//the same event
-			Iterator<String> itr = keys.iterator();
-			while (itr.hasNext()) {
-				String key = itr.next();
-				Assert.assertEquals(expectedInfo.get(key), actualInfo.get(key));
-			}
-			i++;
+			compareHashes(expectedInfo, actualInfo);
 		}
-		
 		asp.closePanel(asp.eventsPanel);
 	}
 	
@@ -109,19 +98,12 @@ public class AssociateTP extends AbstractT {
 			Timestamp ts = task.getDate();
 			LocalDate date = Utils.convertTimestampToLocalDate(ts);
 			HashMap<String, String> expectedInfo = getExpectedTask(task, date.toString());
-			
-			Set<String> keys = expectedInfo.keySet();
 			HashMap<String, String> actualInfo = asp.findTask(expectedInfo.get("taskType"), date);
-				
-			Iterator<String> itr = keys.iterator();
-			while (itr.hasNext()) {
-				String key = itr.next();
-				//This if statement is here because task notes are not displayed in any way on the web
-				//page for panels
-				if (!("taskNote".equals(key) && "Panel".equals(expectedInfo.get("taskType")))) {  
-					Assert.assertEquals(expectedInfo.get(key), actualInfo.get(key));
-				}
-			}
+			compareHashes(expectedInfo, actualInfo);
+			
+			//This if statement is here because task notes are not displayed in any way on the web
+			//page for panels
+			//if (!("taskNote".equals(key) && "Panel".equals(expectedInfo.get("taskType"))))
 		}
 		asp.closePanel(asp.tasksPanel);
 	}

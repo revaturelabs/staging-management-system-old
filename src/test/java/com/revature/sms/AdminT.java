@@ -36,7 +36,7 @@ public class AdminT extends AbstractT {
 	@Test
 	public void testWeekOf() {
 		lp.login(un, pw);
-		String monday = getThisMondayFromHeader();
+		String monday = hp.getThisMondayFromHeader();
 		String weekTop = Utils.getDateFromText(adp.weekOfTop.getText());
 		String weekBottom = Utils.getDateFromText(adp.weekOfBottom.getText());
 		Assert.assertEquals(weekTop, weekBottom);

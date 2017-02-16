@@ -3,7 +3,9 @@ package com.revature.sms;
 import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
@@ -167,13 +169,20 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		rbw.cancel.click();
 	}
 	
-	public String getThisMondayFromHeader() {
-		String monday = hp.attendanceHeaders.findElement(By.tagName("p")).getText();
-		if (monday.contains("/0")) {
-			monday = monday.replace("0", "");
+	
+	public void compareHashes(HashMap<String, String> expectedInfo, HashMap<String, String> actualInfo) {
+		Set<String> keys = expectedInfo.keySet();
+		Iterator<String> itr = keys.iterator();
+		//By using the same key to get info from both Hashes, we know they're both referring to 
+		//the same event
+		while (itr.hasNext()) {
+			String key = itr.next();
+			Assert.assertEquals(expectedInfo.get(key), actualInfo.get(key));
 		}
-		return monday;
 	}
+	
+	
+	
 	
 	public void compareAttendanceStatuses(ArrayList<MonthDay> monthDays, HashMap<MonthDay, String> expectedStatuses, 
 										  HashMap<MonthDay, String> actualStatuses) {

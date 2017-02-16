@@ -36,7 +36,7 @@ public class AssociateT extends AbstractT {
 	@Test
 	public void testWeekOf()  {
 		lp.login(un, pw);
-		String monday = getThisMondayFromHeader();
+		String monday = hp.getThisMondayFromHeader();
 		String week = Utils.getDateFromText(asp.weekOf.getText());
 		Assert.assertEquals(monday, week);
 	}

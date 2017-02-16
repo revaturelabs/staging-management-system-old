@@ -36,6 +36,14 @@ public class HomePage extends SMSPage {
 	}
 	
 	
+	public String getThisMondayFromHeader() {
+		String monday = attendanceHeaders.findElement(By.tagName("p")).getText();
+		if (monday.contains("/0")) {
+			monday = monday.replace("0", "");
+		}
+		return monday;
+	}
+	
 	//This method is used to organize and return dates from the attendance table.
 	public ArrayList<MonthDay> goThroughWeek() {
 		ArrayList<MonthDay> monthDays = new ArrayList<MonthDay>();
