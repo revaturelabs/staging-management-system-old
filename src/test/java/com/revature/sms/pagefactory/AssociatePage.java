@@ -23,9 +23,6 @@ public class AssociatePage extends HomePage {
 	public WebElement checkincheckout;
 
 	@FindBy(xpath = "//*[@name=\"contentView\"]/md-card/md-toolbar/div/button[2]/md-icon")
-	public WebElement events;
-
-	@FindBy(xpath = "//*[@name=\"contentView\"]/md-card/md-toolbar/div/button[3]/md-icon")
 	public WebElement certification;
 
 	@FindBy(xpath = "//*[@md-component-id=\"userInfoPanel\"]")

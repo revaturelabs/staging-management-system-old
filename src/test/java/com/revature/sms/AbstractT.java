@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.After;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -60,7 +59,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	protected SuperAdminPage sap;
 	protected ScheduleCertificationWindow scw;
 	protected CreateBatchWindow cbw;
-	protected AvailableSkillsWindow tsw;
+	protected AvailableSkillsWindow asw;
 	protected SettingsWindow sw;
 	protected RaiseBugWindow rbw;
 
@@ -105,7 +104,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		sap = new SuperAdminPage(driver);
 		scw = new ScheduleCertificationWindow(driver);
 		cbw = new CreateBatchWindow(driver);
-		tsw = new AvailableSkillsWindow(driver);
+		asw = new AvailableSkillsWindow(driver);
 		sw = new SettingsWindow(driver);
 		rbw = new RaiseBugWindow(driver);
 		

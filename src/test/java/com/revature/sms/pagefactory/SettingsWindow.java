@@ -9,6 +9,9 @@ import org.openqa.selenium.support.FindBy;
 
 public class SettingsWindow extends SMSPage {
 
+	@FindBy(xpath="md-dialog/div/md-toolbar/div")
+	public WebElement header;
+	
 	@FindBy(id="oldPass")
 	public WebElement oldPass;
 	

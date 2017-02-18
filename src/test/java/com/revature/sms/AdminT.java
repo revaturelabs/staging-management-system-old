@@ -89,7 +89,7 @@ public class AdminT extends AbstractT {
 				allCells = adp.attendanceBody.findElements(By.tagName("td"));
 				cell = allCells.get(i);
 				if (cell.getText().contains("\n")) {  //When an associate name is clicked
-					adp.closeIcon.click();
+					cell.click();
 				} else {  //When an attendance icon is clicked
 					String textAfter = cell.getText();
 					if (textBefore.equals(textAfter)) {
@@ -99,45 +99,15 @@ public class AdminT extends AbstractT {
 				}
 				i++;
 			}
-			Logger.getRootLogger().debug("Week: "+adp.weekOfTop.getText());
-			Logger.getRootLogger().debug("Misses: "+misses);
-			//System.out.println("Week: "+adp.weekOfTop.getText());
-			//System.out.println("Misses: "+misses);
+			if (misses>0) {
+				Logger.getRootLogger().debug("Week: "+adp.weekOfTop.getText());
+				Logger.getRootLogger().debug("Misses: "+misses);
+				//System.out.println("Week: "+adp.weekOfTop.getText());
+				//System.out.println("Misses: "+misses);
+			}
 			Utils.attemptWait(1500);
 			adp.prevWeekTop.click();
 		}
-		
-		// This test is temporarily unusable and irrelevant while the search bar is
-		// being fixed
-		// Test to enter username in search box and verify correct associate name is
-		// returned
-		/*
-		 * @Test 
-		 * public void testAdminSearchBar() {
-		 * lp.login(inputs.getProperty("adminUN"), inputs.getProperty("adminPW"));
-		 * Assert.assertTrue(adp.verify());
-		 * Assert.assertEquals(expected.getProperty("adminPg"),
-		 * adp.header.getText());
-		 * 
-		 * adp.searchBox.sendKeys("Java");
-		 * Assert.assertEquals(expected.getProperty("java"),
-		 * adp.searchResult.getText()); adp.searchBox.clear();
-		 * 
-		 * adp.searchBox.sendKeys("DotNet");
-		 * Assert.assertEquals(expected.getProperty("dotnet"),
-		 * adp.searchResult.getText()); adp.searchBox.clear();
-		 * 
-		 * adp.searchBox.sendKeys("SDET");
-		 * Assert.assertEquals(expected.getProperty("sdet"),
-		 * adp.searchResult.getText()); adp.searchBox.clear();
-		 * 
-		 * adp.logout.click(); 
-		 * Assert.assertTrue(lp.verify()); 
-		 * }
-		 */
-		
-		
-		
 	}
 
 }

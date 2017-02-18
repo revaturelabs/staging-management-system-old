@@ -6,6 +6,9 @@ import org.openqa.selenium.support.FindBy;
 
 public class CreateJobEventWindow extends SMSPage {
 
+	@FindBy(xpath="md-dialog/div/md-toolbar/div")
+	public WebElement header;
+	
 	@FindBy(xpath="//*[@ng-model=\"jACtrl.companyName\"]")
 	public WebElement companyName;
 	

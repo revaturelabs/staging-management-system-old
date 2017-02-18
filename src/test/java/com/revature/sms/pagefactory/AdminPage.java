@@ -31,20 +31,12 @@ public class AdminPage extends HomePage {
 	@FindBy(xpath = "//*[@class=\"attendanceTable\"]/table/tbody/tr[1]/td[2]")
 	public WebElement sampleAttendanceTableCell;
 
-	@FindBy(id = "closeIcon")
-	public WebElement closeIcon;
-
-	@FindBy(id = "associateInformationDiv")
-	public WebElement verifyInfoDiv;
-
+	
 	public AdminPage(WebDriver driver) {
 		super(driver);
 	}
 	
 	
-	public boolean infoDisplayed() {
-		return verifyInfoDiv.isDisplayed();
-	}
 	
 	public ArrayList<String> goThroughWeekIcons(int rowNumber) {
 		// no icon = no string

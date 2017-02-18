@@ -6,6 +6,9 @@ import org.openqa.selenium.support.FindBy;
 
 public class ScheduleCertificationWindow extends SMSPage {
 	
+	@FindBy(xpath="md-dialog/div/md-toolbar/div")
+	public WebElement header;
+	
 	@FindBy(xpath="//*[@class=\"md-datepicker-input md-input\"]")
 	public WebElement enterDate;
 	

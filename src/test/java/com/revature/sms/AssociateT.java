@@ -74,6 +74,9 @@ public class AssociateT extends AbstractT {
 	public void testArrowButtons() {
 		lp.login(un, pw);
 		
+		//This test seems to fail when panels are opened and closed in certain orders, but I think this has 
+		//more to do with Selenium getting confused by a large scrollable web page than a real bug in the
+		//web application code.
 		asp.openPanel(asp.tasksPanel);
 		asp.openPanel(asp.eventsPanel);
 		asp.openPanel(asp.skillsPanel);

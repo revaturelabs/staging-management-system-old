@@ -43,16 +43,16 @@ public abstract class SMSPage {
 		while (i<fields.length) {
 			try {
 				//When a field is a WebElement
-				//System.out.println(fields[i].getName());
+				System.out.println(fields[i].getName());
 				fieldValue = (WebElement) fields[i].get(this);
 				result = verifyField(fieldValue);
-				//System.out.println(result);
+				System.out.println(result);
 				if (!result) {
 					return result;
 				}
 			} catch (ClassCastException e) {
 				try {
-					//When a field is a list of Webelements
+					//When a field is a list of WebElements
 					fieldValues = (List<WebElement>) fields[i].get(this);
 					//Each WebElement must be verified individually.
 					for (WebElement f:fieldValues) {

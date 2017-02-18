@@ -6,6 +6,8 @@ import org.openqa.selenium.support.FindBy;
 
 public class AvailableSkillsWindow extends SMSPage{
 
+	@FindBy(xpath="//md-dialog/div/md-toolbar/div")
+	public WebElement header;
 	
 	@FindBy(xpath="//*[@aria-label=\"New skill\"]")
 	public WebElement newSkill;
