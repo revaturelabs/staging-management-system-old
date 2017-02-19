@@ -26,14 +26,14 @@ import com.revature.sms.util.TestSetup;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;
-import com.revature.sms.pagefactory.SettingsWindow;
-import com.revature.sms.pagefactory.CreateBatchWindow;
+import com.revature.sms.pagefactory.SettingsDialog;
+import com.revature.sms.pagefactory.CreateBatchDialog;
 import com.revature.sms.pagefactory.HomePage;
 import com.revature.sms.pagefactory.LoginPage;
-import com.revature.sms.pagefactory.RaiseBugWindow;
-import com.revature.sms.pagefactory.ScheduleCertificationWindow;
+import com.revature.sms.pagefactory.RaiseBugFrame;
+import com.revature.sms.pagefactory.ScheduleCertificationDialog;
 import com.revature.sms.pagefactory.SuperAdminPage;
-import com.revature.sms.pagefactory.AvailableSkillsWindow;
+import com.revature.sms.pagefactory.AvailableSkillsDialog;
 import com.revature.sms.util.EventListener;
 
 //This test class can't be directly run, but it provides set up and tear down for various other tests that are
@@ -57,11 +57,11 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	protected AssociatePage asp;
 	protected AdminPage adp;
 	protected SuperAdminPage sap;
-	protected ScheduleCertificationWindow scw;
-	protected CreateBatchWindow cbw;
-	protected AvailableSkillsWindow asw;
-	protected SettingsWindow sw;
-	protected RaiseBugWindow rbw;
+	protected ScheduleCertificationDialog scw;
+	protected CreateBatchDialog cbw;
+	protected AvailableSkillsDialog asw;
+	protected SettingsDialog sw;
+	protected RaiseBugFrame rbw;
 
 	protected HomePage hp;
 	protected String un;
@@ -102,11 +102,11 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		asp = new AssociatePage(driver);
 		adp = new AdminPage(driver);
 		sap = new SuperAdminPage(driver);
-		scw = new ScheduleCertificationWindow(driver);
-		cbw = new CreateBatchWindow(driver);
-		asw = new AvailableSkillsWindow(driver);
-		sw = new SettingsWindow(driver);
-		rbw = new RaiseBugWindow(driver);
+		scw = new ScheduleCertificationDialog(driver);
+		cbw = new CreateBatchDialog(driver);
+		asw = new AvailableSkillsDialog(driver);
+		sw = new SettingsDialog(driver);
+		rbw = new RaiseBugFrame(driver);
 		
 		//The home page and username variables are different depending on which test class is being used.
 		Class<? extends AbstractT> currentClass = this.getClass();
@@ -176,7 +176,11 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		//the same event
 		while (itr.hasNext()) {
 			String key = itr.next();
-			Assert.assertEquals(expectedInfo.get(key), actualInfo.get(key));
+			//This if statement is here because task notes are not displayed in any way on the web
+			//page for panels
+			if (!("taskNote".equals(key) && "Panel".equals(expectedInfo.get("taskType")))) {
+				Assert.assertEquals(expectedInfo.get(key), actualInfo.get(key));
+			}
 		}
 	}
 	

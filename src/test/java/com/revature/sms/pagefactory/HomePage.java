@@ -63,4 +63,27 @@ public class HomePage extends SMSPage {
 		return monthDays;
 	}
 	
+	//This method is used to return check-in and verification data from the attendance table.
+	public ArrayList<String> goThroughWeekIcons(WebElement row) {
+		// no icon = no string
+		// checkmark = "done"
+		// double checkmark = "done_all"
+		// x = "close"
+		ArrayList<String> icons = new ArrayList<String>();
+		List<WebElement> iconCells = row.findElements(By.tagName("md-icon"));
+		for (WebElement e: iconCells) {
+			if (e.isDisplayed()) {  //Because on the admin page, the Associate Name column has an md-icon that is not displayed or relevant to this program.
+				String text = e.getText();
+				icons.add(text.trim());
+			}
+		}
+		return icons;
+	}
+	
+	public ArrayList<String> goThroughWeekIcons() {
+		ArrayList<String> icons = goThroughWeekIcons(attendanceBody.findElement(By.tagName("tr")));
+		return icons;
+	}
+	
+	
 }

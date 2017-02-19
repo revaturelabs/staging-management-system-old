@@ -4,9 +4,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class ProjectStatusWindow extends SMSPage {
+public class ProjectStatusDialog extends SMSPage {
 
-	@FindBy(xpath="md-dialog/div/md-toolbar/div")
+	//The xpath for this header is different than for most of the other dialogs
+	@FindBy(xpath="//md-dialog/md-toolbar/div/div")
 	public WebElement header;
 	
 	@FindBy(xpath="//*[@layout-align=\"center space-around\"]")
@@ -27,11 +28,11 @@ public class ProjectStatusWindow extends SMSPage {
 	@FindBy(id="assignSubmit")
 	public WebElement submit;
 	
-	@FindBy(id="assignCancel")
+	@FindBy(id="cancel")
 	public WebElement cancel;
 	
 	
-	public ProjectStatusWindow(WebDriver driver) {
+	public ProjectStatusDialog(WebDriver driver) {
 		super(driver);
 	}
 

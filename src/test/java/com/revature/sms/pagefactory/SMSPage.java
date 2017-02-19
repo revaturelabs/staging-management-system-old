@@ -43,10 +43,10 @@ public abstract class SMSPage {
 		while (i<fields.length) {
 			try {
 				//When a field is a WebElement
-				System.out.println(fields[i].getName());
+				//System.out.println(fields[i].getName());
 				fieldValue = (WebElement) fields[i].get(this);
 				result = verifyField(fieldValue);
-				System.out.println(result);
+				//System.out.println(result);
 				if (!result) {
 					return result;
 				}
@@ -90,7 +90,7 @@ public abstract class SMSPage {
 	//notifications are laid out in a similar way.
 	public String getToastMessage() {
 		try {
-			Utils.attemptWait(400);
+			Utils.attemptWait(500);
 			WebElement toast = driver.findElement(By.tagName("md-toast"));
 			String text = toast.getText();
 			if (text.equals("")) {

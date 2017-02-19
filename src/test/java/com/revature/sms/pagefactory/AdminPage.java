@@ -38,23 +38,8 @@ public class AdminPage extends HomePage {
 	
 	
 	
-	public ArrayList<String> goThroughWeekIcons(int rowNumber) {
-		// no icon = no string
-		// checkmark = "done"
-		// double checkmark = "done_all"
-		// x = "close"
-		ArrayList<String> icons = new ArrayList<String>();
-		for (int i = 2; i <= 6; i++) {
-			WebElement e = attendanceBody.findElement(By.xpath("//tr["+rowNumber+"]/td["+i+"]/div/md-icon"));
-			String text = e.getText();
-			icons.add(text.trim());
-		}
-		return icons;
-	}
-	
-	
 	public WebElement getRowByIdentifier(String id, String idLocation) {
-		List<WebElement> rows = driver.findElements(By.xpath("//tbody/tr"));
+		List<WebElement> rows = attendanceBody.findElements(By.tagName("tr"));
 		for (WebElement row:rows) {
 			WebElement idCell = row.findElement(By.xpath(idLocation));
 			if (id.equals(idCell.getText())) {

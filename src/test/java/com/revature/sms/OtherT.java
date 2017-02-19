@@ -8,8 +8,6 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import com.revature.sms.util.Utils;
-
 //This class tests features of the website that are not associated with a specific type of home page.
 public class OtherT extends AbstractT {
 

@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 //This class should be used after you click the plus icon on the dashboard (which is only on the Super Admin page).
-public class CreateBatchWindow extends SMSPage {
+public class CreateBatchDialog extends SMSPage {
 	
 	@FindBy(xpath="//md-dialog/div/md-toolbar/div")
 	public WebElement header;
@@ -35,7 +35,7 @@ public class CreateBatchWindow extends SMSPage {
 	public WebElement cancel;
 	
 	
-	public CreateBatchWindow(WebDriver driver) {
+	public CreateBatchDialog(WebDriver driver) {
 		super(driver);
 	}
 	

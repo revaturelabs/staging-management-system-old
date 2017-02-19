@@ -5,9 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -83,6 +81,7 @@ public class AssociateTP extends AbstractT {
 			String subheader = asp.eventsPanel.findElement(By.xpath("md-expansion-panel-expanded/md-expansion-panel-content/md-list/div["+(i+1)+"]")).getText();  
 			Assert.assertEquals(subheader, expectedInfo.get("eventType"));
 			compareHashes(expectedInfo, actualInfo);
+			i++;
 		}
 		asp.closePanel(asp.eventsPanel);
 	}
@@ -101,10 +100,6 @@ public class AssociateTP extends AbstractT {
 			HashMap<String, String> expectedInfo = getExpectedTask(task);
 			HashMap<String, String> actualInfo = asp.findTask(expectedInfo.get("taskType"), date);
 			compareHashes(expectedInfo, actualInfo);
-			
-			//This if statement is here because task notes are not displayed in any way on the web
-			//page for panels
-			//if (!("taskNote".equals(key) && "Panel".equals(expectedInfo.get("taskType"))))
 		}
 		asp.closePanel(asp.tasksPanel);
 	}

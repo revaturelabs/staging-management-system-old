@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AvailableSkillsWindow extends SMSPage{
+public class AvailableSkillsDialog extends SMSPage{
 
 	@FindBy(xpath="//md-dialog/div/md-toolbar/div")
 	public WebElement header;
@@ -18,7 +18,7 @@ public class AvailableSkillsWindow extends SMSPage{
 	@FindBy(xpath="//*[@name=\"updateAll\"]/button[2]")
 	public WebElement cancel;
 	
-	public AvailableSkillsWindow(WebDriver driver) {
+	public AvailableSkillsDialog(WebDriver driver) {
 		super(driver);
 	}
 

@@ -4,9 +4,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class CreateJobEventWindow extends SMSPage {
 
-	@FindBy(xpath="md-dialog/div/md-toolbar/div")
+//Where did this dialog go? I can't find it anymore.
+public class CreateJobEventDialog extends SMSPage {
+
+	@FindBy(xpath="//md-dialog/div/md-toolbar/div")
 	public WebElement header;
 	
 	@FindBy(xpath="//*[@ng-model=\"jACtrl.companyName\"]")
@@ -38,7 +40,7 @@ public class CreateJobEventWindow extends SMSPage {
 	
 	
 	
-	public CreateJobEventWindow(WebDriver driver) {
+	public CreateJobEventDialog(WebDriver driver) {
 		super(driver);
 	}
 

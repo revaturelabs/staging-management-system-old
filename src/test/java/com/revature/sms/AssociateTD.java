@@ -1,15 +1,11 @@
 package com.revature.sms;
 
-import java.sql.Timestamp;
 import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Test;
 
-import com.revature.sms.domain.AssociateAttendance;
 import com.revature.sms.domain.User;
 import com.revature.sms.util.Utils;
 
@@ -25,8 +21,7 @@ public class AssociateTD extends AbstractT {
 		User user = ur.findByUsername(un);
 		HashMap<MonthDay, String> expectedStatuses = Utils.getExpectedAttendanceStatuses(user);
 		
-		boolean flag = true;
-		//This do-while loop uses the navigation buttons on the calendar to go through all of the weeks in 
+		//This while loop uses the navigation buttons on the calendar to go through all of the weeks in 
 		//reverse order until it receives the toast notification that says you can't go back any further.
 		while (!expected.getProperty("tooFarBack").equals(asp.getToastMessage())) {
 			ArrayList<MonthDay> monthDays = asp.goThroughWeek();

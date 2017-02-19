@@ -1,15 +1,13 @@
 package com.revature.sms.pagefactory;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class SettingsWindow extends SMSPage {
-
-	@FindBy(xpath="md-dialog/div/md-toolbar/div")
+public class SettingsDialog extends SMSPage {
+	
+	//The xpath for this header is different than for most of the other dialogs
+	@FindBy(xpath="//md-dialog/md-toolbar/div/h2")
 	public WebElement header;
 	
 	@FindBy(id="oldPass")
@@ -28,7 +26,7 @@ public class SettingsWindow extends SMSPage {
 	public WebElement cancel;
 	
 	
-	public SettingsWindow(WebDriver driver) {
+	public SettingsDialog(WebDriver driver) {
 		super(driver);
 	}
 	

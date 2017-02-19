@@ -30,6 +30,7 @@ public class AdminTD extends AbstractT {
 					
 					ArrayList<MonthDay> monthDays = adp.goThroughWeek();
 					ArrayList<String> icons = new ArrayList<String>();
+					
 					WebElement row = adp.getRowByIdentifier(expectedUsername, "td[1]/div/div[2]/p");
 					Assert.assertTrue(row!=null);
 					
@@ -37,9 +38,7 @@ public class AdminTD extends AbstractT {
 					String actualFullName = fullNameCell.getText();
 					Assert.assertEquals(expectedFullName, actualFullName);
 					
-					WebElement rowNumberCell = row.findElement(By.xpath("td[1]/div/h2"));
-					int rowNumber = Integer.parseInt(rowNumberCell.getText());
-					icons = adp.goThroughWeekIcons(rowNumber);
+					icons = adp.goThroughWeekIcons(row);
 					
 					HashMap<MonthDay, String> actualStatuses = new HashMap<MonthDay, String>();
 					int j = 0;

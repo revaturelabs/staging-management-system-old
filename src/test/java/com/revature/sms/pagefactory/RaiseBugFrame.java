@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 //This class should be used after clicking the "Found a bug?" button on the bottom right of a home page.
-public class RaiseBugWindow extends SMSPage {
+public class RaiseBugFrame extends SMSPage {
 	
 	@FindBy(xpath="//*[@id=\"jic-collector-form\"]/div[1]/div[1]")
 	public WebElement windowHeader;
@@ -46,7 +46,7 @@ public class RaiseBugWindow extends SMSPage {
 	@FindBy(xpath="//*[@class=\"cancel\"]")
 	public WebElement cancel;
 	
-	public RaiseBugWindow(WebDriver driver) {
+	public RaiseBugFrame(WebDriver driver) {
 		super(driver);
 	}
 
