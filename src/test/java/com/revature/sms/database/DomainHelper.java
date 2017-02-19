@@ -21,7 +21,6 @@ import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.User;
 import com.revature.sms.util.Utils;
 
-import static com.revature.sms.database.DomainHelper.getExpectedTask;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 //This class contains methods that take in database domain objects and format their information so that they

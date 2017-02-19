@@ -86,4 +86,16 @@ public class HomePage extends SMSPage {
 	}
 	
 	
+	public WebElement getRowByIdentifier(WebElement tableBody, String id, String idLocation) {
+		List<WebElement> rows = tableBody.findElements(By.tagName("tr"));
+		for (WebElement row:rows) {
+			WebElement cell = row.findElement(By.xpath(idLocation));
+			if (id.equals(cell.getText())) {
+				return row;
+			}
+		}
+		return null;
+	}
+	
+	
 }

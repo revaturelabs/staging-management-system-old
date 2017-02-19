@@ -1,9 +1,5 @@
 package com.revature.sms.pagefactory;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,19 +33,7 @@ public class AdminPage extends HomePage {
 	}
 	
 	
-	
-	public WebElement getRowByIdentifier(String id, String idLocation) {
-		List<WebElement> rows = attendanceBody.findElements(By.tagName("tr"));
-		for (WebElement row:rows) {
-			WebElement idCell = row.findElement(By.xpath(idLocation));
-			if (id.equals(idCell.getText())) {
-				return row;
-			}
-		}
-		return null;
-	}
-	
-	
+	/*
 	public ArrayList<String> getAssociateNames(String infoType) {
 		ArrayList<String> info = new ArrayList<String>();
 		List<WebElement> rows = attendanceBody.findElements(By.tagName("tr"));
@@ -65,5 +49,6 @@ public class AdminPage extends HomePage {
 		}
 		return info;
 	}
+	*/
 	
 }

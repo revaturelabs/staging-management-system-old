@@ -27,14 +27,20 @@ public class SuperAdminPage extends AdminPage {
 	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/md-card/md-toolbar/div/button[3]/md-icon")
 	public WebElement updateProject;
 	
+	@FindBy(xpath="//*[@id=\"associateTableViewTableContainer\"]/table/thead/tr")
+	public WebElement associateTableHeaders;
+	
+	@FindBy(xpath="//*[@id=\"associateTableViewTableContainer\"]/table/tbody")
+	public WebElement associateTableBody;
+	
 	
 	public SuperAdminPage(WebDriver driver) {
 		super(driver);
 	}
 	
 	
-	public ArrayList<String> getAssociateViewHeaders() {
-		List<WebElement> avHeaderCells = driver.findElements(By.xpath("//thead/tr/th"));
+	public ArrayList<String> getAssociateTableHeaders() {
+		List<WebElement> avHeaderCells = associateTableHeaders.findElements(By.tagName("th"));
 		ArrayList<String> avHeaders = new ArrayList<String>();
 		for (WebElement headerCell:avHeaderCells) {
 			if (!("".equals(headerCell.getText()))) {
@@ -45,10 +51,10 @@ public class SuperAdminPage extends AdminPage {
 	}
 	
 	
-	public HashMap<String, String> goThroughAssociateView(WebElement row, Properties expected) {
+	public HashMap<String, String> goThroughAssociateTable(WebElement row, Properties expected) {
 		HashMap<String, String> hm = new HashMap<String, String>();
 		
-		ArrayList<String> avHeaders = getAssociateViewHeaders();
+		ArrayList<String> avHeaders = getAssociateTableHeaders();
 		int i = 1;
 		for (String avHeader:avHeaders) {
 			//System.out.println();
