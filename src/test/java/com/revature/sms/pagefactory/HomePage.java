@@ -55,7 +55,8 @@ public class HomePage extends SMSPage {
 	
 	
 	public String getThisMondayFromHeader() {
-		String monday = attendanceHeaders.findElement(By.tagName("p")).getText();
+		//This will get the text from the first "p" tag, which should always refer to the first day of the week (or Monday)
+		String monday = attendanceHeaders.findElement(By.tagName("p")).getText();  
 		if (monday.contains("/0")) {
 			monday = monday.replace("0", "");
 		}
@@ -81,7 +82,7 @@ public class HomePage extends SMSPage {
 		return monthDays;
 	}
 	
-	//This method is used to return check-in and verification data from the attendance table.
+	//This method is used to return check-in and verification data from the given row of the attendance table.
 	public ArrayList<String> goThroughWeekIcons(WebElement row) {
 		// no icon = no string
 		// checkmark = "done"
@@ -98,12 +99,16 @@ public class HomePage extends SMSPage {
 		return icons;
 	}
 	
+	//For now, this is just used by the Associate Page's attendance table, which only has one row.
 	public ArrayList<String> goThroughWeekIcons() {
 		ArrayList<String> icons = goThroughWeekIcons(attendanceBody.findElement(By.tagName("tr")));
 		return icons;
 	}
 	
 	
+	//This method searches a table until it finds a row that has information that matches the id parameter.
+	//The idLocation parameter should be an xpath that shows the method where to find the possibly matching
+	//information.
 	public WebElement getRowByIdentifier(WebElement tableBody, String id, String idLocation) {
 		List<WebElement> rows = tableBody.findElements(By.tagName("tr"));
 		for (WebElement row:rows) {
@@ -161,7 +166,7 @@ public class HomePage extends SMSPage {
 		String skillText = skillsPanel.findElement(By.xpath("md-expansion-panel-expanded/md-expansion-panel-content")).getText();
 		System.out.println(skillText);
 		
-		//Parses through the skills, which are seperated by commas
+		//Parses through the skills, which are separated by commas
 		String[] splitSkillText = skillText.split(",");
 		int i=0;
 		while (i<splitSkillText.length) {

@@ -23,7 +23,6 @@ public class SuperAdminT extends AdminT  {
 		Assert.assertEquals(expected.getProperty("cancelAddSkill"), sap.getToastMessage());
 		
 		cancelCommonButtons();
-		Utils.attemptWait(500);
 	}	
 	
 	

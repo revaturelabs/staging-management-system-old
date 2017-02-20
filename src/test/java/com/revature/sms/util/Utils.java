@@ -84,7 +84,7 @@ public class Utils {
 	}
 	
 	
-	//This method will not retrieve leap days because I'm lazy
+	//This method does not retrieve leap days because I'm lazy
 	public static String getDateFromText(String text) {
 		String pattern = "\\d{1,2}[-/]\\d{1,2}";
 		Pattern p = Pattern.compile(pattern);

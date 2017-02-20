@@ -27,6 +27,9 @@ import static java.time.temporal.ChronoUnit.DAYS;
 //can be compared to what is found on an SMS web page.
 public class DomainHelper {
 
+	//On the web page, user info is laid out in rows, which each contain both data and a title explaining 
+	//what that data is. Each row is saved into a hash, with the title and data separated by a colon and space
+	//for easy comparison later.
 	public static ArrayList<String> getExpectedUserInfo(User user, Properties expected) {
 		ArrayList<String> expectedInfo = new ArrayList<String>();
 		String title1 = expected.getProperty("title1");
@@ -86,8 +89,10 @@ public class DomainHelper {
 		return expectedInfo;
 	}
 	
+	
 	public static HashMap<String, String> getExpectedEvent(JobEvent e) {
 		HashMap<String, String> expectedInfo = new HashMap<String, String>();
+		//Events have three nested objects that have information needed by this program.
 		JobAssignment a = e.getAssignment();
 		expectedInfo.put("companyName", a.getCompanyName());
 		expectedInfo.put("companyLocation", a.getLocation());
@@ -110,17 +115,19 @@ public class DomainHelper {
 		
 		Timestamp ts = task.getDate();
 		LocalDate date = Utils.convertTimestampToLocalDate(ts);
-		expectedInfo.put("taskDate", date.toString());  //The comparison will mess up if the taskDate is before 5am in the database
+		expectedInfo.put("taskDate", date.toString());  //The comparison may be inaccurate if the taskDate is before 5am in the database
 		
 		expectedInfo.put("taskNote", task.getNote());
 		
 		AssociateTaskType taskType = task.getTaskType();
 		expectedInfo.put("taskType", taskType.getType());
 		
-		expectedInfo.put("taskStatus", String.valueOf(task.getPassed()));
+		expectedInfo.put("taskStatus", String.valueOf(task.getPassed()));  //Because task statuses are returned by the domain object as a boolean
 		return expectedInfo;
 	}
 	
+	//This data is checked against everything that can be found in the Associate Information Table on the 
+	//Super Admin page.
 	public static HashMap<String, String> getExpectedAssociateInfo(User user) {
 		HashMap<String, String> expectedInfo = new HashMap<String, String>();
 		expectedInfo.put("fullName", user.getFirstName()+" "+user.getLastName());
@@ -130,6 +137,8 @@ public class DomainHelper {
 		LocalDate msd = Utils.convertTimestampToLocalDate(user.getGraduationDate());
 		expectedInfo.put("marketingStartDate", msd.toString());
 		
+		//Days on market is not directly stored in the database. It is calculated on the fly using the
+		//marketing start date and today's date.
 		LocalDate today = LocalDate.now();
 		int daysBetween = (int) DAYS.between(msd, today);
 		daysBetween++;
@@ -141,6 +150,8 @@ public class DomainHelper {
 		for (AssociateTask task:tasks) {
 			String td = Utils.convertTimestampToSimpleDate(task.getDate());
 			HashMap<String, String> expectedTaskInfo = getExpectedTask(task);
+			
+			//Tasks are handled quite differently in the table depending on their type.
 			if ("Panel".equals(expectedTaskInfo.get("taskType"))) {
 				//QUESTION: How are panels that have not happened yet displayed?
 				if ("true".equals(expectedTaskInfo.get("taskStatus"))) {
@@ -165,7 +176,7 @@ public class DomainHelper {
 		if (pus.isEmpty()) {
 			expectedInfo.put("project", "No project");
 		} else {
-			ProjectUser pu = pus.get(pus.size()-1);
+			ProjectUser pu = pus.get(pus.size()-1); //last of a user's projects
 			Project project = pu.getProject();
 			expectedInfo.put("project", project.getName());
 		}

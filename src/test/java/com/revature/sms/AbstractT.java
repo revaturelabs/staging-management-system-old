@@ -211,7 +211,8 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		}
 	}
 		
-	
+	//On an Admin Page, panels are not automatically visible upon loading the page. This method clicks on the
+	//row of a given user so that the panels can be opened to display their information.
 	public void revealCollapsedPanelsForUser(String username) {
 		WebElement row = adp.getRowByIdentifier(adp.attendanceBody, username, "td[1]/div/div[2]/p");
 		Assert.assertTrue(row!=null);

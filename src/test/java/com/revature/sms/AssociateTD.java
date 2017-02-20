@@ -25,8 +25,8 @@ public class AssociateTD extends AbstractT {
 		while (!expected.getProperty("tooFarBack").equals(asp.getToastMessage())) {
 			ArrayList<MonthDay> monthDays = asp.goThroughWeek();
 			ArrayList<String> icons = asp.goThroughWeekIcons();
-			HashMap<MonthDay, String> actualStatuses = new HashMap<MonthDay, String>();  //Website data
 			
+			HashMap<MonthDay, String> actualStatuses = new HashMap<MonthDay, String>();  //Website data
 			int i = 0;
 			//This while loop organizes the dates, check-ins, and verifications from the website into a HashMap.
 			while (i < 5) {

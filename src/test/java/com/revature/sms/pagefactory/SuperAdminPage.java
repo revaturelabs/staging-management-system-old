@@ -27,6 +27,8 @@ public class SuperAdminPage extends AdminPage {
 	@FindBy(xpath="/html/body/div[1]/div/ui-view[2]/md-card/md-toolbar/div/button[3]/md-icon")
 	public WebElement updateProject;
 	
+	//The following fields are hidden by default upon the page loading. The switchView element should
+	//be clicked before any methods involving the following fields are used.
 	@FindBy(xpath="//*[@id=\"associateTableViewTableContainer\"]/table/thead/tr")
 	public WebElement associateTableHeaders;
 	
@@ -39,30 +41,33 @@ public class SuperAdminPage extends AdminPage {
 	}
 	
 	
+	//Inserts the text of header cells into an ArrayList.
 	public ArrayList<String> getAssociateTableHeaders() {
-		List<WebElement> avHeaderCells = associateTableHeaders.findElements(By.tagName("th"));
-		ArrayList<String> avHeaders = new ArrayList<String>();
-		for (WebElement headerCell:avHeaderCells) {
+		List<WebElement> atHeaderCells = associateTableHeaders.findElements(By.tagName("th"));
+		ArrayList<String> atHeaders = new ArrayList<String>();
+		for (WebElement headerCell:atHeaderCells) {
 			if (!("".equals(headerCell.getText()))) {
-				avHeaders.add(headerCell.getText());
+				atHeaders.add(headerCell.getText());
 			}
 		}
-		return avHeaders;
+		return atHeaders;
 	}
 	
-	
+	//Organizes a single row of information from the Associate Information Table
 	public HashMap<String, String> goThroughAssociateTable(WebElement row, Properties expected) {
 		HashMap<String, String> hm = new HashMap<String, String>();
 		
 		ArrayList<String> avHeaders = getAssociateTableHeaders();
 		int i = 1;
 		for (String avHeader:avHeaders) {
-			//System.out.println();
-			//System.out.println("Iteration: "+i);
-			//System.out.println("Header: "+avHeader);
-			WebElement cell = row.findElement(By.xpath("td["+i+"]"));
-			//System.out.println("Cell: "+cell);
+			//The information in each cell is identified by the header above it.
+			WebElement cell = row.findElement(By.xpath("td["+i+"]")); 
 			
+			//Every header should correspond to exactly one cell. This means that each iteration of the
+			//"for loop" should result in the next condition in this "if else" construct until
+			//every possible outcome has happened in order, exactly once, except for the final outcome,
+			//which throws an exception. This is the best way I could think of to coordinate the iteration
+			//headers and cells.
 			if (avHeader.equals(expected.getProperty("header1"))) {
 				hm.put("fullName", cell.getText());
 			} else if (avHeader.equals(expected.getProperty("header2"))) {

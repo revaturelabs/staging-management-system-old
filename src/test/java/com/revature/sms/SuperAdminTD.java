@@ -11,6 +11,7 @@ import static com.revature.sms.database.DomainHelper.*;
 
 public class SuperAdminTD extends AdminTD {
 
+	//This test method confirms that all the data displayed in the Associate Information table is accurate.
 	@Test
 	public void testAssociateInformationView() {
 		lp.login(un, pw);
@@ -21,6 +22,7 @@ public class SuperAdminTD extends AdminTD {
 			if ("associate".equals(user.getUserRole().getName())) {	
 				HashMap<String, String> expectedInfo = getExpectedAssociateInfo(user);
 				String fullName = user.getFirstName()+" "+user.getLastName();
+				//Finds the row with the user's information using their full name.
 				WebElement row = sap.getRowByIdentifier(sap.associateTableBody, fullName, "td[1]");
 				Assert.assertTrue(row!=null);
 				HashMap<String, String> actualInfo = sap.goThroughAssociateTable(row, expected);

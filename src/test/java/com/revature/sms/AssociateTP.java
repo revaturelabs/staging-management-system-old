@@ -45,7 +45,7 @@ public class AssociateTP extends AbstractT {
 		asp.openPanel(asp.skillsPanel);
 		User user = ur.findByUsername(un);
 		
-		//Iterates through the Set of skills of the logged in user
+		//Iterates through the Set of skills of the logged-in user
 		ArrayList<String> expectedSkills = getExpectedSkills(user);
 		ArrayList<String> actualSkills = asp.goThroughSkills();
 		
@@ -87,6 +87,8 @@ public class AssociateTP extends AbstractT {
 	}
 	
 	
+	//Certifications and panels share a domain object and therefore have enough in common to be tested
+	//using the same hash.
 	@Test
 	public void testTasksPanel() {
 		lp.login(un, pw);
