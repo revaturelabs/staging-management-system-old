@@ -27,6 +27,10 @@ import static java.time.temporal.ChronoUnit.DAYS;
 //can be compared to what is found on an SMS web page.
 public class DomainHelper {
 
+	private DomainHelper() {
+		throw new IllegalAccessError("Utility class");
+	}
+	
 	//On the web page, user info is laid out in rows, which each contain both data and a title explaining 
 	//what that data is. Each row is saved into a hash, with the title and data separated by a colon and space
 	//for easy comparison later.
@@ -75,7 +79,7 @@ public class DomainHelper {
 		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
 		//This if statement is a convoluted way of making up for the fact that having no skills is displayed
 		//differently on the admin page panel.
-		if (skillset.size() == 0 && stackTraceElements[2].getClassName().contains("Admin")) {
+		if (skillset.isEmpty() && stackTraceElements[2].getClassName().contains("Admin")) {
 			expectedInfo.add("User has not added any skills.");
 		}
 		
@@ -160,14 +164,14 @@ public class DomainHelper {
 				//QUESTION: Why is the date only displayed when the user has not passed their panel?
 				} else {  
 					expectedInfo.put("panelStatus", "not_interested");
-					expectedInfo.put("panelDate", td.toString());
+					expectedInfo.put("panelDate", td);
 				}
 			}
 			//QUESTION: How do I know which certification is the primary certification?
 			//QUESTION: Shouldn't the table say whether the certification has been passed or not?
 			if ("Certification".equals(expectedTaskInfo.get("taskType"))) {
 				expectedInfo.put("certName", task.getNote());
-				expectedInfo.put("certDate", td.toString());	
+				expectedInfo.put("certDate", td);	
 			}
 		}
 		

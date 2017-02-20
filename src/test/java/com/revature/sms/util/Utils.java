@@ -89,9 +89,11 @@ public class Utils {
 		String pattern = "\\d{1,2}[-/]\\d{1,2}";
 		Pattern p = Pattern.compile(pattern);
 		Matcher m = p.matcher(text);
-		String dateString = null;
+		String dateString;
 		if (m.find()) {
 			dateString = m.group();
+		} else {
+			return null;
 		}
 		
 		String[] split;
@@ -110,63 +112,27 @@ public class Utils {
 		}
 		
         switch (month) {
-            case 1:  
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
             	if (day>31) {
+            		properDate = false;
+            	}
+                break;
+            case 4: 
+            case 6:
+            case 9:
+            case 11:
+            	if (day>30) {
             		properDate = false;
             	}
                 break;
             case 2:  
             	if (day>28) {
-            		properDate = false;
-            	}
-                break;
-            case 3:  
-            	if (day>31) {
-            		properDate = false;
-            	}
-                break;
-            case 4:  
-            	if (day>30) {
-            		properDate = false;
-            	}
-                break;
-            case 5:  
-            	if (day>31) {
-            		properDate = false;
-            	}
-                break;
-            case 6:  
-            	if (day>30) {
-            		properDate = false;
-            	}
-                break;
-            case 7:  
-            	if (day>31) {
-            		properDate = false;
-            	}
-                break;
-            case 8:  
-            	if (day>31) {
-            		properDate = false;
-            	}
-                break;
-            case 9:  
-            	if (day>30) {
-            		properDate = false;
-            	}
-                break;
-            case 10: 
-            	if (day>31) {
-            		properDate = false;
-            	}
-                break;
-            case 11: 
-            	if (day>30) {
-            		properDate = false;
-            	}
-                break;
-            case 12: 
-            	if (day>31) {
             		properDate = false;
             	}
                 break;
@@ -203,12 +169,10 @@ public class Utils {
 			//and each icon is associated with a different string in the html.
 			if (v) { 
 				status = "done_all";
-			} else if (ci && !v) {
+			} else if (ci) {
 				status = "done";
-			} else if (!ci && !v) {
-				status = "close";
 			} else {
-				status = "???";
+				status = "close";
 			}
 			expectedStatuses.put(md, status);
 		}

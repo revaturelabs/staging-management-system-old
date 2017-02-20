@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -233,7 +234,7 @@ public class HomePage extends SMSPage {
 			boolean certSearch = "Certification".equals(taskType);
 			boolean panelSearch = "Panel".equals(taskType);
 			
-			boolean isTask = false;
+			boolean isTask;
 			boolean taskMatches = false;
 			//This loop goes through all the WebElements in the the Tasks panel.
 			for (WebElement e:elements) {
@@ -288,7 +289,7 @@ public class HomePage extends SMSPage {
 					}
 				}
 			}
-		} catch (NoSuchElementException exception) {}
+		} catch (NoSuchElementException exception) { Logger.getRootLogger().debug("Task was not found", exception); }
 		return hm;	
 	}
 	
