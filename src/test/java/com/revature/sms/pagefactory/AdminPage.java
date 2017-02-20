@@ -6,25 +6,31 @@ import org.openqa.selenium.support.FindBy;
 
 public class AdminPage extends HomePage {
 
-	@FindBy(xpath = "//*[@id=\"attendanceTableDiv\"]/md-card/div/div[1]/div[2]/button[1]")
+	@FindBy(id="associateInformationDiv")
+	public WebElement panelDiv;
+	
+	@FindBy(id="attendanceTableDiv")
+	public WebElement attendanceDiv;
+	
+	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/div[1]/div[2]/button[1]")
 	public WebElement prevWeekTop;
 
-	@FindBy(xpath = "//*[@id=\"attendanceTableDiv\"]/md-card/div/div[1]/div[2]/button[2]")
+	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/div[1]/div[2]/button[2]")
 	public WebElement nextWeekTop;
 
-	@FindBy(xpath = "//*[@id=\"attendanceTableDiv\"]/md-card/div/div[1]/div[2]/div")
+	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/div[1]/div[2]/div")
 	public WebElement weekOfTop;
 
-	@FindBy(xpath = "//*[@id=\"attendanceTableDiv\"]/md-card/div/div[2]/div[2]/button[1]")
+	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/div[2]/div[2]/button[1]")
 	public WebElement prevWeekBottom;
 
-	@FindBy(xpath = "//*[@id=\"attendanceTableDiv\"]/md-card/div/div[2]/div[2]/button[2]")
+	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/div[2]/div[2]/button[2]")
 	public WebElement nextWeekBottom;
 
-	@FindBy(xpath = "//*[@id=\"attendanceTableDiv\"]/md-card/div/div[2]/div[2]/div")
+	@FindBy(xpath="//*[@id=\"attendanceTableDiv\"]/md-card/div/div[2]/div[2]/div")
 	public WebElement weekOfBottom;
 	
-	@FindBy(xpath = "//*[@class=\"attendanceTable\"]/table/tbody/tr[1]/td[2]")
+	@FindBy(xpath="//*[@class=\"attendanceTable\"]/table/tbody/tr[1]/td[2]")
 	public WebElement sampleAttendanceTableCell;
 
 	

@@ -51,6 +51,7 @@ public class AdminT extends AbstractT {
 	final int tooManyMisses = 3;
 	
 	//This test clicks all of the buttons on the Admin attendance table and makes sure that they work.
+	//This can probably be split up into multiple tests.
 	@Test
 	public void testAdminAttendanceButtons() {
 		lp.login(un, pw);

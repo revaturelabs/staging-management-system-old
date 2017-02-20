@@ -40,16 +40,43 @@ public class DomainHelper {
 		String batchType = bt.getType();
 		String batchCurriculumRow = title3+": "+batchType;
 		expectedInfo.add(batchCurriculumRow);
-		String title4 = expected.getProperty("title4");
+		String title5 = expected.getProperty("title5");
 		LocalDate dateObject = Utils.convertTimestampToLocalDate(user.getGraduationDate());
-		String gDateRow = title4+": "+dateObject.toString();
+		String gDateRow = title5+": "+dateObject.toString();
 		expectedInfo.add(gDateRow);
+		
+		/*
+		String title4 = expected.getProperty("title4");
+		Trainer trainer = user.getTrainer();
+		String trainerRow = title4+": "+trainer.getFirstName()+" "+trainer.getLastName();
+		expectedInfo.add(trainerRow);
+		
+		String title6 = expected.getProperty("title6");
+		LocalDate msd = Utils.convertTimestampToLocalDate(user.getGraduationDate());
+		LocalDate today = LocalDate.now();
+		int daysBetween = (int) DAYS.between(msd, today);
+		daysBetween++;
+		String marketingDaysRow = title6+": "+daysBetween+" days";
+		
+		String title7 = expected.getProperty("title7");
+		String marketingStatusRow = title7+": "+user.getMarketingStatus().getName();
+		*/
+		
 		return expectedInfo;
 	}
 	
 	public static ArrayList<String> getExpectedSkills(User user) {
 		ArrayList<String> expectedInfo = new ArrayList<String>();
 		Set<TechnicalSkills> skillset = user.getSkill();
+		
+		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+		//This if statement is a convoluted way of making up for the fact that having no skills is displayed
+		//differently on the admin page panel.
+		if (skillset.size() == 0 && stackTraceElements[2].getClassName().contains("Admin")) {
+			expectedInfo.add("User has not added any skills.");
+		}
+		
+		
 		Iterator<TechnicalSkills> itr = skillset.iterator();
 		while (itr.hasNext()) {
 			TechnicalSkills ts = itr.next();

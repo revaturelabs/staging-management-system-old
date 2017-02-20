@@ -4,6 +4,7 @@ import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -12,7 +13,9 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.After;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.revature.sms.util.InstanceTestClassListener;
 import com.revature.sms.util.SpringInstanceTestClassRunner;
 import com.revature.sms.util.TestSetup;
+import com.revature.sms.domain.User;
 import com.revature.sms.domain.dao.UserRepo;
 import com.revature.sms.pagefactory.AdminPage;
 import com.revature.sms.pagefactory.AssociatePage;
@@ -66,6 +70,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	protected HomePage hp;
 	protected String un;
 	protected String pw;
+	protected List<User> users;
 	
 	
 	@Autowired
@@ -122,6 +127,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 			un = inputs.getProperty("superAdminUN");
 		}
 		pw = inputs.getProperty("PW");
+		users = ur.findAll();
 		
 		driver.get(inputs.getProperty("url"));
 		// Make sure the login page is loaded correctly
@@ -160,11 +166,11 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	
 	public void cancelCommonButtons() {
 		hp.settings.click();
-		sw.verify();
+		Assert.assertTrue(sw.verify());
 		sw.cancel.click();
 		hp.reportBug.click();
 		driver.switchTo().frame("atlwdg-frame");
-		rbw.verify();
+		Assert.assertTrue(rbw.verify());
 		rbw.cancel.click();
 	}
 	
@@ -176,6 +182,7 @@ public abstract class AbstractT implements InstanceTestClassListener {
 		//the same event
 		while (itr.hasNext()) {
 			String key = itr.next();
+			System.out.println(key);
 			//This if statement is here because task notes are not displayed in any way on the web
 			//page for panels
 			if (!("taskNote".equals(key) && "Panel".equals(expectedInfo.get("taskType")))) {
@@ -183,8 +190,6 @@ public abstract class AbstractT implements InstanceTestClassListener {
 			}
 		}
 	}
-	
-	
 	
 	
 	public void compareAttendanceStatuses(ArrayList<MonthDay> monthDays, HashMap<MonthDay, String> expectedStatuses, 
@@ -207,9 +212,13 @@ public abstract class AbstractT implements InstanceTestClassListener {
 	}
 		
 	
-	
-	
-	
-	
+	public void revealCollapsedPanelsForUser(String username) {
+		WebElement row = adp.getRowByIdentifier(adp.attendanceBody, username, "td[1]/div/div[2]/p");
+		Assert.assertTrue(row!=null);
+		WebElement fullNameCell = row.findElement(By.xpath("td[1]"));
+		fullNameCell.click();
+		Assert.assertTrue("false".equals(adp.panelDiv.getAttribute("aria-hidden")));
+		Assert.assertTrue("resizeAttendanceDiv".equals(adp.attendanceDiv.getAttribute("class")));
+	}
 	
 }

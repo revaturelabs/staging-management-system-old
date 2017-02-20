@@ -16,7 +16,6 @@ public class AssociateTD extends AbstractT {
 	@Test
 	public void testAssociateAttendanceView() {
 		lp.login(un, pw);
-		asp.verify();
 
 		User user = ur.findByUsername(un);
 		HashMap<MonthDay, String> expectedStatuses = Utils.getExpectedAttendanceStatuses(user);

@@ -3,7 +3,6 @@ package com.revature.sms;
 import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,9 +17,7 @@ public class AdminTD extends AbstractT {
 	@Test
 	public void testAdminAttendanceView() {
 		lp.login(un, pw);
-		Assert.assertTrue(adp.verify());
 		
-		List<User> users = ur.findAll();
 		while (!expected.getProperty("tooFarBack").equals(adp.getToastMessage())) {
 			for (User user:users) {
 				if ("associate".equals(user.getUserRole().getName())) {	
