@@ -51,6 +51,7 @@ public abstract class SMSPage {
 					return result;
 				}
 			} catch (ClassCastException e) {
+				Logger.getRootLogger().debug("SonarQube made me do this", e);
 				try {
 					//When a field is a list of WebElements
 					fieldValues = (List<WebElement>) fields[i].get(this);
