@@ -1,6 +1,8 @@
 package com.revature.sms.controllers;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
@@ -14,15 +16,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.sms.domain.MarketingStatus;
+import com.revature.sms.domain.TechnicalSkills;
 import com.revature.sms.domain.Token;
 import com.revature.sms.domain.User;
+import com.revature.sms.domain.UserRole;
 import com.revature.sms.domain.dao.AssociateAttendanceRepo;
+import com.revature.sms.domain.dao.MarketingStatusRepo;
 import com.revature.sms.domain.dao.TokenRepo;
 import com.revature.sms.domain.dao.UserRepo;
+import com.revature.sms.domain.dao.UserRoleRepo;
 import com.revature.sms.domain.dto.ResponseErrorEntity;
 import com.revature.sms.domain.dto.UserDTO;
 
@@ -42,6 +48,12 @@ public class UserController {
 
 	@Autowired
 	private TokenRepo tokenRepo;
+	
+	@Autowired
+	private UserRoleRepo uRoleRepo;
+	
+	@Autowired
+	private MarketingStatusRepo markStatRepo;
 
 	/**
 	 * Autowired AssociateAttendenceRepo object. Spring handles setting this up
@@ -68,12 +80,16 @@ public class UserController {
 	public @ResponseBody Object createUser(@RequestHeader(value = "Authorization") String token,
 			@RequestBody UserDTO userDTO) {
 
-		// System.out.println("UserDTO username: " + userDTO.getUsername());
+		
 		try {
 			// validate token and create user
 			if (isValid(token) && isSuperAdmin(role)) {
-
+				
 				User user = getUser(userDTO);
+				UserRole role = uRoleRepo.findByName("associate");
+				MarketingStatus status = markStatRepo.findByStatus("Staging");
+				user.setUserRole(role);
+				user.setMarketingStatus(status);
 				user = userRepo.save(user);
 				user.blankPassword();
 				user.setID(0);
@@ -115,6 +131,7 @@ public class UserController {
 		try {
 			// validate token and update user info
 			if (isValid(token)) {
+				
 				User oldUser = (User) updateValidation(userDTO);
 				User newUser = userRepo.save(oldUser);
 				newUser.blankPassword();
@@ -125,6 +142,7 @@ public class UserController {
 						HttpStatus.UNAUTHORIZED);
 			}
 		} catch (Exception e) {
+			
 			Logger.getRootLogger().debug("Exception while updating user info", e);
 			return new ResponseEntity<ResponseErrorEntity>(
 					new ResponseErrorEntity("Problem occurred while updating user info."), HttpStatus.NOT_FOUND);
@@ -221,15 +239,23 @@ public class UserController {
 	 *         retrieving the users
 	 */
 	@RequestMapping(value = "/{username}", method = {
-			RequestMethod.DELETE, }, consumes = MediaType.APPLICATION_JSON_VALUE)
+			RequestMethod.DELETE, }, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Object deleteUser(@RequestHeader(value = "Authorization") String token,
 			@PathVariable String username) {
 
 		try {
 			// validate token and delete associate
 			if (isValid(token) && isSuperAdmin(role)) {
-				long result = userRepo.deleteByUsername(username);
-				return new ResponseEntity<Long>(result, HttpStatus.OK);
+				
+				List<Token> tokens = tokenRepo.findAll();
+				for (int i = 0; i < tokens.size(); i++) {
+					if (tokens.get(i).getUser().getUsername().equals(username)) {
+						tokenRepo.delete(tokens.get(i));
+					}
+				}
+				
+				userRepo.deleteByUsername(username);
+				return new ResponseEntity<User>(new User(), HttpStatus.OK);
 			} else {
 				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
 						HttpStatus.UNAUTHORIZED);
@@ -325,10 +351,55 @@ public class UserController {
 			user.setGraduationDate(userDTO.getGraduationDate());
 
 		}
+		if(userDTO.getTrainer() != null){
+			user.setTrainer(userDTO.getTrainer());
+		}
+		if (userDTO.getMarketingStatus() != null){
+			user.setMarketingStatus(userDTO.getMarketingStatus());
+		}
 		if (userDTO.getTasks() != null){
 			user.setTasks(userDTO.getTasks());
 		}
 
+		if(userDTO.getProject() != null){
+			user.setProject(userDTO.getProject());
+		}
+		if (userDTO.getEvents() != null){
+			
+			user.setEvents(userDTO.getEvents());
+		}
+
+		if (userDTO.getSkill() != null){
+			//remove deleted skills
+			boolean found;
+			Set<TechnicalSkills> list = userDTO.getSkill();
+			System.out.println(list.size());
+			for(TechnicalSkills ts: user.getSkill()){
+				if(!list.contains(ts.getID())){
+					userDTO.getSkill().remove(ts);
+					ts.getUsers().remove(user);
+				}
+			}
+			
+			//add new skills
+			Set<User> u;
+			for(TechnicalSkills ts: userDTO.getSkill()){
+				u = ts.getUsers();
+				if(u !=null){
+					u.add(user);
+					
+				}
+				else{
+					u = new HashSet<User>();
+					u.add(user);
+				}
+				ts.setUsers(u);
+			}
+			
+			user.setSkill(list);
+			
+		}
+		
 		return user;
 
 	}

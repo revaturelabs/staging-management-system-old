@@ -1,0 +1,186 @@
+
+    <div ng-controller="associateViewUserInfoCtrl as aVUICtrl">
+        
+          <!-- User info panel -->
+        <md-expansion-panel md-component-id="userInfoPanel">
+            <md-expansion-panel-collapsed>
+                <div class="md-title"> User info </div>
+                <div class="md-summary"> Full name, username, batch, graduation date, marketing status </div>
+                <md-expansion-panel-icon> </md-expansion-panel-icon>
+            </md-expansion-panel-collapsed>
+
+            <md-expansion-panel-expanded>
+                <md-expansion-panel-header md-ink-ripple="#000000" ng-click="$panel.collapse()"> 
+                    <div class="md-title"> User info </div>
+                    <div class="md-summary"> Full name, username, batch, graduation date, marketing status </div>
+                    <md-expansion-panel-icon> </md-expansion-panel-icon>
+                </md-expansion-panel-header>
+                
+                <md-expansion-panel-content>
+                    <md-list class="expansionPanelList md-dense">
+ 
+                        <md-list-item class="md-3-line dense-list" ng-click="null">
+                            <div class="md-list-item-text" layout="column"> 
+                                <h3 class="h3Top"> Name </h3>
+                            </div>
+                            <div flex> </div>
+                            <div class="md-list-item-text eventListRight" layout="column">
+                                <h3> {{ aVUICtrl.user.firstName }} {{ aVUICtrl.user.lastName }} </h3>
+                            </div>
+                        </md-list-item>
+
+                        <md-list-item class="md-3-line dense-list" ng-click="null">
+                            <div class="md-list-item-text" layout="column"> 
+                                <h3 class="h3Top"> Username </h3>
+                            </div>
+                            <div flex> </div>
+                            <div class="md-list-item-text eventListRight" layout="column">
+                                <h3> {{ aVUICtrl.user.username }} </h3>
+                            </div>
+                        </md-list-item>
+
+                        <md-list-item class="md-3-line dense-list" ng-click="null">
+                            <div class="md-list-item-text" layout="column"> 
+                                <h3 class="h3Top"> Batch curriculum </h3>
+                            </div>
+                            <div flex> </div>
+                            <div class="md-list-item-text eventListRight" layout="column">
+                                <h3> {{ aVUICtrl.user.batchType.type }} </h3>
+                            </div>
+                        </md-list-item>
+
+                        <md-list-item class="md-3-line dense-list" ng-click="null">
+                            <div class="md-list-item-text" layout="column"> 
+                                <h3 class="h3Top"> Graduation date </h3>
+                            </div>
+                            <div flex> </div>
+                            <div class="md-list-item-text eventListRight" layout="column">
+                                <h3> {{ aVUICtrl.user.graduationDate | date:"MMMM dd, yyyy" }} </h3>
+                            </div>
+                        </md-list-item>
+
+                    </md-list>
+                </md-expansion-panel-content>
+            </md-expansion-panel-expanded>
+        </md-expansion-panel>
+
+          <!-- Skill panel -->
+        <md-expansion-panel md-component-id="skillPanel">
+            <md-expansion-panel-collapsed>
+                <div class="md-title"> Skills </div>
+                <div class="md-summary"> Technical skills </div>
+                <md-expansion-panel-icon> </md-expansion-panel-icon>
+            </md-expansion-panel-collapsed>
+
+            <md-expansion-panel-expanded>
+                <md-expansion-panel-header md-ink-ripple="#000000" ng-click="$panel.collapse()"> 
+                    <div class="md-title"> Skills </div>
+                    <div class="md-summary"> Technical skills </div>
+                    <md-expansion-panel-icon> </md-expansion-panel-icon>
+                </md-expansion-panel-header>
+                
+                <md-expansion-panel-content ng-if="aVUICtrl.showChips == false"> {{ aVUICtrl.user.skill.map(aVUICtrl.joinArrayBySkill).join(", ") }} </md-expansion-panel-content>
+                <md-expansion-panel-content ng-if="aVUICtrl.showChips != false">
+                    <md-chips ng-model="aVUICtrl.selectedSkills" md-autocomplete-snap
+                        md-transform-chip="aVUICtrl.transformChip($chip)"
+                        md-require-match="true">
+                        <md-autocomplete
+                            md-selected-item="aVUICtrl.selectedItem"
+                            md-search-text="aVUICtrl.searchText"
+                            md-items="skill in aVUICtrl.skillSearch(aVUICtrl.searchText)"
+                            md-item-text="skill.skill"
+                            placeholder="Search for skills">
+                            <span md-highlight-text="aVUICtrl.searchText"> {{ skill.skill }} </span>
+                        </md-autocomplete>
+                        <md-chip-template>
+                            <span> {{ $chip.skill }} </span>
+                        </md-chip-template>
+                    </md-chips>
+                </md-expansion-panel-content>
+                
+                <md-expansion-panel-footer>
+                    <div flex> </div>
+                    <md-button class="md-accent" ng-click="aVUICtrl.editSkills()" ng-if="aVUICtrl.showChips == false"> EDIT </md-button>
+                    <md-button class="md-accent" ng-click="aVUICtrl.updateSkills()" ng-if="aVUICtrl.showChips != false"> SAVE CHANGES </md-button>
+                </md-expansion-panel-footer>
+            </md-expansion-panel-expanded>
+        </md-expansion-panel>  
+            
+          <!-- Event panel -->
+        <md-expansion-panel md-component-id="eventPanel">
+            <md-expansion-panel-collapsed>
+                <div class="md-title"> Events </div>
+                <div class="md-summary"> Interviews, submissions, selections </div>
+                <md-expansion-panel-icon> </md-expansion-panel-icon>
+            </md-expansion-panel-collapsed>
+
+            <md-expansion-panel-expanded>
+                <md-expansion-panel-header md-ink-ripple="#000000" ng-click="$panel.collapse()"> 
+                    <div class="md-title"> Events </div>
+                    <div class="md-summary"> Interviews, submissions, selections </div>
+                    <md-expansion-panel-icon> </md-expansion-panel-icon>
+                </md-expansion-panel-header>
+                
+                <md-expansion-panel-content>
+                    <md-list class="expansionPanelList md-dense">
+                        
+                        <md-subheader class="md-no-sticky" ng-repeat-start="(type, specificEvents) in aVUICtrl.allEvents"> {{ type }} </md-subheader>
+                        <md-list-item class="md-3-line" ng-repeat="event in specificEvents" ng-click="null">
+                            <div class="md-list-item-text" layout="column"> 
+                                <h3 class="h3Top"> {{ event.assignment.companyName }} - {{ event.assignment.location }} </h3>
+                                <h4> {{ event.type.type }} - {{ event.assignment.jobTitle }} </h4>
+                                <p style="text-align: left"> {{ event.note }} </p>
+                            </div>
+                            <div flex> </div>
+                            <div class="md-list-item-text eventListRight" layout="column">
+                                <h3> {{ event.date | date:'dd MMMM, yyyy' }} </h3>
+                                <h4> {{ event.location }} </h4>
+                                <p style="text-align: left"> &nbsp; </p>
+                            </div>
+                        </md-list-item>
+                        <md-divider ng-repeat-end ng-if="!$last"> </md-divider>
+
+                    </md-list>
+                </md-expansion-panel-content>
+            </md-expansion-panel-expanded>
+        </md-expansion-panel>
+            
+          <!-- Task panel -->
+        <md-expansion-panel md-component-id="taskPanel">
+            <md-expansion-panel-collapsed>
+                <div class="md-title"> Tasks </div>
+                <div class="md-summary"> Certifications, panels, projects </div>
+                <md-expansion-panel-icon> </md-expansion-panel-icon>
+            </md-expansion-panel-collapsed>
+
+            <md-expansion-panel-expanded>
+                <md-expansion-panel-header md-ink-ripple="#000000" ng-click="$panel.collapse()"> 
+                    <div class="md-title"> Tasks </div>
+                    <div class="md-summary"> Certifications, panels, projects </div>
+                    <md-expansion-panel-icon> </md-expansion-panel-icon>
+                </md-expansion-panel-header>
+                
+                <md-expansion-panel-content>
+                    <md-list class="expansionPanelList">
+                        
+                        <md-subheader class="md-no-sticky" ng-repeat-start="(type, specificTasks) in aVUICtrl.allTasks" layout="row" layout-align="space-between center"> 
+                            <span> {{ type }}s </span>
+                            <!--<md-button ng-if="(aVUICtrl.newCert == true) && (type.toLowerCase() == 'certification')" class="md-icon-button" aria-label="Add certification" ng-click="aVUICtrl.addCert()">
+                                <md-tooltip> Add certification </md-tooltip>
+                                <md-icon class="md-material-icon" ng-click="aVUICtrl.assocCertifications()"> add </md-icon>
+                            </md-button>  -->
+                        </md-subheader>
+                        <md-list-item ng-repeat="task in specificTasks">
+                            <h3> {{ aVUICtrl.formatTaskListItemTitle(task) }} </h3>
+                            <div flex> </div>
+                            <p> {{ aVUICtrl.formatTaskListItemContent(task) }} </p>
+                            <md-icon class="material-icons"> {{ task | iconFilter:"passed" }} </md-icon>
+                        </md-list-item>
+                        <md-divider ng-repeat-end ng-if="!$last"> </md-divider>
+
+                    </md-list>
+                </md-expansion-panel-content>
+            </md-expansion-panel-expanded>
+        </md-expansion-panel>
+
+    </div>

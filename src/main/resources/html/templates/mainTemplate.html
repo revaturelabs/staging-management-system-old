@@ -1,20 +1,26 @@
 
-    <md-card md-whiteframe="8">
+    <md-card class="templateCard" md-whiteframe="8">
         <md-toolbar md-whiteframe="8">
             <div class="md-toolbar-tools">
 
                 <div flex> {{ tempCtrl.title }} </div>
-
+				
+				<div>
+					<md-tooltip>{{tempCtrl.viewLabel}}</md-tooltip>
+					<md-switch ng-show="tempCtrl.user.userRole.name == 'superAdmin'" class="md-accent" md-no-ink="" aria-label="Switch view" ng-change="tempCtrl.changeView()" ng-model="tempCtrl.associateTableIsOpen"/>
+				</div>
+				
                 <md-button ng-repeat="action in tempCtrl.actions" class="md-icon-button" aria-label="action.tooltip" ng-click="action.function()">
                     <md-tooltip> {{ action.tooltip }} </md-tooltip>
                     <md-icon class="md-material-icon menu-icon"> {{ action.icon }} </md-icon>
                 </md-button>
 
                 <md-button class="md-icon-button" aria-label="Account settings" ng-click="tempCtrl.settings(false)">
-                    <md-tooltip> Account settings </md-tooltip>
+                    <md-tooltip> Change password </md-tooltip>
                     <md-icon class="md-material-icon menu-icon"> settings </md-icon>
-                </md-button>
-
+                </md-button>           
+                
+                
                 <md-button class="md-icon-button" aria-label="Logout" ng-click="tempCtrl.logout()">
                     <md-tooltip> Logout </md-tooltip>
                     <md-icon class="md-material-icon menu-icon"> exit_to_app </md-icon>

@@ -1,5 +1,4 @@
-
-    md-dialog {
+ md-dialog {
         max-width: 60%;
     }
     
@@ -230,4 +229,30 @@
 
     .highlightSelected {
         background-color: #9fa8da;
+    }
+
+    /* Associate view info panels */
+    .expansionPanelList md-list-item {
+        height: 36px;
+        min-height: 36px;
+    }
+
+    .expansionPanelList p {
+        text-align: right;
+    }
+
+    .dense-list, .dense-list div, .dense-list button {
+        height: 24px !important;
+        min-height: 24px !important;
+        margin: 0px !important;
+    }
+
+    .dense-list .md-list-item-inner div {
+        position: relative;
+        top: 4px;
+    }
+
+    .denseItem {
+        font-size: 13px;
+        font-weight: bold;
     }
