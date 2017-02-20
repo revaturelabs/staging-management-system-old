@@ -12,8 +12,7 @@
                 query : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, isArray: true }, 
                 get   : { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } }, 
                 update: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "POST", url: "api/v1/user" },
-                remove: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() }, method: "DELETE"},
-                "delete": { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } } 
+                remove: { headers: { "Content-Type": "application/json", "Authorization": loginService.getToken() } } 
             } 
         )
 
@@ -34,6 +33,6 @@
         }
 
         us.remove = function(user, success, error) {
-            us.userResource.remove({username: user.username}, success, error);
+            user.$remove(success, error);
         }
     }

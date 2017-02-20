@@ -11,10 +11,9 @@
                 {name: 'done'  , color: "#00A", tooltip: "Checked in" },
                 {name: 'close', color: "#A00", tooltip: "Absent" },
                 {name: 'done_all' , color: "#59E2A8", tooltip: "Verified" },
-                {name: 'library_books', color: "E91E63"},
-                {name: 'turned_in' , color: "E91E63"},
-                {name: 'library_books', color: "blue"},
-                {name: 'turned_in' , color: "blue"},
+                {name: 'looks', color: "gray"},
+                {name: 'turned_in' , color: "gray"},
+                {name: 'library_books', color: "gray"},
                 {name: 'looks_one', color: "#E91E63"},
                 {name: 'looks_two', color: "#E91E63"},
                 {name: 'looks_3', color: "#E91E63"},
@@ -76,16 +75,7 @@
                         thisObject.icon = iconData[12];
                     }
                     break;
-                case "passed":
-                    if ( thisObject.taskType.type.toLowerCase() != "project" ) {
-                        if ( thisObject.passed ) {
-                            return iconData[0].name;
-                        } else {
-                            return iconData[1].name;
-                        }
-                    } else {
-                        return "";
-                    }
+            
             default:
             }
             

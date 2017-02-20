@@ -1,3 +1,4 @@
+
     
     angular
         .module( "sms" )
@@ -9,26 +10,19 @@
           // bindables
             // data
             // functions
-		
         aic.showName = showName;
-	    aic.showTaskPanel = showTaskPanel;
-		aic.showTaskCertification = showTaskCertification;
+        aic.showTaskPanel = showTaskPanel;
+        aic.showTaskCertification = showTaskCertification;
         aic.cancel = cancel;
 
           // initilization
           // functions
-    	    
-		/**
-		 * @description Shows the associate's full name.
-		 */
+    	    // show associate full name
     	function showName() {
     		return aic.user.firstName + " " + aic.user.lastName;
     	}
     	
-
-		/**
-		 * @description Shows the associate's panel information.
-		 */
+    	    // show the associate panel info
     	function showTaskPanel() {
     		if ((aic.user.tasks != null) && (aic.user.tasks.length > 0)) {
     			for (var i = 0; i < aic.user.tasks.length; i++) {
@@ -40,9 +34,6 @@
     	}
     	
     	    // show the associate certification info
-			/**
-			 * @description Shows the associate's certification information.
-			 */
     	function showTaskCertification() {
     		if ((aic.user.tasks != null) && (aic.user.tasks.length > 0)) {
     			for (var i = 0; i < aic.user.tasks.length; i++) {
@@ -53,10 +44,9 @@
     		}
     	}
     	
-    /**
-	 * @description Closes the certification dialog window.
-	 */
+    	    // cancel dialog 
     	function cancel() {
     		$mdDialog.cancel();
     	}
+
     }

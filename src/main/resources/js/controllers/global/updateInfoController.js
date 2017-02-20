@@ -3,48 +3,27 @@
         .module( "sms" )
         .controller( "updateInfoCrtl", updateInfoCtrl );
         
-        /**
-         * @description AngularJS controller for updating a password (and eventually other info)
-         */
-    function updateInfoCtrl ( $scope, $state, $mdToast, $mdDialog, loginService, userService ) {
+    function updateInfoCtrl ( $scope, $state, $mdToast, $mdDialog, loginService ) {
         var uic = this;
 
-        
           // bindables
-        uic.user = loginService.getUser();
-        uic.currentSkills = uic.user.skill;
-        
-        // functions
-        /**@var {function} toast function reference variable. */
+            // functions
         uic.toast = toast;
-        /**@var {function} cancel function reference variable. */
         uic.cancel = cancel;
-        /**@var {function} submit function reference variable. */
         uic.submit = submit;
-        
-          // initializations
-        
+
           // functions
-             /**
-             * @description Displays a toast notification.
-             * @param {string} message The value of the message to be shown.
-             */
+            // for notifications
         function toast( message ) {
             $mdToast.show( $mdToast.simple().textContent( message ).action("OKAY").position("top right").highlightAction(true) );
         }
         
-
-        /**
-         * @description Cancel the currently opened dialog window.
-         */
+            // when user decides to cancel password update
         function cancel() {
             $mdDialog.cancel();
         }
         
-           
-            /**
-             * @description Submit the changed password to update the users password.
-             */
+            // when user submits updated password
         function submit() {
               //check for empty passwords
             if(oldPass.value === ""){
@@ -70,11 +49,13 @@
             var oldPassH = CryptoJS.SHA1(oldPass.value).toString();
             var newPassH = CryptoJS.SHA1(newPass.value).toString();
             var confirmPassH = CryptoJS.SHA1(confirmPass.value).toString();
-                        if(newPassH == confirmPassH){
+            
+            if(newPassH == confirmPassH){
                   // new passwords match
                 if(oldPassH != newPassH){
                       // old and new passwords are different
                     
+                    uic.user = loginService.getUser();
                     uic.token = loginService.getToken();
                     var data={"username": uic.user.username, 
                         "oldPassword": oldPassH, 
@@ -88,8 +69,8 @@
                                   // password change went wrong
                                 uic.toast(response.data.errorMessage);
                             });
- 
                     
+                    uic.user = "";
                     uic.token = "";
                     
                 }else{

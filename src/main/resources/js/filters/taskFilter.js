@@ -14,14 +14,10 @@ sms.filter("taskFilter", function($filter){
 			user.notification.number = 0;
 			user.panels = [];
 			user.certs = [];
-			user.activeProject;
-			
 			user.tasks.forEach(function(task){
 				thisTask = {};
 				thisTask.type = task.taskType.type;
 				thisTask.note = task.note;
-				thisTask.passed = task.passed;
-				thisTask.id = task.id;
 				
 				
 				//check when the task is
@@ -45,7 +41,7 @@ sms.filter("taskFilter", function($filter){
 				}
 				if(thisTask.type == "Certification"){
 					user.certs.push(thisTask);
-				}else if(thisTask.type == "Panel"){
+				}else{
 					user.panels.push(thisTask);
 				}
 			})
@@ -55,22 +51,7 @@ sms.filter("taskFilter", function($filter){
 				user.notification.number = upcoming;
 				user.notification = $filter("iconFilter")(user.notification, iconInput);
 			}
-			
-			//set active project
-			user.project.forEach(function(proj){
-				var endDate = new Date(proj.project.endDate);
-				var startDate = new Date(proj.project.startDate);
-				if(endDate > now ){
-					user.activeProject = proj.project;
-					user.activeProject.endDateDisplay = (endDate.getMonth()+1)+"/"+endDate.getDate(); 
-					user.activeProject.startDateDisplay = (startDate.getMonth()+1)+"/"+startDate.getDate();
-				}
-				
-			});
 		});
-		
-		
-		
 		return users;
 	}
 });

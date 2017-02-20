@@ -1,5 +1,5 @@
 
-    var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "ngResource", "ngCookies", "md.data.table", "material.components.expansionPanels", "ui.router"]);
+    var sms = angular.module( "sms", ["ngAria", "ngMessages", "ngAnimate", "ngMaterial", "md.data.table", "ngResource", "ngCookies", "ui.router"]);
 
       // global constants
     sms.constant( "weekdays", [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ] );
@@ -41,7 +41,7 @@
                         }
                     }
                 })
-
+                
                  // superadmin view all tasks
                 .state( "superTask", {
                     url: "^/task",

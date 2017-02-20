@@ -150,7 +150,44 @@ public class LoginController {
 	}
 
 
+/*	
+ * *//**
+	 * Marks an associate as present
+	 * 
+	 * @param username
+	 *            User to be marked as present
+	 *//*
+	private void markPresent(String username) {
+		User user = ur.findByUsername(username);
+		Timestamp d = new Timestamp(new java.util.Date().getTime());
+		List<AssociateAttendance> associateAttendanceList = user.getAttendance();
 
+		if (!associateAttendanceList.isEmpty()) {
+
+			for (AssociateAttendance aa : associateAttendanceList) {
+				if (d.getDate() == aa.getDate().getDate() && d.getDay() == aa.getDate().getDay()
+						&& d.getYear() == aa.getDate().getYear()) {
+					// Associate has checked in before and current day exists
+					aa.setCheckedIn(true);
+					aar.save(aa);
+					return;
+				}
+			}
+		}
+
+		// Associate has not checked in before
+		// or
+		// Associate has checked in before but current day does not exist
+		AssociateAttendance aa = new AssociateAttendance(d, true, false, "");
+
+		List<AssociateAttendance> l = user.getAttendance();
+		l.add(aa);
+		user.setAttendance(l);
+
+		ur.save(user);
+	}
+*/
+	
 
 	/**
 	 * To update user info
@@ -196,61 +233,6 @@ public class LoginController {
 
 	}
 
-	
-	/**
-	 * To allow superadmin update user info
-	 * 
-	 * @param token
-	 *            Authorization token to make sure the user of the method has
-	 *            appropriate access to run the command
-	 * @param userDTO
-	 *            User Data Transfer Object that carries only the new
-	 *            information to be updated
-	 * @return ResponseEntity object containing the updated user object if it
-	 *         succeeds, or an error if there was a problem while updating the
-	 *         user password
-	 */
-	@RequestMapping(value="/resetPass", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody public Object resetPassword(@RequestHeader(value = "Authorization") String token,
-			@RequestBody UserDTO userDTO) {
-
-		try {
-			// validate token and update user password
-			if (isValid(token, userDTO.getUsername())) {
-				
-				// verify user
-				User oldUser = ur.findByUsername(userDTO.getUsername());
-				
-				// set the database users password to the updated password from the working user
-				oldUser.setHashedPassword( User.hashPassword( oldUser.getUsername() ) );
-				
-				
-				User newUser = ur.save(oldUser);
-				
-				// set user password to blank because its info you don't want sent over
-				newUser.blankPassword();
-				
-				// set user id to 0 because its info you don't want sent over
-				newUser.setID(0);
-				
-				// return good job
-				return new ResponseEntity<User>(newUser, HttpStatus.OK);
-				
-			} else {
-				return new ResponseEntity<ResponseErrorEntity>(new ResponseErrorEntity("User is unauthorized"),
-						HttpStatus.UNAUTHORIZED);
-			}
-		} catch (Exception e) {
-			Logger.getRootLogger().debug("Exception while updating user password", e);
-			return new ResponseEntity<ResponseErrorEntity>(
-					new ResponseErrorEntity("Problem occurred while updating user password."), HttpStatus.NOT_FOUND);
-		}
-
-	}	
-	
-//????????????????????????????????????????????????????????????????????????????????????????????????????????????????????	
-	
-	
 	/**
 	 * 
 	 * To validate the token from the request and make sure username belongs to
@@ -265,12 +247,9 @@ public class LoginController {
 	public boolean isValid(String tokenString, String usernameString) {
 		boolean valid = false;
 		Token token = tr.findByAuthToken(tokenString);
-		String superadminString = "superadmin";
-		
 		if (token != null) {
-			if ((usernameString.equals(token.getUser().getUsername()))  || (token.getUser().getUserRole().getName().equalsIgnoreCase(superadminString)) ) {
+			if (usernameString.equals(token.getUser().getUsername()))
 				valid = true;
-			} 
 		}
 		return valid;
 	}
