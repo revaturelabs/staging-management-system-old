@@ -63,7 +63,7 @@ public abstract class SMSPage {
 					}
 				} catch (ClassCastException e1) { 
 					//When a field is not related to WebElements
-					Logger.getRootLogger().debug("SonarQube made me do this", e);
+					Logger.getRootLogger().debug("SonarQube made me do this", e1);
 				} catch (IllegalArgumentException | IllegalAccessException e1) { //These exceptions should never happen
 					Logger.getRootLogger().debug(e1);
 				}
@@ -94,7 +94,7 @@ public abstract class SMSPage {
 			Utils.attemptWait(500);
 			WebElement toast = driver.findElement(By.tagName("md-toast"));
 			String text = toast.getText();
-			if ("".equals("text")) {
+			if ("".equals(text)) {
 				return null;
 			}
 			text = text.trim();
