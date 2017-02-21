@@ -1,0 +1,31 @@
+
+    <div role="dialog">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                Jobs added
+            </div>
+        </md-toolbar>
+
+        <md-content layout="columns">
+            <div>
+                <md-list flex>
+                    <md-list-item class="md-2-line" ng-repeat="associate in jASCtrl.newAssociates" ng-click="null">
+                        
+                        <div class="md-list-item-text">
+                            <h3> {{ associate.firstName }} {{ associate.lastName }} </h3>
+                            <p> {{ associate.username }} </p>
+                        </div>
+
+                    </md-list-item>
+                </md-list>
+            </div>
+        </md-content>
+
+        <div>
+            <div flex> </div>
+            <md-button class="md-raised md-primary" ng-click="jASCtrl.okay()"> OKAY </md-button>
+        </div>
+
+
+    </div>

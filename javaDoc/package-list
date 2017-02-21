@@ -1,0 +1,6 @@
+com.revature.sms
+com.revature.sms.controllers
+com.revature.sms.domain
+com.revature.sms.domain.dao
+com.revature.sms.domain.dto
+com.revature.sms.testLibs

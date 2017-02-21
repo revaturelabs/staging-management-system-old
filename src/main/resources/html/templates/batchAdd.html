@@ -1,0 +1,79 @@
+
+    <div role="dialog">
+        
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                Add associates by batch
+            </div>
+        </md-toolbar>
+
+        <div class="md-padding batchAddChips">
+            <md-chips ng-model="bACtrl.associates" readonly="true" md-removable="true">
+                <md-chip-template>
+                    {{ $chip.firstName }} {{ $chip.lastName }}
+                </md-chip-template>
+            </md-chips>
+        </div>
+
+        <div class="newAssociateGroup" layout="column">
+            
+            <form name="newAssociate" ng-submit="bACtrl.addNew(newAssociate.$valid)" novalidate>
+                
+                <div class="newAssociate md-padding" layout="columns">
+                    
+                    <md-input-container flex>
+                        <label> First name </label>
+                        <input id="firstName" type="text" ng-model="bACtrl.firstName" required>
+                    </md-input-container>
+                    
+                    <md-input-container flex>
+                        <label> Last name </label>
+                        <input type="text" ng-model="bACtrl.lastName" required>
+                    </md-input-container>
+                    
+                    <md-button type="submit" class="md-fab md-mini" aria-label="Add to list"> 
+                        <md-icon md-svg-icon="img/icons/ic_add_white_24px.svg"> </md-icon>
+                    </md-button>
+                
+                </div>
+ 			</form>
+
+            <div class="md-padding" layout="columns">
+                
+                <form flex name="batchAdd" ng-submit="bACtrl.save(batchAdd.$valid)" novalidate>
+                    
+                    <div layout="row" layout-align="space-between center">
+                        <md-input-container flex>
+                            <label> Curriculum </label>
+                            <md-select ng-model="bACtrl.selectedBatchType" required>
+                                    <md-option ng-value="batchType" ng-repeat="batchType in bACtrl.batchTypes"> {{ batchType.type }} </md-option>
+                            </md-select>
+                        </md-input-container>
+                        
+                         <md-input-container flex>
+                             <label> Trainer </label>			
+						<md-select  ng-model="bACtrl.trainer" required>
+								<md-option ng-repeat="x in bACtrl.trainers | orderBy: 'firstName'" ng-value="x">{{ x.firstName}}  {{x.lastName}}</md-option>
+					 		</md-select>
+						</md-input-container>
+                    </div>
+                    <div layout="row" layout-align="space-between center">
+                        
+                        <md-input-container flex>
+                            <label>Enter date</label>
+                            <md-datepicker ng-model="bACtrl.selectedDate" name="dateField" md-hide-icons="calendar" md-date-filter="bACtrl.onlyFridays" required> </md-datepicker>
+
+                        </md-input-container>
+                    </div>
+
+                    <div layout="row" layout-align="end center"> 
+                        <md-button type="submit" class="md-primary" aria-label="Submit All"> SUBMIT </md-button>
+                        <md-button type="button" class="md-accent" ng-click="bACtrl.cancel()" aria-label="Cancel"> CANCEL </md-button>
+                    </div>
+                </form>        
+
+            </div>
+
+        </div>
+
+    </div>

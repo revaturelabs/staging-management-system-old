@@ -1,4 +1,0 @@
-k8s/secrets/production/db-info.yaml
-k8s/secrets/production/sf-auth-service.yaml
-k8s/secrets/staging/db-info.yaml
-k8s/secrets/staging/sf-auth-service.yaml
