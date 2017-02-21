@@ -1,0 +1,61 @@
+  apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:  
+    name: "scheduler"
+    labels: 
+      app: "scheduler"
+      track: "stable"
+  spec: 
+    replicas: 1
+    template: 
+      metadata: 
+        name: "scheduler"
+        labels: 
+          app: "scheduler"
+          track: "stable"
+      spec: 
+        containers: 
+          - name: "scheduler"
+            image: "revature/scheduler:20fe3d01b7d83fc009c5698c34751fe7bac326bc"
+            ports: 
+              - containerPort: 80
+            env:
+              - name: "SF_AUTH_SERVICE_URL"
+                valueFrom:
+                  secretKeyRef:
+                    name: "scheduler-sf-auth-service"
+                    key: "url"
+              - name: "DB_URL"
+                valueFrom:
+                  secretKeyRef:
+                    name: "scheduler-db"
+                    key: "url"
+              - name: "DB_USERNAME"
+                valueFrom:
+                  secretKeyRef:
+                    name: "scheduler-db"
+                    key: "username"
+              - name: "DB_PASSWORD"
+                valueFrom:
+                  secretKeyRef:
+                    name: "scheduler-db"
+                    key: "password"
+            resources:
+              requests:
+                cpu: 0.5
+                memory: 800M
+              limits:
+                cpu: 0.5
+                memory: 800M
+#            livenessProbe:
+#              httpGet:
+#                path: /healthz
+#                port: 8080
+#              initialDelaySeconds: 20
+#              timeoutSeconds: 5
+#            readinessProbe:
+#              httpGet:
+#                path: /readiness
+#                port: 8080
+#              initialDelaySeconds: 40
+#              timeoutSeconds: 5
