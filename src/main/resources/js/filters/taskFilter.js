@@ -14,10 +14,20 @@ sms.filter("taskFilter", function($filter){
 			user.notification.number = 0;
 			user.panels = [];
 			user.certs = [];
+<<<<<<< HEAD
+=======
+			user.activeProject;
+			
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
 			user.tasks.forEach(function(task){
 				thisTask = {};
 				thisTask.type = task.taskType.type;
 				thisTask.note = task.note;
+<<<<<<< HEAD
+=======
+				thisTask.passed = task.passed;
+				thisTask.id = task.id;
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
 				
 				
 				//check when the task is
@@ -41,7 +51,11 @@ sms.filter("taskFilter", function($filter){
 				}
 				if(thisTask.type == "Certification"){
 					user.certs.push(thisTask);
+<<<<<<< HEAD
 				}else{
+=======
+				}else if(thisTask.type == "Panel"){
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
 					user.panels.push(thisTask);
 				}
 			})
@@ -51,7 +65,26 @@ sms.filter("taskFilter", function($filter){
 				user.notification.number = upcoming;
 				user.notification = $filter("iconFilter")(user.notification, iconInput);
 			}
+<<<<<<< HEAD
 		});
+=======
+			
+			//set active project
+			user.project.forEach(function(proj){
+				var endDate = new Date(proj.project.endDate);
+				var startDate = new Date(proj.project.startDate);
+				if(endDate > now ){
+					user.activeProject = proj.project;
+					user.activeProject.endDateDisplay = (endDate.getMonth()+1)+"/"+endDate.getDate(); 
+					user.activeProject.startDateDisplay = (startDate.getMonth()+1)+"/"+startDate.getDate();
+				}
+				
+			});
+		});
+		
+		
+		
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
 		return users;
 	}
 });

@@ -2,29 +2,65 @@
     angular
         .module( "sms" )
         .controller( "loginCtrl", loginCtrl );
+<<<<<<< HEAD
         
+=======
+      /** 
+       * @description AngularJS controller for logging in functionality. 
+       *     
+       */
+
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
     function loginCtrl( $scope, $state, $cookies, $mdToast, loginService ) {
         var lc = this;
 
           // bindables
             // data
             //functions
+<<<<<<< HEAD
         lc.toast = toast;
         lc.login = login;
         lc.cookieCheck = cookieCheck;
         lc.loginSuccess = loginSuccess;
+=======
+     
+        /**@var {function} toast function reference variable. */
+        lc.toast = toast;
+        /**@var {function} login function reference variable. */
+        lc.login = login;
+        /**@var {function} cookieCheck function reference variable. */
+        lc.cookieCheck = cookieCheck;
+        /**@var {function} loginSuccess function reference variable. */
+        lc.loginSuccess = loginSuccess;
+        /**@var {function} associateCertToast function reference variable. */
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
         lc.associateCertToast = associateCertToast;
 
           // initialization
         lc.cookieCheck();
 
           // functions
+<<<<<<< HEAD
             // calls master controller's toast function
+=======
+
+            /**
+             * @description Displays a toast notification.
+             * @param {string} message The value of the message to be shown.
+             */
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
         function toast(message) {
             $scope.$emit( "toastMessage", message );
         }
 
+<<<<<<< HEAD
           // logs in the user by conventional means
+=======
+          /**
+           * @description Logs in the user based on entering in username and password.
+           * @param {boolean} isValid Boolean that matches the results of $valid in the html form.
+           */
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
         function login(isValid) {
             if (isValid) {
                 var creds = {};
@@ -36,7 +72,15 @@
             }
         }
 
+<<<<<<< HEAD
           // logs in the user by means of cookies stored in browser session
+=======
+
+          /**
+           * @description Logs in the user if the two cookies related to being logged
+           * in the app is found, which means the user was already logged in.
+           */
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
         function cookieCheck() {
             lc.cookieLoad = true;
 
@@ -57,7 +101,14 @@
             }
         }
 
+<<<<<<< HEAD
           // sets user and token data and changes state upon successful login
+=======
+          /**
+           * @description Implementation of logging the user in that runs if log in is successful.
+           * @param {object} response The data given from the server on providing valid login credentials.
+           */
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
         function loginSuccess( response ) {
 
             loginService.addUser(response.user);
@@ -66,11 +117,22 @@
             $cookies.put( "RevatureSMSToken", loginService.getToken() );
 
             $state.go("attendance");
+<<<<<<< HEAD
             lc.toast("Login Successful.");
             lc.associateCertToast();
         }
 
           // notifies user of upcoming certification
+=======
+            lc.toast("Login successful.");
+            lc.associateCertToast();
+        }
+
+          /**
+           * @description Displays a toast notification if the logged in user has a scheduled certification
+           * exam within the next 2 weeks.
+           */
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
         function associateCertToast() {
             var user = loginService.getUser();
             if ( user.userRole.name == "associate" ) {

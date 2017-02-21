@@ -3,15 +3,19 @@ package com.revature.sms.domain;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -89,7 +93,11 @@ public class User {
 	/**
 	 * List containing JobEvent objects that keeps track of the user's events.
 	 */
+<<<<<<< HEAD
 	@OneToMany(cascade=CascadeType.ALL)
+=======
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
 	@JoinColumn(name="ASSOCIATE")
 	private List<JobEvent> events;
 
@@ -107,12 +115,40 @@ public class User {
 	private Timestamp graduationDate;
 	
 	/**
+	 * List of skills that a user has
+	 */
+	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private Set<TechnicalSkills> skill;
+	
+	/**
+	 * MarketingStatus object that keeps track of the user's marketing status
+	 */
+	@ManyToOne
+	@JoinColumn(name = "marketing_status")
+	private MarketingStatus marketingStatus;
+	
+	/**
+	 * Trainer object that keeps track of the user's trainer
+	 */
+	@ManyToOne
+	@JoinColumn(name = "trainer")
+	private Trainer trainer;
+	
+	/**
+	 * List containing Project objects that keeps track of the user's project.
+	 */
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="ASSOCIATE")
+	private List<ProjectUser> project;
+	
+	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
 	 */
 	public User() {
 		super();
 	}
 
+	// constructor for associate
 	/**
 	 * Constructor for User object. This constructor is specifically designed to
 	 * be used for creating a User who is an associate. Initializes all instance variables except for ID, as that is
@@ -127,9 +163,15 @@ public class User {
 	 * @param events List containing JobEvent objects that keeps track of the user's events.
 	 * @param userRole UserRole object that keeps track of the user's specific role.
 	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
+	 * @param skills gets a list of technical skills that an associate has
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
+<<<<<<< HEAD
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, List<JobEvent> events, UserRole userRole, Timestamp graduationDate) {
+=======
+			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate, 
+			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus, Trainer trainer) {
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -141,8 +183,11 @@ public class User {
 		this.events = events;
 		this.userRole = userRole;
 		this.graduationDate = graduationDate;
+		this.skill = skills;
+		this.events = events;
+		this.marketingStatus = marketingStatus;
+		this.trainer = trainer;
 	}
-
 	// constructor for non-associate
 	/**
 	 * Constructor for User object. This constructor is meant to be used to create
@@ -153,6 +198,7 @@ public class User {
 	 * @param lastName String that represents the last name of the User object.
 	 * @param hashedPassword String that represents the hashedPassword of the User object.
 	 * @param userRole UserRole object that keeps track of the user's specific role.
+	 * @param trainer 
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, UserRole userRole) {
 		super();
@@ -161,7 +207,18 @@ public class User {
 		this.lastName = lastName;
 		this.hashedPassword = hashedPassword;
 		this.userRole = userRole;
+		//this.trainer = trainer;
 	}
+		
+	public List<ProjectUser> getProject() {
+		return project;
+	} 
+ 
+	public void setProject(List<ProjectUser> project) {
+		this.project = project;
+	}
+
+	
 	
 	/**
 	 * Method to retrieve the ID value of the User object.
@@ -323,7 +380,17 @@ public class User {
 	 * the User object.
 	 */
 	public void setEvents(List<JobEvent> events) {
+<<<<<<< HEAD
 		this.events = events;
+=======
+		if (this.events != null) {
+			this.events.clear();
+			this.events.addAll(events);
+		}
+		else  {
+			this.events = new ArrayList<>();
+		}
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
 	}
 
 	/**
@@ -360,13 +427,51 @@ public class User {
 	}
 
 	/**
+	 * Method that retrieves the list of skills of the user
+	 */
+	public Set<TechnicalSkills> getSkill() {
+		return skill;
+	}
+
+	/**
+	 * Method that manually sets the skills of the user object
+	 */
+	public void setSkill(Set<TechnicalSkills> skill) {
+		this.skill = skill;
+	}
+	
+	/**
+	 * Method that retrieves the marketing status of the user
+	 */
+	public Trainer getTrainer() {
+		return trainer;
+	}
+
+	public void setTrainer(Trainer trainer) {
+		this.trainer = trainer;
+	}
+	
+	public MarketingStatus getMarketingStatus() {
+		return marketingStatus;
+	}
+
+	/**
+	 * Method that manually sets the marketing status of the user object
+	 */
+	public void setMarketingStatus(MarketingStatus marketingStatus) {
+		this.marketingStatus = marketingStatus;
+	}
+
+	/**
 	 * Method that returns a string representation of the current User object.
 	 */
+
 	@Override
 	public String toString() {
 		return "User [ID=" + ID + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", hashedPassword=" + hashedPassword + ", batchType=" + batchType + ", attendance=" + attendance
-				+ ", tasks=" + tasks + ", userRole=" + userRole + "]";
+				+ ", tasks=" + tasks + ", events=" + events + ", userRole=" + userRole + ", graduationDate="
+				+ graduationDate + ", skill=" + skill + ", marketingStatus=" + marketingStatus + ", Projects=" + project +"]";
 	}
 
 	/**

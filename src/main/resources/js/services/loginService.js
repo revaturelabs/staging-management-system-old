@@ -35,10 +35,27 @@
                 		"Content-Type":"application/json",
                 		"Authorization": function(){ return ls.token; }
                 	}
+                },
+                resetPass: {
+                	method:"PUT",
+                	url:"/api/v1/login/resetPass",
+                	headers:{
+                		"Content-Type":"application/json",
+                		"Authorization": function(){ return ls.token; }
+                	}
                 }
             }
         )
 
+<<<<<<< HEAD
+=======
+        //?????
+        ls.resetPass = function(data,success,error){
+        	loginResource.resetPass(data,success,error);
+        }
+        //?????
+        
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
         ls.changePass = function(data,success,error){
         	loginResource.changePass(data,success,error);
         }
@@ -108,6 +125,10 @@
             cookieLogin : ls.cookieLogin,
             checkPass   : ls.checkPass,
             changePass  : ls.changePass,
+<<<<<<< HEAD
+=======
+            resetPass   : ls.resetPass,
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
             logout      : ls.logout,
             addUser     : ls.addUser,
             getUser     : ls.getUser,

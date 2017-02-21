@@ -50,6 +50,7 @@
                             </md-select>
                         </md-input-container>
                         
+<<<<<<< HEAD
                         <md-input-container flex>
                             <label>Enter date</label>
                             <md-datepicker ng-model="bACtrl.selectedDate" name="dateField" md-hide-icons="calendar" md-date-filter="bACtrl.onlyFridays" required> </md-datepicker>
@@ -59,6 +60,21 @@
                                 <div ng-message="required"> This date is required. </div>
                                 <div ng-message="filtered"> Only Fridays are allowed. </div>
                             </div>-->
+=======
+                         <md-input-container flex>
+                             <label> Trainer </label>			
+						<md-select  ng-model="bACtrl.trainer" required>
+								<md-option ng-repeat="x in bACtrl.trainers | orderBy: 'firstName'" ng-value="x">{{ x.firstName}}  {{x.lastName}}</md-option>
+					 		</md-select>
+						</md-input-container>
+                    </div>
+                    <div layout="row" layout-align="space-between center">
+                        
+                        <md-input-container flex>
+                            <label>Enter date</label>
+                            <md-datepicker ng-model="bACtrl.selectedDate" name="dateField" md-hide-icons="calendar" md-date-filter="bACtrl.onlyFridays" required> </md-datepicker>
+
+>>>>>>> 8bd20877974ed80df91287cb995127748c2d5238
                         </md-input-container>
                     </div>
 
