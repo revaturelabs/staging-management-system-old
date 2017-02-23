@@ -124,18 +124,19 @@ public class User {
 	private MarketingStatus marketingStatus;
 	
 	/**
+	 * List containing Project objects that keeps track of the user's project.
+	 */
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="ASSOCIATE")
+	private List<ProjectUser> project;
+	
+	/**
 	 * Trainer object that keeps track of the user's trainer
 	 */
 	@ManyToOne
 	@JoinColumn(name = "trainer")
 	private Trainer trainer;
 	
-	/**
-	 * List containing Project objects that keeps track of the user's project.
-	 */
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="ASSOCIATE")
-	private List<ProjectUser> project;
 	
 	/**
 	 * Null args constructor. Doesn't initialize any of the User instance variables.
@@ -159,10 +160,12 @@ public class User {
 	 * @param userRole UserRole object that keeps track of the user's specific role.
 	 * @param graduationDate Graduation date tracks when an associate graduates from a batch
 	 * @param skills gets a list of technical skills that an associate has
+	 * @param project projects that a user is currently working on.
 	 */
 	public User(String username, String firstName, String lastName, String hashedPassword, BatchType batchType,
 			List<AssociateAttendance> attendance, List<AssociateTask> tasks, UserRole userRole, Timestamp graduationDate, 
-			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus, Trainer trainer) {
+			Set<TechnicalSkills> skills, List<JobEvent> events, MarketingStatus marketingStatus, List<ProjectUser> project,
+			Trainer trainer) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -176,6 +179,7 @@ public class User {
 		this.skill = skills;
 		this.events = events;
 		this.marketingStatus = marketingStatus;
+		this.project = project;
 		this.trainer = trainer;
 	}
 	// constructor for non-associate
@@ -197,18 +201,8 @@ public class User {
 		this.lastName = lastName;
 		this.hashedPassword = hashedPassword;
 		this.userRole = userRole;
-		//this.trainer = trainer;
 	}
 		
-	public List<ProjectUser> getProject() {
-		return project;
-	} 
- 
-	public void setProject(List<ProjectUser> project) {
-		this.project = project;
-	}
-
-	
 	
 	/**
 	 * Method to retrieve the ID value of the User object.
@@ -399,7 +393,6 @@ public class User {
 	 * Method that retrieves the batch graduation date of the user.
 	 * @return graduationDate Timestamp of the graduation date for the user
 	 */
-	
 	public Timestamp getGraduationDate() {
 		return graduationDate;
 	}
@@ -429,14 +422,6 @@ public class User {
 	/**
 	 * Method that retrieves the marketing status of the user
 	 */
-	public Trainer getTrainer() {
-		return trainer;
-	}
-
-	public void setTrainer(Trainer trainer) {
-		this.trainer = trainer;
-	}
-	
 	public MarketingStatus getMarketingStatus() {
 		return marketingStatus;
 	}
@@ -449,9 +434,38 @@ public class User {
 	}
 
 	/**
+	 * Method that retrieves the list of projects that the user is working on
+	 */
+	public List<ProjectUser> getProject() {
+		return project;
+	} 
+ 
+	/**
+	 * Method that sets the list of projects that the user is working on
+	 */
+	public void setProject(List<ProjectUser> project) {
+		this.project = project;
+	}
+	
+	/**
+	 * Method that retrieves the user's trainer
+	 */
+	public Trainer getTrainer() {
+		return trainer;
+	}
+
+	/**
+	 * Method that sets the user's trainer
+	 */
+	public void setTrainer(Trainer trainer) {
+		this.trainer = trainer;
+	}
+	
+	
+	
+	/**
 	 * Method that returns a string representation of the current User object.
 	 */
-
 	@Override
 	public String toString() {
 		return "User [ID=" + ID + ", username=" + username + ", firstName=" + firstName + ", lastName=" + lastName
