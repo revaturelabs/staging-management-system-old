@@ -144,7 +144,9 @@
                     
                     <md-expansion-panel-content>
                         <md-list class="expansionPanelList md-dense">
-                            
+                            <md-icon ng-click="manAttCtrl.makenewjob()" 
+                                style="color:black !important;cursor: pointer;" role="button" 
+                                tabindex="0" class="material-icons">note_add</md-icon>
                             <md-subheader class="md-no-sticky" ng-repeat-start="(type, specificEvents) in mVUICtrl.allEvents"> {{ type }} </md-subheader>
                             <md-list-item class="md-3-line" ng-repeat="event in specificEvents" ng-click="null">
                                 <div class="md-list-item-text" layout="column"> 
