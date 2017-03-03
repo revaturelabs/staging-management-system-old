@@ -373,7 +373,6 @@ public class UserController {
 			//remove deleted skills
 			boolean found;
 			Set<TechnicalSkills> list = userDTO.getSkill();
-			System.out.println(list.size());
 			for(TechnicalSkills ts: user.getSkill()){
 				if(!list.contains(ts.getID())){
 					userDTO.getSkill().remove(ts);
