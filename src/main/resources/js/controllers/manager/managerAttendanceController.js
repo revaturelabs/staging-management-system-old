@@ -152,7 +152,7 @@
                 mac.filterWeek( monday, user );
                 if ( ( mac.selectedUser ) && ( user.username == mac.selectedUser.username ) ) {
                 	mac.selectedUser = user;
-                	if(user.panels[0].date){
+                    if(user.panels[0] != undefined && user.panels[0].date){
                 		mac.panelDate = new Date(user.panels[0].date);
                 	}
                 	else{

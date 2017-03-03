@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="50167cae-c32c-4a5e-950d-1480e999a029" name="Default" comment="" />
+    <list default="true" id="50167cae-c32c-4a5e-950d-1480e999a029" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/html/templates/mainTemplate.html" afterPath="$PROJECT_DIR$/src/main/resources/html/templates/mainTemplate.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/html/templates/updateInformation.html" afterPath="$PROJECT_DIR$/src/main/resources/html/templates/updateInformation.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/js/controllers/associate/associateAttendenceController.js" afterPath="$PROJECT_DIR$/src/main/resources/js/controllers/associate/associateAttendenceController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/js/controllers/associate/associateViewUserInfoController.js" afterPath="$PROJECT_DIR$/src/main/resources/js/controllers/associate/associateViewUserInfoController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/js/controllers/manager/managerAttendanceController.js" afterPath="$PROJECT_DIR$/src/main/resources/js/controllers/manager/managerAttendanceController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/js/controllers/manager/managerViewUserInfoController.js" afterPath="$PROJECT_DIR$/src/main/resources/js/controllers/manager/managerViewUserInfoController.js" />
+    </list>
+
     <ignored path="staging-management-system.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -124,6 +132,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -697,8 +708,7 @@
       <workItem from="1485876005306" duration="9445000" />
       <workItem from="1485961298599" duration="6944000" />
       <workItem from="1486046144890" duration="2471000" />
-      <workItem from="1486133470123" duration="2142000" />
-      <workItem from="1486394220233" duration="1496000" />
+      <workItem from="1486133470123" duration="1401000" />
       <workItem from="1486405127924" duration="6473000" />
       <workItem from="1486480132447" duration="1175000" />
       <workItem from="1486672748520" duration="2442000" />
@@ -807,12 +817,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/revature/sms/controllers/TechSkillsController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/revature/sms/controllers/LoginController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -941,48 +945,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/revature/sms/controllers/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4334">
-          <caret line="197" column="75" selection-start-line="197" selection-start-column="75" selection-end-line="197" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/revature/sms/controllers/TechSkillsController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/revature/sms/controllers/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3762">
-          <caret line="197" column="75" selection-start-line="197" selection-start-column="75" selection-end-line="197" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/revature/sms/controllers/TechSkillsController.java">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
