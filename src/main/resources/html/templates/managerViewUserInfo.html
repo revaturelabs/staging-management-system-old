@@ -188,10 +188,13 @@
                             
                             <md-subheader class="md-no-sticky" ng-repeat-start="thisTaskType in mVUICtrl.taskTypes" layout="row" layout-align="space-between center"> 
                                 <span> {{ thisTaskType.type }}s </span>
-                        <!--    <md-button ng-if="(mVUICtrl.newCert == true) && (thisTaskType.type.toLowerCase() == 'certification')" class="md-icon-button" aria-label="Add certification" ng-click="mVUICtrl.addCert()">
+                                
+                                <div ng-if="thisTaskType.type.toLowerCase() == 'certification'">
+                                   <md-button ng-if="(mVUICtrl.newCert == true) && (thisTaskType.type.toLowerCase() == 'certification')" class="md-icon-button" aria-label="Add certification" ng-click="mVUICtrl.addCert()">
                                     <md-tooltip> Add certification </md-tooltip>
                                     <md-icon class="md-material-icon"> add </md-icon>
-                                </md-button> -->
+                                </md-button>
+                                </div>
                                 
                                 <div ng-if="(mVUICtrl.newCert == true) && (thisTaskType.type.toLowerCase() == 'panel')">
                                     <md-menu ng-show="manAttCtrl.selectedUser.panels[0]">
@@ -221,13 +224,6 @@
                                     <md-button ng-if='manAttCtrl.user.userRole.name == "superAdmin"' class="md-raised md-primary" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject)">Change current project</md-button>
                                 </div>
                             </md-subheader>
-                            
-                            <!--<md-list-item ng-repeat="task in specificTasks">
-                                <h3> {{ mVUICtrl.formatTaskListItemTitle(task) }} </h3>
-                                <div flex> </div>
-                                <p> {{ mVUICtrl.formatTaskListItemContent(task) }} </p>
-                                <md-icon class="material-icons"> {{ task | iconFilter:"passed" }} </md-icon>
-                            </md-list-item>-->
 
                             <md-list-item class="md-3-line dense-list" ng-click="null" ng-repeat="task in mVUICtrl.allTasks[thisTaskType.type]" ng-if="task.taskType.type.toLowerCase() == 'certification'">
                                 <div class="md-list-item-text" layout="column"> 
@@ -240,6 +236,16 @@
                             </md-list-item>
                             
                             <md-divider ng-repeat-end ng-if="!$last"> </md-divider>
+                            
+                            <md-subheader class="md-no-sticky" layout="row" layout-align="space-between center"> 
+                            <span> Projects </span>
+                        </md-subheader>
+	                        <md-list-item class="md-3-line dense-list" ng-repeat="project in mVUICtrl.user.project">
+	                        	<div flex class="md-list-item-text" layout="column">
+									<span ng-show="project ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject)" style="cursor:pointer;">{{ manAttCtrl.selectedUser.activeProject.name }}</span]>
+	                          		<span ng-hide="project" ng-click="manAttCtrl.assignProject(manAttCtrl.selectedUser, manAttCtrl.selectedUser.activeProject)" style="cursor:pointer;">No project</span>
+								</div>
+							</md-list-item>
 
                         </md-list>
                     </md-expansion-panel-content>
